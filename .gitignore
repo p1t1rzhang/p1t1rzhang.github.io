@@ -1,0 +1,17 @@
+# 本機產生的每日資料：公開網站的資料由 GitHub Actions 維護在 data 分支
+daily_models.json
+daily_models.js
+history/
+logs/
+
+# Python 與系統暫存檔
+__pycache__/
+*.pyc
+.DS_Store
+
+# 建置暫存
+_site/
+_data/
+
+# 部署設定的暫存副本（請貼到 GitHub 網頁的 .github/workflows/deploy.yml）
+/deploy.yml

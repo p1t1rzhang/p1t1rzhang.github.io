@@ -1,0 +1,1395 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Model Learning</title>
+<meta name="description" content="資料科學知識庫：資料分析流程、ML 演算法與統計因果兩棵 MECE 知識樹（143 個方法，附數學直覺、公式與實務要點），加上每日 Hugging Face 模型雷達。">
+<meta name="theme-color" content="#7A1E3A">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Model Learning">
+<meta property="og:title" content="Model Learning｜資料科學知識庫 × 每日 AI 模型雷達">
+<meta property="og:description" content="分析流程 4 階段 · ML 演算法 102 個 · 統計與因果方法 41 個 · 每日 Hugging Face 熱門模型精選">
+<meta property="og:url" content="__SITE_URL__">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%237A1E3A'/%3E%3Ccircle cx='32' cy='32' r='14' fill='none' stroke='%23F7D9E2' stroke-width='4'/%3E%3Ccircle cx='32' cy='32' r='4' fill='%23F7D9E2'/%3E%3Cpath d='M32 10v8M32 46v8M10 32h8M46 32h8' stroke='%23F7D9E2' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+<style id="katex-css">/*__KATEX_CSS__*/</style>
+<style>
+/* ───────────── Design tokens ───────────── */
+:root{
+  --bg:#FBF7F8; --surface:#FFFFFF; --surface-2:#FDF4F7; --surface-3:#F9EAF0;
+  --ink:#2B1B21; --ink-2:#5B4650; --muted:#8A7580; --line:#F0E2E8; --line-2:#E5CDD7;
+  --brand:#7A1E3A; --brand-2:#942A4B; --brand-deep:#4A1022; --brand-text:#7A1E3A;
+  --pink:#F7D9E2; --pink-2:#FBEAF0; --pink-3:#EFBACB; --pink-ink:#7A1E3A;
+  --on-brand:#FFFFFF; --good:#2F7D5B; --warn:#A5642A;
+  --shadow-sm:0 1px 2px rgba(74,16,34,.06),0 1px 1px rgba(74,16,34,.04);
+  --shadow:0 10px 30px -14px rgba(74,16,34,.28);
+  --shadow-lg:0 24px 60px -20px rgba(74,16,34,.35);
+  --radius:16px; --radius-sm:10px;
+  --font-sans:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei","Helvetica Neue",Arial,sans-serif;
+  --font-serif:"Noto Serif TC","Songti TC","Source Han Serif TC",Georgia,"Times New Roman",serif;
+  --font-math:"Cambria","Times New Roman","Noto Serif","DejaVu Serif","Songti TC","Noto Serif TC",serif;
+  --font-mono:"SF Mono",ui-monospace,Menlo,Consolas,"Noto Sans Mono CJK TC",monospace;
+  --sidebar-w:252px;
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#140C0F; --surface:#1E1317; --surface-2:#26181E; --surface-3:#2F1D25;
+  --ink:#F6EAF0; --ink-2:#D8C3CC; --muted:#A48F99; --line:#33232A; --line-2:#46303A;
+  --brand:#9C2F52; --brand-2:#B23B61; --brand-deep:#3A0D1B; --brand-text:#F09BB5;
+  --pink:#3B1F29; --pink-2:#2A1920; --pink-3:#5C2D3D; --pink-ink:#F4B3C6;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4); --shadow:0 10px 30px -14px rgba(0,0,0,.6); --shadow-lg:0 24px 60px -20px rgba(0,0,0,.7);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#140C0F; --surface:#1E1317; --surface-2:#26181E; --surface-3:#2F1D25;
+    --ink:#F6EAF0; --ink-2:#D8C3CC; --muted:#A48F99; --line:#33232A; --line-2:#46303A;
+    --brand:#9C2F52; --brand-2:#B23B61; --brand-deep:#3A0D1B; --brand-text:#F09BB5;
+    --pink:#3B1F29; --pink-2:#2A1920; --pink-3:#5C2D3D; --pink-ink:#F4B3C6;
+    --shadow-sm:0 1px 2px rgba(0,0,0,.4); --shadow:0 10px 30px -14px rgba(0,0,0,.6); --shadow-lg:0 24px 60px -20px rgba(0,0,0,.7);
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 var(--font-sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:var(--brand-text)}
+:focus-visible{outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--brand) 35%,transparent);border-radius:8px}
+[hidden]{display:none!important}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+mark{background:var(--pink-3);color:inherit;border-radius:3px;padding:0 1px}
+
+/* ───────────── Layout ───────────── */
+.app{display:grid;grid-template-columns:var(--sidebar-w) minmax(0,1fr);min-height:100vh}
+.sidebar{position:sticky;top:env(safe-area-inset-top,0px);height:100vh;background:linear-gradient(170deg,#5A1428 0%,#7A1E3A 55%,#8E2748 100%);color:#FBE3EA;display:flex;flex-direction:column;padding:26px 18px 18px;overflow:auto}
+:root[data-theme="dark"] .sidebar{background:linear-gradient(170deg,#2A0913 0%,#4A1022 60%,#5E1830 100%)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sidebar{background:linear-gradient(170deg,#2A0913 0%,#4A1022 60%,#5E1830 100%)}}
+.brand{display:flex;gap:12px;align-items:center;padding:0 8px 22px;border-bottom:1px solid rgba(251,227,234,.14);margin-bottom:18px}
+.brand-mark{width:40px;height:40px;border-radius:12px;background:rgba(251,227,234,.12);display:grid;place-items:center;flex:none}
+.brand-name{font-family:var(--font-serif);font-size:19px;font-weight:700;letter-spacing:.3px;color:#fff;line-height:1.2}
+.brand-sub{font-size:11.5px;color:#F2BCCB;letter-spacing:.8px}
+.nav{display:flex;flex-direction:column;gap:4px}
+.nav-btn{display:flex;align-items:center;gap:12px;border:0;background:transparent;color:#F7D3DD;padding:11px 12px;border-radius:12px;text-align:left;font-size:14.5px;transition:background .15s,color .15s}
+.nav-btn svg{flex:none;opacity:.9}
+.nav-btn:hover{background:rgba(251,227,234,.08);color:#fff}
+.nav-btn[aria-current="page"]{background:#FBEAF0;color:#5A1428;font-weight:600;box-shadow:0 6px 18px -8px rgba(0,0,0,.35)}
+.nav-btn .nav-en{display:block;font-size:11px;opacity:.7;font-weight:400;letter-spacing:.3px}
+.side-foot{margin-top:auto;padding:16px 10px 4px;font-size:12px;color:#EDB3C4;line-height:1.6}
+.side-foot b{color:#fff;font-weight:600}
+.side-stat{display:flex;justify-content:space-between;padding:6px 0;border-top:1px dashed rgba(251,227,234,.15)}
+
+.main{min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;display:flex;align-items:center;gap:12px;padding:14px 32px;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--line)}
+.topbar .mobile-brand{display:none;font-family:var(--font-serif);font-weight:700;color:var(--brand-text);font-size:17px;white-space:nowrap}
+.search{position:relative;flex:1;max-width:620px}
+.search input{width:100%;height:44px;border:1px solid var(--line-2);background:var(--surface);border-radius:999px;padding:0 90px 0 44px;font:inherit;color:var(--ink);outline:none;transition:border-color .15s,box-shadow .15s}
+.search input:focus{border-color:var(--brand);box-shadow:0 0 0 4px color-mix(in srgb,var(--brand) 14%,transparent)}
+.search input::placeholder{color:var(--muted)}
+.search .s-icon{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.search kbd{position:absolute;right:12px;top:50%;transform:translateY(-50%);font:11px var(--font-mono);color:var(--muted);border:1px solid var(--line-2);border-radius:6px;padding:2px 6px;background:var(--surface-2)}
+.icon-btn{width:42px;height:42px;display:grid;place-items:center;border-radius:999px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);flex:none}
+.icon-btn:hover{color:var(--brand-text);border-color:var(--pink-3)}
+.content{padding:28px 32px 80px;max-width:1320px;width:100%;margin:0 auto}
+.view{display:none;animation:fade .25s ease}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* ───────────── Search panel ───────────── */
+.s-panel{position:absolute;top:52px;left:0;right:0;background:var(--surface);border:1px solid var(--line-2);border-radius:18px;box-shadow:var(--shadow-lg);max-height:min(70vh,560px);overflow:auto;padding:8px;display:none}
+.s-panel.open{display:block}
+.s-group{padding:10px 12px 4px;font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+.s-item{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border-radius:12px;cursor:pointer;border:0;background:transparent;width:100%;text-align:left}
+.s-item:hover,.s-item.active{background:var(--pink-2)}
+.s-item .s-kind{flex:none;font-size:11px;font-weight:700;color:var(--pink-ink);background:var(--pink);border-radius:6px;padding:2px 7px;margin-top:2px}
+.s-item .s-title{font-weight:600;color:var(--ink)}
+.s-item .s-sub{font-size:12.5px;color:var(--muted);line-height:1.45}
+.s-empty{padding:22px;text-align:center;color:var(--muted);font-size:14px}
+
+/* ───────────── Common ───────────── */
+.hero{display:flex;flex-wrap:wrap;gap:18px 24px;align-items:flex-end;justify-content:space-between;margin-bottom:22px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--brand-text);text-transform:uppercase}
+h1.title{font-family:var(--font-serif);font-size:clamp(26px,3.2vw,36px);line-height:1.2;margin:6px 0 8px;color:var(--ink);letter-spacing:.3px}
+.lede{color:var(--ink-2);max-width:760px;margin:0}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;padding:5px 11px;border-radius:999px;background:var(--pink-2);color:var(--pink-ink);border:1px solid var(--pink);white-space:nowrap}
+.pill.solid{background:var(--brand);color:var(--on-brand);border-color:transparent}
+.pill .dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.pill.live .dot{animation:pulse 1.2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.btn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);font-size:14px;font-weight:500;transition:all .15s}
+.btn:hover{border-color:var(--pink-3);color:var(--brand-text)}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:var(--on-brand)}
+.btn.primary:hover{background:var(--brand-2);color:#fff}
+.btn:disabled{opacity:.55;cursor:wait}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+.section-title{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:34px 0 14px}
+.section-title h2{font-family:var(--font-serif);font-size:21px;margin:0;color:var(--ink)}
+.section-title .hint{font-size:13px;color:var(--muted)}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;line-height:1;padding:6px 10px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.chip.task{background:var(--pink);border-color:transparent;color:var(--pink-ink);font-weight:600}
+.chip.warn{background:color-mix(in srgb,var(--warn) 12%,var(--surface));color:var(--warn);border-color:transparent}
+.chip.good{background:color-mix(in srgb,var(--good) 12%,var(--surface));color:var(--good);border-color:transparent}
+button.chip{cursor:pointer}
+button.chip:hover{border-color:var(--pink-3);color:var(--brand-text)}
+.muted{color:var(--muted)}
+.empty{padding:36px;text-align:center}
+.demo-note{display:flex;gap:12px;align-items:flex-start;padding:14px 18px;margin-bottom:16px;border-radius:14px;background:color-mix(in srgb,var(--warn) 10%,var(--surface));border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);color:var(--ink-2);font-size:14px}
+.demo-note b{color:var(--warn)}
+.empty h3{font-family:var(--font-serif);margin:6px 0 8px}
+code,.code{font-family:var(--font-mono);font-size:.92em;background:var(--surface-3);padding:2px 7px;border-radius:6px;color:var(--ink)}
+pre.cmd{font:13px/1.6 var(--font-mono);background:#2A1219;color:#FBE3EA;border-radius:12px;padding:14px 16px;overflow:auto;text-align:left;margin:12px 0}
+
+/* ───────────── Radar ───────────── */
+.stat-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.stat{padding:16px 18px}
+.stat .k{font-size:12.5px;color:var(--muted)}
+.stat .v{font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--ink);line-height:1.15;margin-top:2px}
+.stat .v small{font-size:13px;color:var(--muted);font-family:var(--font-sans);font-weight:400;margin-left:4px}
+.dist{padding:18px 20px;margin-top:14px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:26px}
+.dist h3{font-size:13.5px;margin:0 0 10px;color:var(--ink-2);font-weight:600}
+.bar-row{display:grid;grid-template-columns:118px minmax(0,1fr) 30px;gap:10px;align-items:center;font-size:13px;margin:5px 0}
+.bar-row .lbl{color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-track{height:10px;background:var(--surface-3);border-radius:999px;overflow:hidden}
+.bar-fill{height:100%;background:var(--brand);border-radius:999px}
+.bar-row .n{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+.method-mini{font-size:13px;color:var(--ink-2)}
+.method-mini .w{display:grid;grid-template-columns:86px minmax(0,1fr) 40px;gap:10px;align-items:center;margin:6px 0}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin:26px 0 14px}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{border:1px solid var(--line-2);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:13px;color:var(--ink-2)}
+.seg button[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:var(--on-brand)}
+.seg button .c{opacity:.7;margin-left:4px;font-variant-numeric:tabular-nums}
+.ctrl{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+select.sel{height:38px;border-radius:999px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);padding:0 34px 0 14px;font:inherit;font-size:13.5px;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238A7580' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.toggle{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-2);cursor:pointer;user-select:none}
+.toggle input{appearance:none;width:36px;height:20px;border-radius:999px;background:var(--line-2);position:relative;cursor:pointer;transition:background .2s;margin:0}
+.toggle input::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:var(--shadow-sm);transition:transform .2s}
+.toggle input:checked{background:var(--brand)}
+.toggle input:checked::after{transform:translateX(16px)}
+.grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px}
+.mcard{padding:18px 18px 16px;display:flex;flex-direction:column;gap:12px;transition:transform .18s,box-shadow .18s,border-color .18s;position:relative}
+.mcard:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--pink-3)}
+.mcard-head{display:flex;gap:12px;align-items:flex-start}
+.rank{flex:none;width:34px;height:34px;border-radius:10px;background:var(--pink);color:var(--pink-ink);display:grid;place-items:center;font-weight:700;font-size:14px;font-family:var(--font-serif)}
+.rank.top{background:var(--brand);color:var(--on-brand)}
+.mname{font-weight:700;font-size:15.5px;line-height:1.3;word-break:break-word;color:var(--ink);text-decoration:none}
+.mname:hover{color:var(--brand-text);text-decoration:underline;text-underline-offset:3px}
+.mauthor{font-size:12.5px;color:var(--muted);margin-top:2px;word-break:break-all}
+.score{flex:none;margin-left:auto;position:relative;width:52px;height:52px}
+.score svg{transform:rotate(-90deg)}
+.score .sv{position:absolute;inset:0;display:grid;place-items:center;font-weight:700;font-size:15px;font-family:var(--font-serif);color:var(--ink)}
+.score .sl{position:absolute;left:0;right:0;bottom:-15px;text-align:center;font-size:10px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;background:var(--surface-2);border-radius:12px;padding:10px 6px}
+.metric{text-align:center;min-width:0}
+.metric .mv{font-weight:700;font-size:14px;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+.metric .mk{font-size:11px;color:var(--muted)}
+.reasons{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px;font-size:13.3px;color:var(--ink-2)}
+.mfoot{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:auto;padding-top:10px;border-top:1px dashed var(--line-2)}
+.mfoot .rel{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--muted)}
+.hf-link{font-size:13px;font-weight:600;text-decoration:none;color:var(--brand-text);white-space:nowrap}
+.hf-link:hover{text-decoration:underline}
+.breakdown{display:none;gap:4px;flex-direction:column;font-size:12px;color:var(--ink-2)}
+.mcard.show-bd .breakdown{display:flex}
+.bd-row{display:grid;grid-template-columns:70px minmax(0,1fr) 34px;gap:8px;align-items:center}
+.bd-row .bar-track{height:7px}
+.link-btn{border:0;background:none;padding:0;color:var(--muted);font-size:12px;text-decoration:underline;text-underline-offset:3px}
+.link-btn:hover{color:var(--brand-text)}
+table.list{width:100%;border-collapse:collapse;font-size:13.5px}
+table.list th{text-align:left;font-size:12px;color:var(--muted);font-weight:600;padding:10px 12px;border-bottom:1px solid var(--line-2);white-space:nowrap}
+table.list td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+table.list tr:hover td{background:var(--surface-2)}
+table.list td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.list .mid{font-weight:600;word-break:break-all}
+.table-wrap{overflow:auto;border-radius:var(--radius)}
+
+/* ───────────── Taxonomy ───────────── */
+.tax-controls{display:flex;gap:8px;flex-wrap:wrap}
+/* 金字塔（由上而下的 MECE 議題樹） */
+.pyr-tree{position:relative;margin-top:6px;padding-bottom:8px}
+.pyr-lines{position:absolute;left:0;top:0;pointer-events:none;z-index:0;overflow:visible}
+.pyr-lines .ln{fill:none;stroke:var(--line-2);stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round}
+.pyr-lines .act{stroke:var(--brand-text);stroke-width:2.4}
+.tier{position:relative;z-index:1}
+.tier.appear{animation:appear .28s ease}
+@keyframes appear{from{opacity:0}to{opacity:1}}
+.tier-row{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+.fork{position:relative;z-index:1;display:flex;justify-content:center;padding:26px 0;scroll-margin-top:84px}
+.fork-pill{max-width:min(640px,100%);background:var(--surface);border:1px solid var(--pink-3);border-radius:14px;padding:9px 16px 10px;text-align:center;box-shadow:var(--shadow-sm)}
+.fk-lvl{display:block;font:700 11px var(--font-mono);letter-spacing:1px;color:var(--brand-text);text-transform:uppercase}
+.fk-crit{display:block;font-weight:700;font-size:14px;color:var(--ink);margin-top:2px;text-wrap:balance}
+.fk-def{display:block;font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.6;text-wrap:pretty}
+.pnode{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:5px;width:clamp(150px,17%,224px);padding:12px 14px 13px;border-radius:14px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);text-align:left;transition:border-color .15s,box-shadow .15s,background .15s;-webkit-tap-highlight-color:transparent;scroll-margin-top:96px}
+button.pnode{cursor:pointer}
+button.pnode:hover{border-color:var(--pink-3);box-shadow:var(--shadow-sm)}
+.pnode.sel{background:var(--brand);border-color:var(--brand);color:var(--on-brand);box-shadow:0 10px 24px -14px rgba(74,16,34,.6)}
+.pnode.sel .p-sub{color:rgba(255,255,255,.82)}
+.pnode.sel .lvl,.pnode.sel .p-cnt{background:rgba(255,255,255,.18);color:#fff;border-color:transparent}
+.pnode.root{width:auto;min-width:min(280px,100%);align-items:center;text-align:center;padding:14px 22px}
+.pnode.root .p-name{font-family:var(--font-serif);font-size:19px}
+.pnode.lv4{background:var(--surface-2)}
+.pnode.lv4 .p-go{margin-left:auto;color:var(--brand-text);font-size:12px;font-weight:600}
+.pnode.flash{box-shadow:0 0 0 4px color-mix(in srgb,var(--brand) 30%,transparent)}
+.p-top{display:flex;gap:6px;align-items:center;width:100%}
+.p-cnt{margin-left:auto;font-size:11.5px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--pink-ink);background:var(--pink);border-radius:999px;padding:1px 8px}
+.p-name{font-weight:700;font-size:14.5px;line-height:1.35;text-wrap:balance}
+.pnode.lv1 .p-name{font-family:var(--font-serif);font-size:16.5px}
+.p-sub{font-size:11.5px;color:var(--muted);line-height:1.4}
+.pnode .hot{font-size:10.5px;color:var(--pink-ink);background:var(--pink);border-radius:999px;padding:1px 7px}
+.pyr-hint{text-align:center;color:var(--muted);font-size:13px;margin:16px 0 0}
+.pyr-crumb{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:13px;color:var(--muted);min-height:34px}
+.pyr-crumb button{border:1px solid var(--line-2);background:var(--surface);border-radius:999px;padding:4px 11px;font-size:12.5px;color:var(--ink-2)}
+.pyr-crumb button:hover{border-color:var(--pink-3);color:var(--brand-text)}
+.pyr-crumb button[aria-current="true"]{background:var(--pink);border-color:transparent;color:var(--pink-ink);font-weight:600}
+.pyr-crumb .sep{color:var(--line-2)}
+/* 共用：層級徽章與切分準則（方法論頁也使用） */
+.crit{display:inline-flex;gap:8px;align-items:flex-start;margin-top:10px;font-size:12.5px;color:var(--pink-ink);background:var(--pink-2);border:1px solid var(--pink);border-radius:10px;padding:6px 10px;line-height:1.55}
+.crit b{white-space:nowrap}
+.lvl{flex:none;display:inline-block;line-height:1.25;font:700 11px var(--font-mono);letter-spacing:.5px;padding:3px 7px;border-radius:7px;background:var(--brand);color:var(--on-brand);border:1px solid transparent}
+.lvl.lv2{background:var(--pink);color:var(--pink-ink)}
+.lvl.lv3{background:var(--surface-3);color:var(--ink-2)}
+.lvl.lv4{background:transparent;color:var(--brand-text);border-color:var(--pink-3)}
+
+/* ───────────── Method ───────────── */
+.rule-table{width:100%;border-collapse:separate;border-spacing:0;font-size:14px}
+.rule-table td{padding:14px 16px;border-top:1px solid var(--line);vertical-align:top}
+.rule-table tr:first-child td{border-top:0}
+.rule-table td:first-child{width:118px}
+.faq details{border-top:1px solid var(--line)}
+.faq details:first-child{border-top:0}
+.faq summary{list-style:none;cursor:pointer;padding:15px 18px;font-weight:600;display:flex;gap:10px;align-items:flex-start}
+.faq summary::-webkit-details-marker{display:none}
+.faq .a{padding:0 18px 16px 46px;color:var(--ink-2);font-size:14px}
+.faq .qi{flex:none;width:24px;height:24px;border-radius:7px;background:var(--pink);color:var(--pink-ink);display:grid;place-items:center;font-size:12px;font-weight:700}
+.notation{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;padding:16px}
+.notation div{font-size:13px;color:var(--ink-2)}
+.notation b{font-family:var(--font-math);font-size:15px;color:var(--brand-text);margin-right:8px}
+.two-col{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.l1card{padding:16px 18px}
+.l1card p{margin:10px 0 0;color:var(--ink-2);font-size:14px}
+.mtoggle{margin-bottom:6px}
+.l3c{display:block;font-size:12.5px;color:var(--muted);margin-top:2px}
+
+/* ───────────── Workflow ───────────── */
+.flow{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:30px;scroll-margin-top:84px}
+.flow li{position:relative;display:flex;min-width:0}
+.flow li+li::before{content:"";position:absolute;left:-21px;top:50%;width:11px;height:11px;border-top:2px solid var(--pink-3);border-right:2px solid var(--pink-3);transform:translateY(-50%) rotate(45deg)}
+.fstep{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:16px 16px 14px;border-radius:var(--radius);border:1px solid var(--line-2);background:var(--surface);transition:border-color .15s,box-shadow .15s,background .15s;-webkit-tap-highlight-color:transparent}
+.fstep:hover{border-color:var(--pink-3);box-shadow:var(--shadow-sm)}
+.fstep.on{background:var(--brand);border-color:var(--brand);color:var(--on-brand);box-shadow:var(--shadow)}
+.fs-num{font:700 28px/1 var(--font-serif);color:var(--brand-text)}
+.fstep.on .fs-num{color:#F7D9E2}
+.fs-name{font-weight:700;font-size:17px;margin-top:6px}
+.fs-en{font-size:11.5px;color:var(--muted);letter-spacing:.3px}
+.fs-q{font-size:13px;color:var(--ink-2);line-height:1.55;margin-top:8px}
+.fs-out{margin-top:auto;padding-top:12px;font-size:12px;color:var(--pink-ink)}
+.fs-out span{display:inline-block;background:var(--pink-2);border:1px solid var(--pink);border-radius:999px;padding:2px 9px}
+.fstep.on .fs-en,.fstep.on .fs-q{color:rgba(255,255,255,.84)}
+.fstep.on .fs-out span{background:rgba(255,255,255,.16);border-color:transparent;color:#fff}
+.flow-loop{position:relative;height:22px;margin:0 calc((100% - 90px) / 8);border:2px dashed var(--pink-3);border-top:0;border-radius:0 0 14px 14px}
+.flow-loop::after{content:"";position:absolute;left:-7px;top:-3px;border:6px solid transparent;border-bottom:9px solid var(--pink-3);border-top:0}
+.flow-loop-t{text-align:center;font-size:12.5px;color:var(--muted);margin:8px 0 0}
+.flow-loop-t b{color:var(--brand-text)}
+.wf-anchor{scroll-margin-top:84px}
+.flash-card{box-shadow:0 0 0 4px color-mix(in srgb,var(--brand) 28%,transparent)!important}
+.stage-head{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 22px;padding:22px 24px;margin-top:26px;background:linear-gradient(135deg,var(--surface) 55%,var(--pink-2))}
+.sh-num{font:700 64px/.9 var(--font-serif);color:var(--pink-3)}
+.sh-title{font-family:var(--font-serif);font-size:26px;margin:4px 0 8px;line-height:1.25}
+.sh-q{font-family:var(--font-serif);font-size:18px;line-height:1.55;color:var(--brand-text);margin:0 0 10px;border-left:3px solid var(--brand);padding-left:12px}
+.sh-sum{color:var(--ink-2);margin:0 0 12px;max-width:860px}
+.cmp{overflow:hidden;margin-bottom:16px}
+.cmp h3,.layers h3{margin:0;padding:16px 18px 12px;font-family:var(--font-serif);font-size:18px}
+.cmp-table{width:100%;border-collapse:collapse;font-size:14px;table-layout:fixed}
+.cmp-table th,.cmp-table td{padding:11px 16px;border-top:1px solid var(--line);vertical-align:top;text-align:left;line-height:1.6}
+.cmp-table thead th{background:var(--surface-2);font-size:13px;color:var(--brand-text);font-weight:700}
+.cmp-table thead th:first-child,.cmp-table th[scope="row"]{width:112px}
+.cmp-table th[scope="row"]{font-size:13px;color:var(--muted);font-weight:600}
+.cmp-table td+td{border-left:1px dashed var(--line)}
+.verdict{display:flex;gap:12px;align-items:flex-start;padding:14px 18px;background:var(--pink-2);border-top:1px solid var(--pink)}
+.verdict b{flex:none;font-size:12px;color:var(--on-brand);background:var(--brand);border-radius:6px;padding:2px 8px;margin-top:2px}
+.verdict p{margin:0;font-size:14px;color:var(--ink);line-height:1.7}
+.layers{margin-bottom:16px;overflow:hidden}
+.lay-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 18px;padding:0 18px 18px}
+.lay-h{font-weight:700;font-size:14px;text-align:center;padding-bottom:10px;color:var(--ink-2)}
+.lay{border-radius:12px;padding:10px 14px;border:1px solid var(--line-2);background:var(--surface-2)}
+.lay b{font-size:14.5px}
+.lay .alias{font:600 11.5px var(--font-mono);color:var(--muted);margin-left:8px}
+.lay p{margin:4px 0 0;font-size:13px;color:var(--ink-2);line-height:1.55}
+.lay.lay-mid{background:var(--pink);border-color:transparent}
+.lay.lay-app{background:var(--brand);border-color:var(--brand);color:#fff}
+.lay.lay-app .alias,.lay.lay-app p{color:rgba(255,255,255,.85)}
+.lay.ghost{border-style:dashed;background:transparent;color:var(--muted);display:grid;place-items:center;text-align:center;font-size:12.5px;line-height:1.5}
+.lay-arrow{text-align:center;color:var(--brand-text);opacity:.55;font-size:16px;font-weight:700;line-height:1;padding:4px 0}
+.qgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.qd{padding:14px 16px}
+.qn{font-family:var(--font-serif);font-weight:700;font-size:17px}
+.qe{font:600 11px var(--font-mono);color:var(--muted);margin-left:6px;letter-spacing:.3px}
+.qq{font-size:13.5px;color:var(--ink);margin:6px 0 8px}
+.qc{font-size:12.5px;color:var(--ink-2);background:var(--surface-2);border-radius:8px;padding:6px 9px}
+.route{overflow:hidden}
+.rt-row{display:grid;grid-template-columns:72px minmax(0,1.25fr) minmax(0,1fr) minmax(0,1.3fr);gap:14px;align-items:start;padding:13px 18px;border-top:1px solid var(--line)}
+.rt-row:first-child{border-top:0}
+.rt-head{font-size:12px;color:var(--muted);font-weight:600;background:var(--surface-2);padding-top:10px;padding-bottom:10px}
+.rt-type{font-weight:700;color:var(--pink-ink);background:var(--pink);border-radius:8px;padding:3px 0;text-align:center;font-size:13.5px}
+.rt-q{font-size:14px;color:var(--ink-2)}
+.rt-m{font-size:14px;font-weight:600}
+.rt-links{display:flex;flex-wrap:wrap;gap:6px}
+.chip.lk{background:var(--surface);border-color:var(--pink-3);color:var(--brand-text);font-weight:600}
+.wf-secs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.wf-sec{padding:16px 18px}
+.wf-sec h3{margin:0 0 6px;font-size:16px}
+.wf-sec p{margin:0;font-size:14px;color:var(--ink-2)}
+.wf-ex{margin-top:10px;white-space:pre-wrap;font-size:13.5px;line-height:1.75;background:var(--surface-2);border-left:3px solid var(--brand);border-radius:0 10px 10px 0;padding:9px 12px;color:var(--ink)}
+.wf-sec ul,.deliv{margin:10px 0 0;padding-left:18px;font-size:13.5px;line-height:1.7}
+.wf-sec li::marker,.deliv li::marker{color:var(--brand-text)}
+.card-h{padding:14px 18px 0;font-weight:700;font-size:14px;color:var(--ink)}
+.checklist{list-style:none;margin:0;padding:12px 18px 16px;display:flex;flex-direction:column;gap:9px}
+.checklist li{display:flex;gap:10px;font-size:14px;line-height:1.55}
+.checklist li::before{content:"✓";flex:none;width:20px;height:20px;border-radius:6px;background:color-mix(in srgb,var(--good) 14%,var(--surface));color:var(--good);display:grid;place-items:center;font-size:12px;font-weight:700;margin-top:1px}
+.pits{padding:4px 18px 12px}
+.pit{padding:10px 0;border-top:1px solid var(--line)}
+.pit:first-child{border-top:0}
+.pit b{display:block;color:var(--warn);font-size:14px}
+.pit span{color:var(--ink-2);font-size:13.5px}
+.deliv{padding:0 18px 16px 36px}
+.flow-back{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;justify-content:space-between;margin-top:16px;padding:14px 18px;border:1px dashed var(--pink-3);border-radius:14px;background:var(--pink-2);font-size:14px;color:var(--ink-2)}
+.prin{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.prin .card{padding:16px 18px}
+.prin b{font-family:var(--font-serif);font-size:16.5px;color:var(--brand-text)}
+.prin p{margin:6px 0 0;font-size:13.5px;color:var(--ink-2)}
+.stage-nav{margin-top:24px}
+
+/* ───────────── Drawer ───────────── */
+.overlay{position:fixed;inset:0;background:rgba(30,8,15,.48);opacity:0;pointer-events:none;transition:opacity .2s;z-index:60}
+.overlay.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(680px,100vw);background:var(--bg);z-index:61;transform:translateX(100%);transition:transform .28s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;box-shadow:var(--shadow-lg)}
+.drawer.open{transform:none}
+.d-head{padding:20px 24px 16px;background:linear-gradient(160deg,#5A1428,#7A1E3A 60%,#8E2748);color:#FBE3EA;position:relative}
+:root[data-theme="dark"] .d-head{background:linear-gradient(160deg,#2A0913,#4A1022 60%,#5E1830)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .d-head{background:linear-gradient(160deg,#2A0913,#4A1022 60%,#5E1830)}}
+.d-crumb{font-size:12px;color:#F2BCCB;display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding-right:44px}
+.d-crumb button{border:0;background:none;color:inherit;padding:0;font-size:12px;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(242,188,203,.4)}
+.d-title{font-family:var(--font-serif);font-size:28px;font-weight:700;color:#fff;margin:10px 0 2px;line-height:1.2}
+.d-sub{color:#F7D3DD;font-size:14px}
+.d-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.d-tags .chip{background:rgba(251,227,234,.14);border-color:rgba(251,227,234,.2);color:#FBE3EA}
+.d-close{position:absolute;top:16px;right:16px;width:38px;height:38px;border-radius:999px;border:1px solid rgba(251,227,234,.25);background:rgba(251,227,234,.1);color:#fff;display:grid;place-items:center}
+.d-close:hover{background:rgba(251,227,234,.2)}
+.d-body{overflow:auto;padding:8px 24px 40px;flex:1}
+.d-sec{margin-top:22px}
+.d-sec h4{display:flex;align-items:center;gap:8px;font-size:13px;letter-spacing:1px;color:var(--brand-text);margin:0 0 10px;font-weight:700}
+.d-sec h4 .n{font:700 11px var(--font-mono);background:var(--pink);color:var(--pink-ink);border-radius:6px;padding:2px 6px;letter-spacing:0}
+.d-sec p{margin:0;color:var(--ink);font-size:15px;line-height:1.8}
+.formula{font-size:15px;line-height:1.7;background:var(--surface);border:1px solid var(--pink);border-radius:14px;padding:12px 18px;color:var(--ink)}
+.formula .fl{padding:5px 0;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch}
+.formula .katex{font-size:1.12em;white-space:nowrap}
+.katex{font-size:1.06em}
+.cx .cv .katex{font-size:1em}
+.cx{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.cx > div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:11px 13px}
+.cx .ck{font-size:11.5px;color:var(--muted);font-weight:600;letter-spacing:.5px}
+.cx .cv{font-size:14px;margin-top:3px;line-height:1.6}
+.pc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.pc > div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:13px 15px}
+.pc h5{margin:0 0 8px;font-size:13px;color:var(--ink-2)}
+.pc ul{margin:0;padding-left:18px;font-size:14px;line-height:1.7}
+.pc li::marker{color:var(--brand-text)}
+.pc .con{background:color-mix(in srgb,var(--warn) 5%,var(--surface))}
+.pc .ok{background:color-mix(in srgb,var(--good) 5%,var(--surface))}
+.tools{display:flex;flex-direction:column;gap:8px}
+.tl{display:flex;gap:10px;align-items:baseline;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:9px 13px;font-size:14px;line-height:1.6}
+.tl .tk{flex:none;font:700 11.5px var(--font-mono);color:var(--brand-text);background:var(--pink-2);border-radius:6px;padding:2px 7px}
+.hp-table{width:100%;border-collapse:collapse;font-size:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.hp-table td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top;line-height:1.6}
+.hp-table tr:first-child td{border-top:0}
+.hp-table td:first-child{width:36%;font-family:var(--font-mono);font-size:12.8px;color:var(--brand-text);font-weight:600;word-break:break-word}
+.note-box{background:var(--pink-2);border:1px solid var(--pink);border-radius:14px;padding:12px 15px;font-size:14px;color:var(--ink-2)}
+.sib{display:flex;flex-wrap:wrap;gap:8px}
+.d-nav{display:flex;justify-content:space-between;gap:10px;margin-top:28px}
+
+/* ───────────── Mobile ───────────── */
+.tabbar{display:none}
+@media (max-width: 1080px){
+  .stat-row{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .dist{grid-template-columns:1fr}
+  .qgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fs-q{display:none}
+}
+@media (max-width: 860px){
+  .app{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .topbar{padding:10px 16px;gap:10px}
+  .topbar .mobile-brand{display:block}
+  .search input{height:40px;padding-right:14px}
+  .search kbd{display:none}
+  .content{padding:20px 16px calc(96px + env(safe-area-inset-bottom))}
+  .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px 8px calc(6px + env(safe-area-inset-bottom))}
+  .tabbar button{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;color:var(--muted);padding:6px 0;border-radius:12px}
+  .tabbar button[aria-current="page"]{color:var(--brand-text);background:var(--pink-2);font-weight:600}
+  .grid-cards{grid-template-columns:1fr}
+  .two-col,.pc,.cx{grid-template-columns:1fr}
+  .formula{padding:10px 14px}
+  .formula .katex{font-size:1.02em}
+  .drawer{top:auto;height:92vh;width:100vw;border-radius:22px 22px 0 0;transform:translateY(100%)}
+  .d-head{border-radius:22px 22px 0 0}
+  .drawer.open{transform:none}
+  .bar-row{grid-template-columns:96px minmax(0,1fr) 28px}
+  table.list .hide-sm{display:none}
+  .s-panel{position:fixed;top:62px;left:10px;right:10px}
+  .hero{align-items:flex-start}
+}
+@media (max-width: 420px){
+  .topbar .mobile-brand{display:none}
+  .metrics{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:10px}
+}
+@media (max-width: 860px){
+  .topbar{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--bg)}
+  .tabbar{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--surface)}
+  .mcard:hover{transform:none}
+  .pnode{width:calc(50% - 6px);padding:11px 12px}
+  .pnode.root{width:auto}
+  .tier-row{gap:10px 12px}
+  .fork{padding:22px 0}
+  .fork-pill{padding:8px 12px}
+  .tabbar{padding-left:4px;padding-right:4px}
+  .tabbar button{font-size:10.5px;white-space:nowrap}
+  /* 分析流程：手機改為精簡步驟條 */
+  .flow{gap:8px}
+  .flow li+li::before{display:none}
+  .fstep{align-items:center;text-align:center;padding:10px 4px 9px;border-radius:12px}
+  .fs-num{font-size:18px}
+  .fs-name{font-size:12.5px;margin-top:4px;line-height:1.3;word-break:keep-all}
+  .fs-en,.fs-q,.fs-out{display:none}
+  .flow-loop{margin:0 calc((100% - 24px) / 8);height:16px}
+  .stage-head{grid-template-columns:1fr;padding:18px 18px 16px;margin-top:18px}
+  .sh-num{font-size:40px}
+  .sh-title{font-size:22px}
+  .sh-q{font-size:16px}
+  .cmp h3,.layers h3{font-size:16.5px;padding:14px 14px 10px}
+  .cmp-table,.cmp-table tbody{display:block}
+  .cmp-table thead{display:none}
+  .cmp-table tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-top:1px solid var(--line)}
+  .cmp-table th[scope="row"]{grid-column:1/-1;width:auto;padding:10px 14px 2px;border:0;color:var(--ink);font-weight:700}
+  .cmp-table td{border:0;padding:4px 12px 12px 14px;font-size:13.5px;line-height:1.55}
+  .cmp-table td+td{border-left:1px dashed var(--line-2)}
+  .cmp-table td::before{content:attr(data-col);display:block;font-size:11px;font-weight:700;color:var(--brand-text);margin-bottom:2px}
+  .verdict{flex-direction:column;gap:6px;padding:12px 14px}
+  .lay-grid{gap:0 10px;padding:0 12px 14px}
+  .lay{padding:8px 10px}
+  .lay .alias{display:block;margin-left:0}
+  .lay p{font-size:12px}
+  .qgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .qd{padding:12px}
+  .rt-row{grid-template-columns:56px minmax(0,1fr);gap:6px 12px;padding:12px 14px}
+  .rt-head{display:none}
+  .rt-type{grid-row:span 3}
+  .rt-q,.rt-m,.rt-links{grid-column:2}
+  .wf-secs,.prin{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media print{.sidebar,.topbar,.tabbar,.overlay,.drawer{display:none!important}.app{display:block}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" aria-label="主選單">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F7D9E2" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.3" fill="#F7D9E2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+      </div>
+      <div><div class="brand-name">Model Learning</div><div class="brand-sub">DS 知識庫 · 模型雷達</div></div>
+    </div>
+    <nav class="nav">
+      <button class="nav-btn" data-view="radar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12 19 5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg><span>每日 HF 模型雷達<span class="nav-en">Daily AI Radar</span></span></button>
+      <button class="nav-btn" data-view="workflow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="5.5" r="2.5"/><circle cx="19" cy="18.5" r="2.5"/><path d="M7.5 5.5H15a3.25 3.25 0 0 1 0 6.5H9a3.25 3.25 0 0 0 0 6.5h7.5"/></svg><span>資料分析流程<span class="nav-en">Analytics Workflow</span></span></button>
+      <button class="nav-btn" data-view="taxonomy"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="5" rx="1.2"/><rect x="2.5" y="16.5" width="6" height="5" rx="1.2"/><rect x="15.5" y="16.5" width="6" height="5" rx="1.2"/><path d="M12 7.5v4M5.5 16.5v-2.5h13v2.5M12 11.5v2.5"/></svg><span>ML 演算法知識樹<span class="nav-en">Algorithm Taxonomy</span></span></button>
+      <button class="nav-btn" data-view="stats"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 3.5v17h17"/><path d="M6.5 17 19 6.5"/><circle cx="8" cy="11" r="1.2" fill="currentColor"/><circle cx="12" cy="14.5" r="1.2" fill="currentColor"/><circle cx="14" cy="8.5" r="1.2" fill="currentColor"/><circle cx="17.5" cy="13" r="1.2" fill="currentColor"/></svg><span>統計 × 因果知識樹<span class="nav-en">Stats &amp; Causal Inference</span></span></button>
+      <button class="nav-btn" data-view="method"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5M8 13h8M8 17h5"/></svg><span>方法論與切分準則<span class="nav-en">MECE Methodology</span></span></button>
+    </nav>
+    <div class="side-foot" id="sideFoot"></div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="mobile-brand">Model Learning</div>
+      <div class="search" role="search">
+        <svg class="s-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <label class="sr-only" for="q">搜尋演算法、統計方法、分析流程與今日模型</label>
+        <input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="搜尋演算法、統計方法、分析流程或今日模型…（如：XGBoost、DiD、ETL）" aria-controls="sPanel" aria-expanded="false">
+        <kbd>⌘ K</kbd>
+        <div class="s-panel" id="sPanel" role="listbox" aria-label="搜尋結果"></div>
+      </div>
+      <button class="icon-btn" id="themeBtn" title="切換深色／淺色模式" aria-label="切換深色／淺色模式">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </header>
+
+    <main class="content">
+      <!-- ─────────── RADAR ─────────── -->
+      <section class="view" id="view-radar" aria-labelledby="radarTitle">
+        <div class="hero">
+          <div>
+            <div class="eyebrow">Daily AI Radar · Hugging Face</div>
+            <h1 class="title" id="radarTitle">今日有趣模型雷達</h1>
+            <p class="lede">從 Hugging Face 熱門榜抓取，先過濾掉量化／轉檔等衍生版本，再依熱度動能、按讚速度、新鮮度、原創性與任務稀有度五個維度評分，挑出今天最值得一看的模型。</p>
+          </div>
+          <div class="ctrl">
+            <span class="pill" id="freshPill"><span class="dot"></span><span>尚無資料</span></span>
+            <button class="btn primary" id="refreshBtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-2.6-6.4M21 4v5h-5"/></svg><span>更新資料</span></button>
+          </div>
+        </div>
+        <div id="radarBody"></div>
+      </section>
+
+      <!-- ─────────── WORKFLOW ─────────── -->
+      <section class="view" id="view-workflow" aria-labelledby="wfTitle">
+        <div class="hero">
+          <div>
+            <div class="eyebrow">Analytics Workflow · 4 Stages</div>
+            <h1 class="title" id="wfTitle">資料分析流程知識庫</h1>
+            <p class="lede" id="wfLede"></p>
+          </div>
+        </div>
+        <div id="wfFlow"></div>
+        <div id="wfBody"></div>
+      </section>
+
+      <!-- ─────────── ML TAXONOMY ─────────── -->
+      <section class="view" id="view-taxonomy" aria-labelledby="taxTitle">
+        <div class="hero">
+          <div>
+            <div class="eyebrow">Algorithm Taxonomy · 4 Levels</div>
+            <h1 class="title" id="taxTitle">ML 演算法知識樹</h1>
+            <p class="lede">由上而下的 MECE 金字塔：每個分岔只用一個切分準則。點一個節點，就會在下方展開它的下一層。</p>
+          </div>
+          <button class="btn" data-goto="method" data-mt="ml">切分準則與邊界案例 →</button>
+        </div>
+        <div id="taxOverview"></div>
+        <div id="taxTree" class="pyr-tree"></div>
+      </section>
+
+      <!-- ─────────── STATS × CAUSAL TAXONOMY ─────────── -->
+      <section class="view" id="view-stats" aria-labelledby="statTitle">
+        <div class="hero">
+          <div>
+            <div class="eyebrow">Statistical &amp; Causal Inference · 4 Levels</div>
+            <h1 class="title" id="statTitle">統計推論 × 因果推論知識樹</h1>
+            <p class="lede">第一層把問題分成兩類：「是多少、是不是真的、和什麼有關」（統計推論），以及「改變它會怎樣」（因果推論）。每個分岔只用一個切分準則，點節點往下展開。</p>
+          </div>
+          <button class="btn" data-goto="method" data-mt="stat">切分準則與邊界案例 →</button>
+        </div>
+        <div id="statOverview"></div>
+        <div id="statTree" class="pyr-tree"></div>
+      </section>
+
+      <!-- ─────────── METHOD ─────────── -->
+      <section class="view" id="view-method" aria-labelledby="methodTitle">
+        <div class="hero">
+          <div>
+            <div class="eyebrow">MECE Methodology</div>
+            <h1 class="title" id="methodTitle">方法論：每一層怎麼切、為什麼這樣切</h1>
+            <p class="lede">MECE（Mutually Exclusive, Collectively Exhaustive）的關鍵是「每個節點只用一個切分準則」。切換下方的知識樹，查看四層的準則、容易混淆的邊界案例，以及跨分支的組合方法。</p>
+          </div>
+        </div>
+        <div id="methodBody"></div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<nav class="tabbar" aria-label="主選單（行動版）">
+  <button data-view="radar"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12 19 5"/></svg>雷達</button>
+  <button data-view="workflow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="5.5" r="2.5"/><circle cx="19" cy="18.5" r="2.5"/><path d="M7.5 5.5H15a3.25 3.25 0 0 1 0 6.5H9a3.25 3.25 0 0 0 0 6.5h7.5"/></svg>分析流程</button>
+  <button data-view="taxonomy"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="5" rx="1.2"/><rect x="2.5" y="16.5" width="6" height="5" rx="1.2"/><rect x="15.5" y="16.5" width="6" height="5" rx="1.2"/><path d="M12 7.5v4M5.5 16.5v-2.5h13v2.5"/></svg>ML 樹</button>
+  <button data-view="stats"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 3.5v17h17"/><path d="M6.5 17 19 6.5"/><circle cx="8" cy="11" r="1.2" fill="currentColor"/><circle cx="12" cy="14.5" r="1.2" fill="currentColor"/><circle cx="14" cy="8.5" r="1.2" fill="currentColor"/><circle cx="17.5" cy="13" r="1.2" fill="currentColor"/></svg>統計因果</button>
+  <button data-view="method"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5M8 13h8M8 17h5"/></svg>方法論</button>
+</nav>
+
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dTitle" aria-hidden="true">
+  <div class="d-head">
+    <div class="d-crumb" id="dCrumb"></div>
+    <button class="d-close" id="dClose" aria-label="關閉"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div class="d-title" id="dTitle"></div>
+    <div class="d-sub" id="dSub"></div>
+    <div class="d-tags" id="dTags"></div>
+  </div>
+  <div class="d-body" id="dBody"></div>
+</aside>
+
+<noscript><div style="padding:24px;font-family:sans-serif">此儀表板需要啟用 JavaScript。</div></noscript>
+
+<!-- MECE 演算法資料（由 src/build.py 寫入；也可直接在此編輯） -->
+<script id="taxonomy-data" type="application/json">/*__TAXONOMY__*/</script>
+<script id="stat-data" type="application/json">/*__STAT_TAXONOMY__*/</script>
+<script id="workflow-data" type="application/json">/*__WORKFLOW__*/</script>
+<!-- 每日模型資料：由 fetch_hf.py 產生；檔案不存在時頁面仍可正常運作 -->
+<script src="daily_models.js"></script>
+<!-- KaTeX（MIT 授權）：把資料中的 $…$ 渲染成數學公式；由 build.py 從 src/vendor/katex 內嵌 -->
+<script>/*__KATEX_JS__*/</script>
+<script>
+"use strict";
+(function(){
+/* ═════════════════════════ 工具 ═════════════════════════ */
+const TAX = JSON.parse(document.getElementById("taxonomy-data").textContent);
+const STAT = JSON.parse(document.getElementById("stat-data").textContent);
+const WF = JSON.parse(document.getElementById("workflow-data").textContent);
+const $ = (s, el=document) => el.querySelector(s);
+const $$ = (s, el=document) => Array.from(el.querySelectorAll(s));
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const nfCompact = new Intl.NumberFormat("zh-TW", {notation:"compact", maximumFractionDigits:1});
+const fmtN = n => (n == null || isNaN(n)) ? "—" : (Math.abs(n) >= 10000 ? nfCompact.format(n) : Number(n).toLocaleString("zh-TW"));
+const store = { get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch(e){} } };
+function relTime(iso){
+  if(!iso) return "—";
+  const t = new Date(iso).getTime(); if(isNaN(t)) return "—";
+  const m = (Date.now() - t) / 60000;
+  if (m < 1) return "剛剛"; if (m < 60) return Math.round(m) + " 分鐘前";
+  const h = m / 60; if (h < 24) return Math.round(h) + " 小時前";
+  const d = h / 24; if (d < 30) return Math.round(d) + " 天前";
+  return Math.round(d / 30) + " 個月前";
+}
+// 以瀏覽者所在時區顯示資料時間（雲端排程在 UTC 時區執行，generated_at_local 會是 UTC）
+function fmtLocal(iso){
+  const t = new Date(iso); if (!iso || isNaN(t)) return "";
+  const p = n => String(n).padStart(2, "0");
+  return `${t.getFullYear()}-${p(t.getMonth()+1)}-${p(t.getDate())} ${p(t.getHours())}:${p(t.getMinutes())}`;
+}
+function ageLabel(days){
+  if (days == null) return "—";
+  if (days < 1) return Math.max(1, Math.round(days*24)) + " 小時";
+  if (days < 60) return Math.round(days) + " 天";
+  return Math.round(days/30) + " 個月";
+}
+const norm = s => String(s || "").toLowerCase().normalize("NFKC");
+// 網址 hash 只是書籤便利；在受限環境（如沙盒 iframe）寫入失敗時直接略過
+function setHash(h){ try { history.replaceState(null, "", "#" + h); } catch(e){} }
+/* 數學：資料中以 $…$ 包住的片段用 KaTeX 渲染；其餘文字照常跳脫。big=true 時以 \displaystyle 排版（公式框）。 */
+const TEX_CACHE = new Map();
+function texHtml(src, big){
+  const key = (big ? "D:" : "i:") + src;
+  if (TEX_CACHE.has(key)) return TEX_CACHE.get(key);
+  let out;
+  try { out = window.katex ? katex.renderToString((big ? "\\displaystyle " : "") + src, {throwOnError:false, strict:"ignore"}) : `<code>${esc(src)}</code>`; }
+  catch(e){ out = `<code>${esc(src)}</code>`; }
+  TEX_CACHE.set(key, out); return out;
+}
+function rich(s, big=false){
+  const str = String(s ?? "");
+  if (str.indexOf("$") < 0) return esc(str);
+  return str.split("$").map((p, i) => i % 2 ? texHtml(p, big) : esc(p)).join("");
+}
+const formulaHtml = s => String(s ?? "").split("\n").map(line => `<div class="fl">${rich(line, true)}</div>`).join("");
+const plainTex = s => String(s ?? "").replace(/\\(?:text|mathrm|texttt|operatorname\*?|mathbb|mathcal)\{([^}]*)\}/g, " $1 ").replace(/\\[a-zA-Z]+/g, " ").replace(/[$\\{}_^]/g, " ");
+
+/* ═════════════════════════ 知識樹索引 ═════════════════════════ */
+/* 兩棵知識樹共用一個索引：ml = 機器學習演算法、stat = 統計推論 × 因果推論（id 全域唯一，由 build.py 檢查） */
+const TREES = { ml: TAX, stat: STAT };
+const TREE_VIEW = { ml: "taxonomy", stat: "stats" };
+const NODES = {};                      // id → {node, level, parents:[...], tree}
+const LEAVES_BY = { ml: [], stat: [] }; // 依序
+for (const [key, T] of Object.entries(TREES)){
+  T.children.forEach(l1 => {
+    NODES[l1.id] = {node:l1, level:1, parents:[], tree:key};
+    l1.children.forEach(l2 => {
+      NODES[l2.id] = {node:l2, level:2, parents:[l1], tree:key};
+      l2.children.forEach(l3 => {
+        NODES[l3.id] = {node:l3, level:3, parents:[l1,l2], tree:key};
+        l3.leaves.forEach(lf => { NODES[lf.id] = {node:lf, level:4, parents:[l1,l2,l3], tree:key}; LEAVES_BY[key].push(lf); });
+      });
+    });
+  });
+}
+const countLevel = (key, lvl) => Object.values(NODES).filter(n => n.tree === key && n.level === lvl).length;
+const shortName = n => { const m = /^(.*?)（(.*?)）\s*$/.exec(n.name); if (!m) return n.name; return /^[A-Za-z0-9\- ]{2,12}$/.test(m[2]) ? m[2] : m[1]; };
+const leafCount = n => n.leaves ? n.leaves.length : (n.children || []).reduce((a,c) => a + leafCount(c), 0);
+
+/* HF pipeline_tag → 知識樹 L4（讓雷達與知識庫互相連結） */
+const TASK2ALGO = {
+  "text-generation":["gpt","transformer"], "text2text-generation":["transformer"], "image-text-to-text":["gpt","vit","clip"],
+  "video-text-to-text":["gpt","vit"], "any-to-any":["gpt","dit"], "visual-question-answering":["gpt","vit"],
+  "document-question-answering":["gpt","vit"], "image-to-text":["gpt","vit"],
+  "text-classification":["bert"], "token-classification":["bert","crf"], "question-answering":["bert"], "fill-mask":["bert"],
+  "zero-shot-classification":["bert"], "summarization":["transformer"], "translation":["transformer"],
+  "feature-extraction":["simclr","bert"], "sentence-similarity":["simclr","bert"], "text-ranking":["bert"],
+  "zero-shot-image-classification":["clip"], "zero-shot-object-detection":["clip","yolo"], "visual-document-retrieval":["clip"],
+  "image-classification":["vit","resnet"], "object-detection":["yolo"], "image-segmentation":["unet"], "mask-generation":["unet","vit"],
+  "depth-estimation":["dinov2"], "image-feature-extraction":["dinov2","mae"], "keypoint-detection":["resnet"], "video-classification":["vit"],
+  "text-to-image":["ldm","dit","flowmatching"], "image-to-image":["ldm"], "unconditional-image-generation":["ddpm","gan"],
+  "text-to-video":["dit","flowmatching"], "image-to-video":["dit","flowmatching"], "image-text-to-video":["dit","flowmatching"],
+  "video-to-video":["dit"], "text-to-3d":["dit"], "image-to-3d":["dit"],
+  "text-to-speech":["gpt","flowmatching"], "text-to-audio":["gpt","vqvae","ldm"], "automatic-speech-recognition":["transformer"],
+  "audio-to-audio":["transformer"], "audio-classification":["transformer"], "voice-activity-detection":["transformer"],
+  "reinforcement-learning":["ppo","dqn"], "robotics":["ppo","dreamerv3"],
+  "tabular-classification":["xgboost","tabpfn"], "tabular-regression":["xgboost","tabpfn"],
+  "time-series-forecasting":["tft","transformer"], "graph-ml":["gcn","gat"],
+};
+function algosForModel(m){
+  const out = new Set(TASK2ALGO[m.pipeline_tag] || []);
+  const tags = (m.tags || []).map(norm).join(" ") + " " + norm(m.id);
+  if (/\bmamba\b|ssm/.test(tags)) out.add("mamba");
+  if (/\bgrpo\b/.test(tags)) out.add("grpo");
+  if (/\bdpo\b/.test(tags)) out.add("dpo");
+  if (/\bppo\b/.test(tags)) out.add("ppo");
+  if (m.library === "diffusers" && !out.size) out.add("ldm");
+  return [...out].filter(id => NODES[id] && NODES[id].tree === "ml");
+}
+
+/* ═════════════════════════ 狀態 ═════════════════════════ */
+const state = {
+  view: "radar", data: null, source: "none", server: false, refreshing: false,
+  group: "all", sort: "score", showQuant: false, listMode: "picks",
+  stage: "frame", mtree: "ml",
+};
+
+/* ═════════════════════════ 資料載入 ═════════════════════════ */
+/* 公開網站模式：從非本機網址（例如 GitHub Pages）開啟時，資料由雲端排程每天更新，頁面上不提供手動更新 */
+const HOSTED = /^https?:$/.test(location.protocol) && !/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+async function detectServer(){
+  if (!/^https?:$/.test(location.protocol) || HOSTED) return false;
+  try { const r = await fetch("api/status", {cache:"no-store"}); if (!r.ok) return false; const j = await r.json(); return !!j.server; }
+  catch(e){ return false; }
+}
+async function loadData(){
+  state.server = await detectServer();
+  if (state.server){
+    try { const r = await fetch("api/models", {cache:"no-store"}); if (r.ok){ state.data = await r.json(); state.source = "server"; } } catch(e){}
+  } else if (/^https?:$/.test(location.protocol)){
+    try { const r = await fetch("daily_models.json", {cache:"no-store"}); if (r.ok){ state.data = await r.json(); state.source = "json"; } } catch(e){}
+  }
+  if (!state.data && window.DAILY_MODELS){ state.data = window.DAILY_MODELS; state.source = "js"; }
+  if (state.data && !Array.isArray(state.data.models)) state.data = null;
+  renderRadar(); renderSideFoot();
+  if (state.server && isStale()) refresh(false);
+}
+function isStale(){
+  const d = state.data; if (!d) return true;
+  const today = new Date(); const local = today.getFullYear()+"-"+String(today.getMonth()+1).padStart(2,"0")+"-"+String(today.getDate()).padStart(2,"0");
+  if (d.snapshot_date !== local) return true;
+  return (Date.now() - new Date(d.generated_at).getTime()) > 3*3600*1000;
+}
+async function refresh(force){
+  if (!state.server){ showStaticHelp(); return; }
+  if (state.refreshing) return;
+  state.refreshing = true; updateFresh();
+  try {
+    const r = await fetch("api/refresh" + (force ? "?force=1" : ""), {method:"POST"});
+    const j = await r.json();
+    if (j.payload){ state.data = j.payload; state.source = "server"; }
+    if (!j.ok) toast("更新失敗：" + (j.error || "未知錯誤") + "；已保留上一次的資料。");
+    else if (j.skipped && force) toast(j.message || "資料剛更新過，已使用快取。");
+  } catch(e){ toast("無法連線到本機伺服器：" + e.message); }
+  state.refreshing = false; renderRadar(); renderSideFoot();
+}
+function showStaticHelp(){
+  openInfo("如何更新今日資料", `
+    <p>目前是以「靜態檔案」方式開啟（沒有後端伺服器），瀏覽器本身無法執行 Python。</p>
+    <p style="margin-top:10px"><b>方案 B：</b>在 Finder 中對 <code>run.command</code> 按兩下，它會自動抓取最新資料並重新打開這個頁面。</p>
+    <pre class="cmd">python3 fetch_hf.py &amp;&amp; open index.html</pre>
+    <p><b>方案 A：</b>對 <code>start_server.command</code> 按兩下（或執行 <code>python3 server.py</code>），之後每次打開網頁都會自動在背景更新，也能直接按「更新資料」。</p>`);
+}
+
+/* ═════════════════════════ 路由 ═════════════════════════ */
+const VIEWS = ["radar","workflow","taxonomy","stats","method"];
+function setView(v, push=true){
+  if (!VIEWS.includes(v)) v = "radar";
+  const prev = state.view;
+  state.view = v;
+  $$(".view").forEach(s => s.classList.toggle("active", s.id === "view-" + v));
+  $$("[data-view]").forEach(b => b.setAttribute("aria-current", b.dataset.view === v ? "page" : "false"));
+  if (push && location.hash.replace("#","").split("/")[0] !== v) setHash(v);
+  if (v === "taxonomy") requestAnimationFrame(PYR.ml.draw);
+  if (v === "stats") requestAnimationFrame(PYR.stat.draw);
+  // 從某棵知識樹前往方法論時，自動切到那棵樹的準則
+  if (v === "method" && (prev === "taxonomy" || prev === "stats")){ state.mtree = prev === "stats" ? "stat" : "ml"; renderMethod(); }
+  window.scrollTo({top:0, behavior:"auto"});
+}
+function route(){
+  const h = decodeURIComponent(location.hash.replace(/^#/, ""));
+  if (h.startsWith("algo/")){ const id = h.slice(5); if (NODES[id] && NODES[id].level === 4){ if (!$(".view.active")) setView(TREE_VIEW[NODES[id].tree], false); openAlgo(id, false); return; } }
+  if (h.startsWith("node/")){ const id = h.slice(5); if (NODES[id]){ closeDrawer(false); setView(TREE_VIEW[NODES[id].tree], false); PYR[NODES[id].tree].focus(id); return; } }
+  if (h.startsWith("flow/")){ closeDrawer(false); state.stage = h.slice(5); renderWorkflow(); setView("workflow", false); return; }
+  closeDrawer(false);
+  setView(h || store.get("ml.view") || "radar", false);
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-view],[data-goto]"); if (!b) return;
+  const v = b.dataset.view || b.dataset.goto; store.set("ml.view", v); closeDrawer(false); setView(v);
+  if (b.dataset.mt){ state.mtree = b.dataset.mt; renderMethod(); }
+});
+function goNode(id){
+  const rec = NODES[id]; if (!rec) return;
+  closeDrawer(false); setView(TREE_VIEW[rec.tree], false); setHash("node/" + id); PYR[rec.tree].focus(id);
+}
+function goFlow(stage, anchor){
+  closeDrawer(false); state.stage = stage; renderWorkflow(); setView("workflow", false); setHash("flow/" + stage);
+  if (anchor) setTimeout(() => {
+    const el = document.getElementById(anchor); if (!el) return;
+    el.scrollIntoView({behavior:"smooth", block:"start"}); el.classList.add("flash-card"); setTimeout(() => el.classList.remove("flash-card"), 1600);
+  }, 60);
+}
+window.addEventListener("hashchange", route);
+
+/* ═════════════════════════ 雷達 ═════════════════════════ */
+function updateFresh(){
+  const p = $("#freshPill"), btn = $("#refreshBtn"), d = state.data;
+  p.classList.toggle("live", state.refreshing);
+  if (state.refreshing){ p.innerHTML = `<span class="dot"></span><span>正在抓取最新資料…</span>`; }
+  else if (!d){ p.innerHTML = `<span class="dot"></span><span>尚無資料</span>`; }
+  else { p.innerHTML = `<span class="dot"></span><span>資料時間 ${esc(fmtLocal(d.generated_at) || d.generated_at_local || "")}（${esc(relTime(d.generated_at))}）${HOSTED && !d.demo ? " · 每天早上自動更新" : ""}</span>`; }
+  btn.hidden = HOSTED && !state.server;
+  btn.disabled = state.refreshing;
+  btn.title = state.server ? "立即重新抓取 Hugging Face" : "靜態模式：查看更新方式";
+}
+function scoreRing(score){
+  const r = 22, c = 2*Math.PI*r, v = Math.max(0, Math.min(100, score||0));
+  return `<div class="score" title="有趣度分數 ${v}/100"><svg width="52" height="52" viewBox="0 0 52 52" aria-hidden="true">
+    <circle cx="26" cy="26" r="${r}" fill="none" stroke="var(--surface-3)" stroke-width="5"/>
+    <circle cx="26" cy="26" r="${r}" fill="none" stroke="var(--brand)" stroke-width="5" stroke-linecap="round" stroke-dasharray="${(c*v/100).toFixed(1)} ${c.toFixed(1)}"/></svg>
+    <div class="sv">${Math.round(v)}</div><div class="sl">有趣度</div></div>`;
+}
+const BD_LABEL = {momentum:"熱度動能", velocity:"按讚速度", recency:"新鮮度", originality:"原創性", rarity:"任務稀有度"};
+function modelCard(m, i){
+  const algos = algosForModel(m);
+  const rankNum = m.pick_rank || m.rank_trending;
+  const badges = [];
+  badges.push(`<span class="chip task">${esc(m.task_zh || "未標註任務")}</span>`);
+  if (m.derivative && m.derivative !== "original") badges.push(`<span class="chip warn">${esc(m.derivative_zh)}</span>`);
+  if (m.is_new_entry) badges.push(`<span class="chip good">今日新進榜</span>`);
+  if (m.params_b) badges.push(`<span class="chip">${esc(m.params_b)}B 參數${m.active_params_b ? "（啟用 "+esc(m.active_params_b)+"B）" : ""}</span>`);
+  if (m.library) badges.push(`<span class="chip">${esc(m.library)}</span>`);
+  const bd = m.score_breakdown || {};
+  return `<article class="card mcard" data-id="${esc(m.id)}">
+    <div class="mcard-head">
+      <div class="rank ${m.pick_rank && m.pick_rank <= 3 ? "top" : ""}" title="${m.pick_rank ? "今日精選第 " + m.pick_rank + " 名" : "熱門榜第 " + m.rank_trending + " 名"}">${rankNum}</div>
+      <div style="min-width:0">
+        <a class="mname" href="${esc(m.url)}" target="_blank" rel="noopener noreferrer">${esc(m.name)}</a>
+        <div class="mauthor">${esc(m.author_fullname || m.author)} · 熱門榜 #${esc(m.rank_trending)}${m.rank_change ? (m.rank_change > 0 ? " ▲" + m.rank_change : " ▼" + (-m.rank_change)) : ""}</div>
+      </div>
+      ${scoreRing(m.score)}
+    </div>
+    <div class="chips">${badges.join("")}</div>
+    <div class="metrics">
+      <div class="metric"><div class="mv">${fmtN(m.likes)}</div><div class="mk">❤ 按讚</div></div>
+      <div class="metric"><div class="mv">${fmtN(m.downloads)}</div><div class="mk">⬇ 下載</div></div>
+      <div class="metric"><div class="mv">${fmtN(Math.round(m.trending_score))}</div><div class="mk">🔥 熱度</div></div>
+      <div class="metric"><div class="mv">${esc(ageLabel(m.age_days))}</div><div class="mk">⏱ 上架</div></div>
+    </div>
+    ${m.reasons && m.reasons.length ? `<ul class="reasons">${m.reasons.map(r => `<li>${esc(r)}</li>`).join("")}</ul>` : ""}
+    <div class="breakdown" aria-label="分數組成">${Object.keys(BD_LABEL).map(k => `<div class="bd-row"><span>${BD_LABEL[k]}</span><div class="bar-track"><div class="bar-fill" style="width:${Math.round((bd[k]||0)*100)}%"></div></div><span class="muted" style="text-align:right">${Math.round((bd[k]||0)*100)}</span></div>`).join("")}</div>
+    <div class="mfoot">
+      <div class="rel">${algos.length ? `對應演算法 ${algos.map(a => `<button class="chip" data-algo="${a}" title="${esc(NODES[a].node.name)}">${esc(shortName(NODES[a].node))}</button>`).join("")}` : `<button class="link-btn" data-bd>分數組成</button>`}</div>
+      <div style="display:flex;gap:12px;align-items:center">${algos.length ? `<button class="link-btn" data-bd>分數組成</button>` : ""}<a class="hf-link" href="${esc(m.url)}" target="_blank" rel="noopener noreferrer">在 HF 開啟 ↗</a></div>
+    </div>
+  </article>`;
+}
+function renderRadar(){
+  updateFresh();
+  const body = $("#radarBody"), d = state.data;
+  if (!d){
+    body.innerHTML = HOSTED ? `<div class="card empty">
+      <div style="font-size:40px">📡</div><h3>今日資料準備中</h3>
+      <p class="muted" style="max-width:560px;margin:0 auto">網站每天早上會自動抓取 Hugging Face 熱門榜並更新，稍後再回來看看。知識庫的其他頁面現在就能使用。</p>
+      <div style="margin-top:14px"><button class="btn" data-goto="workflow">先看資料分析流程 →</button></div></div>` : `<div class="card empty">
+      <div style="font-size:40px">📡</div><h3>還沒有今日資料</h3>
+      <p class="muted" style="max-width:560px;margin:0 auto">雷達資料由 <code>fetch_hf.py</code> 抓取後產生。第一次使用，請在 Mac 上對資料夾中的 <b>run.command</b> 按兩下，或在終端機執行：</p>
+      <pre class="cmd" style="max-width:560px;margin:14px auto">python3 fetch_hf.py</pre>
+      <p class="muted" style="font-size:13px">完成後重新整理此頁即可。演算法知識樹不需要網路，現在就能使用。</p>
+      <div style="margin-top:14px"><button class="btn" data-goto="taxonomy">先看演算法知識樹 →</button></div></div>`;
+    return;
+  }
+  const st = d.stats || {}, models = d.models || [];
+  const picks = new Set(d.picks || []);
+  const newCount = models.filter(m => m.is_new_entry).length;
+  const groups = {};
+  models.forEach(m => { if (state.showQuant || m.derivative !== "quantized"){ groups[m.task_group] = groups[m.task_group] || {n:0, zh:m.task_group_zh}; groups[m.task_group].n++; } });
+  const taskCounts = Object.entries(st.task_counts || {}).slice(0, 8);
+  const maxTask = Math.max(1, ...taskCounts.map(t => t[1]));
+  const W = (d.method && d.method.weights) || {};
+  const maxW = Math.max(0.01, ...Object.values(W));
+  let list = models.filter(m => state.showQuant || m.derivative !== "quantized");
+  if (state.group !== "all") list = list.filter(m => m.task_group === state.group);
+  if (state.listMode === "picks") list = list.filter(m => picks.has(m.id));
+  const sorters = { score:(a,b)=>b.score-a.score, trending:(a,b)=>a.rank_trending-b.rank_trending, likes:(a,b)=>b.likes-a.likes,
+                    downloads:(a,b)=>b.downloads-a.downloads, newest:(a,b)=>(a.age_days??1e9)-(b.age_days??1e9), velocity:(a,b)=>b.like_velocity-a.like_velocity };
+  list.sort(state.listMode === "picks" && state.sort === "score" ? (a,b)=>(a.pick_rank||99)-(b.pick_rank||99) : sorters[state.sort]);
+  const allN = models.filter(m => state.showQuant || m.derivative !== "quantized").length;
+
+  body.innerHTML = `
+    ${d.demo ? `<div class="demo-note" role="note"><span aria-hidden="true">⚠️</span><div><b>示範資料</b>：這份預覽用測試資料展示介面，模型名稱與數字不是今日真實的熱門榜。在 Mac 上執行 run.command 就會換成當天的真實資料。</div></div>` : ""}
+    <div class="stat-row">
+      <div class="card stat"><div class="k">抓取模型</div><div class="v">${fmtN(st.models ?? models.length)}<small>個</small></div></div>
+      <div class="card stat"><div class="k">今日精選</div><div class="v">${fmtN(picks.size)}<small>個</small></div></div>
+      <div class="card stat"><div class="k">已過濾的量化／轉檔版本</div><div class="v">${fmtN(st.quantized_hidden_by_default || 0)}<small>個</small></div></div>
+      <div class="card stat"><div class="k">今日新進榜${d.previous_snapshot ? `（對比 ${esc(d.previous_snapshot)}）` : ""}</div><div class="v">${d.previous_snapshot ? fmtN(newCount) : "—"}<small>${d.previous_snapshot ? "個" : "明天起可比較"}</small></div></div>
+    </div>
+    <div class="card dist">
+      <div><h3>今日熱門任務分布（不含量化轉檔）</h3>
+        ${taskCounts.map(([k,v]) => `<div class="bar-row"><span class="lbl" title="${esc(k)}">${esc(k)}</span><div class="bar-track"><div class="bar-fill" style="width:${(v/maxTask*100).toFixed(1)}%"></div></div><span class="n">${v}</span></div>`).join("") || `<p class="muted">無資料</p>`}
+      </div>
+      <div class="method-mini"><h3>有趣度評分權重 <button class="link-btn" data-goto="method">完整說明</button></h3>
+        ${Object.entries(W).map(([k,v]) => `<div class="w"><span>${BD_LABEL[k]||esc(k)}</span><div class="bar-track"><div class="bar-fill" style="width:${(v/maxW*100).toFixed(0)}%;opacity:.85"></div></div><span class="muted" style="text-align:right">${Math.round(v*100)}%</span></div>`).join("")}
+        <p class="muted" style="font-size:12px;margin:10px 0 0">來源：${esc(d.source && d.source.name || "Hugging Face")} · ${esc(d.generator || "")}</p>
+      </div>
+    </div>
+    <div class="toolbar">
+      <div class="seg" role="group" aria-label="模態篩選">
+        <button aria-pressed="${state.group==="all"}" data-group="all">全部<span class="c">${allN}</span></button>
+        ${Object.entries(groups).sort((a,b)=>b[1].n-a[1].n).map(([k,g]) => `<button aria-pressed="${state.group===k}" data-group="${esc(k)}">${esc(g.zh)}<span class="c">${g.n}</span></button>`).join("")}
+      </div>
+      <div class="ctrl">
+        <div class="seg" role="group" aria-label="清單範圍">
+          <button aria-pressed="${state.listMode==="picks"}" data-mode="picks">今日精選</button>
+          <button aria-pressed="${state.listMode==="all"}" data-mode="all">完整榜單</button>
+        </div>
+        <label class="sr-only" for="sortSel">排序</label>
+        <select class="sel" id="sortSel">
+          ${[["score","依有趣度"],["trending","依 HF 熱度排名"],["velocity","依按讚速度"],["likes","依按讚數"],["downloads","依下載數"],["newest","依最新發布"]].map(([k,l]) => `<option value="${k}" ${state.sort===k?"selected":""}>${l}</option>`).join("")}
+        </select>
+        <label class="toggle"><input type="checkbox" id="quantTgl" ${state.showQuant?"checked":""}>顯示量化／轉檔版本</label>
+      </div>
+    </div>
+    ${list.length ? `<div class="grid-cards">${list.map(modelCard).join("")}</div>` : `<div class="card empty"><h3>沒有符合條件的模型</h3><p class="muted">試試切換到「完整榜單」或選擇其他模態。</p></div>`}
+    ${state.listMode === "all" ? "" : `<div style="text-align:center;margin-top:18px"><button class="btn" data-mode="all">查看完整榜單（${allN} 個）</button></div>`}
+  `;
+  $$("[data-group]", body).forEach(b => b.onclick = () => { state.group = b.dataset.group; renderRadar(); });
+  $$("[data-mode]", body).forEach(b => b.onclick = () => { state.listMode = b.dataset.mode; renderRadar(); });
+  $("#sortSel", body).onchange = e => { state.sort = e.target.value; renderRadar(); };
+  $("#quantTgl", body).onchange = e => { state.showQuant = e.target.checked; renderRadar(); };
+  $$("[data-algo]", body).forEach(b => b.onclick = () => openAlgo(b.dataset.algo));
+  $$("[data-bd]", body).forEach(b => b.onclick = () => { const c = b.closest(".mcard"); c.classList.toggle("show-bd"); b.textContent = c.classList.contains("show-bd") ? "收合分數" : "分數組成"; });
+}
+$("#refreshBtn").addEventListener("click", () => refresh(true));
+
+function renderSideFoot(){
+  const d = state.data;
+  $("#sideFoot").innerHTML = `
+    <div class="side-stat"><span>ML 演算法</span><b>${LEAVES_BY.ml.length}</b></div>
+    <div class="side-stat"><span>統計／因果方法</span><b>${LEAVES_BY.stat.length}</b></div>
+    <div class="side-stat"><span>今日模型</span><b>${d ? d.models.length : "—"}</b></div>
+    <div class="side-stat"><span>資料模式</span><b>${state.server ? "本機伺服器" : HOSTED ? "網站・每日更新" : (d ? "靜態檔案" : "未載入")}</b></div>
+    <div style="margin-top:10px;opacity:.8">按 <b>⌘K</b> 或 <b>/</b> 搜尋</div>`;
+}
+
+/* ═════════════════════════ 知識樹：由上而下的 MECE 金字塔 ═════════════════════════ */
+/* 只渲染「目前選取路徑」上的各層：根 → L1 → 選中 L1 的 L2 → 選中 L2 的 L3 → 選中 L3 的 L4。
+   每個分岔處標示該層的切分準則；連線以 SVG 依實際版面計算，視窗縮放時自動重畫。
+   兩棵知識樹（ML、統計因果）共用同一個 makePyramid，各自保有選取路徑。 */
+const hotAlgos = () => { const s = {}; (state.data?.models || []).forEach(m => { if (m.derivative !== "quantized") algosForModel(m).forEach(a => s[a] = (s[a]||0) + 1); }); return s; };
+const stripCrit = s => String(s || "").replace(/^L\d 切分準則：/, "").replace(/？$/, "");
+const defOf = n => n.signal || n.def || n.philosophy || "";
+
+function makePyramid(cfg){
+  const T = TREES[cfg.key], wrap = $(cfg.tree), crumbEl = $(cfg.crumb);
+  const ROOT = { id:"root", name:cfg.rootName, criterion:T.criterion, def:cfg.rootDef };
+  const L = cfg.lvl;
+  let SEL = [], last = 0;                 // SEL = [L1 id, L2 id, L3 id]
+  const kidsOf = (node, lvl) => lvl === 1 ? T.children : (node.children || node.leaves || []);
+
+  function nodeHtml(n, lvl, hot){
+    const sel = SEL[lvl-1] === n.id;
+    if (lvl === 4) return `<button class="pnode lv4" data-algo="${n.id}" data-id="${n.id}" title="查看 ${esc(n.name)} 的${cfg.leafWhat}">
+        <span class="p-top"><span class="lvl lv4">L4</span>${hot[n.id] ? `<span class="hot">今日 ${hot[n.id]}</span>` : ""}<span class="p-go">詳情 ›</span></span>
+        <span class="p-name">${esc(n.name)}</span><span class="p-sub">${esc(n.year)} · ${esc((n.tasks||[]).slice(0,2).join("、"))}</span></button>`;
+    return `<button class="pnode lv${lvl}${sel ? " sel" : ""}" data-level="${lvl}" data-id="${n.id}" aria-expanded="${sel}">
+        <span class="p-top"><span class="lvl ${lvl > 1 ? "lv" + lvl : ""}">L${lvl}</span><span class="p-cnt">${leafCount(n)}</span></span>
+        <span class="p-name">${esc(n.name)}</span><span class="p-sub">${esc(n.en || "")}</span></button>`;
+  }
+  function forkHtml(parent, lvl){
+    const crit = lvl === 4 ? cfg.leafFork : "依：" + stripCrit(parent.criterion);
+    return `<div class="fork" data-fork="${lvl}"><div class="fork-pill">
+        <span class="fk-lvl">L${lvl} · ${L[lvl]}</span><span class="fk-crit">${esc(crit)}</span>
+        <span class="fk-def">${rich(defOf(parent))}</span></div></div>`;
+  }
+  function renderCrumb(){
+    const path = SEL.map(id => NODES[id].node);
+    crumbEl.innerHTML = `<nav class="pyr-crumb" aria-label="目前位置">
+      <button data-crumb="0" aria-current="${!path.length}">${esc(cfg.crumbRoot)}</button>
+      ${path.map((n, i) => `<span class="sep">›</span><button data-crumb="${i+1}" aria-current="${i === path.length-1}">${esc(n.name)}</button>`).join("")}
+      ${path.length < 3 ? `<span class="muted" style="font-size:12.5px;margin-left:4px">點下方節點往下展開</span>` : ""}</nav>`;
+  }
+  function render(){
+    const hot = cfg.hot ? cfg.hot() : {}, path = [ROOT, ...SEL.map(id => NODES[id].node)];
+    let html = `<svg class="pyr-lines" aria-hidden="true"></svg>
+      <div class="tier t0"><div class="tier-row"><div class="pnode root" data-id="root"><span class="p-name">${esc(ROOT.name)}</span><span class="p-sub">${esc(cfg.rootSub())}</span></div></div></div>`;
+    let depth = 0;
+    for (let lvl = 1; lvl <= 4; lvl++){
+      const parent = path[lvl-1]; if (!parent) break;
+      html += forkHtml(parent, lvl);
+      html += `<div class="tier t${lvl}${lvl > last ? " appear" : ""}"><div class="tier-row">${kidsOf(parent, lvl).map(k => nodeHtml(k, lvl, hot)).join("")}</div></div>`;
+      depth = lvl;
+      if (!SEL[lvl-1]){ html += `<p class="pyr-hint">${lvl < 4 ? `點選一個${L[lvl]}，往下展開 L${lvl+1} ${L[lvl+1]}` : esc(cfg.leafHint)}</p>`; break; }
+    }
+    last = depth;
+    wrap.innerHTML = html;
+    renderCrumb();
+    requestAnimationFrame(draw);
+  }
+  function draw(){
+    const svg = wrap.querySelector(".pyr-lines");
+    if (!svg || !wrap.offsetParent) return;           // 未顯示時略過（尺寸為 0）
+    const base = wrap.getBoundingClientRect(), W = wrap.clientWidth, H = wrap.scrollHeight;
+    svg.setAttribute("width", W); svg.setAttribute("height", H); svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    const R = el => { const r = el.getBoundingClientRect(); return {t:r.top-base.top, b:r.bottom-base.top, cx:(r.left+r.right)/2-base.left}; };
+    const f1 = n => Math.round(n*10)/10;
+    let d = "", a = "";
+    $$(".fork", wrap).forEach(f => {
+      const lvl = +f.dataset.fork;
+      const parent = lvl === 1 ? wrap.querySelector(".pnode.root") : wrap.querySelector(`.tier.t${lvl-1} .pnode.sel`);
+      const kids = $$(`.tier.t${lvl} .pnode`, wrap);
+      if (!parent || !kids.length) return;
+      const P = R(parent), Q = R(f.querySelector(".fork-pill"));
+      const my = (R(parent.closest(".tier")).b + Q.t) / 2;   // 橫線走在整層下方的空隙，不穿過第二列節點
+      a += Math.abs(P.cx - Q.cx) < 1 ? `M${f1(P.cx)},${f1(P.b)}V${f1(Q.t)}` : `M${f1(P.cx)},${f1(P.b)}V${f1(my)}H${f1(Q.cx)}V${f1(Q.t)}`;
+      const K = kids.map(R), top = Math.min(...K.map(k => k.t)), bus = (Q.b + top) / 2;
+      const xs = K.map(k => k.cx).concat(Q.cx);
+      d += `M${f1(Q.cx)},${f1(Q.b)}V${f1(bus)}M${f1(Math.min(...xs))},${f1(bus)}H${f1(Math.max(...xs))}`;
+      kids.forEach((el, i) => {
+        const seg = `M${f1(K[i].cx)},${f1(bus)}V${f1(K[i].t)}`;
+        if (el.classList.contains("sel")) a += `M${f1(Q.cx)},${f1(Q.b)}V${f1(bus)}H${f1(K[i].cx)}V${f1(K[i].t)}`; else d += seg;
+      });
+    });
+    svg.innerHTML = `<path class="ln" d="${d}"/><path class="ln act" d="${a}"/>`;
+  }
+  function select(id, lvl, scroll=true){
+    if (SEL[lvl-1] === id) SEL = SEL.slice(0, lvl-1);   // 再點一次＝收合
+    else SEL = SEL.slice(0, lvl-1).concat(id);
+    render();
+    if (scroll && SEL[lvl-1] === id){
+      const f = wrap.querySelector(`.fork[data-fork="${lvl+1}"]`);
+      if (f){ const r = f.getBoundingClientRect(); if (r.top > innerHeight * 0.55) f.scrollIntoView({behavior:"smooth", block:"start"}); }
+    }
+  }
+  function focus(id){
+    const rec = NODES[id]; if (!rec || rec.tree !== cfg.key) return;
+    SEL = [...rec.parents.map(p => p.id), id].filter(x => NODES[x].level <= 3).slice(0, 3);
+    render();
+    setTimeout(() => {
+      const el = wrap.querySelector(`.pnode[data-id="${CSS.escape(id)}"]`);
+      if (el){ el.scrollIntoView({behavior:"smooth", block:"center"}); el.classList.add("flash"); setTimeout(() => el.classList.remove("flash"), 1600); }
+    }, 40);
+  }
+  wrap.addEventListener("click", e => {
+    const b = e.target.closest("button.pnode"); if (!b) return;
+    if (b.dataset.algo) openAlgo(b.dataset.algo); else select(b.dataset.id, +b.dataset.level);
+  });
+  crumbEl.addEventListener("click", e => {
+    const b = e.target.closest("[data-crumb]"); if (!b) return;
+    SEL = SEL.slice(0, +b.dataset.crumb); render();
+  });
+  if ("ResizeObserver" in window) new ResizeObserver(() => requestAnimationFrame(draw)).observe(wrap);
+  return { render, draw, focus };
+}
+
+const PYR = {
+  ml: makePyramid({ key:"ml", tree:"#taxTree", crumb:"#taxOverview", crumbRoot:"機器學習",
+    rootName:"機器學習演算法", rootDef:"任何學習演算法都在最佳化某個目標；目標所需的訊號只有四種來源，因此第一層依訊號來源切分。",
+    rootSub: () => `${TAX.children.length} 範式 · ${countLevel("ml",2)} 型態 · ${countLevel("ml",3)} 家族 · ${LEAVES_BY.ml.length} 演算法`,
+    lvl:["", "學習範式", "問題型態", "模型家族", "演算法"],
+    leafFork:"代表性演算法：點選查看數學直覺、複雜度與調參",
+    leafHint:"點選演算法，查看數學直覺、目標函數、複雜度與調參要點",
+    leafWhat:"數學直覺、複雜度與調參要點", hot: hotAlgos }),
+  stat: makePyramid({ key:"stat", tree:"#statTree", crumb:"#statOverview", crumbRoot:"統計因果",
+    rootName:"統計與因果推論", rootDef:"所有統計方法都在回答「從樣本能對母體說什麼」；第一層依目標量是否涉及介入來切分。",
+    rootSub: () => `${STAT.children.length} 類型 · ${countLevel("stat",2)} 型態 · ${countLevel("stat",3)} 家族 · ${LEAVES_BY.stat.length} 方法`,
+    lvl:["", "推論類型", "問題型態", "方法家族", "方法"],
+    leafFork:"代表性方法：點選查看直覺、關鍵假設、診斷與工具",
+    leafHint:"點選方法，查看核心直覺、公式、關鍵假設與診斷方式",
+    leafWhat:"直覺、關鍵假設與診斷方式", hot: null }),
+};
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => requestAnimationFrame(() => { PYR.ml.draw(); PYR.stat.draw(); }));
+
+/* ═════════════════════════ 資料分析流程 ═════════════════════════ */
+const colShort = c => String(c).replace(/（.*$/, "").trim();
+function linkChip(l){
+  const rec = NODES[l.id]; if (!rec) return "";
+  return `<button class="chip lk" ${l.t === "algo" ? `data-algo="${l.id}"` : `data-node="${l.id}"`} title="${esc(rec.node.name)}（${rec.tree === "ml" ? "ML 知識樹" : "統計因果知識樹"}）">${esc(l.label)} ›</button>`;
+}
+function renderWorkflow(){
+  let st = WF.stages.find(s => s.id === state.stage);
+  if (!st){ st = WF.stages[0]; state.stage = st.id; }
+  const i = WF.stages.indexOf(st), prev = WF.stages[i-1], next = WF.stages[i+1];
+  const A = k => `wf-${st.id}-${k}`;
+  $("#wfLede").textContent = WF.lede;
+  $("#wfFlow").innerHTML = `<ol class="flow" id="wfSteps" aria-label="分析流程四階段">${WF.stages.map(s => `<li>
+      <button class="fstep${s.id === st.id ? " on" : ""}" data-stage="${s.id}" aria-current="${s.id === st.id ? "step" : "false"}">
+        <span class="fs-num">${esc(s.num)}</span><span class="fs-name">${esc(s.name)}</span><span class="fs-en">${esc(s.en)}</span>
+        <span class="fs-q">${esc(s.q)}</span><span class="fs-out"><span>產出：${esc(s.output)}</span></span></button></li>`).join("")}</ol>
+    <div class="flow-loop" aria-hidden="true"></div>
+    <p class="flow-loop-t"><b>04 → 01</b>　落地後的回饋，成為下一輪的問題定義</p>`;
+
+  const cmpHtml = (c, k) => `<div class="card cmp wf-anchor" id="${A("c" + k)}"><h3>${esc(c.title)}</h3>
+      <table class="cmp-table"><thead><tr><th scope="col"><span class="sr-only">比較面向</span></th>${c.cols.map(x => `<th scope="col">${esc(x)}</th>`).join("")}</tr></thead>
+      <tbody>${c.rows.map(r => `<tr><th scope="row">${esc(r[0])}</th>${r.slice(1).map((v, j) => `<td data-col="${esc(colShort(c.cols[j]))}">${esc(v)}</td>`).join("")}</tr>`).join("")}</tbody></table>
+      <div class="verdict"><b>怎麼選</b><p>${esc(c.verdict)}</p></div></div>`;
+  const lay = (x, cls) => x ? `<div class="lay ${cls}"><b>${esc(x.name)}</b><span class="alias">${esc(x.alias)}</span><p>${esc(x.desc)}</p></div>`
+                            : `<div class="lay ghost"><span>沒有整合層<br>口徑分散在各應用表</span></div>`;
+  const arrows = `<div class="lay-arrow">↓</div><div class="lay-arrow">↓</div>`;
+  const layersHtml = Lr => { const t = Lr.three.layers, w = Lr.two.layers;
+    return `<div class="card layers wf-anchor" id="${A("l")}"><h3>${esc(Lr.title)}</h3><div class="lay-grid">
+      <div class="lay-h">${esc(Lr.three.name)}</div><div class="lay-h">${esc(Lr.two.name)}</div>
+      ${lay(t[0], "lay-raw")}${lay(w[0], "lay-raw")}${arrows}${lay(t[1], "lay-mid")}${lay(null)}${arrows}${lay(t[2], "lay-app")}${lay(w[1], "lay-app")}</div></div>`; };
+  const qualityHtml = Q => `<div class="section-title"><h2>${esc(Q.title)}</h2><span class="hint">每個維度都要有對應的自動化檢查</span></div>
+    <div class="qgrid wf-anchor" id="${A("q")}">${Q.dims.map(d => `<div class="card qd"><div><span class="qn">${esc(d[0])}</span><span class="qe">${esc(d[1])}</span></div>
+      <div class="qq">${esc(d[2])}</div><div class="qc">檢查：${esc(d[3])}</div></div>`).join("")}</div>`;
+  const routingHtml = R => `<div class="section-title"><h2>${esc(R.title)}</h2><span class="hint">點方法可直接跳到對應的知識樹</span></div>
+    <div class="card route wf-anchor" id="${A("r")}">
+      <div class="rt-row rt-head"><span>類型</span><span>典型問題</span><span>方法家族</span><span>到知識樹</span></div>
+      ${R.rows.map(r => `<div class="rt-row"><span class="rt-type">${esc(r.type)}</span><div class="rt-q">${esc(r.q)}</div><div class="rt-m">${esc(r.method)}</div><div class="rt-links">${r.links.map(linkChip).join("")}</div></div>`).join("")}
+      <div class="verdict"><b>關鍵</b><p>${esc(R.note)}</p></div></div>`;
+
+  const list = arr => (arr || []).map(x => `<li>${esc(x)}</li>`).join("");
+  $("#wfBody").innerHTML = `
+    <div class="card stage-head">
+      <div class="sh-num" aria-hidden="true">${esc(st.num)}</div>
+      <div>
+        <div class="eyebrow">Stage ${esc(st.num)} · ${esc(st.en)}</div>
+        <h2 class="sh-title">${esc(st.name)}</h2>
+        <p class="sh-q">${esc(st.q)}</p>
+        <p class="sh-sum">${esc(st.summary)}</p>
+        <span class="pill">產出：${esc(st.output)}</span>
+      </div>
+    </div>
+    ${st.routing ? routingHtml(st.routing) : ""}
+    ${st.compares ? `<div class="section-title"><h2>關鍵取捨</h2><span class="hint">先看比較，再看「怎麼選」</span></div>${st.layers ? layersHtml(st.layers) : ""}${st.compares.map(cmpHtml).join("")}` : ""}
+    ${st.quality ? qualityHtml(st.quality) : ""}
+    <div class="section-title"><h2>核心做法</h2></div>
+    <div class="wf-secs">${st.sections.map((s, k) => `<div class="card wf-sec wf-anchor" id="${A("s" + k)}"><h3>${esc(s.title)}</h3><p>${esc(s.body)}</p>
+      ${s.example ? `<div class="wf-ex">${esc(s.example)}</div>` : ""}${s.items ? `<ul>${list(s.items)}</ul>` : ""}</div>`).join("")}</div>
+    <div class="section-title"><h2>檢核與避坑</h2></div>
+    <div class="two-col wf-anchor" id="${A("p")}">
+      <div class="card"><div class="card-h">完成這一步前，確認：</div><ul class="checklist">${list(st.checklist)}</ul></div>
+      <div class="card"><div class="card-h">常見陷阱</div><div class="pits">${st.pitfalls.map(p => `<div class="pit"><b>${esc(p[0])}</b><span>${esc(p[1])}</span></div>`).join("")}</div></div>
+    </div>
+    <div class="section-title"><h2>產出與延伸</h2></div>
+    <div class="two-col">
+      <div class="card"><div class="card-h">這一步的產出物</div><ul class="deliv">${list(st.deliverables)}</ul></div>
+      <div class="card"><div class="card-h">延伸到知識樹</div><div class="sib" style="padding:12px 18px 16px">${(st.links || []).map(linkChip).join("")}</div></div>
+    </div>
+    ${next ? "" : `<div class="flow-back"><span>↻ ${esc(WF.loop)}</span><button class="btn" data-stage="${WF.stages[0].id}" data-top="1">回到 01 ${esc(WF.stages[0].name)}</button></div>`}
+    <div class="d-nav stage-nav">${prev ? `<button class="btn" data-stage="${prev.id}" data-top="1">← ${esc(prev.num)} ${esc(prev.name)}</button>` : "<span></span>"}${next ? `<button class="btn primary" data-stage="${next.id}" data-top="1">${esc(next.num)} ${esc(next.name)} →</button>` : ""}</div>
+    <div class="section-title"><h2>貫穿全程的三個原則</h2></div>
+    <div class="prin">${WF.principles.map(p => `<div class="card"><b>${esc(p[0])}</b><p>${esc(p[1])}</p></div>`).join("")}</div>`;
+}
+$("#view-workflow").addEventListener("click", e => {
+  const s = e.target.closest("[data-stage]");
+  if (s){
+    state.stage = s.dataset.stage; renderWorkflow(); setHash("flow/" + state.stage);
+    if (s.dataset.top) $("#wfSteps").scrollIntoView({behavior:"smooth", block:"start"});
+    return;
+  }
+  const a = e.target.closest("[data-algo]"); if (a){ openAlgo(a.dataset.algo); return; }
+  const n = e.target.closest("[data-node]"); if (n) goNode(n.dataset.node);
+});
+
+/* ═════════════════════════ 方法論 ═════════════════════════ */
+function renderMethod(){
+  const key = state.mtree, T = TREES[key], isML = key === "ml";
+  const W = (state.data && state.data.method && state.data.method.weights) || {momentum:.35, velocity:.25, recency:.15, originality:.15, rarity:.10};
+  const WD = {momentum:"HF trendingScore 在今日榜單中的百分位（對極端值穩健）", velocity:"按讚數 ÷ 上架天數 的百分位，抓「上升速度」而非累積量",
+              recency:"exp(−天數 ÷ 14)，約兩週衰減一半的新鮮度", originality:"原創 1.0 ＞ 微調 0.45 ＞ 合併／Adapter 0.35 ＞ 量化轉檔 0",
+              rarity:"1 − 該任務在今日榜單的占比，獎勵非 LLM 的模態"};
+  $("#methodBody").innerHTML = `
+    <div class="seg mtoggle" role="group" aria-label="選擇知識樹">
+      <button data-mtree="ml" aria-pressed="${isML}">ML 演算法知識樹</button>
+      <button data-mtree="stat" aria-pressed="${!isML}">統計 × 因果知識樹</button>
+    </div>
+    <div class="section-title"><h2>第一刀：${esc(stripCrit(T.criterion))}</h2></div>
+    <div class="card l1card"><div class="crit" style="margin-top:0"><b>L1 準則</b><span>${esc(stripCrit(T.criterion))}</span></div><p>${esc(T.criterionDetail)}</p></div>
+
+    <div class="section-title"><h2>四層切分準則</h2><span class="hint">每個節點的子分支都只用一個準則切分，保證互斥；準則本身的值域完整，保證窮盡。</span></div>
+    <div class="card" style="overflow:hidden"><table class="rule-table">${T.levels.map(l => `<tr><td><span class="lvl ${l.level==="L1"?"":l.level==="L2"?"lv2":"lv3"}">${esc(l.level)}</span><div style="font-weight:700;margin-top:6px">${esc(l.name)}</div></td><td>${esc(l.rule)}</td></tr>`).join("")}</table></div>
+
+    <div class="section-title"><h2>${isML ? "各範式的 L2 切分" : "各推論類型的 L2 切分"}</h2><span class="hint">箭頭後是該型態往下切 L3 的準則</span></div>
+    <div class="two-col">${T.children.map(l1 => `<div class="card" style="padding:16px 18px">
+      <div style="font-family:var(--font-serif);font-weight:700;font-size:17px">${esc(l1.name)}</div>
+      <div class="crit" style="margin-top:8px"><b>準則</b><span>${esc(stripCrit(l1.criterion))}</span></div>
+      <ul style="margin:12px 0 0;padding-left:18px;font-size:14px;color:var(--ink-2)">${l1.children.map(l2 => `<li style="margin:6px 0"><b style="color:var(--ink)">${esc(l2.name)}</b>：${rich(l2.def)}${l2.criterion ? `<span class="l3c">→ L3 依 ${esc(stripCrit(l2.criterion))}</span>` : ""}</li>`).join("")}</ul></div>`).join("")}
+    </div>
+
+    <div class="section-title"><h2>邊界案例：容易混淆的歸類</h2><span class="hint">MECE 的品質取決於邊界怎麼判。</span></div>
+    <div class="card faq">${T.boundaries.map((b,i) => `<details ${i===0?"open":""}><summary><span class="qi">Q</span><span>${esc(b.q)}</span></summary><div class="a">${esc(b.a)}</div></details>`).join("")}</div>
+
+    <div class="section-title"><h2>${isML ? "組合範式" : "組合方法"}</h2><span class="hint">${isML ? "不是新的學習訊號，而是上述範式的組合；因此不另設 L1。" : "實務上常把不同分支的方法串接使用；它們是組合，不是新的分支。"}</span></div>
+    <div class="card" style="overflow:hidden"><table class="rule-table">${T.hybrids.map(h => `<tr><td style="font-weight:700;width:150px">${esc(h[0])}</td><td>${esc(h[1])}</td></tr>`).join("")}</table></div>
+
+    ${isML ? `<div class="section-title"><h2>雷達的有趣度評分</h2><span class="hint">分數 = 100 × Σ 權重 × 維度分數（0–1）</span></div>
+    <div class="card" style="overflow:hidden"><table class="rule-table">${Object.entries(W).map(([k,v]) => `<tr><td style="width:150px"><b>${BD_LABEL[k]||esc(k)}</b><div class="muted" style="font-size:13px">權重 ${Math.round(v*100)}%</div></td><td>${esc(WD[k]||"")}</td></tr>`).join("")}
+      <tr><td style="width:150px"><b>精選規則</b></td><td>${esc((state.data && state.data.method && state.data.method.pick_rules) || "排除量化轉檔與移除安全對齊版本；依分數貪婪挑選，同作者 ≤2、同任務 ≤3，不足時放寬")}。權重可在 <code>fetch_hf.py</code> 最上方的 <code>WEIGHTS</code> 調整。</td></tr></table></div>` : ""}
+
+    <div class="section-title"><h2>${isML ? "複雜度符號" : "常用符號"}</h2></div>
+    <div class="card notation">${T.notation.map(n => `<div><b>${esc(n[0])}</b>${esc(n[1])}</div>`).join("")}</div>`;
+  $$("#methodBody [data-mtree]").forEach(b => b.onclick = () => { state.mtree = b.dataset.mtree; renderMethod(); });
+}
+
+/* ═════════════════════════ 抽屜（演算法／方法詳情） ═════════════════════════ */
+let lastFocus = null;
+const toolsHtml = s => `<div class="tools">${String(s).split("；").map(seg => {
+  const m = /^([^：]{1,14})：(.*)$/.exec(seg.trim());
+  return m ? `<div class="tl"><span class="tk">${esc(m[1])}</span><span>${esc(m[2])}</span></div>` : `<div class="tl"><span>${esc(seg)}</span></div>`; }).join("")}</div>`;
+function openAlgo(id, pushHash=true){
+  const rec = NODES[id]; if (!rec || rec.level !== 4) return;
+  const lf = rec.node, [l1, l2, l3] = rec.parents, isML = rec.tree === "ml", T = TREES[rec.tree];
+  lastFocus = document.activeElement;
+  $("#dCrumb").innerHTML = [l1, l2, l3].map(n => `<button data-node="${n.id}">${esc(n.name)}</button>`).join(`<span aria-hidden="true">›</span>`);
+  $("#dTitle").textContent = lf.name;
+  $("#dSub").textContent = [lf.zh, lf.year ? lf.year + " 年" : ""].filter(Boolean).join(" · ");
+  $("#dTags").innerHTML = (lf.tasks || []).map(t => `<span class="chip">${esc(t)}</span>`).join("");
+  const siblings = l3.leaves.filter(x => x.id !== id);
+  const leaves = LEAVES_BY[rec.tree], idx = leaves.indexOf(lf), prev = leaves[idx-1], next = leaves[idx+1];
+  const related = isML ? (state.data?.models || []).filter(m => m.derivative !== "quantized" && algosForModel(m).includes(id)).sort((a,b)=>b.score-a.score).slice(0,4) : [];
+  const list = arr => `<ul>${(arr||[]).map(x => `<li>${rich(x)}</li>`).join("")}</ul>`;
+  const sec03 = isML
+    ? `<div class="d-sec"><h4><span class="n">03</span>時間與空間複雜度</h4>
+        <div class="cx"><div><div class="ck">訓練</div><div class="cv">${rich(lf.complexity.train)}</div></div><div><div class="ck">推論</div><div class="cv">${rich(lf.complexity.infer)}</div></div><div><div class="ck">空間</div><div class="cv">${rich(lf.complexity.space)}</div></div></div>
+        <p class="muted" style="font-size:12.5px;margin-top:8px">符號：${T.notation.slice(0,8).map(n => esc(n[0]+" = "+n[1])).join("、")}…</p></div>`
+    : `<div class="d-sec"><h4><span class="n">03</span>關鍵假設與診斷</h4>
+        <div class="pc"><div class="con"><h5>⚠ 關鍵假設（不成立時結論會偏）</h5>${list(lf.assumptions)}</div><div class="ok"><h5>✓ 怎麼檢查</h5>${list(lf.checks)}</div></div></div>`;
+  $("#dBody").innerHTML = `
+    <div class="d-sec"><h4><span class="n">01</span>${isML ? "核心數學直覺與推導哲學" : "核心直覺"}</h4><p>${rich(lf.intuition)}</p></div>
+    <div class="d-sec"><h4><span class="n">02</span>${isML ? "關鍵目標函數／損失" : "核心公式／估計量"}</h4><div class="formula">${formulaHtml(lf.objective)}</div></div>
+    ${sec03}
+    <div class="d-sec"><h4><span class="n">04</span>關鍵優勢與適用場景</h4>
+      <div class="pc"><div><h5>✦ 優勢</h5>${list(lf.pros)}</div><div><h5>◎ 適用場景</h5>${list(lf.use)}</div></div></div>
+    <div class="d-sec"><h4><span class="n">05</span>核心缺陷與實務痛點</h4><div class="pc" style="grid-template-columns:1fr"><div class="con">${list(lf.cons)}</div></div></div>
+    <div class="d-sec"><h4><span class="n">06</span>${isML ? "實務超參數調校要點" : "實務設定要點"}</h4>
+      <table class="hp-table">${(lf.hp||[]).map(h => `<tr><td>${esc(h[0])}</td><td>${rich(h[1])}</td></tr>`).join("")}</table></div>
+    ${!isML && lf.tools ? `<div class="d-sec"><h4><span class="n">07</span>常用工具</h4>${toolsHtml(lf.tools)}</div>` : ""}
+    ${lf.note ? `<div class="d-sec"><h4><span class="n">✱</span>歸類說明</h4><div class="note-box">${rich(lf.note)}</div></div>` : ""}
+    <div class="d-sec"><h4><span class="n">L3</span>同家族：${esc(l3.name)}</h4><p class="muted" style="font-size:13.5px;margin-bottom:10px">${rich(l3.philosophy)}</p>
+      <div class="sib">${siblings.length ? siblings.map(s => `<button class="chip" data-algo="${s.id}">${esc(s.name)}</button>`).join("") : `<span class="muted" style="font-size:13px">此家族僅收錄這一個代表${isML ? "演算法" : "方法"}。</span>`}</div></div>
+    ${related.length ? `<div class="d-sec"><h4><span class="n">HF</span>今日雷達中的相關模型</h4><div class="sib">${related.map(m => `<a class="chip" href="${esc(m.url)}" target="_blank" rel="noopener noreferrer">${esc(m.name)} ↗</a>`).join("")}</div></div>` : ""}
+    <div class="d-nav">${prev ? `<button class="btn" data-algo="${prev.id}">← ${esc(prev.name)}</button>` : "<span></span>"}${next ? `<button class="btn" data-algo="${next.id}">${esc(next.name)} →</button>` : ""}</div>`;
+  $$("#drawer [data-algo]").forEach(b => b.onclick = () => openAlgo(b.dataset.algo));
+  $$("#dCrumb [data-node]").forEach(b => b.onclick = () => goNode(b.dataset.node));
+  $("#dBody").scrollTop = 0;
+  $("#drawer").classList.add("open"); $("#overlay").classList.add("open");
+  $("#drawer").setAttribute("aria-hidden", "false"); document.body.style.overflow = "hidden";
+  setTimeout(() => $("#dClose").focus(), 60);
+  if (pushHash) setHash("algo/" + id);
+}
+function openInfo(title, html){
+  $("#dCrumb").innerHTML = `<span>說明</span>`; $("#dTitle").textContent = title; $("#dSub").textContent = ""; $("#dTags").innerHTML = "";
+  $("#dBody").innerHTML = `<div class="d-sec">${html}</div>`;
+  $("#drawer").classList.add("open"); $("#overlay").classList.add("open"); $("#drawer").setAttribute("aria-hidden","false"); document.body.style.overflow = "hidden";
+}
+function closeDrawer(restoreHash=true){
+  if (!$("#drawer").classList.contains("open")) return;
+  $("#drawer").classList.remove("open"); $("#overlay").classList.remove("open");
+  $("#drawer").setAttribute("aria-hidden", "true"); document.body.style.overflow = "";
+  if (restoreHash && location.hash.startsWith("#algo/")) setHash(state.view === "workflow" ? "flow/" + state.stage : state.view);
+  if (lastFocus && lastFocus.focus) lastFocus.focus();
+}
+$("#dClose").onclick = () => closeDrawer(); $("#overlay").onclick = () => closeDrawer();
+
+/* ═════════════════════════ 全文搜尋 ═════════════════════════ */
+let INDEX = [];
+function buildIndex(){
+  INDEX = [];
+  for (const key of ["ml", "stat"]) LEAVES_BY[key].forEach(lf => { const [l1,l2,l3] = NODES[lf.id].parents;
+    INDEX.push({type: key === "ml" ? "algo" : "stat", id:lf.id, title:lf.name, sub:`${lf.zh || ""} · ${l1.name} › ${l3.name}`,
+      t1:norm([lf.name, lf.id].join(" ")), t2:norm([lf.zh, (lf.tasks||[]).join(" "), l3.name, l3.en, l2.name].join(" ")),
+      t3:norm(plainTex([lf.intuition, lf.objective, (lf.pros||[]).join(" "), (lf.use||[]).join(" "), (lf.cons||[]).join(" "), (lf.hp||[]).map(h=>h.join(" ")).join(" "),
+               (lf.assumptions||[]).join(" "), (lf.checks||[]).join(" "), lf.tools||"", lf.note||""].join(" ")))}); });
+  Object.values(NODES).filter(n => n.level < 4).forEach(({node, level, tree}) => {
+    INDEX.push({type:"node", id:node.id, title:node.name, sub:`${tree === "ml" ? "ML" : "統計因果"} · L${level} · ${node.en || ""}`, t1:norm(node.name + " " + (node.en||"")), t2:norm(plainTex(node.def || node.signal || "")), t3:norm(plainTex((node.philosophy||"") + " " + (node.criterion||"")))}); });
+  WF.stages.forEach(s => {
+    const sub = `分析流程 · ${s.num} ${s.name}`;
+    INDEX.push({type:"flow", id:s.id, title:`${s.num} ${s.name}`, sub:`分析流程 · ${s.q}`, t1:norm(s.name + " " + s.en), t2:norm(s.q + " " + s.summary + " " + s.output), t3:norm((s.checklist||[]).join(" ") + " " + (s.deliverables||[]).join(" "))});
+    (s.compares||[]).forEach((c, k) => INDEX.push({type:"flow", id:s.id, anchor:`wf-${s.id}-c${k}`, title:c.title, sub, t1:norm(c.title), t2:norm(c.cols.join(" ")), t3:norm(c.rows.map(r => r.join(" ")).join(" ") + " " + c.verdict)}));
+    if (s.layers) INDEX.push({type:"flow", id:s.id, anchor:`wf-${s.id}-l`, title:s.layers.title, sub, t1:norm(s.layers.title), t2:norm([...s.layers.three.layers, ...s.layers.two.layers].map(x => x.name + " " + x.alias).join(" ")), t3:norm([...s.layers.three.layers, ...s.layers.two.layers].map(x => x.desc).join(" "))});
+    if (s.quality) INDEX.push({type:"flow", id:s.id, anchor:`wf-${s.id}-q`, title:s.quality.title, sub, t1:norm(s.quality.title), t2:norm(s.quality.dims.map(d => d[0] + " " + d[1]).join(" ")), t3:norm(s.quality.dims.map(d => d[2] + " " + d[3]).join(" "))});
+    if (s.routing) INDEX.push({type:"flow", id:s.id, anchor:`wf-${s.id}-r`, title:s.routing.title, sub, t1:norm(s.routing.title), t2:norm(s.routing.rows.map(r => r.type + " " + r.method).join(" ")), t3:norm(s.routing.rows.map(r => r.q).join(" ") + " " + s.routing.note)});
+    (s.sections||[]).forEach((c, k) => INDEX.push({type:"flow", id:s.id, anchor:`wf-${s.id}-s${k}`, title:c.title, sub, t1:norm(c.title), t2:norm(c.body), t3:norm((c.items||[]).join(" ") + " " + (c.example||""))}));
+    INDEX.push({type:"flow", id:s.id, anchor:`wf-${s.id}-p`, title:`${s.name}：常見陷阱`, sub, t1:norm(s.name + " 陷阱"), t2:norm(s.pitfalls.map(p => p[0]).join(" ")), t3:norm(s.pitfalls.map(p => p[1]).join(" "))});
+  });
+  (state.data?.models || []).forEach(m => INDEX.push({type:"model", id:m.id, title:m.id, sub:`${m.task_zh || ""} · ❤ ${fmtN(m.likes)} · ${m.derivative_zh || ""}`,
+      t1:norm(m.id), t2:norm([m.task_zh, m.pipeline_tag, m.library, (m.tags||[]).join(" ")].join(" ")), t3:norm((m.reasons||[]).join(" "))}));
+}
+function search(q){
+  const terms = norm(q).split(/\s+/).filter(Boolean); if (!terms.length) return [];
+  // 短英文詞（≤3 字元，如 kl、svm、did）要求整詞比對，避免在其他單字中誤中
+  const matchers = terms.map(t => /^[a-z0-9]{1,3}$/.test(t) ? (s => new RegExp("(^|[^a-z0-9])" + t + "([^a-z0-9]|$)").test(s)) : (s => s.includes(t)));
+  const out = [];
+  for (const it of INDEX){
+    let s = 0, ok = true;
+    for (let i = 0; i < terms.length; i++){
+      const t = terms[i], has = matchers[i];
+      let ts = 0;
+      if (it.t1.startsWith(t)) ts = 100; else if (has(it.t1)) ts = 60; else if (has(it.t2)) ts = 25; else if (has(it.t3)) ts = 8;
+      if (!ts){ ok = false; break; } s += ts;
+    }
+    if (ok) out.push({it, s: s + (it.type === "algo" || it.type === "stat" ? 3 : it.type === "flow" ? 2 : it.type === "node" ? 1 : 0)});
+  }
+  return out.sort((a,b) => b.s - a.s).map(x => x.it);
+}
+function hl(text, q){
+  let h = esc(text); const terms = norm(q).split(/\s+/).filter(Boolean);
+  terms.forEach(t => { if (!t) return; const re = new RegExp("(" + t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "ig"); h = h.replace(re, "<mark>$1</mark>"); });
+  return h;
+}
+const qEl = $("#q"), panel = $("#sPanel"); let sIdx = -1, sItems = [];
+const S_GROUPS = [["algo","ML 演算法",6,"ML"],["stat","統計／因果方法",6,"統計"],["flow","資料分析流程",5,"流程"],["node","知識樹節點",4,"節點"],["model","今日模型",6,"HF"]];
+function renderSearch(){
+  const q = qEl.value.trim();
+  if (!q){ panel.classList.remove("open"); qEl.setAttribute("aria-expanded","false"); return; }
+  const res = search(q);
+  sItems = []; let html = "";
+  S_GROUPS.forEach(([type,label,n,badge]) => { const g = res.filter(r => r.type === type).slice(0, n); if (!g.length) return;
+    html += `<div class="s-group">${label}</div>` + g.map(it => { sItems.push(it); return `<button class="s-item" role="option" data-i="${sItems.length-1}"><span class="s-kind">${badge}</span><span style="min-width:0"><div class="s-title">${hl(it.title, q)}</div><div class="s-sub">${esc(it.sub)}</div></span></button>`; }).join(""); });
+  panel.innerHTML = html || `<div class="s-empty">找不到「${esc(q)}」。試試英文名、中文名或概念（如「注意力」「平行趨勢」「ETL」）。</div>`;
+  panel.classList.add("open"); qEl.setAttribute("aria-expanded","true"); sIdx = -1;
+  $$(".s-item", panel).forEach(b => b.onclick = () => pick(+b.dataset.i));
+}
+function pick(i){
+  const it = sItems[i]; if (!it) return;
+  panel.classList.remove("open"); qEl.blur();
+  if (it.type === "algo" || it.type === "stat") openAlgo(it.id);
+  else if (it.type === "node") goNode(it.id);
+  else if (it.type === "flow") goFlow(it.id, it.anchor);
+  else { state.listMode = "all"; state.group = "all"; state.showQuant = true; closeDrawer(false); setView("radar"); renderRadar();
+    setTimeout(() => { const c = $(`.mcard[data-id="${CSS.escape(it.id)}"]`); if (c){ c.scrollIntoView({behavior:"smooth", block:"center"}); c.style.borderColor = "var(--brand)"; setTimeout(()=>c.style.borderColor="",2200);} }, 60); }
+}
+let debT; qEl.addEventListener("input", () => { clearTimeout(debT); debT = setTimeout(renderSearch, 60); });
+qEl.addEventListener("focus", () => { if (qEl.value.trim()) renderSearch(); });
+qEl.addEventListener("keydown", e => {
+  const items = $$(".s-item", panel);
+  if (e.key === "ArrowDown"){ e.preventDefault(); sIdx = Math.min(items.length-1, sIdx+1); }
+  else if (e.key === "ArrowUp"){ e.preventDefault(); sIdx = Math.max(0, sIdx-1); }
+  else if (e.key === "Enter"){ e.preventDefault(); pick(sIdx >= 0 ? sIdx : 0); return; }
+  else if (e.key === "Escape"){ panel.classList.remove("open"); qEl.blur(); return; }
+  else return;
+  items.forEach((el,i) => el.classList.toggle("active", i === sIdx)); items[sIdx]?.scrollIntoView({block:"nearest"});
+});
+document.addEventListener("click", e => { if (!e.target.closest(".search")) panel.classList.remove("open"); });
+document.addEventListener("keydown", e => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k"){ e.preventDefault(); qEl.focus(); qEl.select(); }
+  else if (e.key === "/" && !/input|textarea|select/i.test(document.activeElement.tagName)){ e.preventDefault(); qEl.focus(); }
+  else if (e.key === "Escape" && $("#drawer").classList.contains("open")) closeDrawer();
+});
+
+/* ═════════════════════════ 主題與提示 ═════════════════════════ */
+function applyTheme(t){ if (t) document.documentElement.setAttribute("data-theme", t); else document.documentElement.removeAttribute("data-theme"); }
+applyTheme(store.get("ml.theme"));
+$("#themeBtn").onclick = () => {
+  const cur = document.documentElement.getAttribute("data-theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const nx = cur === "dark" ? "light" : "dark"; applyTheme(nx); store.set("ml.theme", nx);
+};
+function toast(msg){
+  const t = document.createElement("div");
+  t.textContent = msg; t.setAttribute("role","status");
+  Object.assign(t.style, {position:"fixed", left:"50%", bottom:"calc(96px + env(safe-area-inset-bottom))", transform:"translateX(-50%)", background:"var(--brand-deep)", color:"#FBE3EA",
+    padding:"12px 18px", borderRadius:"12px", boxShadow:"var(--shadow-lg)", zIndex:80, fontSize:"14px", maxWidth:"min(92vw,560px)"});
+  document.body.appendChild(t); setTimeout(() => t.remove(), 4200);
+}
+
+/* ═════════════════════════ 啟動 ═════════════════════════ */
+PYR.ml.render(); PYR.stat.render(); renderWorkflow(); renderMethod(); renderSideFoot(); buildIndex(); route();
+if (innerWidth < 560) qEl.placeholder = "搜尋：XGBoost、DiD、ETL…";
+loadData().then(() => { buildIndex(); PYR.ml.render(); renderMethod(); });
+})();
+</script>
+</body>
+</html>

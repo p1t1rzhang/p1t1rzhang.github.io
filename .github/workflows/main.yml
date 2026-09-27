@@ -1,0 +1,103 @@
+# ─────────────────────────────────────────────────────────────
+# 每日更新與部署：抓取 Hugging Face 熱門榜 → 重建網頁 → 發佈到 GitHub Pages
+#
+# 首次使用（只需做一次）：
+#   repo 的 Settings → Pages → Build and deployment → Source 選「GitHub Actions」
+#
+# 資料放在獨立的 data 分支（由機器人維護），main 分支只放你自己的程式與內容，
+# 所以你在 Mac 上修改、上傳時不會和每天的自動更新互相衝突。
+# ─────────────────────────────────────────────────────────────
+name: 每日更新與部署
+
+on:
+  schedule:
+    - cron: "17 0 * * *"    # 每天 UTC 00:17 = 台灣時間 08:17（GitHub 排程可能延後數分鐘到一小時）
+  push:
+    branches: [main]        # 你更新內容後會自動重新部署
+  workflow_dispatch:        # 也可以在 Actions 頁面按 Run workflow 手動執行
+
+# 最小權限：預設唯讀，只在需要的工作上開放寫入
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write       # 只用來寫入 data 分支
+    steps:
+      - name: 取得程式碼
+        uses: actions/checkout@v7
+
+      - name: 準備資料分支（第一次執行會自動建立）
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898699+github-actions[bot]@users.noreply.github.com"
+          if git fetch --depth 1 origin data:data 2>/dev/null; then
+            git worktree add _data data
+          else
+            git worktree add --orphan -b data _data 2>/dev/null || {
+              git worktree add --detach _data
+              git -C _data checkout -q --orphan data
+              git -C _data rm -rfq . || true
+            }
+          fi
+
+      - name: 抓取 Hugging Face 熱門模型
+        continue-on-error: true   # 抓取失敗時沿用上一次的資料，網站照常部署
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}   # 選用：在 Settings → Secrets 設定可提高 API 額度
+        run: python3 fetch_hf.py --out-dir _data
+
+      - name: 保存當日資料
+        continue-on-error: true
+        working-directory: _data
+        run: |
+          git add -A
+          if git diff --cached --quiet; then
+            echo "資料沒有變化"
+          else
+            git commit -q -m "data: $(date -u +%F) 每日模型雷達"
+            git push -q origin data
+          fi
+
+      - name: 重建網頁
+        run: |
+          OWNER=$(echo "$GITHUB_REPOSITORY_OWNER" | tr '[:upper:]' '[:lower:]')
+          REPO=$(echo "${GITHUB_REPOSITORY#*/}" | tr '[:upper:]' '[:lower:]')
+          if [ "$REPO" = "$OWNER.github.io" ]; then
+            SITE_URL="https://$OWNER.github.io/"
+          else
+            SITE_URL="https://$OWNER.github.io/$REPO/"
+          fi
+          echo "網站網址：$SITE_URL"
+          SITE_URL="$SITE_URL" python3 src/build.py
+          mkdir -p _site
+          cp index.html _site/
+          for f in daily_models.json daily_models.js; do
+            if [ -f "_data/$f" ]; then cp "_data/$f" _site/; fi
+          done
+          ls -la _site
+
+      - name: 打包網站
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write          # 發佈 GitHub Pages
+      id-token: write       # Pages 部署驗證身分用
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 發佈到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
