@@ -114,14 +114,8 @@ class Handler(SimpleHTTPRequestHandler):
                 return False
         return True
 
-    @staticmethod
-    def _blocked(path: str) -> bool:
-        """不對外提供程式碼、歷史快照、紀錄檔與隱藏檔（含 .git）。先解碼、轉小寫，避免用 %2e 或大小寫繞過。"""
-        p = unquote(path).replace("\\", "/").lower()
-        parts = [x for x in p.split("/") if x]
-        return (any(x.startswith(".") for x in parts)
-                or (parts and parts[0] in ("history", "logs", "src", "__pycache__"))
-                or p.endswith((".py", ".pyc", ".sh", ".command")))
+    # 白名單：只提供網頁與資料檔，其餘（程式碼、歷史快照、紀錄檔、.git 等）一律 404
+    ALLOWED_STATIC = {"/", "/index.html", "/daily_models.json", "/daily_models.js"}
 
     # ── 路由 ──
     def do_GET(self):
@@ -143,9 +137,12 @@ class Handler(SimpleHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(body)
             return None
-        if self._blocked(path):
+        if unquote(path) not in self.ALLOWED_STATIC:
             return self._json({"error": "not found"}, HTTPStatus.NOT_FOUND)
         return super().do_GET()
+
+    def do_HEAD(self):  # 網頁用不到 HEAD；關閉以免被用來探測檔案是否存在
+        self.send_error(HTTPStatus.METHOD_NOT_ALLOWED)
 
     def do_POST(self):
         if not self._host_ok():

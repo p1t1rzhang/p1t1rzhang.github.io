@@ -5713,7 +5713,7 @@
           "機器人"
          ],
          "intuition": "先學一個世界模型（循環狀態空間模型 RSSM，把觀測壓縮成潛在狀態，並預測下一步與報酬），再在「想像」中展開潛在軌跡來訓練 actor-critic，大幅減少真實互動。v3 以 symlog 轉換和一組固定超參數通用於 150 多項任務，並首次在沒有人類資料的情況下於 Minecraft 挖到鑽石（Nature, 2025）。",
-         "objective": "世界模型：$\\mathcal{L} = \\mathcal{L}_{\\text{pred}}$（重建觀測、報酬、是否繼續）\n$\\quad + \\beta_{\\text{dyn}} \\cdot \\mathcal{L}_{\\text{dyn}} + \\beta_{\\text{rep}} \\cdot \\mathcal{L}_{\\text{rep}}$（KL 平衡，含 free bits）\nActor：最大化想像軌跡的 $\\lambda$-return（加熵正則）\nCritic：以 symlog 離散迴歸預測 $\\lambda$-return",
+         "objective": "世界模型：$\\mathcal{L} = \\mathcal{L}_{\\text{pred}}$\n$\\quad + \\beta_{\\text{dyn}} \\cdot \\mathcal{L}_{\\text{dyn}} + \\beta_{\\text{rep}} \\cdot \\mathcal{L}_{\\text{rep}}$\n（$\\mathcal{L}_{\\text{pred}}$：重建觀測、報酬、是否繼續；後兩項為 KL 平衡，含 free bits）\nActor：最大化想像軌跡的 $\\lambda$-return（加熵正則）\nCritic：以 symlog 離散迴歸預測 $\\lambda$-return",
          "complexity": {
           "train": "世界模型 $O(B \\cdot T \\cdot P_{\\text{wm}})$ ＋ 想像展開 $O(B \\cdot H \\cdot P)$",
           "infer": "$O(P)$",

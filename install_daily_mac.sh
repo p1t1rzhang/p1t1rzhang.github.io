@@ -52,6 +52,6 @@ case "$DIR" in
   "$HOME/Desktop"*|"$HOME/Documents"*|"$HOME/Downloads"*)
     echo ""
     echo "⚠️  注意：此資料夾位於「桌面／文件／下載項目」，macOS 可能禁止背景排程存取這些位置。"
-    echo "   若 logs/fetch.log 出現 Operation not permitted，請把整個資料夾移到例如 ~/ModelLearning 後重新執行本腳本，"
-    echo "   或到 系統設定 → 隱私權與安全性 → 完整磁碟取用權限，加入 $PY。" ;;
+    echo "   若 logs/fetch.log 出現 Operation not permitted，請把整個資料夾移到例如 ~/ModelLearning 後重新執行本腳本。"
+    echo "   （不建議為 python3 開啟「完整磁碟取用權限」：那會讓所有 Python 程式都能讀取你的全部檔案。）" ;;
 esac

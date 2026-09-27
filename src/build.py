@@ -62,7 +62,8 @@ def katex_assets():
 
 
 def blob(obj):
-    return json.dumps(obj, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    # 內嵌在 <script type="application/json"> 裡：把所有 < 轉成 \u003c，避免任何內容提前結束 script 區塊
+    return json.dumps(obj, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c")
 
 
 def main() -> int:

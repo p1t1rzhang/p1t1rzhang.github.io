@@ -101,13 +101,14 @@
 | 本機伺服器 | `python3 server.py` → http://127.0.0.1:8765 ；資料過期時會在背景自動更新（macOS 可對 `start_server.command` 按兩下） |
 | 每天自動抓取（macOS） | `bash install_daily_mac.sh`（預設 08:30；`--uninstall` 移除）。若資料夾放在「桌面／文件／下載項目」，macOS 可能阻擋背景存取，建議放在家目錄下的其他資料夾 |
 
-> 第一次打開 `.command` 檔若出現「無法打開，因為它來自未識別的開發者」，請改用 **右鍵 → 打開**。
+> 從網路下載的 `.command` 檔可能被 macOS 擋下（「無法打開，因為它來自未識別的開發者」）。請不要為了打開而關閉系統防護：先確認腳本內容，再到「終端機」直接執行，例如 `bash run.command` 或 `python3 server.py`。用 `git clone` 下載的檔案不會被標記，也不會出現這個警告。
 
 常用參數：
 
 ```bash
 python3 fetch_hf.py --limit 100 --top 15    # 抓 100 筆、精選 15 筆
-HF_TOKEN=hf_xxx python3 fetch_hf.py         # 帶 token 提高 API 額度（選用，勿把 token 寫進檔案）
+read -rs HF_TOKEN && export HF_TOKEN       # 帶 token 提高 API 額度（選用）：輸入時不顯示，也不會留在指令紀錄
+python3 fetch_hf.py                         # 建議使用唯讀（read-only）的 fine-grained token
 python3 server.py --port 9000 --no-browser
 ```
 

@@ -163,12 +163,12 @@ def http_get_json(url: str, params: Optional[Dict[str, Any]] = None, token: Opti
     if params:
         url = f"{url}?{urllib.parse.urlencode(params, doseq=True)}"
     headers = {"User-Agent": USER_AGENT, "Accept": "application/json"}
-    if token:
-        headers["Authorization"] = f"Bearer {token}"
     ctx = _ssl_context()
     last_err: Optional[Exception] = None
     for attempt in range(1, retries + 1):
         req = urllib.request.Request(url, headers=headers)
+        if token:  # 用 unredirected header：若遇到轉址，token 不會被送到其他網站
+            req.add_unredirected_header("Authorization", f"Bearer {token}")
         try:
             with urllib.request.urlopen(req, timeout=timeout, context=ctx) as resp:
                 raw = resp.read()

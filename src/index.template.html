@@ -364,7 +364,7 @@ button.pnode:hover{border-color:var(--pink-3);box-shadow:var(--shadow-sm)}
 /* ───────────── Drawer ───────────── */
 .overlay{position:fixed;inset:0;background:rgba(30,8,15,.48);opacity:0;pointer-events:none;transition:opacity .2s;z-index:60}
 .overlay.open{opacity:1;pointer-events:auto}
-.drawer{position:fixed;top:0;right:0;bottom:0;width:min(680px,100vw);background:var(--bg);z-index:61;transform:translateX(100%);transition:transform .28s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;box-shadow:var(--shadow-lg)}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(740px,100vw);background:var(--bg);z-index:61;transform:translateX(100%);transition:transform .28s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;box-shadow:var(--shadow-lg)}
 .drawer.open{transform:none}
 .d-head{padding:20px 24px 16px;background:linear-gradient(160deg,#5A1428,#7A1E3A 60%,#8E2748);color:#FBE3EA;position:relative}
 :root[data-theme="dark"] .d-head{background:linear-gradient(160deg,#2A0913,#4A1022 60%,#5E1830)}
@@ -384,6 +384,9 @@ button.pnode:hover{border-color:var(--pink-3);box-shadow:var(--shadow-sm)}
 .d-sec p{margin:0;color:var(--ink);font-size:15px;line-height:1.8}
 .formula{font-size:15px;line-height:1.7;background:var(--surface);border:1px solid var(--pink);border-radius:14px;padding:12px 18px;color:var(--ink)}
 .formula .fl{padding:5px 0;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch}
+.fgroup .fl-multi{display:none}
+.fgroup.split .fl-one{display:none}
+.fgroup.split .fl-multi{display:block}
 .formula .katex{font-size:1.12em;white-space:nowrap}
 .katex{font-size:1.06em}
 .cx .cv .katex{font-size:1em}
@@ -664,6 +667,8 @@ function ageLabel(days){
   return Math.round(days/30) + " 個月";
 }
 const norm = s => String(s || "").toLowerCase().normalize("NFKC");
+// 模型連結只允許指向 Hugging Face 官方站
+const hfUrl = u => /^https:\/\/huggingface\.co\/[^\s"<>]+$/.test(String(u || "")) ? String(u) : "#";
 // 網址 hash 只是書籤便利；在受限環境（如沙盒 iframe）寫入失敗時直接略過
 function setHash(h){ try { history.replaceState(null, "", "#" + h); } catch(e){} }
 /* 數學：資料中以 $…$ 包住的片段用 KaTeX 渲染；其餘文字照常跳脫。big=true 時以 \displaystyle 排版（公式框）。 */
@@ -681,14 +686,38 @@ function rich(s, big=false){
   if (str.indexOf("$") < 0) return esc(str);
   return str.split("$").map((p, i) => i % 2 ? texHtml(p, big) : esc(p)).join("");
 }
-const formulaHtml = s => String(s ?? "").split("\n").map(line => `<div class="fl">${rich(line, true)}</div>`).join("");
+/* 公式分組：資料裡為了手機拆成多行的式子（續行以 \quad／\qquad 開頭，或「標籤：」後接公式），
+   先嘗試合併成一行；版面放不下時（fitFormulas 量測）才顯示拆行版本。 */
+function formulaGroups(src){
+  const groups = [];
+  for (const line of String(src ?? "").split("\n")){
+    const t = line.trim(), g = groups[groups.length - 1];
+    if (g && /^\$\\q?quad\b/.test(t) && g.joined.trimEnd().endsWith("$")){
+      g.joined = g.joined.trimEnd().slice(0, -1) + " " + t.slice(1).replace(/^\\q?quad\s*/, "");
+      g.lines.push(line); g.label = false; continue;
+    }
+    if (g && g.label && t.startsWith("$")){ g.joined += t; g.lines.push(line); g.label = false; continue; }
+    groups.push({joined: line, lines: [line], label: !t.includes("$") && /[：:]\s*$/.test(t)});
+  }
+  return groups;
+}
+const formulaHtml = s => formulaGroups(s).map(g => g.lines.length === 1
+  ? `<div class="fl">${rich(g.lines[0], true)}</div>`
+  : `<div class="fgroup"><div class="fl fl-one">${rich(g.joined, true)}</div><div class="fl-multi">${g.lines.map(l => `<div class="fl">${rich(l, true)}</div>`).join("")}</div></div>`).join("");
+function fitFormulas(root){
+  $$(".fgroup", root || document).forEach(g => {
+    g.classList.remove("split");
+    const one = g.querySelector(".fl-one");
+    if (one && one.scrollWidth > one.clientWidth + 1) g.classList.add("split");
+  });
+}
 const plainTex = s => String(s ?? "").replace(/\\(?:text|mathrm|texttt|operatorname\*?|mathbb|mathcal)\{([^}]*)\}/g, " $1 ").replace(/\\[a-zA-Z]+/g, " ").replace(/[$\\{}_^]/g, " ");
 
 /* ═════════════════════════ 知識樹索引 ═════════════════════════ */
 /* 兩棵知識樹共用一個索引：ml = 機器學習演算法、stat = 統計推論 × 因果推論（id 全域唯一，由 build.py 檢查） */
 const TREES = { ml: TAX, stat: STAT };
 const TREE_VIEW = { ml: "taxonomy", stat: "stats" };
-const NODES = {};                      // id → {node, level, parents:[...], tree}
+const NODES = Object.create(null);     // id → {node, level, parents:[...], tree}（無原型，避免 __proto__ 等特殊鍵）
 const LEAVES_BY = { ml: [], stat: [] }; // 依序
 for (const [key, T] of Object.entries(TREES)){
   T.children.forEach(l1 => {
@@ -807,7 +836,8 @@ function setView(v, push=true){
   window.scrollTo({top:0, behavior:"auto"});
 }
 function route(){
-  const h = decodeURIComponent(location.hash.replace(/^#/, ""));
+  let h = "";
+  try { h = decodeURIComponent(location.hash.replace(/^#/, "")); } catch(e){ h = ""; }   // 格式錯誤的網址（例如 #%）直接回首頁
   if (h.startsWith("algo/")){ const id = h.slice(5); if (NODES[id] && NODES[id].level === 4){ if (!$(".view.active")) setView(TREE_VIEW[NODES[id].tree], false); openAlgo(id, false); return; } }
   if (h.startsWith("node/")){ const id = h.slice(5); if (NODES[id]){ closeDrawer(false); setView(TREE_VIEW[NODES[id].tree], false); PYR[NODES[id].tree].focus(id); return; } }
   if (h.startsWith("flow/")){ closeDrawer(false); state.stage = h.slice(5); renderWorkflow(); setView("workflow", false); return; }
@@ -863,10 +893,10 @@ function modelCard(m, i){
   const bd = m.score_breakdown || {};
   return `<article class="card mcard" data-id="${esc(m.id)}">
     <div class="mcard-head">
-      <div class="rank ${m.pick_rank && m.pick_rank <= 3 ? "top" : ""}" title="${m.pick_rank ? "今日精選第 " + m.pick_rank + " 名" : "熱門榜第 " + m.rank_trending + " 名"}">${rankNum}</div>
+      <div class="rank ${m.pick_rank && m.pick_rank <= 3 ? "top" : ""}" title="${esc(m.pick_rank ? "今日精選第 " + m.pick_rank + " 名" : "熱門榜第 " + m.rank_trending + " 名")}">${esc(rankNum)}</div>
       <div style="min-width:0">
-        <a class="mname" href="${esc(m.url)}" target="_blank" rel="noopener noreferrer">${esc(m.name)}</a>
-        <div class="mauthor">${esc(m.author_fullname || m.author)} · 熱門榜 #${esc(m.rank_trending)}${m.rank_change ? (m.rank_change > 0 ? " ▲" + m.rank_change : " ▼" + (-m.rank_change)) : ""}</div>
+        <a class="mname" href="${esc(hfUrl(m.url))}" target="_blank" rel="noopener noreferrer">${esc(m.name)}</a>
+        <div class="mauthor">${esc(m.author_fullname || m.author)} · 熱門榜 #${esc(m.rank_trending)}${esc(m.rank_change ? (m.rank_change > 0 ? " ▲" + m.rank_change : " ▼" + (-m.rank_change)) : "")}</div>
       </div>
       ${scoreRing(m.score)}
     </div>
@@ -881,7 +911,7 @@ function modelCard(m, i){
     <div class="breakdown" aria-label="分數組成">${Object.keys(BD_LABEL).map(k => `<div class="bd-row"><span>${BD_LABEL[k]}</span><div class="bar-track"><div class="bar-fill" style="width:${Math.round((bd[k]||0)*100)}%"></div></div><span class="muted" style="text-align:right">${Math.round((bd[k]||0)*100)}</span></div>`).join("")}</div>
     <div class="mfoot">
       <div class="rel">${algos.length ? `對應演算法 ${algos.map(a => `<button class="chip" data-algo="${a}" title="${esc(NODES[a].node.name)}">${esc(shortName(NODES[a].node))}</button>`).join("")}` : `<button class="link-btn" data-bd>分數組成</button>`}</div>
-      <div style="display:flex;gap:12px;align-items:center">${algos.length ? `<button class="link-btn" data-bd>分數組成</button>` : ""}<a class="hf-link" href="${esc(m.url)}" target="_blank" rel="noopener noreferrer">在 HF 開啟 ↗</a></div>
+      <div style="display:flex;gap:12px;align-items:center">${algos.length ? `<button class="link-btn" data-bd>分數組成</button>` : ""}<a class="hf-link" href="${esc(hfUrl(m.url))}" target="_blank" rel="noopener noreferrer">在 HF 開啟 ↗</a></div>
     </div>
   </article>`;
 }
@@ -927,7 +957,7 @@ function renderRadar(){
     </div>
     <div class="card dist">
       <div><h3>今日熱門任務分布（不含量化轉檔）</h3>
-        ${taskCounts.map(([k,v]) => `<div class="bar-row"><span class="lbl" title="${esc(k)}">${esc(k)}</span><div class="bar-track"><div class="bar-fill" style="width:${(v/maxTask*100).toFixed(1)}%"></div></div><span class="n">${v}</span></div>`).join("") || `<p class="muted">無資料</p>`}
+        ${taskCounts.map(([k,v]) => `<div class="bar-row"><span class="lbl" title="${esc(k)}">${esc(k)}</span><div class="bar-track"><div class="bar-fill" style="width:${(v/maxTask*100).toFixed(1)}%"></div></div><span class="n">${esc(v)}</span></div>`).join("") || `<p class="muted">無資料</p>`}
       </div>
       <div class="method-mini"><h3>有趣度評分權重 <button class="link-btn" data-goto="method">完整說明</button></h3>
         ${Object.entries(W).map(([k,v]) => `<div class="w"><span>${BD_LABEL[k]||esc(k)}</span><div class="bar-track"><div class="bar-fill" style="width:${(v/maxW*100).toFixed(0)}%;opacity:.85"></div></div><span class="muted" style="text-align:right">${Math.round(v*100)}%</span></div>`).join("")}
@@ -1260,13 +1290,14 @@ function openAlgo(id, pushHash=true){
     ${lf.note ? `<div class="d-sec"><h4><span class="n">✱</span>歸類說明</h4><div class="note-box">${rich(lf.note)}</div></div>` : ""}
     <div class="d-sec"><h4><span class="n">L3</span>同家族：${esc(l3.name)}</h4><p class="muted" style="font-size:13.5px;margin-bottom:10px">${rich(l3.philosophy)}</p>
       <div class="sib">${siblings.length ? siblings.map(s => `<button class="chip" data-algo="${s.id}">${esc(s.name)}</button>`).join("") : `<span class="muted" style="font-size:13px">此家族僅收錄這一個代表${isML ? "演算法" : "方法"}。</span>`}</div></div>
-    ${related.length ? `<div class="d-sec"><h4><span class="n">HF</span>今日雷達中的相關模型</h4><div class="sib">${related.map(m => `<a class="chip" href="${esc(m.url)}" target="_blank" rel="noopener noreferrer">${esc(m.name)} ↗</a>`).join("")}</div></div>` : ""}
+    ${related.length ? `<div class="d-sec"><h4><span class="n">HF</span>今日雷達中的相關模型</h4><div class="sib">${related.map(m => `<a class="chip" href="${esc(hfUrl(m.url))}" target="_blank" rel="noopener noreferrer">${esc(m.name)} ↗</a>`).join("")}</div></div>` : ""}
     <div class="d-nav">${prev ? `<button class="btn" data-algo="${prev.id}">← ${esc(prev.name)}</button>` : "<span></span>"}${next ? `<button class="btn" data-algo="${next.id}">${esc(next.name)} →</button>` : ""}</div>`;
   $$("#drawer [data-algo]").forEach(b => b.onclick = () => openAlgo(b.dataset.algo));
   $$("#dCrumb [data-node]").forEach(b => b.onclick = () => goNode(b.dataset.node));
   $("#dBody").scrollTop = 0;
   $("#drawer").classList.add("open"); $("#overlay").classList.add("open");
   $("#drawer").setAttribute("aria-hidden", "false"); document.body.style.overflow = "hidden";
+  fitFormulas($("#dBody")); requestAnimationFrame(() => fitFormulas($("#dBody")));
   setTimeout(() => $("#dClose").focus(), 60);
   if (pushHash) setHash("algo/" + id);
 }
@@ -1283,6 +1314,8 @@ function closeDrawer(restoreHash=true){
   if (lastFocus && lastFocus.focus) lastFocus.focus();
 }
 $("#dClose").onclick = () => closeDrawer(); $("#overlay").onclick = () => closeDrawer();
+let fitT; window.addEventListener("resize", () => { clearTimeout(fitT); fitT = setTimeout(() => fitFormulas($("#dBody")), 120); });
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => fitFormulas($("#dBody")));
 
 /* ═════════════════════════ 全文搜尋 ═════════════════════════ */
 let INDEX = [];
@@ -1325,10 +1358,11 @@ function search(q){
   }
   return out.sort((a,b) => b.s - a.s).map(x => x.it);
 }
-function hl(text, q){
-  let h = esc(text); const terms = norm(q).split(/\s+/).filter(Boolean);
-  terms.forEach(t => { if (!t) return; const re = new RegExp("(" + t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "ig"); h = h.replace(re, "<mark>$1</mark>"); });
-  return h;
+function hl(text, q){   // 先切開原文再逐段跳脫，避免在已跳脫的 HTML 上做替換
+  const s = String(text ?? "");
+  const terms = norm(q).split(/\s+/).filter(Boolean).map(t => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  if (!terms.length) return esc(s);
+  return s.split(new RegExp("(" + terms.join("|") + ")", "ig")).map((part, i) => i % 2 ? `<mark>${esc(part)}</mark>` : esc(part)).join("");
 }
 const qEl = $("#q"), panel = $("#sPanel"); let sIdx = -1, sItems = [];
 const S_GROUPS = [["algo","ML 演算法",6,"ML"],["stat","統計／因果方法",6,"統計"],["flow","資料分析流程",5,"流程"],["node","知識樹節點",4,"節點"],["model","今日模型",6,"HF"]];
