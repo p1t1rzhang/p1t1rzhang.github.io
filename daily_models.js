@@ -3,7 +3,7 @@ window.DAILY_MODELS = {
  "schema_version": 1,
  "generator": "fetch_hf.py 1.0.0",
  "snapshot_date": "2026-09-27",
- "generated_at": "2026-09-27T14:01:03+00:00",
+ "generated_at": "2026-09-27T14:01:27+00:00",
  "generated_at_local": "2026-09-27 14:01",
  "source": {
   "name": "Hugging Face Hub API",
@@ -65,7 +65,7 @@ window.DAILY_MODELS = {
    "電腦視覺": 1,
    "決策 / 科學": 1
   },
-  "elapsed_sec": 0.14
+  "elapsed_sec": 0.21
  },
  "picks": [
   "convaiinnovations/laya",
@@ -887,7 +887,7 @@ window.DAILY_MODELS = {
    "trending_score": 412.0,
    "created_at": "2026-08-05T08:22:59.000Z",
    "last_modified": null,
-   "age_days": 53.23,
+   "age_days": 53.24,
    "like_velocity": 307.8,
    "params_b": 27.0,
    "active_params_b": null,
@@ -1137,7 +1137,7 @@ window.DAILY_MODELS = {
    "library": "transformers",
    "likes": 606,
    "downloads": 0,
-   "trending_score": 334.0,
+   "trending_score": 331.0,
    "created_at": "2026-09-16T18:25:10.000Z",
    "last_modified": null,
    "age_days": 10.82,
@@ -2181,7 +2181,7 @@ window.DAILY_MODELS = {
    "created_at": "2026-09-24T03:44:51.000Z",
    "last_modified": null,
    "age_days": 3.43,
-   "like_velocity": 47.6,
+   "like_velocity": 47.5,
    "params_b": 27.0,
    "active_params_b": null,
    "is_moe": false,
