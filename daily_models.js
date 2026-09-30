@@ -3,8 +3,8 @@ window.DAILY_MODELS = {
  "schema_version": 1,
  "generator": "fetch_hf.py 1.0.0",
  "snapshot_date": "2026-09-30",
- "generated_at": "2026-09-30T08:51:48+00:00",
- "generated_at_local": "2026-09-30 08:51",
+ "generated_at": "2026-09-30T08:52:23+00:00",
+ "generated_at_local": "2026-09-30 08:52",
  "source": {
   "name": "Hugging Face Hub API",
   "endpoint": "https://huggingface.co/api/models?sort=trendingScore&limit=60",
@@ -68,7 +68,7 @@ window.DAILY_MODELS = {
    "電腦視覺": 2,
    "決策 / 科學": 1
   },
-  "elapsed_sec": 0.17
+  "elapsed_sec": 0.2
  },
  "picks": [
   "convaiinnovations/laya",
@@ -525,7 +525,7 @@ window.DAILY_MODELS = {
    "task_group": "multimodal",
    "task_group_zh": "多模態",
    "library": null,
-   "likes": 2054,
+   "likes": 2055,
    "downloads": 11836,
    "trending_score": 395.0,
    "created_at": "2026-09-04T02:55:48.000Z",
@@ -704,9 +704,9 @@ window.DAILY_MODELS = {
    "task_group": "multimodal",
    "task_group_zh": "多模態",
    "library": "transformers",
-   "likes": 16588,
+   "likes": 16589,
    "downloads": 7020239,
-   "trending_score": 352.0,
+   "trending_score": 353.0,
    "created_at": "2026-08-05T08:22:59.000Z",
    "last_modified": null,
    "age_days": 56.02,
@@ -1686,7 +1686,7 @@ window.DAILY_MODELS = {
    "trending_score": 175.0,
    "created_at": "2026-09-20T17:08:40.000Z",
    "last_modified": null,
-   "age_days": 9.65,
+   "age_days": 9.66,
    "like_velocity": 33.7,
    "params_b": null,
    "active_params_b": null,
@@ -2932,7 +2932,7 @@ window.DAILY_MODELS = {
    "trending_score": 109.0,
    "created_at": "2026-09-23T15:56:49.000Z",
    "last_modified": null,
-   "age_days": 6.7,
+   "age_days": 6.71,
    "like_velocity": 17.7,
    "params_b": 27.0,
    "active_params_b": null,
@@ -2959,7 +2959,7 @@ window.DAILY_MODELS = {
    "score_breakdown": {
     "momentum": 0.229,
     "velocity": 0.229,
-    "recency": 0.62,
+    "recency": 0.619,
     "originality": 0.45,
     "rarity": 0.775
    },
@@ -3051,7 +3051,7 @@ window.DAILY_MODELS = {
    "created_at": "2026-09-22T10:36:43.000Z",
    "last_modified": null,
    "age_days": 7.93,
-   "like_velocity": 13.8,
+   "like_velocity": 13.7,
    "params_b": null,
    "active_params_b": null,
    "is_moe": false,
