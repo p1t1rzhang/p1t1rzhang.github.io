@@ -2,8 +2,8 @@
  "schema_version": 1,
  "generator": "fetch_hf.py 1.0.0",
  "snapshot_date": "2026-09-30",
- "generated_at": "2026-09-30T08:43:41+00:00",
- "generated_at_local": "2026-09-30 08:43",
+ "generated_at": "2026-09-30T08:44:22+00:00",
+ "generated_at_local": "2026-09-30 08:44",
  "source": {
   "name": "Hugging Face Hub API",
   "endpoint": "https://huggingface.co/api/models?sort=trendingScore&limit=60",
@@ -67,7 +67,7 @@
    "電腦視覺": 2,
    "決策 / 科學": 1
   },
-  "elapsed_sec": 0.16
+  "elapsed_sec": 0.29
  },
  "picks": [
   "convaiinnovations/laya",
@@ -220,7 +220,7 @@
    "task_group": "genmedia",
    "task_group_zh": "影像 / 影音生成",
    "library": "gguf",
-   "likes": 2470,
+   "likes": 2471,
    "downloads": 1152523,
    "trending_score": 972.0,
    "created_at": "2026-09-20T15:51:13.000Z",
@@ -404,7 +404,7 @@
    "created_at": "2026-09-21T20:09:04.000Z",
    "last_modified": null,
    "age_days": 8.52,
-   "like_velocity": 63.4,
+   "like_velocity": 63.3,
    "params_b": 8.0,
    "active_params_b": null,
    "is_moe": false,
