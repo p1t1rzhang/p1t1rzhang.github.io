@@ -160,6 +160,7 @@
          "tasks": [
           "迴歸"
          ],
+         "plain": "一般線性迴歸會「太相信」資料，特徵彼此很像時，係數會忽大忽小。Ridge 給每個係數加一條橡皮筋往 0 拉，讓它們都收斂一點、不要太誇張，模型就穩了。所有特徵都保留，只是影響力被打折。",
          "intuition": "在最小平方法上加入係數的 L2 懲罰，把係數往 0 收縮但不會剛好變成 0。等價於對係數施加高斯先驗的 MAP 估計。特徵高度共線時，XᵀX 有很小的特徵值、反矩陣不穩定；加上 λI 相當於把這些特徵值「墊高」，解就變穩定了。",
          "objective": "$\\min_{\\beta}\\ \\lVert y - X\\beta \\rVert_2^2 + \\lambda \\lVert \\beta \\rVert_2^2$\n閉式解：$\\hat{\\beta} = (X^\\top X + \\lambda I)^{-1} X^\\top y$",
          "complexity": {
@@ -206,6 +207,7 @@
          "tasks": [
           "迴歸"
          ],
+         "plain": "跟 Ridge 一樣會把係數往 0 拉，但拉得更「狠」：不重要的特徵會被直接歸零、踢出模型。所以它同時在預測和挑特徵，最後留下一份精簡的重要變數清單。",
          "intuition": "L1 懲罰的等高線是菱形，損失函數的等高線常在菱形的「角」上碰到它，而角就在座標軸上，所以部分係數會精確等於 0。估計與特徵選擇因此一步完成。等價於拉普拉斯先驗的 MAP 估計。",
          "objective": "$\\min_{\\beta}\\ \\frac{1}{2n} \\lVert y - X\\beta \\rVert_2^2 + \\lambda \\lVert \\beta \\rVert_1$",
          "complexity": {
@@ -252,6 +254,7 @@
          "tasks": [
           "迴歸"
          ],
+         "plain": "Ridge 和 Lasso 的混合版。Lasso 遇到一群很像的特徵時常常只隨機留一個；ElasticNet 會讓相似的特徵「同進同出」，既能挑變數、在共線資料上又比較穩。",
          "intuition": "把 L1 與 L2 混合使用：L1 負責讓係數稀疏，L2 讓高度相關的特徵「成群」一起進出模型（grouping effect），修補 Lasso 在共線特徵下的不穩定。可以理解為先做 Ridge 式的去相關、再做 Lasso 式的選擇。",
          "objective": "$\\min_{\\beta}\\ \\frac{1}{2n} \\lVert y - X\\beta \\rVert_2^2$\n$\\quad + \\lambda \\left[ \\rho \\lVert \\beta \\rVert_1 + \\frac{1 - \\rho}{2} \\lVert \\beta \\rVert_2^2 \\right]$\nscikit-learn 參數：alpha = $\\lambda$、l1_ratio = $\\rho$",
          "complexity": {
@@ -296,6 +299,7 @@
          "tasks": [
           "分類"
          ],
+         "plain": "把各個特徵加權打分，再把分數壓成 0 到 1 之間的機率，例如「這位客戶流失的機率是 73%」。簡單、快、係數好解釋（每個特徵讓機率往上或往下推多少），是分類問題的標準起手式。",
          "intuition": "把線性分數 wᵀx 經過 sigmoid 轉成機率，等價於假設「對數勝算（log-odds）與特徵呈線性」。最大化概似就是最小化交叉熵，而交叉熵是凸函數，所以保證找得到全域最佳解。多類別時改用 softmax。",
          "objective": "$\\min_{w}\\ -\\sum_{i} \\big[\\, y_i \\log \\sigma(w^\\top x_i)$\n$\\quad + (1 - y_i) \\log\\big(1 - \\sigma(w^\\top x_i)\\big) \\big] + \\lambda R(w)$\n$\\sigma(z) = \\frac{1}{1 + e^{-z}}$",
          "complexity": {
@@ -355,6 +359,7 @@
          "tasks": [
           "分類"
          ],
+         "plain": "想在兩群點中間畫一條分隔線，而且要讓線離兩邊最近的點都「越遠越好」，就像在兩群人中間開一條最寬的馬路。邊界只由靠近路邊的少數點決定；搭配核函數，這條路也可以是彎的。",
          "intuition": "所有能分開兩類的超平面中，選「間隔（margin）」最大的那一個：間隔越大，泛化誤差上界越緊。最後只有落在邊界上或違反間隔的點（支持向量）會決定解。搭配核技巧就能得到非線性邊界。",
          "objective": "$\\min_{w,b}\\ \\tfrac{1}{2} \\lVert w \\rVert^2$\n$\\quad + C \\sum_{i} \\max\\big(0,\\ 1 - y_i (w^\\top \\phi(x_i) + b)\\big)$\n（hinge loss，對偶問題只涉及核矩陣 $K_{ij} = k(x_i, x_j)$）",
          "complexity": {
@@ -405,6 +410,7 @@
          "tasks": [
           "迴歸"
          ],
+         "plain": "SVM 的迴歸版。預測時允許一個「誤差容忍帶」：只要預測值落在真實值上下一小段範圍內就不算錯，只懲罰跑出範圍的點。因此對小雜訊不敏感。",
          "intuition": "把 SVM 的間隔概念搬到迴歸：預測誤差落在 ε 寬的「管子」內就不計成本，只懲罰管外的點。因此對小雜訊不敏感，而解同樣只依賴支持向量。",
          "objective": "$\\min_{w,b}\\ \\tfrac{1}{2} \\lVert w \\rVert^2$\n$\\quad + C \\sum_{i} \\max\\big(0,\\ \\lvert y_i - f(x_i) \\rvert - \\varepsilon\\big)$\n（$\\varepsilon$-insensitive loss）",
          "complexity": {
@@ -451,6 +457,7 @@
           "迴歸",
           "分類"
          ],
+         "plain": "不先假設函數長什麼樣，而是說「相近的輸入，輸出也應該相近」，再讓資料去塑形。它最大的特色是會同時告訴你預測值和「有多不確定」：資料多的地方很有把握，資料少的地方就老實說不確定。",
          "intuition": "不是學一組參數，而是直接對「函數本身」放先驗：任意有限個點上的函數值服從多元常態分布，協方差由核函數決定。觀察資料後以貝氏定理得到後驗，同時給出預測均值與不確定性（信賴帶）。",
          "objective": "後驗均值：$\\mu(x_*) = k_*^\\top (K + \\sigma^2 I)^{-1} y$\n超參數：最大化邊際對數概似\n$\\log p(y \\mid X, \\theta) = -\\tfrac{1}{2} y^\\top (K + \\sigma^2 I)^{-1} y$\n$\\quad - \\tfrac{1}{2} \\log \\lvert K + \\sigma^2 I \\rvert - \\tfrac{n}{2} \\log 2\\pi$",
          "complexity": {
@@ -509,6 +516,7 @@
           "迴歸",
           "分類"
          ],
+         "plain": "像玩「二十個問題」：每一步挑一個最能把資料分乾淨的問題（例如「年齡 > 35？」），一路問下去，最後得到一組 if-then 規則。人看得懂，但單棵樹容易背答案（過擬合）。",
          "intuition": "每一步貪婪地挑一個特徵與切點，讓切分後子節點的不純度（分類用 Gini 或熵，迴歸用平方誤差）下降最多，最後形成一組可讀的 if-then 規則。",
          "objective": "每次切分最大化 $\\Delta I = I(\\text{父}) - \\frac{n_L}{n} I(L) - \\frac{n_R}{n} I(R)$\n$\\text{Gini} = 1 - \\sum_{k} p_k^2$\n成本複雜度剪枝：$R_\\alpha(T) = R(T) + \\alpha \\lvert T \\rvert$",
          "complexity": {
@@ -555,6 +563,7 @@
           "迴歸",
           "分類"
          ],
+         "plain": "種很多棵決策樹，每棵只看部分資料、每次切分只看部分特徵，讓它們各有偏見，最後投票或取平均。就像問一群觀點不同的專家，平均下來比任何一位都準也更穩。表格資料上幾乎不用調參就很好用。",
          "intuition": "B 棵樹平均後的變異 = ρσ² + (1−ρ)σ²/B。自助抽樣（bootstrap）可以壓低第二項，而每次切分只從隨機 m 個特徵中挑選則壓低樹與樹之間的相關 ρ。這就是它比單純 bagging 更強的原因。",
          "objective": "$\\hat{y} = \\frac{1}{B} \\sum_{b=1}^{B} T_b(x)$\n每棵樹在 bootstrap 樣本上訓練；每次切分只從隨機 $m$ 個特徵中挑選（分類 $m \\approx \\sqrt{d}$，迴歸 $m \\approx d/3$）",
          "complexity": {
@@ -606,6 +615,7 @@
           "迴歸",
           "分類"
          ],
+         "plain": "比隨機森林更「隨性」：切分點不仔細找最佳值，而是隨機抽一個。每棵樹更粗糙，但樹與樹更不像，平均後反而穩定，而且訓練更快。",
          "intuition": "比隨機森林更隨機：切點不再搜尋最佳值，而是在每個候選特徵的範圍內隨機抽一個，再從這些隨機切分中挑最好的。用稍高的偏差換取更低的變異與更快的訓練；預設不做 bootstrap。",
          "objective": "同隨機森林的平均預測\n切點 $\\sim \\operatorname{Uniform}(\\min\\nolimits_j, \\max\\nolimits_j)$，在 $m$ 個候選（特徵, 隨機切點）中取不純度下降最大者",
          "complexity": {
@@ -665,6 +675,7 @@
           "分類",
           "排序"
          ],
+         "plain": "一棵接一棵地種樹，每棵新樹專門修正前面所有樹還猜錯的部分，就像考試後只針對錯題加強練習。累積幾百棵「小修正」後，預測會非常準；是表格資料競賽常勝軍的原型。",
          "intuition": "$F_m(x) = F_{m-1}(x) + \\nu \\cdot h_m(x)$，其中 $h_m$ 擬合偽殘差 $r = -\\partial L / \\partial F$。只要損失函數可微就能用（平方、絕對、Huber、對數損失、分位數），把 AdaBoost 一般化為「在函數空間做梯度下降」。",
          "objective": "偽殘差：$r_{im} = -\\left[ \\frac{\\partial L(y_i, F(x_i))}{\\partial F(x_i)} \\right]_{F = F_{m-1}}$\n$h_m = \\operatorname*{arg\\,min}_{h} \\sum_{i} \\big(r_{im} - h(x_i)\\big)^2$\n$F_m = F_{m-1} + \\nu \\cdot h_m$",
          "complexity": {
@@ -716,6 +727,7 @@
           "分類",
           "排序"
          ],
+         "plain": "GBDT 的工程強化版。除了一棵棵修正錯誤，還內建「別把樹長太複雜」的懲罰來防止過擬合，並且會處理缺失值、支援平行運算，所以又準又快。表格資料的首選之一。",
          "intuition": "對損失函數做二階泰勒展開，並在目標函數中直接加入樹的複雜度懲罰。由此可解出每片葉子的最佳權重與分裂增益的公式，讓「要不要再切」本身成為有理論依據的正則化決策。工程上再加入稀疏感知切分、直方圖近似、快取與平行化。",
          "objective": "$\\mathrm{Obj} = \\sum_{i} l(y_i, \\hat{y}_i) + \\sum_{k} \\Omega(f_k)$，$\\Omega(f) = \\gamma T + \\tfrac{1}{2} \\lambda \\lVert w \\rVert^2$\n最佳葉權重：$w_j^* = -\\frac{G_j}{H_j + \\lambda}$\n分裂增益 $= \\tfrac{1}{2} \\Big[ \\frac{G_L^2}{H_L + \\lambda} + \\frac{G_R^2}{H_R + \\lambda}$\n$\\qquad - \\frac{(G_L + G_R)^2}{H_L + H_R + \\lambda} \\Big] - \\gamma$\n（$G$、$H$ 為該節點樣本的一階、二階梯度和）",
          "complexity": {
@@ -785,6 +797,7 @@
           "分類",
           "排序"
          ],
+         "plain": "為大資料加速的梯度提升樹。它用直方圖把數值分箱、優先處理「錯得多」的樣本，並把互斥的稀疏特徵綁在一起，所以訓練速度比 XGBoost 快很多、記憶體也省。資料量大時的首選。",
          "intuition": "為大資料設計的兩個巧思：GOSS 保留梯度大的樣本、只抽樣梯度小的樣本並補回權重，減少樣本數；EFB 把幾乎互斥的稀疏特徵綁成一個，減少特徵數。再加上逐葉（leaf-wise）成長，每次都切「增益最大的那片葉子」，同樣葉數下損失降得更多。",
          "objective": "同 GBDT 的二階目標\n直方圖分箱，並用直方圖差分加速：子節點直方圖 = 父節點 − 兄弟節點",
          "complexity": {
@@ -844,6 +857,7 @@
           "分類",
           "排序"
          ],
+         "plain": "專門擅長處理類別型特徵（城市、商品類別、會員等級……）的梯度提升樹。它用一種不會偷看答案的方式把類別轉成數字，避免資訊洩漏，通常不太需要調參就有很好的表現。",
          "intuition": "解決 boosting 的「預測偏移」：一般的 target encoding 與梯度計算都用到樣本自己的標籤，造成目標洩漏。CatBoost 改用有序策略，每個樣本只用隨機排列中排在它之前的樣本來計算類別統計量與殘差。另外採用對稱（oblivious）樹：同一層的所有節點共用同一個切分條件。",
          "objective": "有序目標統計（類別特徵編碼）：\n$\\hat{x}_i = \\frac{\\sum_{j<i,\\ x_j = x_i} y_j + a \\cdot P}{\\sum_{j<i} \\mathbf{1}[x_j = x_i] + a}$\n對稱樹：同一深度的所有節點使用同一組（特徵, 閾值）",
          "complexity": {
@@ -909,6 +923,7 @@
           "迴歸",
           "分類"
          ],
+         "plain": "「物以類聚」：要預測一個新樣本，就去找跟它最像的 K 個舊樣本，看它們大多是什麼、平均是多少。完全不用訓練，但預測時要跟所有資料比，資料一大就慢，而且特徵要先標準化。",
          "intuition": "預測新點時，找出最近的 k 個訓練樣本：分類取多數決，迴歸取平均（可依距離加權）。k 小則偏差低、變異高；k 大則平滑、偏差高。本質上是非參數的局部條件期望估計。",
          "objective": "迴歸：$\\hat{y}(x) = \\frac{1}{k} \\sum_{x_i \\in \\mathcal{N}_k(x)} y_i$\n分類：$\\hat{y}(x) = \\operatorname*{arg\\,max}_{c} \\sum_{x_i \\in \\mathcal{N}_k(x)} \\mathbf{1}[y_i = c]$\n距離常用 $\\lVert x - x_i \\rVert_p$",
          "complexity": {
@@ -972,6 +987,7 @@
          "tasks": [
           "分類"
          ],
+         "plain": "天真地假設每個特徵彼此獨立，把各個線索各自提供的機率證據直接相乘，得出最可能的類別。像看到信裡有「中獎」「匯款」「限時」就判斷是垃圾信。假設雖然不真實，但在文字分類上又快又出奇地好用。",
          "intuition": "假設在給定類別下，各特徵彼此條件獨立，於是聯合概似可拆成乘積，每個參數只需一維統計量。這個假設幾乎總是錯的，但分類只需要類別之間的排序正確，所以實務上常出奇有效。",
          "objective": "$\\hat{y} = \\operatorname*{arg\\,max}_{c} \\left[ \\log P(c) + \\sum_{j} \\log P(x_j \\mid c) \\right]$\nMultinomial NB（文字）：$P(w \\mid c) = \\frac{\\operatorname{count}(w, c) + \\alpha}{\\sum_{w'} \\operatorname{count}(w', c) + \\alpha \\lvert V \\rvert}$",
          "complexity": {
@@ -1018,6 +1034,7 @@
           "分類",
           "監督式降維"
          ],
+         "plain": "假設每一類的資料都像一團形狀相同的雲，找出一個投影方向，讓不同類的雲分得最開、同類的點擠得最緊。既能分類，也能當降維工具。",
          "intuition": "假設各類別都是共用同一協方差矩陣的多元常態，於是對數後驗比是 x 的線性函數，得到線性邊界。Fisher 的觀點則是找一個投影方向，讓「類間變異 ÷ 類內變異」最大，所以 LDA 也能做監督式降維（最多 K − 1 維）。",
          "objective": "Fisher 準則：$\\max_{w}\\ \\frac{w^\\top S_B w}{w^\\top S_W w}$\n判別函數：$\\delta_c(x) = x^\\top \\Sigma^{-1} \\mu_c - \\tfrac{1}{2} \\mu_c^\\top \\Sigma^{-1} \\mu_c + \\log \\pi_c$",
          "complexity": {
@@ -1076,6 +1093,7 @@
           "迴歸",
           "分類"
          ],
+         "plain": "最基本的神經網路：一層層的「加權加總 → 非線性轉換」疊起來，理論上能逼近任何函數。在表格資料上通常打不過梯度提升樹，但它是所有深度學習模型的基本積木。",
          "intuition": "每一層做仿射變換再過非線性激活函數 h = σ(Wx + b)，堆疊起來就能逼近任意連續函數；梯度用鏈鎖律反向傳播計算。",
          "objective": "$\\min_{\\theta}\\ \\frac{1}{n} \\sum_{i} L(y_i, f_\\theta(x_i)) + \\lambda \\lVert \\theta \\rVert^2$\n$f_\\theta(x) = W_L\\, \\sigma\\big(\\cdots \\sigma(W_1 x + b_1) \\cdots\\big) + b_L$",
          "complexity": {
@@ -1131,6 +1149,7 @@
           "迴歸",
           "分類"
          ],
+         "plain": "一個事先在上百萬個「假資料集」上練過的 Transformer，已經學會「怎麼從小資料學習」。遇到你的小型表格資料時，不用訓練，直接看一眼就能預測。適合樣本數不多（約一萬筆內）的分類與迴歸。",
          "intuition": "把「學習演算法」本身學起來：先在數百萬個由隨機結構因果模型生成的合成資料集上預訓練 Transformer，讓它學會「看到訓練集後，直接輸出測試點的後驗預測分布」。使用時不做任何梯度更新，一次前向傳播就完成擬合與預測（情境學習），近似貝氏推論。v2 版發表於 Nature（2025）。",
          "objective": "預訓練：$\\min_{\\theta}\\ \\mathbb{E}_{D \\sim p(D)} \\left[ -\\log q_\\theta(y_{\\text{test}} \\mid x_{\\text{test}}, D_{\\text{train}}) \\right]$，$D$ 取自合成資料先驗\n推論：$p(y \\mid x, D_{\\text{train}}) \\approx q_\\theta(y \\mid x, D_{\\text{train}})$",
          "complexity": {
@@ -1194,6 +1213,7 @@
          "tasks": [
           "時間序列預測"
          ],
+         "plain": "用「過去的自己」預測未來：今天的值跟前幾天的值和前幾天的預測誤差有關。遇到有趨勢的序列先做差分讓它平穩；SARIMA 再加上季節性（例如每週、每年的循環）。經典、可解釋的時間序列基準模型。",
          "intuition": "先差分 d 次讓序列平穩，再用過去的觀測值（AR，p 階）與過去的預測誤差（MA，q 階）的線性組合預測下一期。SARIMA 再加上季節性的對應項。",
          "objective": "$\\phi(B)(1 - B)^d y_t = \\theta(B)\\, \\varepsilon_t$\n$\\phi(B) = 1 - \\sum_{i=1}^{p} \\phi_i B^i$，$\\theta(B) = 1 + \\sum_{j=1}^{q} \\theta_j B^j$，$\\varepsilon_t \\sim \\mathrm{WN}(0, \\sigma^2)$\n以最大概似估計，AIC / BIC 選擇階數",
          "complexity": {
@@ -1240,6 +1260,7 @@
          "tasks": [
           "時間序列預測"
          ],
+         "plain": "把時間序列拆成「長期趨勢 + 週/年季節性 + 節假日效應」三塊積木分別估計再加起來。對缺值和異常點很寬容，參數也直覺，適合有明顯週期的商業數據（流量、銷量）快速做出預測。",
          "intuition": "把時間序列拆成可解釋的加法元件：y(t) = 趨勢 g(t) + 季節 s(t) + 假日 h(t) + ε。趨勢是分段線性（或 logistic 飽和）並自動偵測轉折點，季節性用傅立葉級數表示。本質是「曲線擬合」而非自迴歸，因此能容忍缺值與不規則間隔。",
          "objective": "$y(t) = g(t) + s(t) + h(t) + \\varepsilon_t$\n$s(t) = \\sum_{n=1}^{N} \\Big[ a_n \\cos\\left(\\frac{2\\pi n t}{P}\\right)$\n$\\qquad + b_n \\sin\\left(\\frac{2\\pi n t}{P}\\right) \\Big]$\n以 Stan 做 MAP 估計；轉折點幅度加 Laplace 先驗（促使稀疏）",
          "complexity": {
@@ -1302,6 +1323,7 @@
           "序列標註",
           "分段"
          ],
+         "plain": "背後有看不到的「狀態」在切換（例如市場處於多頭或空頭、人在說哪個音），我們只看得到它們產生的表象。HMM 從觀察到的序列反推最可能的隱藏狀態序列。",
          "intuition": "觀測值背後有一條看不見的離散狀態鏈：狀態依轉移矩陣演化，每個狀態再依發射分布產生觀測。前向-後向演算法計算概似，Viterbi 演算法找出最可能的狀態路徑。",
          "objective": "$p(x_{1:T}, z_{1:T}) = \\pi(z_1) \\prod_{t=2}^{T} A(z_{t-1}, z_t)$\n$\\qquad \\times \\prod_{t=1}^{T} B(z_t, x_t)$\n以 Baum-Welch（EM）最大化 $\\log p(x)$\n解碼：$z^* = \\operatorname*{arg\\,max}_{z} p(z \\mid x)$（Viterbi）",
          "complexity": {
@@ -1352,6 +1374,7 @@
          "tasks": [
           "序列標註"
          ],
+         "plain": "在序列標註（例如把一句話的每個字標成人名、地名、其他）時，不只看每個字本身，也考慮「前後標籤要合理」，例如「人名的中間」後面不太可能直接接「地名的開頭」。整句一起判斷，比逐字判斷更一致。",
          "intuition": "直接建模 p(y | x)（判別式），並把整條標籤序列一起考慮：用特徵函數描述「標籤之間的轉移」與「標籤與觀測的相容度」，在整條序列上做全域正規化，避免 MEMM 的標籤偏差問題。",
          "objective": "$p(y \\mid x) = \\frac{1}{Z(x)} \\exp\\Big($\n$\\quad \\sum_{t} \\sum_{k} \\lambda_k f_k(y_{t-1}, y_t, x, t) \\Big)$\n最大化條件對數概似 + $L_2$ 正則；$Z(x)$ 以前向演算法計算",
          "complexity": {
@@ -1407,6 +1430,7 @@
           "序列預測",
           "序列標註"
          ],
+         "plain": "有「記憶」的神經網路，依序讀資料，並用三個閘門決定「要記住什麼、要忘掉什麼、要輸出什麼」。因此能記住比較久以前的資訊，過去常用在文字、語音與時間序列。",
          "intuition": "普通 RNN 的梯度在時間上連乘，很容易消失或爆炸。LSTM 加入一條以「加法」更新的細胞狀態 cₜ，並用遺忘門、輸入門、輸出門控制資訊的保留與寫入，讓梯度能沿著 cₜ 幾乎無損地長距離流動（constant error carousel）。",
          "objective": "$f_t = \\sigma(W_f [h_{t-1}, x_t] + b_f)$，$i_t = \\sigma(\\cdots)$，$o_t = \\sigma(\\cdots)$，$\\tilde{c}_t = \\tanh(\\cdots)$\n$c_t = f_t \\odot c_{t-1} + i_t \\odot \\tilde{c}_t$\n$h_t = o_t \\odot \\tanh(c_t)$\n損失依任務而定（交叉熵或 MSE），以 BPTT 最佳化",
          "complexity": {
@@ -1465,6 +1489,7 @@
           "序列分類",
           "序列預測"
          ],
+         "plain": "LSTM 的精簡版，把閘門從三個減成兩個。參數更少、訓練更快，多數任務效果和 LSTM 差不多。",
          "intuition": "LSTM 的精簡版：把遺忘門與輸入門合併為一個更新門 zₜ，並取消獨立的細胞狀態。參數約少 25%，多數任務的表現與 LSTM 相近。",
          "objective": "$z_t = \\sigma(W_z [h_{t-1}, x_t])$，$r_t = \\sigma(W_r [h_{t-1}, x_t])$\n$\\tilde{h}_t = \\tanh(W [r_t \\odot h_{t-1}, x_t])$\n$h_t = (1 - z_t) \\odot h_{t-1} + z_t \\odot \\tilde{h}_t$",
          "complexity": {
@@ -1507,6 +1532,7 @@
           "時間序列預測",
           "序列分類"
          ],
+         "plain": "用卷積而非循環來處理序列：每一步只看過去（不偷看未來），並用「跳著看」的空洞卷積，只要幾層就能看到很久以前。可以平行運算，訓練比 LSTM 快又穩。",
          "intuition": "用只看過去的「因果」卷積，加上指數成長的膨脹率（1, 2, 4, 8…），讓感受野隨層數指數擴大，再配合殘差連接。所有時間步可平行計算，梯度路徑短而穩定。",
          "objective": "膨脹卷積：$(F *_d x)(t) = \\sum_{i=0}^{k-1} f(i) \\cdot x_{t - d \\cdot i}$\n感受野 $R = 1 + (k - 1) \\cdot \\sum_{l} d_l$\n殘差塊：$o = \\operatorname{ReLU}(x + \\mathcal{F}(x))$",
          "complexity": {
@@ -1566,6 +1592,7 @@
           "翻譯",
           "語音辨識"
          ],
+         "plain": "核心是「注意力」：處理每個字時，都去看句子裡所有其他字，判斷誰跟它最相關、該參考多少。不用逐字依序處理，可以大量平行運算，所以能訓練得非常大。現代大型語言模型的基礎架構。",
          "intuition": "每個 token 產生 Query、Key、Value；Q 與 K 的相似度決定要從哪些位置「讀取」多少 V。多頭注意力並行學習不同的關係；編碼器理解輸入，解碼器以交叉注意力讀取編碼結果並自迴歸地生成輸出。原始論文以監督式機器翻譯訓練。",
          "objective": "$\\operatorname{Attention}(Q, K, V) = \\operatorname{softmax}\\left( \\frac{QK^\\top}{\\sqrt{d_k}} \\right) V$\n$\\operatorname{MultiHead} = \\operatorname{Concat}(\\text{head}_1, \\ldots, \\text{head}_h)\\, W^O$\n訓練：最小化目標序列的交叉熵 $-\\sum_{t} \\log p(y_t \\mid y_{<t}, x)$（teacher forcing），常搭配 label smoothing",
          "complexity": {
@@ -1619,6 +1646,7 @@
          "tasks": [
           "時間序列預測"
          ],
+         "plain": "專為多步時間序列預測設計的 Transformer。它能同時吃進靜態資訊（店型）、已知的未來資訊（假日、促銷）與過去的觀測值，自動挑出重要的變數，還能給出預測區間與可解釋的注意力權重。",
          "intuition": "為多時間跨度預測設計的可解釋架構：變數選擇網路自動挑出重要特徵，LSTM 處理局部時序，多頭注意力捕捉長期模式。它把靜態共變數、已知的未來輸入（節慶、促銷）與歷史觀測分流處理，並直接輸出分位數預測。",
          "objective": "分位數損失：$\\mathcal{L} = \\sum_{q} \\sum_{t} \\Big[ q\\, (y_t - \\hat{y}_t^{q})_+$\n$\\qquad + (1 - q)(\\hat{y}_t^{q} - y_t)_+ \\Big]$，$q \\in \\{0.1, 0.5, 0.9\\}$",
          "complexity": {
@@ -1690,6 +1718,7 @@
           "影像分類",
           "視覺骨幹"
          ],
+         "plain": "神經網路疊太深反而會學不好。ResNet 在每幾層加一條「捷徑」，讓訊號可以直接跳過去，網路只需要學「在原本基礎上要修正多少」。這個小改動讓上百層的網路也能順利訓練。",
          "intuition": "網路變深時，訓練誤差反而上升（退化問題）。殘差塊讓每一層只學「修正量」F(x)，輸出為 x + F(x)；恆等捷徑讓梯度可以直達淺層，因此能訓練上百層的網路。",
          "objective": "$y = \\mathcal{F}(x, \\{W_i\\}) + x$\n分類以交叉熵 $-\\sum_{c} y_c \\log \\operatorname{softmax}(z)_c$ 訓練",
          "complexity": {
@@ -1743,6 +1772,7 @@
          "tasks": [
           "影像分割"
          ],
+         "plain": "先把影像一路壓縮、理解「這是什麼」，再一路放大還原、標出「它在哪裡、每個像素屬於什麼」，並用跳接把壓縮前的細節直接送到還原端。擅長像素級的分割，例如醫學影像找腫瘤。",
          "intuition": "編碼器逐步下採樣以理解「是什麼」，解碼器逐步上採樣以恢復「在哪裡」；對稱的跳接（skip connection）把高解析度細節直接送到解碼端，因此少量標註就能得到精細的邊界。U-Net 也是擴散模型去噪網路的常見骨幹。",
          "objective": "像素級交叉熵 $-\\sum_{\\text{pixels}} w(x) \\cdot \\log p_{\\ell(x)}(x)$（原論文加權強調邊界）\n常另加 Dice 損失：$1 - \\frac{2 \\lvert P \\cap G \\rvert}{\\lvert P \\rvert + \\lvert G \\rvert}$，處理前景不平衡",
          "complexity": {
@@ -1793,6 +1823,7 @@
          "tasks": [
           "物件偵測"
          ],
+         "plain": "把影像切成網格，一次看完整張圖，同時預測「哪裡有物體、框多大、是什麼」。只看一次（You Only Look Once），所以速度快到能做即時偵測，例如監視器、自駕車。",
          "intuition": "把偵測當成一次性的迴歸：整張圖只看一次，每個網格或特徵點同時預測框座標、物件性與類別機率，再用非極大值抑制（NMS）去除重複框。因為速度快，可以即時運行；此後持續迭代至 v8、YOLO11 等版本。",
          "objective": "$\\mathcal{L} = \\lambda_{\\text{box}} \\mathcal{L}_{\\text{box}} + \\lambda_{\\text{obj}} \\mathcal{L}_{\\text{obj}} + \\lambda_{\\text{cls}} \\mathcal{L}_{\\text{cls}}$\n$\\mathcal{L}_{\\text{box}}$：CIoU / GIoU；$\\mathcal{L}_{\\text{obj}}$、$\\mathcal{L}_{\\text{cls}}$：BCE\n推論後以 NMS（IoU 門檻）去除重複框",
          "complexity": {
@@ -1855,6 +1886,7 @@
           "影像分類",
           "視覺骨幹"
          ],
+         "plain": "把圖片切成一塊塊小方塊，當成「一串字」丟進 Transformer。它不像 CNN 預設「相鄰像素比較相關」，所以需要大量資料才學得好；資料夠多時表現超越 CNN。",
          "intuition": "把影像切成 16×16 的 patch，線性投影成向量，加上位置嵌入與 [CLS] token，送進標準 Transformer 編碼器，最後用 [CLS] 的輸出做分類。它沒有 CNN 的局部偏誤，所以小資料時較差，但經大規模預訓練後超越 CNN。",
          "objective": "$z_0 = [x_{\\text{cls}};\\, x_p^1 E;\\, \\ldots;\\, x_p^N E] + E_{\\text{pos}}$，$N = HW / P^2$\n對 $\\operatorname{LN}(z_L^0)$ 計算分類交叉熵",
          "complexity": {
@@ -1904,6 +1936,7 @@
           "物件偵測",
           "語意分割"
          ],
+         "plain": "ViT 的改良版：注意力只在小視窗內計算，下一層再把視窗錯開，讓資訊跨區流動；並像 CNN 一樣逐層縮小解析度。計算量大幅下降，適合偵測、分割等需要高解析度的任務。",
          "intuition": "只在不重疊的局部視窗內做注意力，使成本與影像大小呈線性；下一層把視窗平移半格，讓相鄰視窗交換資訊。再逐層合併 patch 形成階層式特徵圖，兼具 CNN 的多尺度與 Transformer 的彈性。",
          "objective": "W-MSA 與 SW-MSA（移位視窗）交替\n複雜度：$\\Omega(\\text{W-MSA}) = 4hwC^2 + 2M^2 hwC$（線性於 $hw$）\n對比全域注意力：$\\Omega(\\text{MSA}) = 4hwC^2 + 2(hw)^2 C$",
          "complexity": {
@@ -1970,6 +2003,7 @@
           "節點分類",
           "圖分類"
          ],
+         "plain": "在社群網路、分子結構這類「圖」上做學習：每個節點蒐集鄰居的資訊並取平均來更新自己，疊幾層後就能「看到」朋友的朋友。常用於節點分類，例如判斷詐騙帳號。",
          "intuition": "把影像卷積推廣到圖上：用對稱正規化的鄰接矩陣對鄰居做加權平均，再做線性變換與激活，可視為譜圖卷積的一階近似。",
          "objective": "$H^{(l+1)} = \\sigma\\left( \\tilde{D}^{-1/2} \\tilde{A} \\tilde{D}^{-1/2} H^{(l)} W^{(l)} \\right)$，$\\tilde{A} = A + I$\n原論文為半監督節點分類：只在有標籤的節點上計算交叉熵",
          "complexity": {
@@ -2019,6 +2053,7 @@
           "節點分類",
           "連結預測"
          ],
+         "plain": "不是用全部鄰居，而是每次只抽樣一部分鄰居來彙整資訊，並學到一個「怎麼彙整」的通用規則。因此能處理超大圖，也能直接套用到訓練時沒見過的新節點（例如新註冊的用戶）。",
          "intuition": "不學每個節點固定的嵌入，而是學一個「聚合函數」：對每個節點抽樣固定數量的鄰居，聚合（mean、LSTM 或 pooling）後與自身表徵拼接。因此是歸納式（inductive），能直接推論新節點，並以小批次抽樣擴展到大圖。",
          "objective": "$h_{\\mathcal{N}(v)}^{k} = \\operatorname{AGG}\\left( \\{ h_u^{k-1},\\ u \\in S(\\mathcal{N}(v)) \\} \\right)$\n$h_v^{k} = \\sigma\\left( W^{k} \\cdot \\operatorname{CONCAT}(h_v^{k-1},\\, h_{\\mathcal{N}(v)}^{k}) \\right)$，再做 $\\ell_2$ 正規化\n可用監督式交叉熵，或非監督的鄰近負採樣損失",
          "complexity": {
@@ -2068,6 +2103,7 @@
          "tasks": [
           "節點分類"
          ],
+         "plain": "在圖上彙整鄰居資訊時，不是每個鄰居一視同仁，而是用注意力自動學「哪個鄰居比較重要」。像是你的意見受好朋友影響比受點頭之交大。",
          "intuition": "鄰居的重要性不該只由度數決定：用注意力機制學習每條邊的權重 $\\alpha_{ij}$，並用多頭注意力穩定訓練。",
          "objective": "$e_{ij} = \\operatorname{LeakyReLU}\\left( a^\\top [W h_i \\mathbin{\\Vert} W h_j] \\right)$\n$\\alpha_{ij} = \\operatorname{softmax}_{j \\in \\mathcal{N}(i)}(e_{ij})$\n$h_i' = \\sigma\\left( \\sum_{j \\in \\mathcal{N}(i)} \\alpha_{ij} W h_j \\right)$（多頭串接或平均）",
          "complexity": {
@@ -2118,6 +2154,7 @@
           "圖分類",
           "分子性質預測"
          ],
+         "plain": "目標是讓圖神經網路的「辨別力」最大化：用加總而非平均來彙整鄰居，讓結構不同的圖盡量得到不同的表示。常用於整張圖的分類，例如判斷分子是否有毒。",
          "intuition": "理論問題：GNN 最多能分辨多少種不同的圖？答案是訊息傳遞 GNN 的辨識力上限等於 1-WL 圖同構測試。要達到上限，聚合函數必須是「單射」的，所以要用總和（sum）而不是平均或最大值，並接上 MLP。",
          "objective": "$h_v^{(k)} = \\operatorname{MLP}^{(k)}\\Big( (1 + \\epsilon^{(k)}) \\cdot h_v^{(k-1)}$\n$\\qquad + \\sum_{u \\in \\mathcal{N}(v)} h_u^{(k-1)} \\Big)$\n圖級讀出：$\\operatorname{CONCAT}_{k}\\left( \\sum_{v} h_v^{(k)} \\right)$",
          "complexity": {
@@ -2178,6 +2215,7 @@
           "圖級預測",
           "分子性質預測"
          ],
+         "plain": "把 Transformer 用在圖上：每個節點都能直接注意到所有其他節點，再額外告訴模型「兩個節點在圖上相距多遠、中心性多高」等結構資訊。在分子性質預測上表現優異。",
          "intuition": "讓 Transformer 讀懂圖結構：把每對節點之間的最短路徑距離當作注意力偏置（空間編碼），加入度數中心性嵌入，並編碼路徑上的邊特徵。每一層都能看到全圖。",
          "objective": "$A_{ij} = \\frac{(h_i W_Q)(h_j W_K)^\\top}{\\sqrt{d}} + b_{\\phi(v_i, v_j)} + c_{ij}$\n$\\phi$ 為最短路徑距離；$c_{ij}$ 為路徑上邊特徵的平均編碼\n$h_i^{(0)} = x_i + z^{-}_{\\deg^{-}(v_i)} + z^{+}_{\\deg^{+}(v_i)}$（中心性編碼）",
          "complexity": {
@@ -2246,6 +2284,7 @@
          "tasks": [
           "分群"
          ],
+         "plain": "先隨便放 K 個中心點，把每個樣本分給最近的中心，再把中心移到該群的平均位置，反覆直到不動。簡單快速，適合分出大小相近、形狀像圓球的群，例如客群分群的第一步。需要事先決定 K。",
          "intuition": "反覆兩個步驟：把每個點分給最近的中心，再把中心移到群內的平均位置。每一步都不會讓群內平方誤差變大，所以一定會收斂（但只到局部最佳）。隱含假設：群是等變異的球形、大小相近。",
          "objective": "$\\min_{C,\\,\\mu} \\sum_{k} \\sum_{x \\in C_k} \\lVert x - \\mu_k \\rVert^2$（群內平方和，WCSS / inertia）",
          "complexity": {
@@ -2300,6 +2339,7 @@
          "tasks": [
           "分群"
          ],
+         "plain": "類似 K-Means，但群的代表必須是「真實存在的樣本」而不是平均值。因此對極端值比較不敏感，也能搭配任何距離定義（例如文字相似度），代表點本身也更好解釋。",
          "intuition": "與 K-Means 同樣的精神，但中心必須是「實際存在的資料點」（medoid），並且可以使用任意距離（曼哈頓、Gower、編輯距離、DTW）。以真實樣本作代表，對離群值更穩健。",
          "objective": "$\\min_{M \\subset X,\\ \\lvert M \\rvert = K} \\sum_{i} \\min_{m \\in M} \\operatorname{dist}(x_i, m)$",
          "complexity": {
@@ -2357,6 +2397,7 @@
           "分群",
           "離群點標記"
          ],
+         "plain": "「人多的地方就是一群」：一個點附近夠擁擠就是核心，彼此相連的擁擠區域連成一群，落單的點當作雜訊。不用事先指定群數，能找出任意形狀的群，還會自動標出離群值。",
          "intuition": "ε 鄰域內至少有 minPts 個點的是核心點；由核心點「密度可達」的點串成一群，其餘的是雜訊。能找出任意形狀的群，並自動決定群數。",
          "objective": "核心點：$\\lvert N_{\\epsilon}(p) \\rvert \\ge \\text{minPts}$\n群 = 彼此密度相連的最大點集合（以圖的連通性定義，沒有顯式的最佳化目標）",
          "complexity": {
@@ -2403,6 +2444,7 @@
           "分群",
           "離群分數"
          ],
+         "plain": "DBSCAN 的進化版。DBSCAN 用單一的「擁擠門檻」，遇到有的群密、有的群疏就不好用；HDBSCAN 會嘗試各種門檻，自動挑出最穩定的群。調參更少、結果更穩。",
          "intuition": "把 DBSCAN 在所有 ε 下的結果組成一棵階層樹，再挑出「最穩定、存續最久」的那些群。以相互可達距離平滑密度，能同時找到密度不同的群，而使用者只需設定最小群大小。",
          "objective": "相互可達距離：\n$d_{\\text{mreach}}(a, b)$\n$\\quad = \\max\\big( \\text{core}_k(a),\\ \\text{core}_k(b),\\ d(a, b) \\big)$\n在其最小生成樹上建立凝聚階層，選出使穩定度 $\\sum S(C)$ 最大的群集合\n$S(C) = \\sum_{x \\in C} (\\lambda_x - \\lambda_{\\text{birth}})$，$\\lambda = 1 / \\text{距離}$",
          "complexity": {
@@ -2460,6 +2502,7 @@
          "tasks": [
           "分群"
          ],
+         "plain": "由下而上合併：一開始每個點自成一群，每次把最相近的兩群合在一起，直到剩一群，過程畫出一棵「家族樹」。你可以在任何高度切一刀決定要幾群，並看清楚群與群之間的親疏關係。",
          "intuition": "每個點先自成一群，反覆合併「最近」的兩群，直到只剩一群，得到樹狀圖（dendrogram）；在任意高度切一刀就得到對應的群數。Ward 連結每次選擇「合併後群內變異增加最少」的兩群。",
          "objective": "Ward 合併成本：$\\Delta(A, B) = \\frac{\\lvert A \\rvert \\lvert B \\rvert}{\\lvert A \\rvert + \\lvert B \\rvert} \\cdot \\lVert \\mu_A - \\mu_B \\rVert^2$\n其他連結：single（最小距離）、complete（最大距離）、average（平均距離）",
          "complexity": {
@@ -2518,6 +2561,7 @@
           "軟分群",
           "密度估計"
          ],
+         "plain": "假設資料是由幾個「鐘形分布」混合而成，找出每個分布的位置、大小和形狀。和 K-Means 不同，它給的是「軟分群」：這個客戶 70% 像 A 群、30% 像 B 群，而且群可以是橢圓形。",
          "intuition": "假設資料由 K 個高斯分布混合而成，每個點屬於各群是一個「機率」。EM 演算法交替進行：E 步算出每點屬於各成分的責任值 γ，M 步用加權樣本更新均值、協方差與權重。K-Means 是它在等變異、硬指派下的極限情形。",
          "objective": "$\\max_{\\theta} \\sum_{i} \\log \\sum_{k} \\pi_k \\cdot \\mathcal{N}(x_i \\mid \\mu_k, \\Sigma_k)$\nE 步：$\\gamma_{ik} = \\frac{\\pi_k \\mathcal{N}(x_i \\mid \\mu_k, \\Sigma_k)}{\\sum_{j} \\pi_j \\mathcal{N}(x_i \\mid \\mu_j, \\Sigma_j)}$",
          "complexity": {
@@ -2575,6 +2619,7 @@
          "tasks": [
           "分群"
          ],
+         "plain": "先把資料轉成「誰和誰相似」的關係網，再從網路結構找出自然的切法。能分出像同心圓、月牙形這類 K-Means 分不開的形狀。",
          "intuition": "把資料建成相似度圖，分群就是做「正規化切割」：切斷的邊越少越弱越好。這個離散問題的連續鬆弛，等於求圖拉普拉斯矩陣最小的 K 個特徵向量；在特徵向量空間中，原本纏繞在一起的群會變得容易分開，最後用 K-Means 收尾。",
          "objective": "$\\min \\operatorname{NCut}(A, B) = \\frac{\\operatorname{cut}(A, B)}{\\operatorname{vol}(A)} + \\frac{\\operatorname{cut}(A, B)}{\\operatorname{vol}(B)}$\n鬆弛為：求 $L_{\\text{sym}} = I - D^{-1/2} W D^{-1/2}$ 最小的 $K$ 個特徵向量",
          "complexity": {
@@ -2623,6 +2668,7 @@
          "tasks": [
           "社群偵測"
          ],
+         "plain": "在網路中找「社群」：群內連線很密、群與群之間連線很稀。演算法不斷搬動節點、合併群體，讓這種「群內緊密」的程度最大化。用於社群網路分群、找詐騙集團。Leiden 是修正缺陷的改良版。",
          "intuition": "最大化模組度（modularity）：衡量群內的邊比「隨機配對下的期望邊數」多出多少。Louvain 反覆「局部移動節點 → 把群縮成超級節點」；Leiden（2019）修正了 Louvain 可能產生不連通群的缺陷，保證群內連通。",
          "objective": "$Q = \\frac{1}{2m} \\sum_{i,j} \\left[ A_{ij} - \\gamma \\cdot \\frac{k_i k_j}{2m} \\right] \\cdot \\delta(c_i, c_j)$，$\\gamma$ 為解析度參數",
          "complexity": {
@@ -2687,6 +2733,7 @@
           "降維",
           "去相關"
          ],
+         "plain": "資料有很多欄位時，找出幾個「最能代表資料差異」的新方向，把資料投影上去。就像幫一群人拍照時找最能看出身高差異的角度。可以用少數幾個主成分保留大部分資訊，用於降維、去雜訊、視覺化。",
          "intuition": "找一組正交方向，使資料投影後的變異依序最大；這等價於最小化重建的平方誤差。解就是協方差矩陣的特徵向量，也就是中心化資料矩陣的 SVD。",
          "objective": "$\\max_{W:\\, W^\\top W = I} \\operatorname{tr}(W^\\top S W)$，$S = \\frac{1}{n} X^\\top X$（已中心化）\n$\\Leftrightarrow \\min_{W} \\lVert X - X W W^\\top \\rVert_F^2$\n解：$X = U \\Sigma V^\\top$，$W = V$ 的前 $k$ 行",
          "complexity": {
@@ -2742,6 +2789,7 @@
           "訊號分離",
           "降維"
          ],
+         "plain": "「雞尾酒會問題」：好幾支麥克風錄到好幾個人混在一起的聲音，ICA 能把每個人的聲音分離出來。前提是原始來源彼此獨立、而且不是鐘形分布。常用於腦波、訊號去雜訊。",
          "intuition": "雞尾酒會問題：觀測到的是多個獨立訊號的線性混合，要把它們分離出來。根據中央極限定理，混合後的訊號比原始訊號更接近高斯分布，所以只要找出讓投影「最不像高斯」（負熵最大）的方向，就能還原獨立的來源。",
          "objective": "$x = A s$，求 $W \\approx A^{-1}$ 使 $\\hat{s} = W x$ 的各成分統計獨立\nFastICA：$\\max J(y) \\propto \\big[ \\mathbb{E}\\{G(y)\\} - \\mathbb{E}\\{G(\\nu)\\} \\big]^2$\n$G(u) = \\log\\cosh(u)$，$\\nu \\sim \\mathcal{N}(0, 1)$",
          "complexity": {
@@ -2791,6 +2839,7 @@
           "降維",
           "主題抽取"
          ],
+         "plain": "把資料拆成「幾種基本零件 × 各自用了多少」，而且所有數字都不能是負的，所以只能相加、不能相減。拆出來的零件通常很好解釋，例如文章拆成幾個主題、臉拆成眼睛鼻子嘴巴。",
          "intuition": "把非負的資料矩陣近似分解成兩個非負矩陣 V ≈ WH。因為只能「相加」不能相減，得到的是部件式（parts-based）的表示：臉部會被分解成眼睛、鼻子，文件會被分解成主題。",
          "objective": "$\\min_{W \\ge 0,\\, H \\ge 0} \\lVert V - WH \\rVert_F^2$（或 KL 散度 $D(V \\parallel WH)$）\n乘法更新：$H \\leftarrow H \\odot \\frac{W^\\top V}{W^\\top W H}$",
          "complexity": {
@@ -2848,6 +2897,7 @@
          "tasks": [
           "視覺化"
          ],
+         "plain": "把高維資料壓到 2D 畫圖，專注在「原本靠近的點，畫出來也要靠近」。很擅長把群集漂亮地分開顯示，但群與群之間的距離、群的大小都沒有意義，只能看、不能拿來量。",
          "intuition": "把高維中「誰是誰的鄰居」轉成機率，再在 2D 或 3D 中找一組位置，讓鄰居機率分布盡量一致。低維端用厚尾的 Student-t 分布，讓中等距離的點可以被推得更開，解決擁擠問題，所以群與群之間分得很清楚。",
          "objective": "$p_{j \\mid i} \\propto \\exp\\!\\left( -\\frac{\\lVert x_i - x_j \\rVert^2}{2\\sigma_i^2} \\right)$（$\\sigma_i$ 由 perplexity 決定）\n$p_{ij} = \\frac{p_{j \\mid i} + p_{i \\mid j}}{2n}$\n$q_{ij} \\propto \\left( 1 + \\lVert y_i - y_j \\rVert^2 \\right)^{-1}$\n$\\min \\mathrm{KL}(P \\parallel Q) = \\sum p_{ij} \\log \\frac{p_{ij}}{q_{ij}}$",
          "complexity": {
@@ -2905,6 +2955,7 @@
           "視覺化",
           "降維"
          ],
+         "plain": "和 t-SNE 類似的降維視覺化工具，但速度更快、比較能保留整體結構（群與群的相對位置），也能用來轉換新資料，常被當作降維的前處理。",
          "intuition": "建立在黎曼幾何與拓撲學之上：假設資料在流形上均勻分布，以每個點到第 k 近鄰的距離自適應地建立加權 kNN 圖（模糊單純複形），再在低維中最佳化一張相似的圖。損失是兩個模糊集合間的交叉熵，同時有吸引與排斥項，所以比 t-SNE 保留更多全域結構，也更快。",
          "objective": "高維邊權：$w_{ij} = \\exp\\!\\left( -\\frac{d(x_i, x_j) - \\rho_i}{\\sigma_i} \\right)$，再以模糊聯集對稱化\n低維：$v_{ij} = \\left( 1 + a \\lVert y_i - y_j \\rVert^{2b} \\right)^{-1}$\n$\\min \\mathrm{CE} = \\sum \\Big[ w_{ij} \\log \\frac{w_{ij}}{v_{ij}}$\n$\\qquad + (1 - w_{ij}) \\log \\frac{1 - w_{ij}}{1 - v_{ij}} \\Big]$",
          "complexity": {
@@ -2955,6 +3006,7 @@
          "tasks": [
           "降維"
          ],
+         "plain": "資料可能分布在一張捲起來的「瑞士捲」表面上，直線距離會誤導。Isomap 改用「沿著表面走的距離」，再把捲起來的面攤平，還原資料真正的形狀。",
          "intuition": "流形上兩點的真實距離，是「沿著流形走」的測地距離，而不是直線距離。以 kNN 圖上的最短路徑近似測地距離，再用古典 MDS 把距離矩陣嵌入低維，瑞士捲就能被攤平。",
          "objective": "$D_G =$ kNN 圖上的最短路徑距離\n古典 MDS：$B = -\\tfrac12 J D_G^{(2)} J$，取前 $k$ 個特徵向量 $Y = V_k \\Lambda_k^{1/2}$",
          "complexity": {
@@ -3007,6 +3059,7 @@
           "降維",
           "構念萃取"
          ],
+         "plain": "觀察到的許多變數，背後可能是少數幾個看不見的「潛在因子」在驅動。例如問卷上十幾題的回答，其實反映的是「滿意度」「忠誠度」兩種態度。因子分析就是把這些潛在因子找出來。",
          "intuition": "假設觀測變數由少數不可觀測的潛在因子線性產生，再加上每個變數各自的雜訊（異質變異）。與 PCA 的差別在於，因子分析把「共同變異」與「特有變異」分開建模，所以因子解釋的是變數之間的共變。",
          "objective": "$x = \\mu + \\Lambda z + \\epsilon$，$z \\sim \\mathcal{N}(0, I_k)$，$\\epsilon \\sim \\mathcal{N}(0, \\Psi)$（$\\Psi$ 為對角矩陣）\n$\\Rightarrow x \\sim \\mathcal{N}(\\mu,\\ \\Lambda \\Lambda^\\top + \\Psi)$\n以 EM 或最大概似估計 $\\Lambda$、$\\Psi$；可做 varimax 旋轉提升可解釋性",
          "complexity": {
@@ -3053,6 +3106,7 @@
           "主題抽取",
           "文件表示"
          ],
+         "plain": "假設每篇文章是幾個主題的混合，每個主題又是一組常一起出現的詞。模型從大量文章中自動歸納出主題（例如「金融」＝股價、利率、央行…），並告訴你每篇文章各主題占多少比例。",
          "intuition": "生成故事：每篇文件是多個主題的混合（θ ~ Dirichlet(α)），每個主題是詞彙上的機率分布（φ ~ Dirichlet(β)）；寫每個字時先抽一個主題、再從該主題抽一個字。反推後驗，就得到每篇文件的主題比例（低維表示）與每個主題的關鍵詞。",
          "objective": "$p(w, z, \\theta, \\phi \\mid \\alpha, \\beta)$\n$= \\prod_{k} p(\\phi_k \\mid \\beta) \\cdot \\prod_{d} p(\\theta_d \\mid \\alpha)$\n$\\quad \\cdot \\prod_{n} p(z_{dn} \\mid \\theta_d) \\cdot p(w_{dn} \\mid \\phi_{z_{dn}})$\n以變分推論（ELBO）或 collapsed Gibbs sampling 近似後驗",
          "complexity": {
@@ -3120,6 +3174,7 @@
          "tasks": [
           "異常偵測"
          ],
+         "plain": "異常值「少而不同」，所以很容易被孤立。隨機地一刀一刀切資料，正常點要切很多刀才能單獨分出來，異常點幾刀就被切出來了。用「被孤立得多快」當異常分數，快速又適合高維資料。",
          "intuition": "建很多棵隨機切分的樹。異常點「少而不同」，通常只要幾刀就被單獨隔離；一個點被隔離所需的平均路徑越短，就越可能是異常。",
          "objective": "$s(x, n) = 2^{-\\mathbb{E}[h(x)] / c(n)}$\n$c(n) = 2H(n - 1) - \\frac{2(n - 1)}{n}$（平均路徑的正規化常數，$H$ 為調和數）\n$s$ 接近 1 為異常；遠小於 0.5 為正常",
          "complexity": {
@@ -3178,6 +3233,7 @@
          "tasks": [
           "異常偵測"
          ],
+         "plain": "看一個點周圍「稀疏」的程度，並跟它的鄰居比較：如果大家都住在熱鬧的社區，只有它住得很偏僻，它就是異常。適合資料各區域疏密不同的情況。",
          "intuition": "比較一個點的局部可達密度與它 k 個鄰居的平均密度。比值遠大於 1，代表它比鄰居稀疏得多，是局部離群。能在密度不均的資料中找到全域方法看不到的異常。",
          "objective": "$\\text{reach-dist}_k(A, B)$\n$\\quad = \\max\\big( k\\text{-distance}(B),\\ d(A, B) \\big)$\n$\\mathrm{lrd}(A) = 1 \\Big/ \\operatorname*{mean}_{B \\in N_k(A)} \\text{reach-dist}_k(A, B)$\n$\\mathrm{LOF}(A) = \\operatorname*{mean}_{B \\in N_k(A)} \\frac{\\mathrm{lrd}(B)}{\\mathrm{lrd}(A)}$；約等於 1 為正常，遠大於 1 為離群",
          "complexity": {
@@ -3236,6 +3292,7 @@
           "新奇偵測",
           "異常偵測"
          ],
+         "plain": "只拿正常資料來訓練，畫出一條把「正常」圍起來的邊界；之後落在邊界外的就判定為異常。適合只有正常樣本、幾乎沒有異常樣本可學的情況。",
          "intuition": "只有正常資料時，在核特徵空間中找一個超平面，以最大間隔把資料與原點分開，等價於找一個包住大部分資料的最小區域；落在邊界外的就是異常。參數 ν 同時是訓練誤差比例的上界、也是支持向量比例的下界。",
          "objective": "$\\min_{w,\\, \\xi,\\, \\rho} \\tfrac12 \\lVert w \\rVert^2 + \\frac{1}{\\nu n} \\sum_{i} \\xi_i - \\rho$\ns.t. $w^\\top \\phi(x_i) \\ge \\rho - \\xi_i$，$\\xi_i \\ge 0$\n決策函數 $f(x) = \\operatorname{sign}(w^\\top \\phi(x) - \\rho)$",
          "complexity": {
@@ -3293,6 +3350,7 @@
           "密度估計",
           "異常偵測"
          ],
+         "plain": "把每個資料點都換成一座小山丘，全部疊起來，就得到一條平滑的分布曲線，是比直方圖更平滑的版本。落在密度很低的地方的點就可能是異常值。",
          "intuition": "在每個資料點上放一個小小的「核」（例如高斯鐘形），全部加起來就是一個平滑的密度曲面。頻寬 h 決定平滑程度：太小會有很多尖刺，太大則過度平滑。",
          "objective": "$\\hat{f}(x) = \\frac{1}{n \\cdot h^d} \\sum_{i} K\\!\\left( \\frac{x - x_i}{h} \\right)$\n頻寬選擇：Silverman / Scott 經驗法則，或最大化交叉驗證的對數概似",
          "complexity": {
@@ -3337,6 +3395,7 @@
          "tasks": [
           "異常偵測"
          ],
+         "plain": "假設正常資料大致是一團橢圓形的雲，先用不受極端值干擾的方法估計這團雲的中心和形狀，再把離雲太遠的點標為異常。適合特徵不多、大致呈鐘形分布的資料。",
          "intuition": "假設正常資料近似多元常態，用馬氏距離衡量每個點離中心多遠。但一般的均值與共變異數會被異常點拉歪，所以改用最小共變異行列式（MCD）：找出使共變異數行列式最小的 h 個點來估計中心與形狀，對污染資料穩健。",
          "objective": "MCD：在所有大小為 $h$ 的子集中，找使 $\\det(\\Sigma_H)$ 最小者\n異常分數：$d^2(x) = (x - \\hat{\\mu})^\\top \\hat{\\Sigma}^{-1} (x - \\hat{\\mu})$，常態下服從 $\\chi^2_d$ 分布",
          "complexity": {
@@ -3399,6 +3458,7 @@
          "tasks": [
           "關聯規則"
          ],
+         "plain": "找出「常常一起被買」的商品組合，例如「買尿布的人也常買啤酒」。聰明的地方在於：如果某個組合不常出現，包含它的更大組合一定也不常出現，所以可以直接跳過，大幅節省計算。",
          "intuition": "反單調性：一個項目集若不頻繁，它的任何超集合也不會頻繁。因此逐層（1 項、2 項……）產生候選並剪枝，最後由頻繁項目集導出「若買 A 則買 B」的規則。",
          "objective": "$\\text{support}(A) = P(A)$\n$\\text{confidence}(A \\to B) = P(B \\mid A)$\n$\\text{lift}(A \\to B) = \\frac{P(A \\cap B)}{P(A) \\cdot P(B)}$\n找出 $\\text{support} \\ge \\text{minsup}$ 的項目集，以及 $\\text{confidence} \\ge \\text{minconf}$ 的規則",
          "complexity": {
@@ -3448,6 +3508,7 @@
          "tasks": [
           "關聯規則"
          ],
+         "plain": "和 Apriori 做同一件事（找常一起出現的組合），但先把所有交易壓縮成一棵共享前綴的樹，不用一次次掃描資料庫。資料量大時快很多。",
          "intuition": "不產生候選：只掃描資料庫兩次，把交易壓縮成一棵共享前綴的 FP 樹，再對每個品項遞迴建立條件 FP 樹，直接長出頻繁項目集。通常比 Apriori 快一個數量級。",
          "objective": "support、confidence、lift 的定義同 Apriori\nFP 樹依品項頻率降序插入每筆交易",
          "complexity": {
@@ -3499,6 +3560,7 @@
          "tasks": [
           "依存網路"
          ],
+         "plain": "想知道很多變數之間「誰直接影響誰」，而不只是一起變動。它估計一張稀疏的關係網，只保留排除其他變數後仍然相關的連線，把間接相關剪掉，讓網路圖清楚可讀。",
          "intuition": "在高斯模型中，精度矩陣 Θ = Σ⁻¹ 的元素為 0，代表兩個變數在給定其他所有變數下條件獨立。對 Θ 加 L1 懲罰得到稀疏估計，就能直接讀出變數之間的條件依存網路，區分直接相關與間接相關。",
          "objective": "$\\max_{\\Theta \\succ 0} \\log\\det \\Theta - \\operatorname{tr}(S\\Theta) - \\lambda \\lVert \\Theta \\rVert_1$（$S$ 為樣本共變異數矩陣）",
          "complexity": {
@@ -3545,6 +3607,7 @@
          "tasks": [
           "因果發現"
          ],
+         "plain": "從觀察資料中推測因果方向的圖。先透過一連串「控制某些變數後，A 和 B 還相關嗎？」的檢定把沒有直接關係的邊剪掉，再利用特定結構推斷箭頭方向。結果仍依賴強假設（例如沒有遺漏的共同原因），應視為待驗證的假說。",
          "intuition": "從完全圖出發，對每一對變數做條件獨立檢定：只要在某個條件集合下獨立，就刪掉這條邊。接著用 v-結構（X → Z ← Y）與方向傳播規則，為部分邊決定方向，得到因果圖的馬可夫等價類（CPDAG）。",
          "objective": "若存在 $S \\subseteq \\operatorname{adj}(X) \\setminus \\{Y\\}$，$\\lvert S \\rvert = \\ell$，使 $X \\perp\\!\\!\\!\\perp Y \\mid S$（檢定 $p > \\alpha$），則刪除邊 $X$ – $Y$；$\\ell$ 逐步增加\n最後定向 v-結構，並套用 Meek 規則",
          "complexity": {
@@ -3623,6 +3686,7 @@
           "文字生成",
           "情境學習"
          ],
+         "plain": "讀了海量文字，只練一件事：看前面的字，猜下一個字。練到極致後，它學會了語法、知識，甚至一定程度的推理。ChatGPT 這類聊天機器人的核心就是這種模型。",
          "intuition": "把機率鏈鎖律 $p(x) = \\prod_t p(x_t \\mid x_{<t})$ 直接當成訓練任務：用因果遮罩讓每個位置只看得到前文，預測下一個 token。網路上的每一段文字都是免費的標籤；模型規模擴大之後，湧現出情境學習與推理能力。",
          "objective": "$\\min_{\\theta} \\; -\\sum_{t} \\log p_{\\theta}(x_t \\mid x_{<t})$（下一個 token 的交叉熵）\n困惑度 $\\mathrm{PPL} = \\exp(\\text{平均負對數概似})$",
          "complexity": {
@@ -3679,6 +3743,7 @@
           "語言建模",
           "長序列建模"
          ],
+         "plain": "Transformer 讀長文時，每個字都要跟所有字比對，文章越長越慢。Mamba 像人一樣邊讀邊更新一份「摘要記憶」，並根據內容決定要記住或忽略什麼，所以處理超長序列時快得多、也更省記憶體。",
          "intuition": "狀態空間模型用線性遞迴壓縮歷史，成本隨長度線性成長；但傳統 SSM 的參數固定，無法「依內容決定要記住什麼」。Mamba 讓 B、C、Δ 隨輸入變化（選擇性），並以硬體感知的平行掃描實作，在語言建模上以線性時間接近 Transformer 的品質。",
          "objective": "連續形式：$h'(t) = A h(t) + B x(t)$，$y(t) = C h(t)$\n離散化：$\\bar{A} = \\exp(\\Delta A)$，$\\bar{B} \\approx \\Delta B$；$h_t = \\bar{A} h_{t-1} + \\bar{B} x_t$，$y_t = C h_t$\n選擇性：$B,\\ C,\\ \\Delta = f(x_t)$\n訓練目標與 GPT 相同：下一個 token 的交叉熵",
          "complexity": {
@@ -3738,6 +3803,7 @@
           "NER",
           "嵌入"
          ],
+         "plain": "做「克漏字」練習：把句子遮掉一些字，讓模型同時看左右文來猜。因為能看完整上下文，它對語意的理解很強，適合分類、搜尋、問答等「理解型」任務，而不是生成文章。",
          "intuition": "隨機遮住 15% 的 token，讓編碼器同時參考左右兩側的文字把它們猜回來（MLM），藉此學習雙向理解。得到的上下文化表徵，只要接一個小分類頭微調，就能做分類、NER、問答。",
          "objective": "$\\mathcal{L}_{\\text{MLM}} = -\\sum_{i \\in M} \\log p(x_i \\mid x_{\\setminus M})$（$M$ 為遮蔽位置）\n遮蔽策略：80% 換成 [MASK]、10% 換成隨機字、10% 不變\n原版另有 NSP（下一句預測），後續 RoBERTa 證實可移除",
          "complexity": {
@@ -3791,6 +3857,7 @@
          "tasks": [
           "視覺預訓練"
          ],
+         "plain": "影像版的克漏字：把圖片遮掉大部分（約 75%），讓模型根據剩下的碎片還原整張圖。為了還原，它必須學會物體長什麼樣，學到的特徵可以拿去做各種視覺任務。",
          "intuition": "影像高度冗餘，所以要遮很多才有挑戰性：隨機遮住 75% 的 patch，編碼器只處理可見的 25%（節省三倍以上的計算），再由一個輕量解碼器重建被遮住的像素。學到的編碼器是強大的視覺表徵。",
          "objective": "$\\mathcal{L} = \\frac{1}{|M|} \\sum_{i \\in M} \\lVert x_i - \\hat{x}_i \\rVert^2$（只在被遮蔽的 patch 上計算 MSE，目標為正規化後的像素）",
          "complexity": {
@@ -3839,6 +3906,7 @@
          "tasks": [
           "詞嵌入"
          ],
+         "plain": "「看一個字的朋友，就知道它是什麼字」。根據詞的上下文，把每個詞變成一組數字向量，意思相近的詞向量也相近，甚至能做到「國王 − 男人 + 女人 ≈ 女王」。",
          "intuition": "分布假說：一個字的意義由它的鄰居決定。Skip-gram 用中心字預測周圍的字（CBOW 則反過來），並以負採樣把昂貴的 softmax 變成二元分類。學到的向量具有線性類比結構：king − man + woman ≈ queen。",
          "objective": "Skip-gram + 負採樣：\n$\\max \\; \\log \\sigma\\big(v'^{\\top}_{w_O} v_{w_I}\\big)$\n$+ \\sum_{k} \\mathbb{E}_{w_k \\sim P_n(w)} \\big[ \\log \\sigma\\big(-v'^{\\top}_{w_k} v_{w_I}\\big) \\big]$\n$P_n(w) \\propto U(w)^{3/4}$",
          "complexity": {
@@ -3896,6 +3964,7 @@
           "節點嵌入",
           "連結預測"
          ],
+         "plain": "把 Word2Vec 搬到網路圖上：在圖上隨機漫步，把走過的節點當成一句話，再學出每個節點的向量。結構或位置相似的節點，向量也相近，可用於推薦與連結預測。",
          "intuition": "把圖轉換成「句子」：在圖上做有偏的隨機遊走，產生節點序列，再用 Skip-gram 學節點向量。參數 p、q 控制遊走偏向 BFS（捕捉結構角色）或偏向 DFS（捕捉社群同質性）。",
          "objective": "$\\max \\sum_{u \\in V} \\log P\\big(N_S(u) \\mid f(u)\\big)$，$N_S(u)$ 為隨機遊走得到的鄰域\n轉移偏置：$\\alpha_{pq}(t, x) = \\frac{1}{p}$（回到上一個節點）、$1$（距離 1）、$\\frac{1}{q}$（遠離）",
          "complexity": {
@@ -3956,6 +4025,7 @@
           "異常偵測",
           "去雜訊"
          ],
+         "plain": "把資料壓縮成一個很小的摘要，再試著還原回來。為了還原成功，中間的摘要必須抓住最重要的特徵。去噪版會故意先加雜訊，讓模型學會還原乾淨版本。還原誤差很大的樣本也常被當成異常。",
          "intuition": "強迫資料通過一個窄瓶頸再重建自己，網路只好學到最重要的壓縮表示。去噪版在輸入加入雜訊，要求還原乾淨的版本，逼模型學習資料流形的結構，而不是恆等映射。線性自編碼器在平方誤差下的最佳子空間，就是 PCA 的子空間。",
          "objective": "$\\min_{\\theta, \\phi} \\sum_i \\lVert x_i - g_{\\phi}(f_{\\theta}(\\tilde{x}_i)) \\rVert^2$\n$\\tilde{x} = x + \\text{雜訊}$（DAE）或 $\\tilde{x} = x$（一般 AE）；可加入稀疏或收縮正則",
          "complexity": {
@@ -4023,6 +4093,7 @@
          "tasks": [
           "視覺表徵學習"
          ],
+         "plain": "拿同一張圖做兩種不同的變形（裁切、調色），告訴模型「這兩張是同一個東西，要把它們拉近；跟其他圖要推遠」。不需要任何標籤，就能學到很好的影像特徵。",
          "intuition": "同一張圖做兩種隨機增強，得到一個「正樣本對」；同一批次中的其他圖都是負樣本。訓練讓正樣本對在表徵空間靠近、負樣本對推開。增強方式的選擇，定義了模型應該「不在乎」哪些變化（顏色、裁切）。",
          "objective": "NT-Xent：$\\ell_{i,j} = -\\log \\frac{\\exp(\\operatorname{sim}(z_i, z_j)/\\tau)}{\\sum_{k \\neq i} \\exp(\\operatorname{sim}(z_i, z_k)/\\tau)}$\n$\\operatorname{sim}$ 為餘弦相似度；$z = g(f(x))$ 經過投影頭",
          "complexity": {
@@ -4078,6 +4149,7 @@
           "零樣本分類",
           "圖文檢索"
          ],
+         "plain": "用網路上幾億組「圖片 + 說明文字」訓練，讓配對的圖和文在同一個空間裡靠近。練好後可以直接用文字搜圖，或不經訓練就分類（零樣本），例如問「這張比較像『一隻狗』還是『一隻貓』？」。",
          "intuition": "把網路上約 4 億組「圖片 + 說明文字」當作天然的配對：影像編碼器與文字編碼器把配對的圖文拉近、不配對的推開。結果是一個共享的圖文嵌入空間，可以直接用文字描述做零樣本分類與檢索。",
          "objective": "對稱 InfoNCE：$\\mathcal{L} = \\frac{1}{2} \\big[ \\mathrm{CE}(S, I) + \\mathrm{CE}(S^\\top, I) \\big]$\n$S_{ij} = \\tau^{-1} \\cdot \\langle f_{\\text{img}}(x_i), f_{\\text{txt}}(t_j) \\rangle$（嵌入經 L2 正規化），$\\tau$ 為可學習的溫度",
          "complexity": {
@@ -4137,6 +4209,7 @@
          "tasks": [
           "視覺表徵學習"
          ],
+         "plain": "和 SimCLR 一樣，讓同一張圖的兩個變形版本表示相近，但完全不需要「負樣本」。它用一個緩慢更新的「老師網路」提供目標給「學生網路」學，巧妙避免模型偷懶把所有圖都輸出成一樣。",
          "intuition": "不用負樣本也能避免崩塌：線上網路多接一個預測頭，去預測目標網路對另一個增強視角的表徵；目標網路是線上網路權重的指數移動平均（EMA），而且不回傳梯度。這種不對稱結構加上停止梯度，讓「全部輸出常數」的平凡解不穩定。",
          "objective": "$\\mathcal{L} = \\left\\lVert \\frac{q_{\\theta}(z_{\\theta})}{\\lVert q_{\\theta}(z_{\\theta}) \\rVert} - \\frac{z'_{\\xi}}{\\lVert z'_{\\xi} \\rVert} \\right\\rVert_2^2$（兩個視角對稱加總）\n目標網路更新：$\\xi \\leftarrow \\tau \\xi + (1 - \\tau) \\theta$",
          "complexity": {
@@ -4185,6 +4258,7 @@
           "影像檢索",
           "密集預測"
          ],
+         "plain": "讓學生網路模仿老師網路對同一張圖不同裁切的看法（自我蒸餾），在大量精選的圖片上訓練，不需要任何標籤。學到的視覺特徵非常通用，直接拿來做分類、分割、深度估計都很強。",
          "intuition": "自我蒸餾：學生網路看局部裁切，教師網路（學生的 EMA）看全域裁切，學生要讓自己的輸出分布對齊教師；教師的輸出經中心化與銳化以避免崩塌。DINOv2 再結合 iBOT 的 patch 級遮蔽目標，在 1.42 億張精選影像上訓練，得到凍結即可使用的通用視覺特徵。",
          "objective": "$\\mathcal{L} = -\\sum P_t(x) \\cdot \\log P_s(x')$\n$P_t = \\operatorname{softmax}\\left(\\frac{g_t(x) - c}{\\tau_t}\\right)$，$P_s = \\operatorname{softmax}\\left(\\frac{g_s(x')}{\\tau_s}\\right)$，$\\tau_t < \\tau_s$（銳化），$c$ 為中心化向量（EMA）\n教師更新：$\\theta_t \\leftarrow \\lambda \\theta_t + (1 - \\lambda) \\theta_s$",
          "complexity": {
@@ -4233,6 +4307,7 @@
          "tasks": [
           "視覺表徵學習"
          ],
+         "plain": "給模型看圖片的一部分，要它預測被遮住區域的「抽象特徵」而非像素。不用在意葉子紋理這類細節，逼模型學到更高層次的語意理解，也比還原像素更有效率。",
          "intuition": "預測「表徵」而不是像素：用可見的脈絡區塊，在表徵空間中預測被遮住的目標區塊的表徵（目標由 EMA 編碼器產生）。不重建像素，就不必浪費容量在無法預測的細節上，也不依賴手工設計的資料增強。",
          "objective": "$\\mathcal{L} = \\frac{1}{M} \\sum_{i} \\sum_{j \\in B_i} \\lVert \\hat{s}_{y_j} - s_{y_j} \\rVert_2^2$\n$\\hat{s} = g_{\\phi}\\big(f_{\\theta}(x_{\\text{context}}), \\text{mask tokens}\\big)$，$s = f_{\\bar{\\theta}}(y)$（EMA 目標編碼器，停止梯度）",
          "complexity": {
@@ -4288,6 +4363,7 @@
          "tasks": [
           "表徵學習"
          ],
+         "plain": "自監督學習的一種「規則式」做法，同時要求三件事：同一張圖的兩個版本要相似、每個特徵維度都要有足夠變化（避免全部變成同一個值）、不同維度彼此不要重複。概念清楚，不需要負樣本。",
          "intuition": "用三個正則項直接規定好的表徵長什麼樣：不變性（兩個視角的嵌入要相近）、變異性（每一維的批次標準差不能太小，防止崩塌）、共變異性（不同維度要去相關，防止資訊冗餘）。不需要負樣本、動量編碼器或停止梯度。",
          "objective": "$\\mathcal{L} = \\lambda\\, s(Z, Z') + \\mu \\big[ v(Z) + v(Z') \\big]$\n$\\qquad + \\nu \\big[ c(Z) + c(Z') \\big]$\n$s = \\mathrm{MSE}$；$v(Z) = \\frac{1}{d} \\sum_j \\max\\big(0, \\gamma - \\sqrt{\\operatorname{Var}(z_j) + \\epsilon}\\big)$；$c(Z) = \\frac{1}{d} \\sum_{i \\neq j} [C(Z)]_{ij}^2$",
          "complexity": {
@@ -4331,6 +4407,7 @@
          "tasks": [
           "表徵學習"
          ],
+         "plain": "讓同一張圖兩個版本的特徵在同一個維度上高度一致，而不同維度之間互不相關，也就是每個維度各司其職、不重複存資訊。簡單而有效的自監督方法。",
          "intuition": "受神經科學「冗餘消減」原理啟發：讓兩個增強視角嵌入之間的交叉相關矩陣逼近單位矩陣。對角線等於 1，代表同一個特徵對兩個視角不變；非對角線等於 0，代表不同特徵彼此獨立、不冗餘。",
          "objective": "$\\mathcal{L}_{\\text{BT}} = \\sum_i (1 - C_{ii})^2 + \\lambda \\sum_i \\sum_{j \\neq i} C_{ij}^2$\n$C_{ij} = \\frac{\\sum_b z^A_{b,i} z^B_{b,j}}{\\sqrt{\\sum_b (z^A_{b,i})^2} \\cdot \\sqrt{\\sum_b (z^B_{b,j})^2}}$",
          "complexity": {
@@ -4391,6 +4468,7 @@
           "表徵學習",
           "異常偵測"
          ],
+         "plain": "像自編碼器一樣壓縮再還原，但壓縮後的摘要被要求落在一個平滑、規則的空間裡。因此可以在這個空間隨意取點，生成全新、合理的樣本，也能在兩張臉之間平滑過渡。",
          "intuition": "把自編碼器機率化：編碼器輸出潛變數的分布 q(z|x)，而不是一個點；解碼器建模 p(x|z)。最大化 ELBO 等於「重建品質 − 與先驗 N(0, I) 的 KL 距離」，KL 項讓潛在空間連續且平滑，所以可以從先驗取樣生成新資料。重參數化技巧 z = μ + σ ⊙ ε 讓取樣過程可以微分。",
          "objective": "$\\log p(x) \\ge \\mathrm{ELBO} = \\mathbb{E}_{q_{\\phi}(z \\mid x)} \\big[ \\log p_{\\theta}(x \\mid z) \\big]$\n$- \\mathrm{KL}\\big(q_{\\phi}(z \\mid x) \\,\\Vert\\, p(z)\\big)$\n重參數化：$z = \\mu_{\\phi}(x) + \\sigma_{\\phi}(x) \\odot \\epsilon$，$\\epsilon \\sim \\mathcal{N}(0, I)$",
          "complexity": {
@@ -4442,6 +4520,7 @@
           "離散表徵",
           "Tokenizer"
          ],
+         "plain": "把壓縮後的摘要換成一本「密碼本」裡的離散代碼，就像把圖片翻譯成一串有限詞彙的「詞」。這讓影像或聲音可以像文字一樣被語言模型處理與生成。",
          "intuition": "把潛變數改成離散的：編碼器的輸出向量會被替換成碼本（codebook）中最近的碼字，影像因此變成一串離散 token。先學壓縮，再用自迴歸模型或 Transformer 在 token 上建模先驗。這正是把影像與音訊「token 化」、交給語言模型處理的基本做法。",
          "objective": "$\\mathcal{L} = -\\log p(x \\mid z_q(x)) + \\lVert \\operatorname{sg}[z_e(x)] - e \\rVert_2^2$\n$+ \\beta \\lVert z_e(x) - \\operatorname{sg}[e] \\rVert_2^2$\n$z_q = e_k$，$k = \\operatorname*{arg\\,min}_j \\lVert z_e(x) - e_j \\rVert$（$\\operatorname{sg}$ 為停止梯度；以直通估計器傳遞梯度）",
          "complexity": {
@@ -4499,6 +4578,7 @@
           "生成",
           "影像轉換"
          ],
+         "plain": "兩個網路對打：生成器努力造假，鑑別器努力抓假。雙方互相進步，最後生成器能造出以假亂真的圖片。生成品質高，但訓練不穩定，有時會只生成少數幾種樣子（模式崩潰）。",
          "intuition": "兩個網路的零和賽局：生成器從雜訊製造假樣本，判別器分辨真假，判別器因此成了「可學習的損失函數」。達到均衡時，生成分布等於資料分布；在最佳判別器下，生成器等同於最小化 JS 散度。",
          "objective": "$\\min_G \\max_D \\; \\mathbb{E}_{x \\sim p_{\\text{data}}}\\big[\\log D(x)\\big]$\n$+ \\mathbb{E}_{z \\sim p(z)}\\big[\\log(1 - D(G(z)))\\big]$\n實務上生成器改用非飽和版本：$\\max_G \\mathbb{E}\\big[\\log D(G(z))\\big]$",
          "complexity": {
@@ -4550,6 +4630,7 @@
           "高解析度影像生成",
           "影像編輯"
          ],
+         "plain": "GAN 的升級版，把「風格」分層注入：粗層控制臉型與姿勢，中層控制五官，細層控制髮絲與膚質。因此能生成超逼真的人臉，也能精準調整某一層級的特徵。",
          "intuition": "先用映射網路把雜訊 z 轉成更解耦的中間潛變數 w，再透過自適應正規化（AdaIN，v2 起改為權重調製）在生成器的每個解析度注入「風格」：粗層控制姿態與形狀，細層控制紋理與色彩。能生成擬真的人臉，並做語意編輯。",
          "objective": "$w = f(z)$（8 層 MLP 映射網路）\n$\\operatorname{AdaIN}(x_i, y) = y_{s,i} \\cdot \\frac{x_i - \\mu(x_i)}{\\sigma(x_i)} + y_{b,i}$，$y = A(w)$\n對抗損失（非飽和）＋ $R_1$ 正則 ＋ 路徑長度正則（v2）",
          "complexity": {
@@ -4608,6 +4689,7 @@
           "組合式生成",
           "分布外偵測"
          ],
+         "plain": "不直接產生資料，而是替每種可能的資料打一個「能量分數」：越合理、越像真的，能量越低。學習就是把真實資料的能量壓低、不合理資料的能量抬高。框架很通用，但取樣與訓練較困難。",
          "intuition": "不直接輸出機率，而是學一個能量函數 E(x)：真實資料的能量低，其他地方的能量高，p(x) ∝ exp(−E(x))。正規化常數 Z 算不出來，所以訓練時「壓低資料處的能量、抬高模型取樣處的能量」，取樣則用 MCMC（例如 Langevin 動力學）。擴散與分數模型可以視為學習能量梯度（分數）的後繼者。",
          "objective": "$p_{\\theta}(x) = \\frac{\\exp(-E_{\\theta}(x))}{Z(\\theta)}$\n$\\nabla_{\\theta} \\log p(x) = -\\nabla_{\\theta} E_{\\theta}(x) + \\mathbb{E}_{x' \\sim p_{\\theta}}\\big[\\nabla_{\\theta} E_{\\theta}(x')\\big]$（第二項以對比散度近似）\nLangevin：$x_{t+1} = x_t - \\frac{\\eta}{2} \\nabla_x E(x_t) + \\sqrt{\\eta} \\cdot \\epsilon$",
          "complexity": {
@@ -4659,6 +4741,7 @@
           "影像生成",
           "音訊生成"
          ],
+         "plain": "先學「怎麼把一張圖一步步加雜訊變成純雜訊」，再訓練模型學反過來的過程：從純雜訊開始，一步步去掉雜訊，最後「雕」出一張清晰的圖。品質高、訓練穩定，是現代 AI 繪圖的基礎。",
          "intuition": "前向過程把資料一點一點加入高斯雜訊，直到變成純雜訊（固定、沒有參數）；再學一個網路反轉這個過程：給定 xₜ 與時間 t，預測當初加入的雜訊 ε。生成時從純雜訊出發，逐步去噪。本質是在每個雜訊尺度上學習資料分布的分數 ∇ log p(x)。",
          "objective": "前向：$q(x_t \\mid x_0) = \\mathcal{N}\\big(\\sqrt{\\bar{\\alpha}_t}\\, x_0,\\ (1 - \\bar{\\alpha}_t) I\\big)$\n$\\mathcal{L}_{\\text{simple}} = \\mathbb{E}_{t, x_0, \\epsilon} \\big\\lVert \\epsilon - \\epsilon_{\\theta}(x_t, t) \\big\\rVert^2$\n其中 $x_t = \\sqrt{\\bar{\\alpha}_t}\\, x_0 + \\sqrt{1 - \\bar{\\alpha}_t}\\, \\epsilon$",
          "complexity": {
@@ -4712,6 +4795,7 @@
           "文生圖",
           "影像編輯"
          ],
+         "plain": "擴散模型直接在像素上運算太慢。Stable Diffusion 先把圖壓縮到一個小很多的「潛在空間」，在那裡去雜訊，最後再解壓回圖片，並用文字提示引導生成。大幅降低運算成本，讓一般顯示卡也能生成圖片。",
          "intuition": "像素空間太大，而且充滿感知上不重要的細節。先用 VAE 把影像壓縮到長寬各縮小 8 倍的潛在空間，再在潛在空間做擴散；文字條件透過交叉注意力注入 U-Net。算力因此降低一個數量級，高解析度的文生圖得以在消費級 GPU 上運行。",
          "objective": "$\\mathcal{L}_{\\text{LDM}} = \\mathbb{E}_{\\mathcal{E}(x), y, \\epsilon, t} \\big\\lVert \\epsilon - \\epsilon_{\\theta}\\big(z_t, t, \\tau_{\\theta}(y)\\big) \\big\\rVert^2$\n$z = \\mathcal{E}(x)$ 為 VAE 編碼；$\\tau_{\\theta}(y)$ 為文字編碼器（CLIP、T5）的輸出，經交叉注意力注入\nClassifier-free guidance：$\\tilde{\\epsilon} = \\epsilon(z_t, \\varnothing) + s \\cdot \\big( \\epsilon(z_t, y) - \\epsilon(z_t, \\varnothing) \\big)$",
          "complexity": {
@@ -4768,6 +4852,7 @@
           "文生影片",
           "圖生影片"
          ],
+         "plain": "把擴散模型裡負責去雜訊的 U-Net 換成 Transformer。好處是模型越大、效果越好，規模化特性很好，是 Sora 等影片生成模型與新一代繪圖模型的主流架構。",
          "intuition": "把擴散模型的 U-Net 骨幹換成 Transformer：潛在影像切成 patch 當作 token，時間步與條件透過 adaLN-Zero 調製每一層（初始化為恆等映射，訓練更穩定）。Transformer 的擴展定律延續到擴散模型：GFLOPs 越高，FID 越低。已成為 Sora、SD3、Flux 等影像與影片模型的主流骨幹。",
          "objective": "目標同潛在擴散：$\\lVert \\epsilon - \\epsilon_{\\theta}(z_t, t, c) \\rVert^2$（或改用 flow matching 的速度目標）\nadaLN-Zero：$\\gamma, \\beta, \\alpha = \\mathrm{MLP}(t_{\\text{emb}} + c_{\\text{emb}})$\n$x \\leftarrow x + \\alpha \\odot \\operatorname{Attn}\\big(\\gamma \\odot \\mathrm{LN}(x) + \\beta\\big)$，$\\alpha$ 初始化為 0",
          "complexity": {
@@ -4830,6 +4915,7 @@
           "密度估計",
           "生成"
          ],
+         "plain": "用一連串「可以完美還原」的轉換，把簡單的鐘形分布一步步扭曲成複雜的資料分布。因為每一步都可逆，能精確算出任何樣本的機率，也能從雜訊直接生成樣本。",
          "intuition": "用一連串可逆、且雅可比行列式容易計算的變換，把簡單分布（高斯）精確地「變形」成資料分布。因為可逆，同時能做精確的概似計算與取樣。Affine coupling 讓一半維度保持不動，用它算出另一半的縮放與平移，行列式就只是縮放項的乘積。",
          "objective": "$\\log p_X(x) = \\log p_Z(f(x)) + \\log \\left| \\det \\frac{\\partial f(x)}{\\partial x} \\right|$\nAffine coupling：$y_1 = x_1$，$y_2 = x_2 \\odot \\exp(s(x_1)) + t(x_1)$\n$\\Rightarrow \\log \\lvert \\det J \\rvert = \\sum s(x_1)$",
          "complexity": {
@@ -4882,6 +4968,7 @@
           "文生影片",
           "語音生成"
          ],
+         "plain": "直接學一條從雜訊「流」到真實資料的路徑，而且盡量走直線。路徑越直，生成時需要的步驟越少，所以比傳統擴散模型更快、更簡潔，已被許多新一代影像與影片模型採用。",
          "intuition": "不模擬加噪過程，而是直接學一個「速度場」，把雜訊點沿著一條路徑推到資料點。最簡單的路徑是直線 xₜ = (1 − t)·x₀ + t·x₁（x₀ 為雜訊、x₁ 為資料），目標速度就是 x₁ − x₀，訓練只是一個簡單的迴歸。直線路徑讓 ODE 取樣所需的步數大幅減少；SD3、Flux 都採用這個目標。",
          "objective": "$\\mathcal{L}_{\\text{CFM}} = \\mathbb{E}_{t, x_0, x_1} \\big\\lVert v_{\\theta}(x_t, t) - (x_1 - x_0) \\big\\rVert^2$\n$t \\sim U[0,1],\\ x_0 \\sim \\mathcal{N}(0, I),\\ x_1 \\sim p_{\\text{data}}$\n$x_t = (1 - t) x_0 + t x_1$\n取樣：解常微分方程 $\\frac{dx}{dt} = v_{\\theta}(x, t)$",
          "complexity": {
@@ -4959,6 +5046,7 @@
          "tasks": [
           "探索-利用"
          ],
+         "plain": "大多數時候選目前看起來最好的選項（利用），但保留一小比例（ε，例如 10%）的時間隨機亂試（探索），以免錯過更好的選項。最簡單的探索策略。",
          "intuition": "最樸素的探索與利用權衡：以 1 − ε 的機率選目前估計最好的動作，以 ε 的機率隨機亂選。簡單，但屬於「盲目」探索：已知很差的動作也會被一再嘗試。",
          "objective": "$a_t = \\operatorname*{arg\\,max}_{a} \\hat{Q}(a)$（機率 $1 - \\epsilon$），否則均勻隨機\n增量平均：$\\hat{Q}(a) \\leftarrow \\hat{Q}(a) + \\frac{r - \\hat{Q}(a)}{N(a)}$\n$\\epsilon$ 適當衰減時累積遺憾可達 $O(\\log T)$",
          "complexity": {
@@ -5012,6 +5100,7 @@
          "tasks": [
           "探索-利用"
          ],
+         "plain": "「對不確定的選項保持樂觀」：每個選項的評分 = 目前平均表現 + 一個「試得越少加分越多」的獎勵。這樣很少被嘗試的選項會自然獲得機會，試多了加分就消失。",
          "intuition": "每個動作的分數 = 平均報酬 + 不確定性獎勵；被嘗試得越少，獎勵越大。探索因此有了方向：只探索「還有可能是最好的」動作。理論上累積遺憾為 O(log T)。",
          "objective": "$a_t = \\operatorname*{arg\\,max}_{a} \\left[ \\hat{Q}(a) + c \\cdot \\sqrt{\\frac{2 \\ln t}{N(a)}} \\right]$（UCB1 取 $c = 1$，報酬需在 $[0, 1]$）\n累積遺憾 $= O\\left( \\sum_{a:\\, \\Delta_a > 0} \\frac{\\ln T}{\\Delta_a} \\right)$",
          "complexity": {
@@ -5054,6 +5143,7 @@
           "個人化推薦",
           "探索-利用"
          ],
+         "plain": "UCB 的「看人選菜」版：會根據情境（使用者特徵、時段）預測每個選項的效果，再加上不確定性加分來選。常用於個人化推薦與新聞版位。",
          "intuition": "把使用者或情境的特徵納入：假設期望報酬是情境特徵的線性函數 E[r | x, a] = xₐᵀθₐ。以嶺迴歸估計 θ，置信橢球的寬度 √(xᵀA⁻¹x) 當作不確定性獎勵。遇到「特徵組合沒見過」的使用者，會自動加大探索。",
          "objective": "$A_a = D_a^\\top D_a + I$，$b_a = D_a^\\top c_a$，$\\hat{\\theta}_a = A_a^{-1} b_a$\n$p_{t,a} = x_{t,a}^\\top \\hat{\\theta}_a + \\alpha \\cdot \\sqrt{x_{t,a}^\\top A_a^{-1} x_{t,a}}$\n選擇 $\\operatorname*{arg\\,max}_{a} p_{t,a}$",
          "complexity": {
@@ -5108,6 +5198,7 @@
           "探索-利用",
           "動態 A/B 測試"
          ],
+         "plain": "替每個選項維持一個「我覺得它有多好」的機率分布，每次從各分布抽一個數字，選抽到最大的那個。越不確定的選項偶爾會抽到很高的數字而被試到，探索與利用自然平衡。實務上表現常常最好。",
          "intuition": "對每個動作的報酬維持一個貝氏後驗分布；每回合從各後驗抽一個樣本，選樣本值最大的動作。一個動作被選中的機率，恰好等於「它是最佳動作」的後驗機率（機率配對），不確定性自然地轉換成探索。",
          "objective": "伯努利報酬：$\\theta_a \\sim \\operatorname{Beta}(\\alpha_a, \\beta_a)$\n每回合抽 $\\tilde{\\theta}_a \\sim \\operatorname{Beta}(\\alpha_a, \\beta_a)$，選 $\\operatorname*{arg\\,max}_{a} \\tilde{\\theta}_a$\n觀察報酬 $r$ 後更新：$\\alpha_a \\leftarrow \\alpha_a + r$，$\\beta_a \\leftarrow \\beta_a + 1 - r$",
          "complexity": {
@@ -5172,6 +5263,7 @@
          "tasks": [
           "離散控制"
          ],
+         "plain": "邊玩邊學一張「在這個狀態下做這個動作，長期能拿多少分」的表格。每次行動後，用「得到的獎勵 + 下一步最好的預期」來修正表格。即使學習時的行為很隨機，最終也能學到最佳策略。",
          "intuition": "學習每個「狀態-動作」組合的長期價值 Q(s, a)，並用貝爾曼最佳方程做自舉（bootstrapping）：以「立即報酬 + 下一個狀態的最佳 Q 值」當目標來更新目前的估計。它是離線策略（off-policy）方法：行為可以四處探索，但學到的是最佳策略的價值。",
          "objective": "$Q(s, a) \\leftarrow Q(s, a)$\n$\\quad + \\alpha \\big[ r + \\gamma \\cdot \\max_{a'} Q(s', a') - Q(s, a) \\big]$\n最佳策略：$\\pi^*(s) = \\operatorname*{arg\\,max}_{a} Q^*(s, a)$",
          "complexity": {
@@ -5222,6 +5314,7 @@
           "離散控制",
           "遊戲"
          ],
+         "plain": "Q-Learning 的表格在狀態太多時（例如遊戲畫面）放不下，DQN 改用神經網路來估計。再加上「經驗回放」和「目標網路」兩個技巧讓訓練穩定，第一次讓 AI 看畫面就學會玩 Atari 遊戲。",
          "intuition": "用深度網路近似 Q 函數，第一次直接從像素學會玩 Atari 遊戲。兩個穩定訓練的關鍵：經驗回放（打散樣本間的相關性、重複利用資料）與目標網路（定期複製權重，讓 TD 目標暫時固定）。後續的 Double DQN、Dueling、Prioritized Replay 等改進組合成 Rainbow。",
          "objective": "$\\mathcal{L}(\\theta) = \\mathbb{E}_{(s, a, r, s') \\sim \\mathcal{D}} \\Big[ \\big( r + \\gamma \\cdot \\max_{a'} Q(s', a'; \\theta^-)$\n$\\qquad - Q(s, a; \\theta) \\big)^2 \\Big]$（常改用 Huber 損失）\n目標網路：每 $C$ 步令 $\\theta^- \\leftarrow \\theta$",
          "complexity": {
@@ -5274,6 +5367,7 @@
          "tasks": [
           "離線強化學習"
          ],
+         "plain": "只能用過去收集的資料學習、不能再去環境試錯時（離線強化學習），模型容易高估沒見過的動作。CQL 刻意對資料裡沒出現過的動作「保守評價」，避免學出紙上談兵的危險策略。",
          "intuition": "離線強化學習只能使用既有的歷史紀錄，不能再與環境互動。問題在於 Q 網路對資料中沒出現過的動作常嚴重高估，策略就會去追逐這些虛幻的高價值。CQL 在損失中多加一項：壓低所有動作的 Q 值、抬高資料中實際出現的動作的 Q 值。學到的 Q 是真實值的下界，策略因此保守地待在資料涵蓋的範圍內。",
          "objective": "$\\min_{Q}\\ \\alpha \\cdot \\Bigg( \\mathbb{E}_{s \\sim \\mathcal{D}} \\left[ \\log \\sum_{a} \\exp Q(s, a) \\right]$\n$\\qquad - \\mathbb{E}_{(s, a) \\sim \\mathcal{D}} \\big[ Q(s, a) \\big] \\Bigg)$\n$\\quad + \\tfrac12 \\cdot \\mathbb{E}_{(s, a, s') \\sim \\mathcal{D}} \\Big[ \\big( Q(s, a) - \\hat{\\mathcal{B}}^{\\pi} \\hat{Q}(s, a) \\big)^2 \\Big]$",
          "complexity": {
@@ -5327,6 +5421,7 @@
          "tasks": [
           "策略最佳化"
          ],
+         "plain": "最直接的策略學習：整局玩完後，結果好的那些動作就提高下次出現的機率，結果差的就降低。原理簡單，但因為要等整局結束才知道好壞，學習訊號雜訊大、效率較低。",
          "intuition": "直接對策略參數做梯度上升：讓結果好的動作機率提高、結果差的降低。策略梯度定理讓我們不必知道環境動態，只要取樣軌跡與回報就能估計梯度；減去基準線 b(s) 可降低變異，而且不會引入偏差。",
          "objective": "$\\nabla_\\theta J(\\theta) = \\mathbb{E}_{\\tau \\sim \\pi_\\theta} \\Bigg[ \\sum_{t} \\nabla_\\theta \\log \\pi_\\theta(a_t \\mid s_t)$\n$\\qquad \\cdot \\big( G_t - b(s_t) \\big) \\Bigg]$\n$G_t = \\sum_{k \\ge t} \\gamma^{k - t} \\cdot r_k$",
          "complexity": {
@@ -5382,6 +5477,7 @@
           "離散控制",
           "RLHF"
          ],
+         "plain": "在策略學習時限制「每次更新不能改太多」，避免一次大改讓表現崩掉。穩定、好調、效果好，是機器人控制與早期 ChatGPT 人類回饋訓練（RLHF）最常用的演算法。",
          "intuition": "策略梯度一步走太大，策略就會崩潰。PPO 用重要性比率 $r_t = \\pi_\\theta / \\pi_{\\text{old}}$ 衡量新舊策略的差異，並把它裁剪在 $[1 - \\epsilon,\\ 1 + \\epsilon]$ 之間：改善超過這個範圍就不再給獎勵。它是 TRPO 信任區域的一階簡化版，穩定又簡單，成為 RLHF 的預設演算法。",
          "objective": "$L^{\\text{CLIP}}(\\theta) = \\mathbb{E}_t \\Big[ \\min\\big( r_t(\\theta) \\cdot \\hat{A}_t,$\n$\\qquad \\operatorname{clip}(r_t(\\theta), 1 - \\epsilon, 1 + \\epsilon) \\cdot \\hat{A}_t \\big) \\Big]$\n$r_t = \\frac{\\pi_\\theta(a_t \\mid s_t)}{\\pi_{\\theta_{\\text{old}}}(a_t \\mid s_t)}$；$\\hat{A}_t$ 以 $\\text{GAE}(\\lambda)$ 估計\n總損失另含價值函數誤差與熵獎勵；RLHF 中再加 $-\\beta \\cdot \\mathrm{KL}(\\pi_\\theta \\parallel \\pi_{\\text{ref}})$",
          "complexity": {
@@ -5435,6 +5531,7 @@
          "tasks": [
           "連續控制"
          ],
+         "plain": "學習時除了追求高獎勵，也鼓勵行為保持一定的隨機性（別太早認定只有一種做法）。探索更充分、訓練更穩、樣本效率高，適合機器手臂這類連續控制任務。",
          "intuition": "最大熵強化學習：目標除了報酬，還要讓策略「盡量隨機」（高熵），自然地鼓勵探索、對干擾更穩健、不會過早收斂到單一動作。它是離線策略方法，並用兩個 Q 網路取最小值來抑制高估，是連續控制中樣本效率最好的方法之一。",
          "objective": "$J(\\pi) = \\sum_{t} \\mathbb{E}\\big[ r(s_t, a_t) + \\alpha \\cdot \\mathcal{H}(\\pi(\\cdot \\mid s_t)) \\big]$\n$Q$ 目標：\n$y = r + \\gamma \\big( \\min_{i=1,2} Q_{\\bar{\\theta}_i}(s', \\tilde{a}')$\n$\\qquad - \\alpha \\log \\pi(\\tilde{a}' \\mid s') \\big)$\n策略：$\\min \\mathbb{E}\\big[ \\alpha \\cdot \\log \\pi(a \\mid s) - \\min_{i} Q_{\\theta_i}(s, a) \\big]$（重參數化）；$\\alpha$ 可自動調整至目標熵",
          "complexity": {
@@ -5488,6 +5585,7 @@
          "tasks": [
           "LLM 偏好對齊"
          ],
+         "plain": "訓練語言模型符合人類偏好時，不需要先另外訓練一個打分模型再做強化學習，而是直接拿「這個回答比那個好」的成對資料來調整模型。流程更簡單、更穩定，效果接近 RLHF。",
          "intuition": "RLHF 要先訓練獎勵模型，再用 PPO 最佳化，流程複雜。DPO 發現在 KL 約束的獎勵最大化問題中，最佳策略與獎勵之間有閉式關係：$r(x, y) = \\beta \\log \\frac{\\pi^*(y \\mid x)}{\\pi_{\\text{ref}}(y \\mid x)} + \\text{常數}$。把它代入 Bradley-Terry 偏好模型，就能直接用「偏好對」以分類損失訓練策略，不需要獎勵模型，也不需要取樣。",
          "objective": "$\\mathcal{L}_{\\text{DPO}} = -\\mathbb{E}_{(x, y_w, y_l)} \\bigg[ \\log \\sigma\\bigg( \\beta \\cdot \\log \\frac{\\pi_\\theta(y_w \\mid x)}{\\pi_{\\text{ref}}(y_w \\mid x)}$\n$\\qquad - \\beta \\cdot \\log \\frac{\\pi_\\theta(y_l \\mid x)}{\\pi_{\\text{ref}}(y_l \\mid x)} \\bigg) \\bigg]$\n（$y_w$ 為偏好的回答，$y_l$ 為不偏好的回答）",
          "complexity": {
@@ -5538,6 +5636,7 @@
           "推理模型訓練",
           "RLVR"
          ],
+         "plain": "對同一個問題讓模型產生一組答案，互相比較：比組內平均好的答案就加強、比較差的就削弱。不需要額外的評分網路，省記憶體，是訓練推理模型（如 DeepSeek-R1）的關鍵方法。",
          "intuition": "PPO 需要一個與策略同樣大的價值網路來估計優勢，成本很高。GRPO 對同一個問題取樣一組 G 個回答，用組內報酬的標準化分數當作優勢（組內互相比較就是基準線），因此省掉了價值網路。搭配可驗證的報酬（數學答案對錯、程式測試是否通過），訓練出長鏈推理能力（DeepSeekMath、DeepSeek-R1）。",
          "objective": "$\\hat{A}_i = \\frac{r_i - \\operatorname{mean}(r_1, \\ldots, r_G)}{\\operatorname{std}(r_1, \\ldots, r_G)}$\n$J = \\mathbb{E}\\Bigg[ \\frac{1}{G} \\sum_{i} \\frac{1}{\\lvert o_i \\rvert} \\sum_{t} \\min\\big( \\rho_{i,t} \\cdot \\hat{A}_i,$\n$\\qquad \\operatorname{clip}(\\rho_{i,t}, 1 - \\epsilon, 1 + \\epsilon) \\cdot \\hat{A}_i \\big)$\n$\\qquad - \\beta \\cdot D_{\\mathrm{KL}}(\\pi_\\theta \\parallel \\pi_{\\text{ref}}) \\Bigg]$\n$\\rho = \\pi_\\theta / \\pi_{\\text{old}}$",
          "complexity": {
@@ -5603,6 +5702,7 @@
           "棋類",
           "組合最佳化"
          ],
+         "plain": "下棋時在腦中模擬「如果我這樣走、對手那樣回……」，但用神經網路判斷哪些走法值得細看、局面誰佔優，只深挖有希望的分支。完全靠自我對弈學習，在圍棋、西洋棋上超越人類。",
          "intuition": "已知規則（有模擬器）時，決策可以靠「想」：蒙地卡羅樹搜尋反覆進行選擇、擴展、評估、回傳，並以 PUCT 平衡探索與利用。AlphaZero 用一個神經網路同時輸出策略先驗與價值，取代隨機模擬；再把搜尋結果當作監督目標，透過自我對弈訓練網路。搜尋改善策略，策略又加速搜尋。",
          "objective": "選擇：$a = \\operatorname*{arg\\,max}_{a} \\Big[ Q(s, a)$\n$\\qquad + c_{\\text{puct}} \\cdot P(s, a) \\cdot \\frac{\\sqrt{N(s)}}{1 + N(s, a)} \\Big]$\n網路損失：$l = (z - v)^2 - \\pi^\\top \\log p + c \\lVert \\theta \\rVert^2$（$z$ 為對局結果，$\\pi$ 為搜尋的訪問次數分布）",
          "complexity": {
@@ -5657,6 +5757,7 @@
           "遊戲",
           "序列決策"
          ],
+         "plain": "連遊戲規則都不用告訴它。它自己學一個「腦內模擬器」，只預測對決策有用的東西（獎勵、局面價值、該怎麼走），再在這個模擬器裡做規劃。圍棋、Atari 都能用同一套方法。",
          "intuition": "不知道規則也能規劃：學一個「潛在模型」，只預測規劃需要的三件事（報酬、價值、策略），而不重建觀測本身，再在這個學到的潛在空間中做 MCTS。在 Atari 與棋類上都達到頂尖水準。",
          "objective": "表示函數 $h$：$s^0 = h(o_1, \\ldots, o_t)$\n動態函數 $g$：$(r^k, s^k) = g(s^{k-1}, a^k)$\n預測函數 $f$：$(p^k, v^k) = f(s^k)$\n$l = \\sum_{k=0}^{K} \\Big[ l^r(u_{t+k}, r^k) + l^v(z_{t+k}, v^k)$\n$\\qquad + l^p(\\pi_{t+k}, p^k) \\Big] + c \\lVert \\theta \\rVert^2$",
          "complexity": {
@@ -5712,6 +5813,7 @@
           "遊戲",
           "機器人"
          ],
+         "plain": "先學一個「世界模型」預測環境會怎麼變化，然後在自己的「想像」中大量練習，減少真實試錯的次數。同一組參數就能在很多不同任務上表現良好，包括在 Minecraft 中自己挖到鑽石。",
          "intuition": "先學一個世界模型（循環狀態空間模型 RSSM，把觀測壓縮成潛在狀態，並預測下一步與報酬），再在「想像」中展開潛在軌跡來訓練 actor-critic，大幅減少真實互動。v3 以 symlog 轉換和一組固定超參數通用於 150 多項任務，並首次在沒有人類資料的情況下於 Minecraft 挖到鑽石（Nature, 2025）。",
          "objective": "世界模型：$\\mathcal{L} = \\mathcal{L}_{\\text{pred}}$\n$\\quad + \\beta_{\\text{dyn}} \\cdot \\mathcal{L}_{\\text{dyn}} + \\beta_{\\text{rep}} \\cdot \\mathcal{L}_{\\text{rep}}$\n（$\\mathcal{L}_{\\text{pred}}$：重建觀測、報酬、是否繼續；後兩項為 KL 平衡，含 free bits）\nActor：最大化想像軌跡的 $\\lambda$-return（加熵正則）\nCritic：以 symlog 離散迴歸預測 $\\lambda$-return",
          "complexity": {
