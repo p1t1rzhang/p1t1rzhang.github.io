@@ -913,13 +913,14 @@ async function loadData(){
   }
   if (!state.data && window.DAILY_MODELS){ state.data = window.DAILY_MODELS; state.source = "js"; }
   if (state.data && !Array.isArray(state.data.models)) state.data = null;
-  if (!state.server){   // 部署時的資料 vs 瀏覽器上次即時抓的資料，先顯示較新的那份
+  if (!state.server && !HOSTED){   // 本機：部署時的資料 vs 瀏覽器上次即時抓的資料，先顯示較新的那份
     state.deployed = state.data;
     const c = cachedLive();
     if (c && (!state.data || new Date(c.generated_at) > new Date(state.data.generated_at))){ state.data = c; state.source = "live-cache"; }
   }
   renderRadar(); renderSideFoot();
-  if (!state.server || isStale()) refresh(false);   // 每次打開網頁都在背景抓最新資料（先顯示上次的結果）
+  // 只有在 Mac 本機打開才即時抓取；公開網址顯示最近一次部署的資料（隨機時段更新），不抓取也不跳提示
+  if (!HOSTED && (!state.server || isStale())) refresh(false);
 }
 function isStale(){
   const d = state.data; if (!d) return true;
@@ -1243,8 +1244,8 @@ function renderRadar(){
   const body = $("#radarBody"), d = state.data;
   if (!d){
     body.innerHTML = `<div class="card empty">
-      <div style="font-size:40px">📡</div><h3>${state.refreshing ? "正在抓取 Hugging Face 熱門榜…" : "暫時沒有雷達資料"}</h3>
-      <p class="muted" style="max-width:560px;margin:0 auto">${state.refreshing ? "打開網頁時會直接向 Hugging Face 抓最新資料，通常幾秒內完成。" : "連不上 Hugging Face，可能是網路問題或暫時被限制頻率。稍後" + (HOSTED ? "重新整理頁面" : "按「更新資料」") + "再試一次；知識庫的其他頁面現在就能使用。"}</p>
+      <div style="font-size:40px">📡</div><h3>${state.refreshing ? "正在抓取 Hugging Face 熱門榜…" : HOSTED ? "雷達資料準備中" : "暫時沒有雷達資料"}</h3>
+      <p class="muted" style="max-width:560px;margin:0 auto">${state.refreshing ? "打開網頁時會直接向 Hugging Face 抓最新資料，通常幾秒內完成。" : HOSTED ? "雷達資料會不定時更新，稍後再回來看看；知識庫的其他頁面現在就能使用。" : "連不上 Hugging Face，可能是網路問題或暫時被限制頻率。稍後按「更新資料」再試一次；知識庫的其他頁面現在就能使用。"}</p>
       <div style="margin-top:14px"><button class="btn" data-goto="workflow">先看資料分析流程 →</button></div></div>`;
     return;
   }
@@ -1317,7 +1318,7 @@ function renderSideFoot(){
     <div class="side-stat"><span>ML 演算法</span><b>${LEAVES_BY.ml.length}</b></div>
     <div class="side-stat"><span>統計／因果方法</span><b>${LEAVES_BY.stat.length}</b></div>
     <div class="side-stat"><span>今日模型</span><b>${d ? d.models.length : "—"}</b></div>
-    <div class="side-stat"><span>資料模式</span><b>${state.server ? "本機伺服器" : (state.source === "live" || state.source === "live-cache") ? "瀏覽器即時抓取" : (d ? "部署時快照" : "未載入")}</b></div>
+    <div class="side-stat"><span>資料模式</span><b>${state.server ? "本機伺服器" : HOSTED ? "隨機更新" : (state.source === "live" || state.source === "live-cache") ? "瀏覽器即時抓取" : (d ? "部署時快照" : "未載入")}</b></div>
     <div style="margin-top:10px;opacity:.8">按 <b>⌘K</b> 或 <b>/</b> 搜尋</div>`;
 }
 
