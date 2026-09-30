@@ -114,6 +114,9 @@ a.icon-btn{text-decoration:none}
 .s-item .s-title{font-weight:600;color:var(--ink)}
 .s-item .s-sub{font-size:12.5px;color:var(--muted);line-height:1.45}
 .s-empty{padding:22px;text-align:center;color:var(--muted);font-size:14px}
+.s-empty.has-web{padding-bottom:10px}
+.s-item.s-web{border-top:1px solid var(--line);border-radius:0 0 12px 12px;margin-top:4px}
+.s-item.s-web .s-kind{background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line-2)}
 
 /* ───────────── Common ───────────── */
 .hero{display:flex;flex-wrap:wrap;gap:18px 24px;align-items:flex-end;justify-content:space-between;margin-bottom:22px}
@@ -1387,13 +1390,19 @@ function renderSearch(){
   sItems = []; let html = "";
   S_GROUPS.forEach(([type,label,n,badge]) => { const g = res.filter(r => r.type === type).slice(0, n); if (!g.length) return;
     html += `<div class="s-group">${label}</div>` + g.map(it => { sItems.push(it); return `<button class="s-item" role="option" data-i="${sItems.length-1}"><span class="s-kind">${badge}</span><span style="min-width:0"><div class="s-title">${hl(it.title, q)}</div><div class="s-sub">${esc(it.sub)}</div></span></button>`; }).join(""); });
-  panel.innerHTML = html || `<div class="s-empty">找不到「${esc(q)}」。試試英文名、中文名或概念（如「注意力」「平行趨勢」「ETL」）。</div>`;
+  if (!html){   // 站內查無結果：最後提供 Google 搜尋
+    sItems.push({type:"web", q});
+    html = `<div class="s-empty has-web">站內找不到「${esc(q)}」。試試英文名、中文名或概念（如「注意力」「平行趨勢」「ETL」），或改用 Google 搜尋：</div>`
+      + `<button class="s-item s-web" role="option" data-i="0"><span class="s-kind">G</span><span style="min-width:0"><div class="s-title">用 Google 搜尋「${esc(q)}」</div><div class="s-sub">在新分頁開啟 google.com 搜尋結果 ↗</div></span></button>`;
+  }
+  panel.innerHTML = html;
   panel.classList.add("open"); qEl.setAttribute("aria-expanded","true"); sIdx = -1;
   $$(".s-item", panel).forEach(b => b.onclick = () => pick(+b.dataset.i));
 }
 function pick(i){
   const it = sItems[i]; if (!it) return;
   panel.classList.remove("open"); qEl.blur();
+  if (it.type === "web"){ window.open("https://www.google.com/search?q=" + encodeURIComponent(it.q), "_blank", "noopener,noreferrer"); return; }
   if (it.type === "algo" || it.type === "stat") openAlgo(it.id);
   else if (it.type === "node") goNode(it.id);
   else if (it.type === "flow") goFlow(it.id, it.anchor);
