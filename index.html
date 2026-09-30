@@ -235,6 +235,17 @@ h1.title{font-family:var(--font-serif);font-size:clamp(26px,3.2vw,36px);line-hei
 .btn.primary:hover{background:var(--brand-2);color:var(--on-brand)}
 .btn:disabled{opacity:.55;cursor:wait}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+/* 首頁 */
+.home-hero{padding:18px 0 8px;max-width:760px}
+.home-hero h1.title{font-size:clamp(28px,3.6vw,40px)}
+.home-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:26px}
+.home-card{display:flex;flex-direction:column;gap:8px;text-align:left;padding:20px;border-radius:var(--radius);border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow-sm);transition:border-color .15s,transform .15s,box-shadow .15s;color:var(--ink)}
+.home-card:hover{border-color:var(--pink-3);transform:translateY(-2px);box-shadow:var(--shadow)}
+.home-card .hc-ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--pink-2);color:var(--brand-text)}
+.home-card h3{margin:4px 0 0;font-size:16.5px;color:var(--ink)}
+.home-card p{margin:0;font-size:13.5px;line-height:1.6;color:var(--ink-2)}
+.home-card .hc-go{margin-top:auto;padding-top:6px;font-size:13px;font-weight:600;color:var(--brand-text)}
+.home-note{margin-top:22px;font-size:13px;color:var(--muted)}
 .section-title{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:34px 0 14px}
 .section-title h2{font-family:var(--font-serif);font-size:21px;margin:0;color:var(--ink)}
 .section-title .hint{font-size:13px;color:var(--muted)}
@@ -537,7 +548,7 @@ button.pnode:hover{border-color:var(--pink-3);box-shadow:var(--shadow-sm)}
   .search input{height:40px;padding-right:14px}
   .search kbd{display:none}
   .content{padding:20px 16px calc(96px + env(safe-area-inset-bottom))}
-  .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px 8px calc(6px + env(safe-area-inset-bottom))}
+  .tabbar{display:grid;grid-template-columns:repeat(6,1fr);position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px 8px calc(6px + env(safe-area-inset-bottom))}
   .tabbar button{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;color:var(--muted);padding:6px 0;border-radius:12px}
   .tabbar button[aria-current="page"]{color:var(--brand-text);background:var(--pink-2);font-weight:600}
   .grid-cards{grid-template-columns:1fr}
@@ -614,6 +625,7 @@ button.pnode:hover{border-color:var(--pink-3);box-shadow:var(--shadow-sm)}
       <div><div class="brand-name">Model Learning</div><div class="brand-sub">DS 知識庫 · 模型雷達</div></div>
     </div>
     <nav class="nav">
+      <button class="nav-btn" data-view="home"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 10.5 12 3.5l8.5 7"/><path d="M5.5 9v11h13V9"/><path d="M10 20v-5.5h4V20"/></svg><span>首頁<span class="nav-en">Home</span></span></button>
       <button class="nav-btn" data-view="radar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12 19 5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg><span>每日 HF 模型雷達<span class="nav-en">Daily AI Radar</span></span></button>
       <button class="nav-btn" data-view="workflow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="5.5" r="2.5"/><circle cx="19" cy="18.5" r="2.5"/><path d="M7.5 5.5H15a3.25 3.25 0 0 1 0 6.5H9a3.25 3.25 0 0 0 0 6.5h7.5"/></svg><span>資料分析流程<span class="nav-en">Analytics Workflow</span></span></button>
       <button class="nav-btn" data-view="taxonomy"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="5" rx="1.2"/><rect x="2.5" y="16.5" width="6" height="5" rx="1.2"/><rect x="15.5" y="16.5" width="6" height="5" rx="1.2"/><path d="M12 7.5v4M5.5 16.5v-2.5h13v2.5M12 11.5v2.5"/></svg><span>ML 演算法知識樹<span class="nav-en">Algorithm Taxonomy</span></span></button>
@@ -653,6 +665,22 @@ button.pnode:hover{border-color:var(--pink-3);box-shadow:var(--shadow-sm)}
     </header>
 
     <main class="content">
+      <!-- ─────────── HOME ─────────── -->
+      <section class="view" id="view-home" aria-labelledby="homeTitle">
+        <div class="home-hero">
+          <div class="eyebrow">Model Learning</div>
+          <h1 class="title" id="homeTitle">資料科學知識庫 × AI 模型雷達</h1>
+          <p class="lede">把資料科學常用的知識整理成好查、好懂的知識樹：每個方法都先講白話直覺和適合什麼情況，數學放在最後。另外不定時整理 Hugging Face 上值得關注的新模型。</p>
+        </div>
+        <div class="home-grid">
+          <button class="home-card" data-goto="radar"><span class="hc-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12 19 5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span><h3>AI 模型雷達</h3><p>從 Hugging Face 熱門榜挑出最值得一看的新模型，並連到對應的演算法。</p><span class="hc-go">看雷達 →</span></button>
+          <button class="home-card" data-goto="workflow"><span class="hc-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="5.5" r="2.5"/><circle cx="19" cy="18.5" r="2.5"/><path d="M7.5 5.5H15a3.25 3.25 0 0 1 0 6.5H9a3.25 3.25 0 0 0 0 6.5h7.5"/></svg></span><h3>資料分析流程</h3><p>從定義問題、資料品質、建模到落地，四個階段的做法與檢核清單。</p><span class="hc-go">看流程 →</span></button>
+          <button class="home-card" data-goto="taxonomy"><span class="hc-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="5" rx="1.2"/><rect x="2.5" y="16.5" width="6" height="5" rx="1.2"/><rect x="15.5" y="16.5" width="6" height="5" rx="1.2"/><path d="M12 7.5v4M5.5 16.5v-2.5h13v2.5M12 11.5v2.5"/></svg></span><h3>ML 演算法知識樹</h3><p><span data-count="ml">102</span> 個機器學習演算法，每個都有白話直覺、適用情況與數學細節。</p><span class="hc-go">看演算法 →</span></button>
+          <button class="home-card" data-goto="stats"><span class="hc-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 3.5v17h17"/><path d="M6.5 17 19 6.5"/><circle cx="8" cy="11" r="1.2" fill="currentColor"/><circle cx="12" cy="14.5" r="1.2" fill="currentColor"/><circle cx="14" cy="8.5" r="1.2" fill="currentColor"/><circle cx="17.5" cy="13" r="1.2" fill="currentColor"/></svg></span><h3>統計 × 因果知識樹</h3><p><span data-count="stat">41</span> 個統計與因果推論方法：A/B 測試、DiD、合成控制、DML……</p><span class="hc-go">看方法 →</span></button>
+        </div>
+        <p class="home-note">按 <b>⌘K</b> 或 <b>/</b> 可以直接搜尋任何方法或概念。</p>
+      </section>
+
       <!-- ─────────── RADAR ─────────── -->
       <section class="view" id="view-radar" aria-labelledby="radarTitle">
         <div class="hero">
@@ -726,6 +754,7 @@ button.pnode:hover{border-color:var(--pink-3);box-shadow:var(--shadow-sm)}
 </div>
 
 <nav class="tabbar" aria-label="主選單（行動版）">
+  <button data-view="home"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 10.5 12 3.5l8.5 7"/><path d="M5.5 9v11h13V9"/><path d="M10 20v-5.5h4V20"/></svg>首頁</button>
   <button data-view="radar"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12 19 5"/></svg>雷達</button>
   <button data-view="workflow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="5.5" r="2.5"/><circle cx="19" cy="18.5" r="2.5"/><path d="M7.5 5.5H15a3.25 3.25 0 0 1 0 6.5H9a3.25 3.25 0 0 0 0 6.5h7.5"/></svg>分析流程</button>
   <button data-view="taxonomy"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="5" rx="1.2"/><rect x="2.5" y="16.5" width="6" height="5" rx="1.2"/><rect x="15.5" y="16.5" width="6" height="5" rx="1.2"/><path d="M12 7.5v4M5.5 16.5v-2.5h13v2.5"/></svg>ML 樹</button>
@@ -937,9 +966,9 @@ async function refresh(force){
   state.refreshing = false; renderRadar(); renderSideFoot();
 }
 /* ═════════════════════════ 路由 ═════════════════════════ */
-const VIEWS = ["radar","workflow","taxonomy","stats","method"];
+const VIEWS = ["home","radar","workflow","taxonomy","stats","method"];
 function setView(v, push=true){
-  if (!VIEWS.includes(v)) v = "radar";
+  if (!VIEWS.includes(v)) v = "home";
   const prev = state.view;
   state.view = v;
   $$(".view").forEach(s => s.classList.toggle("active", s.id === "view-" + v));
@@ -958,7 +987,7 @@ function route(){
   if (h.startsWith("node/")){ const id = h.slice(5); if (NODES[id]){ closeDrawer(false); setView(TREE_VIEW[NODES[id].tree], false); PYR[NODES[id].tree].focus(id); return; } }
   if (h.startsWith("flow/")){ closeDrawer(false); state.stage = h.slice(5); renderWorkflow(); setView("workflow", false); return; }
   closeDrawer(false);
-  setView(h || store.get("ml.view") || "radar", false);
+  setView(h || "home", false);   // 直接點網址（沒有 # 路徑）一律先到首頁
 }
 document.addEventListener("click", e => {
   const b = e.target.closest("[data-view],[data-goto]"); if (!b) return;
@@ -1105,6 +1134,7 @@ function renderRadar(){
 $("#refreshBtn").addEventListener("click", () => refresh(true));
 
 function renderSideFoot(){
+  $$("[data-count]").forEach(el => { el.textContent = LEAVES_BY[el.dataset.count].length; });
   const d = state.data;
   $("#sideFoot").innerHTML = `
     <div class="side-stat"><span>ML 演算法</span><b>${LEAVES_BY.ml.length}</b></div>
