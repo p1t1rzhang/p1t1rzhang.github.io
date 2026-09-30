@@ -36,18 +36,17 @@
 ## 運作方式
 
 ```
-推送到 main（不定時）                          在 Mac 本機打開 index.html
-        │                                             │
-        ▼                                             ▼
-GitHub Actions（.github/workflows/）            瀏覽器直接呼叫 Hugging Face 公開 API
-  ├─ fetch_hf.py 抓取熱門榜並評分 → 存到 data 分支     ├─ 評分、精選（與 fetch_hf.py 同一套邏輯）
-  ├─ src/build.py 把知識庫資料與 KaTeX 內嵌成 index.html └─ 只更新自己這台的畫面，不影響公開網站
-  └─ 發佈到 GitHub Pages
+推送到 main／手動 Run workflow（不定時）          在 Mac 執行 start_server.command
+        │                                              │
+        ▼                                              ▼
+GitHub Actions（.github/workflows/）             server.py（只綁定 127.0.0.1）
+  ├─ fetch_hf.py 抓取熱門榜並評分 → 存到 data 分支      ├─ 打開網頁時資料過期就在背景用 fetch_hf.py 更新
+  ├─ src/build.py 把知識庫資料與 KaTeX 內嵌成 index.html  ├─ 顯示「更新資料」按鈕可立即重抓
+  └─ 發佈到 GitHub Pages                               └─ 只影響本機畫面，不會更新公開網站
 ```
 
-- **公開網站**：顯示最近一次部署時抓到的雷達資料，每次推送 `main` 就會更新（隨機時段），不再每天排程；訪客打開時不會另外抓取，也沒有「更新資料」按鈕。
-- **Mac 本機**：直接打開 `index.html` 時，會在背景抓最新資料，另有「更新資料」按鈕可立即重抓；連不上 Hugging Face 時沿用上次的資料。
-- 「今日新進榜」與排名變化：公開網站跟 data 分支前一天的快照比較；本機跟瀏覽器記下的前一天排名比較。
+- **公開網站**：顯示最近一次部署時抓到的雷達資料，每次推送 `main` 或手動 **Run workflow** 就會更新（隨機時段），不再每天排程；訪客只能瀏覽，沒有「更新資料」按鈕。
+- **Mac 本機**：只有執行 `start_server.command`（或 `python3 server.py`）時才會抓取新資料並顯示「更新資料」按鈕；直接打開 `index.html` 只顯示既有資料。
 
 ### 雷達如何挑出「有趣」的模型
 
@@ -64,7 +63,7 @@ GitHub Actions（.github/workflows/）            瀏覽器直接呼叫 Hugging 
 
 3. **多樣性精選**：排除量化轉檔與移除安全對齊的版本；依分數挑選，同作者最多 2 個、同任務最多 3 個。
 
-權重在 `fetch_hf.py` 最上方的 `WEIGHTS`、`RECENCY_HALF_LIFE_DAYS`、`ORIGINALITY`，以及 `src/index.template.html` 裡的 `HFR` 常數；兩邊要一起改。
+權重可在 `fetch_hf.py` 最上方的 `WEIGHTS`、`RECENCY_HALF_LIFE_DAYS`、`ORIGINALITY` 調整。
 
 ---
 
@@ -160,7 +159,6 @@ python3 server.py --port 9000 --no-browser
 | HTTP 429 | API 請求過於頻繁，稍後再試，或設定 `HF_TOKEN` |
 | 抓取失敗 | 舊資料不會被覆蓋，網站照常顯示上一次的結果 |
 | Actions 發佈失敗 | 確認 **Settings → Pages** 的 Source 是 **GitHub Actions**，再 **Re-run all jobs** |
-| 本機打開顯示「暫時沒有雷達資料」 | 瀏覽器連不上 Hugging Face 或被限制頻率，稍後按「更新資料」再試 |
 
 ---
 
