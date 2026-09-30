@@ -2,9 +2,9 @@
 
 **🔗 網站：https://p1t1rzhang.github.io/**
 
-｜　每天台灣時間早上自動更新　｜　手機、電腦皆可瀏覽
+｜　打開網頁即抓取最新熱門模型　｜　手機、電腦皆可瀏覽
 
-把資料科學需要的知識整理成「由上而下、互斥且窮盡（MECE）」的知識樹，搭配一條從定義問題到落地的分析流程，再加上每天自動更新的 Hugging Face 熱門模型雷達。
+把資料科學需要的知識整理成「由上而下、互斥且窮盡（MECE）」的知識樹，搭配一條從定義問題到落地的分析流程，再加上打開網頁就即時更新的 Hugging Face 熱門模型雷達。
 
 ---
 
@@ -15,7 +15,7 @@
 | **資料分析流程** | 01 定義問題（問題驅動 vs 資料驅動）→ 02 資料與品質（三層 vs 兩層架構、ETL vs ELT、六大品質維度）→ 03 建模與分析（問題類型 → 方法路由）→ 04 落地與價值（批次 vs 即時、上線驗證、監控）。每階段附比較表、檢核清單、常見陷阱與產出物 |
 | **ML 演算法知識樹** | 4 大學習範式 → 13 種問題型態 → 46 個模型家族 → **102 個演算法**。每個演算法附數學直覺、目標函數、時間／空間複雜度、優缺點、適用場景與調參要點 |
 | **統計推論 × 因果推論知識樹** | 2 大推論類型 → 6 種問題型態 → 20 個方法家族 → **41 個方法**（MLE、Bootstrap、假設檢定、GLM、存活分析、A/B 測試、CUPED、DiD、合成控制、RDD、IV、PSM、IPW、AIPW、DML、因果森林……）。每個方法附核心直覺、公式、**關鍵假設與診斷方式**、設定要點與常用工具 |
-| **每日 AI 模型雷達** | 抓取 Hugging Face 熱門榜，過濾量化／轉檔版本，依 5 個維度評「有趣度」，精選當天最值得看的模型，並連結到知識樹中對應的演算法 |
+| **AI 模型雷達** | 打開網頁時直接從瀏覽器抓取 Hugging Face 熱門榜，過濾量化／轉檔版本，依 5 個維度評「有趣度」，精選當天最值得看的模型，並連結到知識樹中對應的演算法 |
 
 ## 特色
 
@@ -36,18 +36,18 @@
 ## 運作方式
 
 ```
-每天 08:17（台灣時間）            推送到 main
-        │                              │
-        └──────────┬───────────────────┘
-                   ▼
-        GitHub Actions（.github/workflows/）
-          ├─ fetch_hf.py 抓取 Hugging Face 熱門榜並評分 → 存到 data 分支（含每日快照）
-          ├─ src/build.py 把知識庫資料與 KaTeX 內嵌成 index.html
-          └─ 發佈到 GitHub Pages
+打開網頁                                   推送到 main
+   │                                            │
+   ▼                                            ▼
+瀏覽器直接呼叫 Hugging Face 公開 API       GitHub Actions（.github/workflows/）
+  ├─ 評分、精選（與 fetch_hf.py 同一套邏輯）  ├─ fetch_hf.py 抓一份熱門榜 → 存到 data 分支（備援）
+  └─ 先顯示上次的結果，背景抓完再換成最新的     ├─ src/build.py 把知識庫資料與 KaTeX 內嵌成 index.html
+                                              └─ 發佈到 GitHub Pages
 ```
 
-- 每日資料由機器人存在獨立的 **`data` 分支**，與內容所在的 `main` 分支分開，互不衝突。
-- 抓取失敗時沿用上一次的資料，網站照常發佈。
+- **不再每天排程**：每次打開網頁都會在背景抓最新資料（先顯示上次的結果）；按「更新資料」可立即重抓。不需要伺服器或 token。
+- 連不上 Hugging Face 時，顯示瀏覽器上次抓到的資料或部署時的備援資料。
+- 「今日新進榜」與排名變化，是跟瀏覽器記下的前一天排名（或部署時的資料）比較。
 
 ### 雷達如何挑出「有趣」的模型
 
@@ -64,7 +64,7 @@
 
 3. **多樣性精選**：排除量化轉檔與移除安全對齊的版本；依分數挑選，同作者最多 2 個、同任務最多 3 個。
 
-權重可在 `fetch_hf.py` 最上方的 `WEIGHTS`、`RECENCY_HALF_LIFE_DAYS`、`ORIGINALITY` 調整。
+權重在 `fetch_hf.py` 最上方的 `WEIGHTS`、`RECENCY_HALF_LIFE_DAYS`、`ORIGINALITY`，以及 `src/index.template.html` 裡的 `HFR` 常數；兩邊要一起改。
 
 ---
 
@@ -125,8 +125,8 @@ python3 server.py --port 9000 --no-browser
 
 1. Fork 這個 repo（想要 `https://帳號.github.io/` 的網址，就把 repo 命名為 `帳號.github.io`；其他名稱會是 `https://帳號.github.io/repo 名稱/`）。
 2. **Settings → Pages → Build and deployment → Source** 選 **GitHub Actions**。
-3. Fork 的 repo 預設停用 Actions：到 **Actions** 分頁按啟用，再選「每日更新與部署」→ **Run workflow**。
-4. 約 1–3 分鐘後即可瀏覽；之後每天自動更新。GitHub Pages 與 Actions 對公開 repo 免費。
+3. Fork 的 repo 預設停用 Actions：到 **Actions** 分頁按啟用，再選「部署網站」→ **Run workflow**。
+4. 約 1–3 分鐘後即可瀏覽；雷達資料在打開網頁時自動抓取。GitHub Pages 與 Actions 對公開 repo 免費。
 
 ---
 
@@ -139,7 +139,7 @@ python3 server.py --port 9000 --no-browser
 ├── run.command / run.sh     ← 抓取並開啟
 ├── start_server.command     ← 啟動本機伺服器
 ├── install_daily_mac.sh     ← macOS 每日排程（launchd）
-├── .github/workflows/       ← 每日更新與部署（GitHub Actions）
+├── .github/workflows/       ← 部署網站（GitHub Actions）
 └── src/
     ├── taxonomy.json        ← ML 知識樹
     ├── stat_taxonomy.json   ← 統計推論 × 因果推論知識樹
@@ -160,7 +160,7 @@ python3 server.py --port 9000 --no-browser
 | HTTP 429 | API 請求過於頻繁，稍後再試，或設定 `HF_TOKEN` |
 | 抓取失敗 | 舊資料不會被覆蓋，網站照常顯示上一次的結果 |
 | Actions 發佈失敗 | 確認 **Settings → Pages** 的 Source 是 **GitHub Actions**，再 **Re-run all jobs** |
-| 排程沒有準時執行 | GitHub 排程在尖峰時段可能延後數十分鐘，屬正常現象；可隨時手動 **Run workflow** |
+| 雷達顯示「暫時沒有雷達資料」 | 瀏覽器連不上 Hugging Face 或被限制頻率，稍後按「更新資料」再試 |
 
 ---
 

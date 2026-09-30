@@ -1,17 +1,16 @@
 # ─────────────────────────────────────────────────────────────
-# 每日更新與部署：抓取 Hugging Face 熱門榜 → 重建網頁 → 發佈到 GitHub Pages
+# 部署：抓取 Hugging Face 熱門榜（當作網頁的備援資料）→ 重建網頁 → 發佈到 GitHub Pages
+# 雷達資料平常由網頁在瀏覽器裡即時抓取，所以這裡不再每天排程執行。
 #
 # 首次使用（只需做一次）：
 #   repo 的 Settings → Pages → Build and deployment → Source 選「GitHub Actions」
 #
 # 資料放在獨立的 data 分支（由機器人維護），main 分支只放你自己的程式與內容，
-# 所以你在 Mac 上修改、上傳時不會和每天的自動更新互相衝突。
+# 所以你在 Mac 上修改、上傳時不會和資料更新互相衝突。
 # ─────────────────────────────────────────────────────────────
-name: 每日更新與部署
+name: 部署網站
 
 on:
-  schedule:
-    - cron: "17 0 * * *"    # 每天 UTC 00:17 = 台灣時間 08:17（GitHub 排程可能延後數分鐘到一小時）
   push:
     branches: [main]        # 你更新內容後會自動重新部署
   workflow_dispatch:        # 也可以在 Actions 頁面按 Run workflow 手動執行
