@@ -1,0 +1,454 @@
+{
+ "id": "pm",
+ "name": {
+  "zh": "專案管理",
+  "en": "Project Management"
+ },
+ "role": {
+  "zh": "對應職能：專案經理（Project Manager）",
+  "en": "For: Project Manager roles"
+ },
+ "tagline": {
+  "zh": "把模糊目標變成可交付的計畫：範圍清楚、節奏穩定、風險看得見。",
+  "en": "Turn fuzzy goals into shippable plans: clear scope, steady cadence, visible risk."
+ },
+ "intro": {
+  "zh": "專案管理的核心不是甘特圖，而是讓一群人在固定期限內，對「做什麼、不做什麼、怎樣算成功」有共識。我曾帶 8 人團隊在一個月內跑完 4 個衝刺，也獨自把這個網站從資料管線做到自動部署上線。兩者用的是同一套方法：先定義成功，再用假設排工作、用指標驗成效。",
+  "en": "Project management is less about Gantt charts than about getting a group of people to agree, against a fixed deadline, on what to build, what not to build and what success means. I led an 8-person team through 4 sprints in one month, and I shipped this website on my own, from data pipeline to automated deployment. Both ran on the same method: define success first, sequence work by hypothesis and verify impact with metrics."
+ },
+ "principles": [
+  {
+   "zh": [
+    "先定義成功",
+    "動工前寫下可衡量的成功標準，以及明確不做的範圍。"
+   ],
+   "en": [
+    "Define done first",
+    "Write measurable success criteria and explicit out-of-scope items before any work starts."
+   ]
+  },
+  {
+   "zh": [
+    "小步驗證再放大",
+    "先用小範圍測試確認方向，再決定要不要加碼投入。"
+   ],
+   "en": [
+    "Validate small, then scale",
+    "Test on a small scale to confirm the direction before deciding whether to invest more."
+   ]
+  },
+  {
+   "zh": [
+    "讓風險與決策看得見",
+    "RAID 與 RACI 公開透明；問題早一週浮上檯面，就省下一週救火。"
+   ],
+   "en": [
+    "Make risks and decisions visible",
+    "Keep RAID and RACI in the open; surfacing an issue a week early saves a week of firefighting."
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "charter",
+   "name": {
+    "zh": "專案章程與成功定義",
+    "en": "Project Charter & Definition of Success"
+   },
+   "oneLiner": {
+    "zh": "一頁寫清楚為何做、做什麼、不做什麼、怎樣算成功，作為所有決策的錨點。",
+    "en": "One page stating why, what, what not and what success means: the anchor for every later decision."
+   },
+   "when": {
+    "zh": [
+     "專案啟動或換手時，需要對齊期望",
+     "範圍開始膨脹、需求不斷追加時",
+     "要向主管或客戶爭取資源與授權時"
+    ],
+    "en": [
+     "At kickoff or handover, to align expectations",
+     "When scope starts creeping and requests keep piling up",
+     "When you need resources or a mandate from a sponsor or client"
+    ]
+   },
+   "steps": {
+    "zh": [
+     "用一句話寫問題陳述：誰、遇到什麼問題、代價多大",
+     "列出範圍內與範圍外，範圍外要寫得比範圍內更具體",
+     "定 1 個主要成功指標＋2–3 個護欄指標，含基準值與期限",
+     "寫明限制（時間、預算、資料、法規）與關鍵假設",
+     "列出 sponsor 與決策者，簽核後才開工"
+    ],
+    "en": [
+     "Write a one-sentence problem statement: who, what problem, and what it costs",
+     "List in-scope and out-of-scope; make out-of-scope more specific than in-scope",
+     "Set 1 primary success metric plus 2–3 guardrails, each with a baseline and a deadline",
+     "State constraints (time, budget, data, regulation) and key assumptions",
+     "Name the sponsor and decision-makers; get sign-off before work begins"
+    ]
+   },
+   "example": {
+    "zh": "玉山 Origin 企劃（團隊提案）的問題陳述：「約 20–28 歲的學生與社會新鮮人剛開第一個薪轉或數位帳戶，但記帳麻煩、理財知識不足。」\n產品範圍包含銀行交易自動記帳、AI 分類與理財里程碑等；商業模式分層：學生方案免費作為策略投資，Premium 付費，再帶動信用卡、證券與貸款的交叉銷售。\n財務上的成功標準則以回收期、IRR 與生態系交叉銷售率衡量。",
+    "en": "E.SUN Origin (team business plan) started from one problem statement: \"Students and new graduates aged roughly 20–28 are opening their first salary or digital account, but bookkeeping is tedious and financial literacy is low.\"\nScope included automatic bookkeeping from bank transactions, AI categorization and financial milestones; the model was tiered: a free College Plan as a strategic investment, a paid Premium tier, then cross-sell into cards, securities and loans.\nFinancial success was framed as payback period, IRR and ecosystem cross-sell rate."
+   },
+   "template": {
+    "zh": "專案章程（一頁）\n問題陳述：〔誰〕在〔情境〕遇到〔問題〕，造成〔代價〕\n目標：在〔期限〕前把〔主要指標〕從〔基準〕提升到〔目標〕\n護欄指標：〔不能變差的指標〕\n範圍內：〔…〕\n範圍外：〔…〕\n限制與假設：〔時間／預算／資料／法規〕\n利害關係人：Sponsor〔…〕、決策者〔…〕、核心團隊〔…〕\n里程碑：〔日期〕－〔交付物〕",
+    "en": "Project charter (one page)\nProblem: [who] faces [problem] in [context], costing [impact]\nGoal: move [primary metric] from [baseline] to [target] by [date]\nGuardrails: [metrics that must not get worse]\nIn scope: [...]\nOut of scope: [...]\nConstraints & assumptions: [time / budget / data / regulation]\nStakeholders: sponsor [...], decision-maker [...], core team [...]\nMilestones: [date] – [deliverable]"
+   },
+   "pitfalls": {
+    "zh": [
+     "成功指標寫成活動量（辦了幾場），而不是結果",
+     "只寫範圍內、範圍外留白，需求就會無限追加",
+     "章程寫完就束之高閣，範圍變更時沒有回頭更新"
+    ],
+    "en": [
+     "Success defined as activity (events held) rather than outcomes",
+     "Only in-scope is written; a blank out-of-scope invites endless additions",
+     "The charter is filed and forgotten, never updated when scope changes"
+    ]
+   },
+   "cases": [
+    "esun"
+   ],
+   "links": [
+    {
+     "t": "flow",
+     "id": "frame"
+    }
+   ]
+  },
+  {
+   "id": "stakeholder",
+   "name": {
+    "zh": "利害關係人與 RACI",
+    "en": "Stakeholders & RACI"
+   },
+   "oneLiner": {
+    "zh": "先畫出誰有權力、誰在乎，再用 RACI 講清楚每個決策由誰拍板。",
+    "en": "Map who has power and who cares, then use RACI to make clear who decides what."
+   },
+   "when": {
+    "zh": [
+     "跨部門或多方合作，責任邊界模糊時",
+     "決策卡關，同一件事好幾個人都說了算時",
+     "向高層報告或爭取支持之前"
+    ],
+    "en": [
+     "Cross-functional or multi-party work with blurry ownership",
+     "Decisions stall because several people think they own them",
+     "Before an executive readout or a request for support"
+    ]
+   },
+   "steps": {
+    "zh": [
+     "列出所有利害關係人，依權力 × 關注度放進 2×2",
+     "依象限經營：高權力高關注密切合作、高權力低關注讓其滿意、低權力高關注保持告知",
+     "交付物與決策當列、角色當欄，填入 RACI",
+     "檢查每列恰好一個 A；沒有 R 或多個 A 都要修正",
+     "重要會議前一對一預先溝通，會上只做決策"
+    ],
+    "en": [
+     "List every stakeholder and place them on a power × interest 2×2",
+     "Manage by quadrant: high power & interest, work closely; high power, low interest, keep satisfied; low power, high interest, keep informed",
+     "Put deliverables and decisions in rows, roles in columns, and fill in RACI",
+     "Check each row has exactly one A; fix rows with no R or several As",
+     "Pre-wire key people one-on-one so the meeting itself is for deciding"
+    ]
+   },
+   "example": {
+    "zh": "例如：連鎖餐飲導入新 CRM。財務長權力高但關注低，每月一頁進度即可；門市店長關注高，要讓他們早期參與測試，否則上線時最大的阻力會來自第一線。\n對外同樣是利害關係人經營：在 RiverBien 顧問公司支援旗艦研討會時，從 300+ 次陌生開發接觸轉成 100+ 家客戶組織，並確保高階主管（C-level）出席。",
+    "en": "Generic example: a restaurant chain rolling out a new CRM. The CFO has high power but low interest, so a one-page monthly update is enough; store managers care a lot, so involve them early in testing, or the strongest resistance at launch will come from the front line.\nThe same applies externally: supporting RiverBien's flagship seminar, I converted 300+ cold outbound touchpoints into 100+ client organizations and secured C-suite attendance."
+   },
+   "template": {
+    "zh": "RACI 矩陣\n交付物／決策 ｜ Sponsor ｜ PM ｜ 資料團隊 ｜ 業務單位\n〔專案範圍〕 ｜ A ｜ R ｜ C ｜ C\n〔資料取得〕 ｜ I ｜ A ｜ R ｜ C\n〔上線決策〕 ｜ A ｜ R ｜ C ｜ C\nR＝執行　A＝最終負責（每列僅一個）　C＝事前諮詢　I＝事後告知",
+    "en": "RACI matrix\nDeliverable / decision | Sponsor | PM | Data team | Business unit\n[Project scope] | A | R | C | C\n[Data access] | I | A | R | C\n[Go-live decision] | A | R | C | C\nR = does the work   A = accountable (exactly one per row)   C = consulted before   I = informed after"
+   },
+   "pitfalls": {
+    "zh": [
+     "同一列出現兩個 A，出事時彼此推給對方",
+     "只經營高層，忽略會實際執行或抵制的第一線",
+     "RACI 做完不公開，大家仍憑印象分工"
+    ],
+    "en": [
+     "Two As on one row, so each points at the other when things go wrong",
+     "Managing only executives and ignoring the front line who execute or resist",
+     "A RACI that is never shared, so people still divide work by impression"
+    ]
+   },
+   "cases": [
+    "riverbien"
+   ]
+  },
+  {
+   "id": "workplan",
+   "name": {
+    "zh": "工作計畫與衝刺節奏",
+    "en": "Workplan & Sprint Cadence"
+   },
+   "oneLiner": {
+    "zh": "依假設拆解工作、以衝刺推進、盯緊關鍵路徑，讓進度每週都看得見。",
+    "en": "Break work down by hypothesis, move in sprints and watch the critical path, so progress is visible every week."
+   },
+   "when": {
+    "zh": [
+     "期限固定、範圍有彈性的專案",
+     "多人並行，需要知道誰卡住誰時",
+     "探索型題目，答案要邊做邊收斂"
+    ],
+    "en": [
+     "Fixed deadline, flexible scope",
+     "Many people working in parallel who need to see who is blocking whom",
+     "Exploratory problems where the answer converges as you go"
+    ]
+   },
+   "steps": {
+    "zh": [
+     "從最終交付倒推：每個假設需要哪些分析、資料與負責人",
+     "切成約一週的衝刺，每個衝刺結束都要有可檢視的產出",
+     "找出關鍵路徑（例如資料取得），最早啟動、每天追蹤",
+     "固定節奏：每日 15 分鐘站立會議、每週檢視並調整優先序",
+     "衝刺結束時放下被推翻的假設，把人力移往有希望的方向"
+    ],
+    "en": [
+     "Work back from the final deliverable: for each hypothesis, list analyses, data and an owner",
+     "Slice into roughly one-week sprints, each ending with a reviewable output",
+     "Find the critical path (e.g. data access), start it first and track it daily",
+     "Fix the rhythm: a 15-minute daily stand-up, plus a weekly review and reprioritization",
+     "At each sprint end, drop disproven hypotheses and move people to promising ones"
+    ]
+   },
+   "example": {
+    "zh": "撈王會員成長專案：我擔任組長，帶 8 人團隊在一個月內跑完 4 個衝刺，負責工作計畫、假設排序與最終交付。\n診斷收斂成 5 個假設：下午茶與宵夜兩個時段缺口、試用客的首訪體驗、成長客缺乏回訪理由、會員制度偏交易而非關係；工作計畫就圍繞這些假設的驗證與排序展開。",
+    "en": "Laowang Hot Pot member-growth project: as team lead, I took an 8-person team through 4 sprints in one month and owned the workplan, hypothesis prioritization and final delivery.\nThe diagnosis converged on 5 hypotheses: afternoon-tea and late-night occasion gaps, the trial guest's first visit, developing guests lacking a reason to return, and a transactional rather than relational membership; the workplan was organized around testing and ranking them."
+   },
+   "template": {
+    "zh": "假設導向工作計畫（每列一個假設）\n假設 ｜ 要做的分析 ｜ 資料來源 ｜ 負責人 ｜ 截止 ｜ 狀態（進行中／成立／推翻）\nH1〔…〕 ｜ 〔…〕 ｜ 〔…〕 ｜ 〔…〕 ｜ 〔W1〕 ｜ 〔…〕\n一個月四衝刺（通用骨架）\nW1 問題定義、資料盤點　W2 診斷、驗證假設\nW3 設計並量化解方　W4 故事線、彩排、交付",
+    "en": "Hypothesis-driven workplan (one row per hypothesis)\nHypothesis | Analyses | Data source | Owner | Due | Status (in progress / supported / rejected)\nH1 [...] | [...] | [...] | [...] | [W1] | [...]\nFour sprints in a month (generic skeleton)\nW1 frame the problem, inventory data   W2 diagnose, test hypotheses\nW3 design and quantify solutions   W4 storyline, rehearsal, delivery"
+   },
+   "pitfalls": {
+    "zh": [
+     "工作計畫變成待辦清單，看不出每項任務要回答什麼問題",
+     "資料取得等長前置作業太晚啟動，最後一週全擠在一起",
+     "站立會議變成報告大會，卡關議題沒有當場指定負責人"
+    ],
+    "en": [
+     "A workplan that is just a to-do list, with no link to the question each task answers",
+     "Long-lead items like data access start late, and everything piles into the last week",
+     "Stand-ups become status speeches, and blockers leave the room without an owner"
+    ]
+   },
+   "cases": [
+    "laowang"
+   ],
+   "links": [
+    {
+     "t": "flow",
+     "id": "frame"
+    }
+   ]
+  },
+  {
+   "id": "rice",
+   "name": {
+    "zh": "需求排序：RICE",
+    "en": "Prioritization with RICE"
+   },
+   "oneLiner": {
+    "zh": "觸及 × 影響 × 信心 ÷ 投入，把「感覺很重要」變成可以比較的分數。",
+    "en": "Reach × Impact × Confidence ÷ Effort turns \"feels important\" into a score you can compare."
+   },
+   "when": {
+    "zh": [
+     "待辦清單太長，資源只夠做一部分",
+     "各方各有偏好，需要共同的排序語言",
+     "搭配 MoSCoW：先圈出期限內必做（Must），其餘再用 RICE 排序"
+    ],
+    "en": [
+     "The backlog is long and resources cover only part of it",
+     "Stakeholders each push favorites and need a shared ranking language",
+     "Pair with MoSCoW: fence off the deadline-critical Musts, then rank the rest with RICE"
+    ]
+   },
+   "steps": {
+    "zh": [
+     "Reach：固定期間內影響的人數或事件數（如每季使用者）",
+     "Impact：對目標指標的影響，分 3／2／1／0.5／0.25 五級",
+     "Confidence：證據強度 100%／80%／50%；低於 50% 先做驗證",
+     "Effort：所有角色合計的人月；分數＝R × I × C ÷ E",
+     "遇到相依、法規或策略必要性時可覆寫分數，但要寫下理由"
+    ],
+    "en": [
+     "Reach: people or events affected in a fixed period (e.g. users per quarter)",
+     "Impact: effect on the goal metric, scored 3 / 2 / 1 / 0.5 / 0.25",
+     "Confidence: strength of evidence, 100% / 80% / 50%; below 50%, test first",
+     "Effort: person-months across all roles; score = R × I × C ÷ E",
+     "Override the score for dependencies, regulation or strategic must-haves, but write down why"
+    ]
+   },
+   "example": {
+    "zh": "例如：會員 App 有兩個候選功能。\nA 首購後推播：每季 8,000 人 × 影響 1 × 信心 80% ÷ 2 人月＝3,200。\nB 會員等級改版：20,000 × 2 × 50% ÷ 8＝2,500。A 先做；B 信心偏低，先小規模測試再重算。\n本站的模型雷達同樣「先評分、再覆寫」：5 個因子加權排序，再以多樣性規則（每位作者 ≤2、每個任務 ≤3）選出前 12 名。",
+    "en": "Generic example: two candidate features for a member app.\nA, post-first-purchase push: 8,000 users/quarter × impact 1 × 80% ÷ 2 person-months = 3,200.\nB, member-tier redesign: 20,000 × 2 × 50% ÷ 8 = 2,500. Ship A first; B's confidence is low, so run a small test and rescore.\nThis site's model radar works the same way, \"score, then override\": 5 weighted factors rank the models, then diversity rules (max 2 per author, max 3 per task) pick the top 12."
+   },
+   "pitfalls": {
+    "zh": [
+     "Impact 全填 3、Confidence 全填 100%，分數失去鑑別力",
+     "Effort 只算工程，漏掉設計、法遵與營運的時間",
+     "各自評分、標準不一；應在同一場會議用同一把尺校準"
+    ],
+    "en": [
+     "Every Impact is 3 and every Confidence 100%, so scores stop discriminating",
+     "Effort counts only engineering and misses design, compliance and operations time",
+     "People score alone on different scales; calibrate together in one session"
+    ]
+   },
+   "cases": [
+    "site"
+   ],
+   "links": [
+    {
+     "t": "algo",
+     "id": "abtest"
+    }
+   ],
+   "widget": "rice"
+  },
+  {
+   "id": "raid",
+   "name": {
+    "zh": "風險、假設、議題與相依（RAID）",
+    "en": "Risks, Assumptions, Issues & Dependencies (RAID)"
+   },
+   "oneLiner": {
+    "zh": "把可能出錯、正在出錯、視為成立與等待他人的事集中一表，每項都有負責人與預警訊號。",
+    "en": "One log for what might go wrong, what is going wrong, what you assume and what you wait on, each with an owner and a warning signal."
+   },
+   "when": {
+    "zh": [
+     "專案超過兩週，或牽涉三個以上單位",
+     "依賴外部資料、廠商或其他團隊的交付",
+     "每週進度會議需要一份共同的風險清單"
+    ],
+    "en": [
+     "Projects longer than two weeks or spanning three or more teams",
+     "Work that depends on outside data, vendors or other teams",
+     "Weekly status meetings that need one shared risk list"
+    ]
+   },
+   "steps": {
+    "zh": [
+     "分四類記錄：風險（可能發生）、假設（視為成立）、議題（已發生）、相依（等別人）",
+     "風險以機率 × 影響各 1–3 分評分，6 分以上進每週會議",
+     "每項指定一位負責人、應對方式（避免／降低／轉移／接受）與期限",
+     "為高分風險設預警訊號，例如「資料延遲超過 3 天」",
+     "每週更新：假設被推翻就轉成風險或議題，已結案的移入封存"
+    ],
+    "en": [
+     "Log four types: Risks (may happen), Assumptions (treated as true), Issues (happening now), Dependencies (waiting on others)",
+     "Score risks by probability × impact, 1–3 each; a score of 6 or more goes to the weekly meeting",
+     "Give each entry one owner, a response (avoid / reduce / transfer / accept) and a due date",
+     "Set early-warning triggers for high risks, e.g. \"data more than 3 days late\"",
+     "Update weekly: a disproven assumption becomes a risk or issue; closed items move to the archive"
+    ]
+   },
+   "example": {
+    "zh": "例如：一個顧客分群專案。\nR：交易資料欄位定義不一致（機率 3 × 影響 2＝6），負責人為資料工程，預警訊號是抽樣比對誤差超過 2%。\nA：會員 ID 可跨通路串接（第 1 週驗證）。\nI：POS 匯出權限尚未開通。D：行銷部門的名單系統需先完成升級。",
+    "en": "Generic example: a customer segmentation project.\nR: inconsistent field definitions in transaction data (probability 3 × impact 2 = 6); owner: data engineering; trigger: sample reconciliation error above 2%.\nA: member IDs can be joined across channels (verify in week 1).\nI: POS export access not yet granted. D: marketing's list system must be upgraded first."
+   },
+   "template": {
+    "zh": "RAID 紀錄表欄位\n編號 ｜ 類型（R/A/I/D） ｜ 描述 ｜ 機率（1–3） ｜ 影響（1–3） ｜ 分數 ｜ 負責人 ｜ 應對方式 ｜ 預警訊號 ｜ 期限 ｜ 狀態 ｜ 最後更新",
+    "en": "RAID log columns\nID | Type (R/A/I/D) | Description | Probability (1–3) | Impact (1–3) | Score | Owner | Response | Early-warning trigger | Due | Status | Last updated"
+   },
+   "pitfalls": {
+    "zh": [
+     "負責人寫「團隊」，等於沒有人負責",
+     "只記風險不記假設，假設被推翻時沒人發現",
+     "紀錄表只在啟動會用過一次，之後從不更新"
+    ],
+    "en": [
+     "Owner listed as \"the team\", which means nobody",
+     "Logging risks but not assumptions, so no one notices when an assumption breaks",
+     "The log is used once at kickoff and never updated"
+    ]
+   },
+   "cases": [],
+   "links": [
+    {
+     "t": "flow",
+     "id": "data"
+    }
+   ]
+  },
+  {
+   "id": "measure",
+   "name": {
+    "zh": "成效衡量與回顧",
+    "en": "Measuring Impact & Retrospectives"
+   },
+   "oneLiner": {
+    "zh": "用領先指標及早調整、用落後指標驗收成果，並分清新增需求還是只是移轉。",
+    "en": "Steer with leading indicators, judge with lagging ones, and separate genuinely new demand from demand that merely shifted."
+   },
+   "when": {
+    "zh": [
+     "試點結束或上線後，要判斷值不值得擴大",
+     "成效需要向 sponsor 或董事會交代",
+     "每個衝刺或階段結束，要留下可複用的教訓"
+    ],
+    "en": [
+     "After a pilot or launch, to decide whether to scale",
+     "When results must be reported to a sponsor or board",
+     "At the end of each sprint or stage, to capture reusable lessons"
+    ]
+   },
+   "steps": {
+    "zh": [
+     "配對指標：每個落後指標（營收、留存）配 1–2 個領先指標（預約、試用）",
+     "設對照組或基準期，衡量增量而非總量",
+     "多個指標同時成立才算新增：目標指標上升，且護欄指標未下滑",
+     "上線後固定頻率追蹤，偏離預期就記入 RAID",
+     "回顧固定三問：哪些有效、哪些無效、下次具體改什麼（附負責人）"
+    ],
+    "en": [
+     "Pair metrics: each lagging metric (revenue, retention) gets 1–2 leading ones (bookings, trials)",
+     "Use a control group or baseline period to measure increments, not totals",
+     "Count it as new only if several indicators hold at once: the target rises and guardrails do not fall",
+     "Track on a fixed cadence after launch; log deviations in the RAID",
+     "Run every retro on three questions: what worked, what didn't, what we change next (with an owner)"
+    ]
+   },
+   "example": {
+    "zh": "撈王提案的衡量設計：新場景帶來的營收，可能只是把晚餐客人移到下午。因此要多個指標同時成立才算新增需求，例如實驗組的 60 天回訪率高於對照組，且晚餐來客數沒有被侵蝕。\n若離峰營收上升但晚餐同步下滑，就應視為需求移轉，而不是成長。",
+    "en": "In the Laowang proposal, revenue from a new occasion might simply move dinner guests to the afternoon. So several indicators had to hold at once to count as new demand, e.g. a higher 60-day repeat rate in treatment than in control, with no cannibalization of dinner traffic.\nIf off-peak revenue rises while dinner falls, that is shifted demand, not growth."
+   },
+   "pitfalls": {
+    "zh": [
+     "只看總量成長，把季節性或需求移轉誤當成專案成效",
+     "只有落後指標，等結果出來已來不及調整",
+     "回顧變成檢討大會，沒有具體行動與負責人"
+    ],
+    "en": [
+     "Counting total growth and mistaking seasonality or shifted demand for impact",
+     "Only lagging metrics, so by the time results arrive it is too late to steer",
+     "Retros turn into blame sessions with no concrete actions or owners"
+    ]
+   },
+   "cases": [
+    "laowang"
+   ],
+   "links": [
+    {
+     "t": "algo",
+     "id": "abtest"
+    },
+    {
+     "t": "algo",
+     "id": "did"
+    },
+    {
+     "t": "flow",
+     "id": "deploy"
+    }
+   ]
+  }
+ ]
+}

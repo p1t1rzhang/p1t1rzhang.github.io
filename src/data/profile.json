@@ -1,0 +1,1450 @@
+{
+ "person": {
+  "name": {
+   "zh": "張方燡 Pete",
+   "en": "Fang-I (Pete) Zhang"
+  },
+  "short": "Pete",
+  "initials": "PZ",
+  "headline": {
+   "zh": "把模糊的商業問題，拆成可以驗證的假設，再用數據給出答案。",
+   "en": "I turn ambiguous business questions into testable hypotheses, then answer them with data."
+  },
+  "sub": {
+   "zh": "臺大農業經濟學研究所碩士生｜合庫人壽 數位與數據部實習生",
+   "en": "MS candidate, National Taiwan University · Digital & Data Intern, BNP Paribas Cardif TCB Life"
+  },
+  "roles": {
+   "zh": "策略顧問 × 數據分析 × 專案管理",
+   "en": "Strategy × Data × Delivery"
+  },
+  "status": {
+   "zh": "正在尋找策略顧問、數據分析／資料科學、專案管理相關機會",
+   "en": "Open to strategy consulting, data analytics / data science and project management roles"
+  },
+  "location": {
+   "zh": "台北",
+   "en": "Taipei, Taiwan"
+  },
+  "bio": {
+   "zh": [
+    "我大學讀財金，現在在臺大農經所做應用機器學習、應用計量與因果推論，論文研究「ChatGPT 等 AI 模型對股票的衝擊與 AI 概念股報酬」。",
+    "我習慣先寫下最可能的答案，再用議題樹拆成可以驗證的假設，最後用 SQL、Python 和統計方法把答案算出來，轉成決策者能直接行動的建議。",
+    "在合庫人壽，我用這套方法為數位通路找出優先客群並估算商機；在 TMBA，我帶 8 人團隊一個月跑完 4 個衝刺，為連鎖火鍋品牌設計會員分群策略，拿到第 3 名。這個網站本身也是我的作品：一個中英雙語的資料科學知識庫，加上每天挑選 AI 新模型的評分雷達。"
+   ],
+   "en": [
+    "I studied finance in college and now work on applied machine learning, applied econometrics and causal inference at National Taiwan University. My thesis studies how ChatGPT and other AI models have moved stock prices, and the returns of AI-concept stocks.",
+    "I start by writing down the most likely answer, break it into testable hypotheses with an issue tree, then use SQL, Python and statistics to get to the number, and turn it into a recommendation a decision-maker can act on.",
+    "At BNP Paribas Cardif I use this approach to find priority segments and size the opportunity for digital channels. At TMBA I led an 8-person team through 4 sprints in a month to design a membership segmentation strategy for a hot-pot chain, placing 3rd. This website is also my work: a bilingual data-science knowledge base plus a scoring radar that picks the most interesting new AI models every day."
+   ]
+  },
+  "facts": [
+   {
+    "k": {
+     "zh": "目前",
+     "en": "Now"
+    },
+    "v": {
+     "zh": "臺大農經所碩士（預計 2027.06 畢業）",
+     "en": "MS, National Taiwan University (expected Jun 2027)"
+    }
+   },
+   {
+    "k": {
+     "zh": "實習",
+     "en": "Interning at"
+    },
+    "v": {
+     "zh": "合庫人壽 數位與數據部",
+     "en": "BNP Paribas Cardif TCB Life, Digital & Data"
+    }
+   },
+   {
+    "k": {
+     "zh": "研究方向",
+     "en": "Research"
+    },
+    "v": {
+     "zh": "應用機器學習、應用計量、因果推論、金融風險模型",
+     "en": "Applied machine learning, applied econometrics, causal inference, financial risk models"
+    }
+   },
+   {
+    "k": {
+     "zh": "語言",
+     "en": "Languages"
+    },
+    "v": {
+     "zh": "中文（母語）、英文（專業工作能力）",
+     "en": "Mandarin (native), English (professional working proficiency)"
+    }
+   }
+  ],
+  "contact": [
+   {
+    "id": "linkedin",
+    "label": "LinkedIn",
+    "href": "https://www.linkedin.com/in/p1t1rzhang/",
+    "text": "linkedin.com/in/p1t1rzhang"
+   },
+   {
+    "id": "github",
+    "label": "GitHub",
+    "href": "https://github.com/p1t1rzhang",
+    "text": "github.com/p1t1rzhang"
+   },
+   {
+    "id": "email",
+    "label": "Email",
+    "href": "mailto:p1t1rzhang@gmail.com",
+    "text": "p1t1rzhang@gmail.com"
+   }
+  ],
+  "proof": [
+   {
+    "v": {
+     "zh": "50萬+",
+     "en": "500K+"
+    },
+    "k": {
+     "zh": "筆保戶資料的分群與驅動因子分析",
+     "en": "policyholder records analyzed for segments and drivers"
+    }
+   },
+   {
+    "v": "8×4",
+    "k": {
+     "zh": "帶 8 人團隊，一個月跑完 4 個衝刺",
+     "en": "led 8 people through 4 sprints in one month"
+    }
+   },
+   {
+    "v": "1.29M",
+    "k": {
+     "zh": "筆交易資料的拆解與假設驗證",
+     "en": "transaction records analyzed to test growth hypotheses"
+    }
+   },
+   {
+    "v": "33%",
+    "k": {
+     "zh": "陌生開發轉換率（300+ 觸及 → 100+ 企業）",
+     "en": "cold-outreach conversion (300+ touchpoints → 100+ firms)"
+    }
+   },
+   {
+    "v": "143",
+    "k": {
+     "zh": "個方法的中英雙語知識庫（本站）",
+     "en": "methods in a bilingual knowledge base (this site)"
+    }
+   }
+  ]
+ },
+ "roles": [
+  {
+   "id": "consulting",
+   "name": {
+    "zh": "策略顧問",
+    "en": "Strategy Consultant"
+   },
+   "ask": {
+    "zh": "你在找能快速拆解問題、帶出答案的顧問",
+    "en": "You need someone who structures problems fast and lands the answer"
+   },
+   "pitch": {
+    "zh": "我用假設驅動與 MECE 議題樹拆解問題，用市場規模估算和損益兩平把答案量化，並以「先講結論」的方式向高層溝通。",
+    "en": "I break problems down with hypothesis-driven, MECE issue trees, quantify the answer with market sizing and breakeven analysis, and communicate answer-first to senior stakeholders."
+   },
+   "strengths": [
+    {
+     "zh": [
+      "問題結構化",
+      "議題樹、16 種人物誌的 MECE 矩陣，收斂到 3 個優先客群"
+     ],
+     "en": [
+      "Problem structuring",
+      "Issue trees and a 16-persona MECE matrix narrowed to 3 priority segments"
+     ]
+    },
+    {
+     "zh": [
+      "量化答案",
+      "轉換漏斗 × 三情境的市場規模估算、損益兩平反推"
+     ],
+     "en": [
+      "Quantifying the answer",
+      "Funnel-based market sizing under 3 scenarios, breakeven back-solving"
+     ]
+    },
+    {
+     "zh": [
+      "高層溝通",
+      "向集團創辦人與獨立董事簡報，得到第 3 名"
+     ],
+     "en": [
+      "Executive communication",
+      "Presented to a group founder and an independent director; placed 3rd"
+     ]
+    }
+   ],
+   "cases": [
+    "cardif",
+    "laowang",
+    "citi"
+   ],
+   "track": "consulting"
+  },
+  {
+   "id": "data",
+   "name": {
+    "zh": "數據分析師／資料科學家",
+    "en": "Data Analyst / Data Scientist"
+   },
+   "ask": {
+    "zh": "你在找能把大量資料變成決策的分析師",
+    "en": "You need an analyst who turns large datasets into decisions"
+   },
+   "pitch": {
+    "zh": "我用 SQL 與 Python 處理大量客戶資料，用統計檢定、因果推論與機器學習找出驅動因子，最後把結果翻譯成業務能行動的分群與建議。",
+    "en": "I work through large customer datasets in SQL and Python, find the drivers with statistical tests, causal inference and machine learning, and translate the results into segments and actions the business can use."
+   },
+   "strengths": [
+    {
+     "zh": [
+      "分群與驅動因子",
+      "SQL 篩選 40+ 屬性、XGBoost 排序前 5 大驅動因子；RFM 8 格收斂成 5 個生命週期客群"
+     ],
+     "en": [
+      "Segmentation and drivers",
+      "Screened 40+ attributes in SQL and ranked the top 5 drivers with XGBoost; RFM 8 cells into 5 lifecycle tiers"
+     ]
+    },
+    {
+     "zh": [
+      "統計與因果",
+      "實驗組 vs 對照組設計；研究所專攻計量與因果推論；論文用 DiD、事件研究法分析 ChatGPT 衝擊與 AI 概念股報酬"
+     ],
+     "en": [
+      "Statistics and causality",
+      "Treatment vs control designs; graduate focus on econometrics and causal inference; thesis applies DiD and event studies to ChatGPT’s impact on AI-concept stock returns"
+     ]
+    },
+    {
+     "zh": [
+      "資料產品",
+      "從零做出本站：雙語知識庫與五因子評分的 AI 模型雷達"
+     ],
+     "en": [
+      "Data products",
+      "Built this site from scratch: a bilingual knowledge base and a 5-factor AI model radar"
+     ]
+    }
+   ],
+   "cases": [
+    "cardif",
+    "citi",
+    "site"
+   ],
+   "track": "data"
+  },
+  {
+   "id": "pm",
+   "name": {
+    "zh": "專案經理",
+    "en": "Project Manager"
+   },
+   "ask": {
+    "zh": "你在找能帶團隊、把專案準時交付的人",
+    "en": "You need someone who leads a team and ships on time"
+   },
+   "pitch": {
+    "zh": "我用工作計畫與衝刺節奏帶團隊，在一個月內交付完整策略；也能做對外開發，把陌生名單變成實際出席的企業客戶。",
+    "en": "I lead teams with a clear workplan and sprint cadence, delivering a full strategy in one month, and I can drive outbound work that turns a cold list into companies that actually show up."
+   },
+   "strengths": [
+    {
+     "zh": [
+      "帶團隊交付",
+      "8 人團隊、4 個衝刺、1 個月，負責工作計畫、假說排序與最終交付"
+     ],
+     "en": [
+      "Leading delivery",
+      "8 people, 4 sprints, 1 month; owned the workplan, hypothesis prioritization and final delivery"
+     ]
+    },
+    {
+     "zh": [
+      "端到端執行",
+      "從籌備到執行，支援顧問公司的旗艦研討會，邀到 C-level 貴賓出席"
+     ],
+     "en": [
+      "End-to-end execution",
+      "Supported a consulting firm’s flagship seminar from planning to delivery, with C-suite guests attending"
+     ]
+    },
+    {
+     "zh": [
+      "對外開發",
+      "300+ 陌生觸及轉成 100+ 家企業（約 33%），包含 C-level 出席"
+     ],
+     "en": [
+      "Outbound execution",
+      "Turned 300+ cold touchpoints into 100+ organizations (≈33%), including C-suite attendance"
+     ]
+    }
+   ],
+   "cases": [
+    "laowang",
+    "riverbien",
+    "esun"
+   ],
+   "track": "pm"
+  }
+ ],
+ "cases": [
+  {
+   "id": "cardif",
+   "tracks": [
+    "consulting",
+    "data"
+   ],
+   "title": {
+    "zh": "壽險數位通路：找出優先客群並估算商機",
+    "en": "Life insurance digital channel: priority segments and opportunity sizing"
+   },
+   "org": {
+    "zh": "合庫人壽",
+    "en": "BNP Paribas Cardif TCB Life Insurance"
+   },
+   "type": {
+    "zh": "實習專案・數位與數據部",
+    "en": "Internship project · Digital & Data Department"
+   },
+   "period": "2026.07 –",
+   "result": {
+    "zh": "進行中",
+    "en": "Ongoing"
+   },
+   "accent": "a",
+   "summary": {
+    "zh": "在沒有傳統業務員通路的情況下，用議題樹、SQL 與 XGBoost 找出 3 個優先客群，並以三情境漏斗估算數位通路商機。",
+    "en": "Without a traditional agent force, I used issue trees, SQL and XGBoost to find 3 priority segments and sized the digital-channel opportunity with a three-scenario funnel."
+   },
+   "metrics": [
+    {
+     "v": "16 → 3",
+     "k": {
+      "zh": "人物誌收斂成優先客群",
+      "en": "personas narrowed to priority segments"
+     }
+    },
+    {
+     "v": "40+ → 5",
+     "k": {
+      "zh": "客戶屬性篩出關鍵驅動因子",
+      "en": "attributes screened to top drivers"
+     }
+    },
+    {
+     "v": "3",
+     "k": {
+      "zh": "種情境的商機規模估算",
+      "en": "scenarios for the opportunity size"
+     }
+    }
+   ],
+   "scqa": {
+    "s": {
+     "zh": "公司沒有傳統業務員通路，保費主要仰賴銀行與數位通路。",
+     "en": "The insurer has no traditional agent force; premiums depend on bank and digital channels."
+    },
+    "c": {
+     "zh": "缺少業務員的主動經營，既有保戶的加保與續保機會可能正在流失，但沒人知道缺口多大、該從哪群人開始。",
+     "en": "Without agents actively managing customers, cross-sell and renewal opportunities may be leaking, but nobody knew how big the gap was or which customers to start with."
+    },
+    "q": {
+     "zh": "數位通路應該先經營哪些客群？值多少？怎麼分階段做？",
+     "en": "Which customers should digital channels prioritize, what is it worth, and how should it be phased?"
+    },
+    "a": {
+     "zh": "鎖定 3 個涵蓋絕大多數保戶的優先客群，以驅動因子設計觸及策略，依三情境商機規模與損益兩平門檻排出分階段數位藍圖。",
+     "en": "Focus on 3 priority segments that cover the large majority of policyholders, design outreach around the key drivers, and phase a digital roadmap by the three-scenario opportunity size and the breakeven threshold."
+    }
+   },
+   "myRole": {
+    "zh": [
+     "負責問題結構化、資料分析與商機估算"
+    ],
+    "en": [
+     "Owned problem structuring, analysis and opportunity sizing"
+    ]
+   },
+   "impact": {
+    "zh": "分析結果轉化為分階段數位藍圖，作為部門規劃依據。",
+    "en": "The analysis was turned into a phased digital roadmap used for departmental planning."
+   },
+   "methods": [],
+   "playbook": [
+    "consulting/issue-tree",
+    "consulting/sizing",
+    "consulting/breakeven",
+    "data/modeling"
+   ],
+   "skills": [
+    "SQL",
+    "Python",
+    "XGBoost",
+    "Issue tree",
+    "Market sizing",
+    "Breakeven",
+    "IFRS 17"
+   ],
+   "privacy": {
+    "zh": "此為進行中的實習專案，內部數據（保戶數、金額、占比）已移除，只保留方法與結構。",
+    "en": "Ongoing internship project: internal figures (policyholder counts, amounts, shares) are removed; only the method and structure are shown."
+   },
+   "locked": true
+  },
+  {
+   "id": "laowang",
+   "tracks": [
+    "consulting",
+    "pm",
+    "data"
+   ],
+   "title": {
+    "zh": "連鎖火鍋品牌：從折價驅動轉向會員生命週期經營",
+    "en": "Hot-pot chain: from discount-driven visits to lifecycle membership"
+   },
+   "org": {
+    "zh": "撈王鍋物料理 × TMBA 產學合作",
+    "en": "Laowang Hot Pot × TMBA industry–academia project"
+   },
+   "type": {
+    "zh": "團隊隊長・8 人",
+    "en": "Team lead · 8 people"
+   },
+   "period": "2026.07 – 2026.08",
+   "result": {
+    "zh": "第 3 名",
+    "en": "3rd place"
+   },
+   "accent": "b",
+   "summary": {
+    "zh": "帶 8 人團隊一個月跑完 4 個衝刺：用 RFM 把會員收斂成 5 個生命週期客群，針對離峰產能與會員關係設計分階段策略，框架被納入客戶的 CRM 規劃。",
+    "en": "Led 8 people through 4 sprints in one month: consolidated members into 5 lifecycle tiers with RFM, designed a phased strategy for off-peak capacity and member relationships, and the framework was adopted into the client's CRM planning."
+   },
+   "metrics": [
+    {
+     "v": "8 → 5",
+     "k": {
+      "zh": "RFM 組合收斂成行動客群",
+      "en": "RFM cells into action tiers"
+     }
+    },
+    {
+     "v": "5",
+     "k": {
+      "zh": "個可驗證的假說",
+      "en": "testable hypotheses"
+     }
+    },
+    {
+     "v": "3rd",
+     "k": {
+      "zh": "向集團創辦人與獨立董事簡報",
+      "en": "presented to founder and independent director"
+     }
+    }
+   ],
+   "scqa": {
+    "s": {
+     "zh": "餐飲市場回到穩定成長，競爭重心從展店轉向單店效益與會員經營。",
+     "en": "The restaurant market is back to steady growth; competition is shifting from opening stores to per-store performance and membership."
+    },
+    "c": {
+     "zh": "會員機制擅長帶動首次到店，但首購後缺乏承接、熟客權益停留在累點折抵，平日離峰產能也閒置。",
+     "en": "The membership program is good at driving first visits, but there is no follow-through after the first purchase, regulars only get points and discounts, and off-peak capacity sits idle."
+    },
+    "q": {
+     "zh": "如何從折價驅動的單次消費，轉向以生命週期經營顧客價值？",
+     "en": "How do we move from discount-driven one-off visits to managing customer value across the lifecycle?"
+    },
+    "a": {
+     "zh": "以 R 為主軸把會員分成 5 個生命週期客群，針對嘗鮮客、養成客、熟客設計不同的成長槓桿。",
+     "en": "Segment members into 5 lifecycle tiers led by Recency, and give trial guests, developing guests and regulars different growth levers."
+    }
+   },
+   "myRole": {
+    "zh": [
+     "擔任隊長，負責工作計畫、假說排序與最終交付"
+    ],
+    "en": [
+     "Team lead: owned the workplan, hypothesis prioritization and final delivery"
+    ]
+   },
+   "impact": {
+    "zh": "向阿爾發集團創辦人與獨立董事簡報，獲得第 3 名；分群框架被納入客戶的 CRM 規劃。",
+    "en": "Presented to the Alpha Group founder and an independent director and placed 3rd; the segmentation framework was adopted into the client's CRM planning."
+   },
+   "methods": [],
+   "playbook": [
+    "data/segmentation",
+    "consulting/prioritize",
+    "pm/workplan",
+    "pm/measure"
+   ],
+   "skills": [
+    "RFM",
+    "CRM",
+    "Prioritization matrix",
+    "Experiment design",
+    "Team leadership"
+   ],
+   "privacy": {
+    "zh": "客戶提供的內部營運數據未揭露；分群規則與策略為團隊提案內容。",
+    "en": "Client-internal operating data is not disclosed; the segmentation rules and strategy are the team's proposal."
+   },
+   "locked": true
+  },
+  {
+   "id": "citi",
+   "tracks": [
+    "data",
+    "consulting"
+   ],
+   "title": {
+    "zh": "新信用卡：用議題樹與假設檢定找出成長槓桿",
+    "en": "New credit card: finding the growth lever with an issue tree and hypothesis tests"
+   },
+   "org": {
+    "zh": "TMBA 商業策略（花旗銀行個案）",
+    "en": "TMBA Business Strategy (Citi case)"
+   },
+   "type": {
+    "zh": "團隊專案",
+    "en": "Team project"
+   },
+   "period": "2025.06 – 2025.08",
+   "result": {
+    "zh": "第 2 名",
+    "en": "2nd place"
+   },
+   "accent": "c",
+   "summary": {
+    "zh": "把「總簽帳金額」拆成平均簽帳與交易筆數，鎖定頂級刷手與百貨情境；用 291 份問卷的單樣本 t 檢定，驗證級距回饋是最有效的槓桿。",
+    "en": "Split total spend into average spend and transaction count, targeted top spenders in the department-store occasion, and used one-sample t-tests on 291 survey responses to show tiered rewards are the strongest lever."
+   },
+   "metrics": [
+    {
+     "v": "1.29M",
+     "k": {
+      "zh": "筆交易資料（公開模擬資料）",
+      "en": "transaction records (public simulated data)"
+     }
+    },
+    {
+     "v": "21.5%",
+     "k": {
+      "zh": "前 1% 頂級刷手貢獻的刷卡金額",
+      "en": "of card spend from the top 1% of spenders"
+     }
+    },
+    {
+     "v": "t = 15.47",
+     "k": {
+      "zh": "級距回饋假說的檢定統計量",
+      "en": "for the tiered-rewards hypothesis"
+     }
+    }
+   ],
+   "scqa": {
+    "s": {
+     "zh": "台灣信用卡市場穩定成長，流通卡數與簽帳金額逐年增加。",
+     "en": "Taiwan's credit card market grows steadily; cards in force and spend rise every year."
+    },
+    "c": {
+     "zh": "新卡要在成熟市場突圍，但各家百貨卡都靠點數回饋，VIP 權益有限，差異化空間在哪並不清楚。",
+     "en": "A new card must break into a mature market, but department-store cards all compete on points with thin VIP benefits, and it was unclear where the room for differentiation was."
+    },
+    "q": {
+     "zh": "新卡應該鎖定誰、用什麼槓桿，才能最大化總簽帳金額？",
+     "en": "Whom should the new card target, and with which lever, to maximize total spend?"
+    },
+    "a": {
+     "zh": "鎖定 30 歲以下、消費集中在百貨的頂級刷手，以「強化 VIP 權益 + 百貨加碼回饋」定位，並用級距回饋持續拉高單月簽帳。",
+     "en": "Target under-30 top spenders who concentrate spending in department stores, position the card on stronger VIP benefits plus extra department-store cashback, and use tiered rewards to keep monthly spend growing."
+    }
+   },
+   "myRole": {
+    "zh": [
+     "參與議題樹拆解與客群分析"
+    ],
+    "en": [
+     "Contributed to the issue tree and segment analysis"
+    ]
+   },
+   "impact": {
+    "zh": "獲得第 2 名。",
+    "en": "Placed 2nd."
+   },
+   "methods": [],
+   "playbook": [
+    "consulting/issue-tree",
+    "consulting/hypothesis",
+    "data/metric-tree",
+    "data/storytelling"
+   ],
+   "skills": [
+    "Issue tree",
+    "Survey design",
+    "t-test",
+    "Python",
+    "Segmentation",
+    "Go-to-market"
+   ],
+   "privacy": {
+    "zh": "使用公開模擬交易資料、聯卡中心公開統計與團隊自行蒐集的問卷。",
+    "en": "Uses a public simulated transaction dataset, public card statistics and the team's own survey."
+   },
+   "locked": true
+  },
+  {
+   "id": "esun",
+   "tracks": [
+    "pm",
+    "consulting"
+   ],
+   "title": {
+    "zh": "玉山 Origin：給 Z 世代的互動式金融日記",
+    "en": "E.SUN Origin: an interactive financial diary for Gen Z"
+   },
+   "org": {
+    "zh": "玉山銀行商業競賽",
+    "en": "E.SUN Bank business plan competition"
+   },
+   "type": {
+    "zh": "團隊專案・Origin Project",
+    "en": "Team project · Origin Project"
+   },
+   "period": "2025.12",
+   "result": {
+    "zh": "商業企劃",
+    "en": "Business plan"
+   },
+   "accent": "d",
+   "summary": {
+    "zh": "為剛開始自己管錢的學生與社會新鮮人設計訂閱制記帳服務：自動記帳、LLM 對話記帳與年度 Wrapped，用學生免費方案養成習慣，再轉換為付費並導流玉山生態系。",
+    "en": "A subscription bookkeeping service for students and new graduates who are just starting to manage money: automatic logging, LLM chat logging and an annual Wrapped, with a free student plan that builds the habit, then converts to paid and feeds the E.SUN ecosystem."
+   },
+   "metrics": [
+    {
+     "v": "≈4 yrs",
+     "k": {
+      "zh": "團隊推估的回收期",
+      "en": "projected payback (team estimate)"
+     }
+    },
+    {
+     "v": "13.5%",
+     "k": {
+      "zh": "團隊推估的 IRR",
+      "en": "projected IRR (team estimate)"
+     }
+    },
+    {
+     "v": "NPV > 0",
+     "k": {
+      "zh": "最悲觀情境下仍為正",
+      "en": "even in the pessimistic scenario"
+     }
+    }
+   ],
+   "scqa": {
+    "s": {
+     "zh": "20–28 歲的年輕人正在開立第一個薪轉戶或數位帳戶，開始自己管錢。",
+     "en": "People aged 20–28 are opening their first salary or digital accounts and starting to manage money on their own."
+    },
+    "c": {
+     "zh": "多數人懶得手動記帳、理財知識不足；現有銀行記帳工具資料封閉、功能偏入門，很難長期使用。",
+     "en": "Most find manual bookkeeping tedious and lack financial literacy; existing bank tools are closed and basic, so few keep using them."
+    },
+    "q": {
+     "zh": "玉山如何在這個階段成為他們的第一個主要銀行？",
+     "en": "How can E.SUN become their first primary bank at this stage of life?"
+    },
+    "a": {
+     "zh": "推出「玉山 Origin」：以自動記帳與情感化互動降低門檻，學生免費養成習慣、畢業後轉 Premium，並把用戶導向玉山的信用卡、證券與貸款。",
+     "en": "Launch E.SUN Origin: lower the barrier with automatic logging and emotional engagement, build the habit with a free student plan, convert to Premium after graduation, and route users into E.SUN's cards, securities and loans."
+    }
+   },
+   "myRole": {
+    "zh": [
+     "參與產品與商業模式設計、同業案例分析"
+    ],
+    "en": [
+     "Worked on product and business-model design and competitor benchmarks"
+    ]
+   },
+   "impact": {
+    "zh": "完成完整商業企劃：產品、商業模式、行銷與財務可行性。",
+    "en": "Delivered a complete business plan covering product, business model, marketing and financial feasibility."
+   },
+   "methods": [],
+   "playbook": [
+    "pm/charter",
+    "consulting/breakeven",
+    "pm/rice"
+   ],
+   "skills": [
+    "Product design",
+    "Business model",
+    "Benchmarking",
+    "NPV / IRR",
+    "Go-to-market"
+   ],
+   "privacy": {
+    "zh": "財務數字為團隊企劃中的推估值。",
+    "en": "Financial figures are the team's projections in the plan."
+   },
+   "locked": true
+  },
+  {
+   "id": "riverbien",
+   "tracks": [
+    "pm"
+   ],
+   "title": {
+    "zh": "暑期專案實習：把陌生名單變成出席的企業客戶",
+    "en": "Summer project internship: turning a cold list into attending companies"
+   },
+   "org": {
+    "zh": "RiverBien Consulting Firm",
+    "en": "RiverBien Consulting Firm"
+   },
+   "type": {
+    "zh": "暑期專案實習",
+    "en": "Summer project internship"
+   },
+   "period": "2025.06 – 2025.08",
+   "result": {
+    "zh": "≈33% 轉換",
+    "en": "≈33% conversion"
+   },
+   "accent": "e",
+   "summary": {
+    "zh": "從頭到尾支援公司的旗艦研討會，把 300+ 次陌生開發轉成 100+ 家企業報名，並成功邀到 C-level 貴賓。",
+    "en": "Supported the firm's flagship seminar end to end, turning 300+ cold outbound touchpoints into 100+ registered organizations and securing C-suite guests."
+   },
+   "metrics": [
+    {
+     "v": "300+",
+     "k": {
+      "zh": "陌生開發觸及",
+      "en": "cold outbound touchpoints"
+     }
+    },
+    {
+     "v": "100+",
+     "k": {
+      "zh": "家企業報名",
+      "en": "organizations registered"
+     }
+    },
+    {
+     "v": "≈33%",
+     "k": {
+      "zh": "整體轉換率",
+      "en": "overall conversion"
+     }
+    }
+   ],
+   "scqa": {
+    "s": {
+     "zh": "旗艦研討會是公司接觸潛在企業客戶的重要場合。",
+     "en": "The flagship seminar is the firm's key way to meet prospective corporate clients."
+    },
+    "c": {
+     "zh": "名單大多是陌生企業，要在有限時間內讓對的人報名並真的出席。",
+     "en": "Most of the list was cold, and the right people had to register and actually attend within a short window."
+    },
+    "q": {
+     "zh": "如何在短時間內，讓足夠且對的企業決策者出席？",
+     "en": "How do we get enough of the right decision-makers to attend, fast?"
+    },
+    "a": {
+     "zh": "把邀約當成漏斗經營：鎖定目標企業與決策者、系統化觸及與追蹤，最後轉換出 100+ 家企業報名。",
+     "en": "Run invitations as a funnel: target the right companies and decision-makers, reach out and follow up systematically, converting 100+ organizations."
+    }
+   },
+   "myRole": {
+    "zh": [
+     "負責陌生開發與報名追蹤"
+    ],
+    "en": [
+     "Owned cold outreach and registration follow-up"
+    ]
+   },
+   "impact": {
+    "zh": "100+ 家企業報名，並有 C-level 貴賓出席。",
+    "en": "100+ organizations registered, with C-suite attendance."
+   },
+   "methods": [],
+   "playbook": [
+    "pm/stakeholder",
+    "data/metric-tree",
+    "consulting/exec"
+   ],
+   "skills": [
+    "B2B outreach",
+    "Funnel management",
+    "Event execution",
+    "Stakeholder management"
+   ],
+   "privacy": {
+    "zh": "",
+    "en": ""
+   },
+   "locked": true
+  },
+  {
+   "id": "site",
+   "tracks": [
+    "data",
+    "pm"
+   ],
+   "title": {
+    "zh": "本站：個人介紹 × 雙語資料科學知識庫 × AI 模型雷達",
+    "en": "This site: personal profile × bilingual data-science knowledge base × AI model radar"
+   },
+   "org": {
+    "zh": "個人專案",
+    "en": "Personal project"
+   },
+   "type": {
+    "zh": "從零設計與開發",
+    "en": "Designed and built from scratch"
+   },
+   "period": "2026.09",
+   "result": {
+    "zh": "上線中",
+    "en": "Live"
+   },
+   "accent": "f",
+   "summary": {
+    "zh": "把 143 個 ML、統計與因果方法整理成兩棵 MECE 知識樹，每個方法先講白話直覺再講數學；並寫了一套評分模型，每天從 Hugging Face 熱門榜挑出最值得看的模型。",
+    "en": "Organized 143 ML, statistics and causal methods into two MECE knowledge trees, each explained plain-language first and math last, and wrote a scoring model that picks the most interesting Hugging Face models every day."
+   },
+   "metrics": [
+    {
+     "v": "143",
+     "k": {
+      "zh": "個方法、兩棵四層 MECE 知識樹",
+      "en": "methods in two 4-level MECE trees"
+     }
+    },
+    {
+     "v": "5",
+     "k": {
+      "zh": "個因子的模型評分（百分位排名）",
+      "en": "scoring factors (percentile ranks)"
+     }
+    },
+    {
+     "v": "2",
+     "k": {
+      "zh": "種語言一鍵切換",
+      "en": "languages, one-click switch"
+     }
+    }
+   ],
+   "scqa": {
+    "s": {
+     "zh": "資料科學的方法很多，網路上的說明不是太淺就是太數學。",
+     "en": "There are countless data-science methods, and most explanations online are either too shallow or too mathematical."
+    },
+    "c": {
+     "zh": "方法之間的關係與適用情境很難一眼看懂；AI 新模型又每天冒出來，很難判斷哪些值得看。",
+     "en": "How methods relate and when to use them is hard to see at a glance, and new AI models appear daily with no easy way to tell which matter."
+    },
+    "q": {
+     "zh": "如何讓知識好查、好懂，而且跟得上最新模型？",
+     "en": "How do we make the knowledge easy to find, easy to understand and current?"
+    },
+    "a": {
+     "zh": "用 MECE 準則建兩棵知識樹、每個方法先白話後數學，再用五因子評分雷達每天挑模型並連回對應的演算法。",
+     "en": "Build two knowledge trees with explicit MECE criteria, explain every method plain-language first, and use a five-factor radar to pick models daily and link them back to the algorithms."
+    }
+   },
+   "myRole": {
+    "zh": [
+     "產品定義、資訊架構、內容與程式全部自己完成"
+    ],
+    "en": [
+     "Did everything: product definition, information architecture, content and code"
+    ]
+   },
+   "impact": {
+    "zh": "你正在看的這個網站。",
+    "en": "The website you are looking at."
+   },
+   "methods": [],
+   "playbook": [
+    "data/workflow",
+    "pm/rice",
+    "data/storytelling"
+   ],
+   "skills": [
+    "Python",
+    "JavaScript",
+    "Information architecture",
+    "Scoring model",
+    "GitHub Actions",
+    "Bilingual content"
+   ],
+   "privacy": {
+    "zh": "",
+    "en": ""
+   },
+   "locked": true
+  },
+  {
+   "id": "prep",
+   "tracks": [
+    "data"
+   ],
+   "title": {
+    "zh": "資料前處理工作流：五個步驟把原始資料整理成可建模的特徵",
+    "en": "Data preprocessing pipeline: five steps from raw data to model-ready features"
+   },
+   "org": {
+    "zh": "個人專案・GitHub",
+    "en": "Personal project · GitHub"
+   },
+   "type": {
+    "zh": "個人練習專案",
+    "en": "Personal practice project"
+   },
+   "period": "2026.06",
+   "result": {
+    "zh": "練習",
+    "en": "Practice"
+   },
+   "accent": "c",
+   "summary": {
+    "zh": "把平常做專案時的資料清洗習慣整理成五支 Python 腳本：資料檢查、缺失值、異常與重複值、格式轉換、特徵縮放，每一步都寫下為什麼這樣處理。",
+    "en": "Turned the data-cleaning habits from my projects into five Python scripts (inspection, missing values, outliers and duplicates, transformation, scaling), with the reasoning behind each step written down."
+   },
+   "metrics": [
+    {
+     "v": "5",
+     "k": {
+      "zh": "個前處理步驟，每步一支腳本",
+      "en": "preprocessing steps, one script each"
+     }
+    },
+    {
+     "v": "3",
+     "k": {
+      "zh": "種異常值偵測：Z-score、IQR、孤立森林",
+      "en": "outlier checks: Z-score, IQR, Isolation Forest"
+     }
+    },
+    {
+     "v": "2",
+     "k": {
+      "zh": "種缺失值補法：中位數、KNN",
+      "en": "imputation methods: median, KNN"
+     }
+    }
+   ],
+   "scqa": {
+    "s": {
+     "zh": "建模前的資料常有缺值、極端值與格式不一致。",
+     "en": "Raw data usually arrives with missing values, extreme values and inconsistent formats."
+    },
+    "c": {
+     "zh": "每次專案都從頭清一次，做法不一致，也很難向別人說明為什麼這樣處理。",
+     "en": "Cleaning it from scratch every time leads to inconsistent choices that are hard to explain."
+    },
+    "q": {
+     "zh": "能不能把清洗流程標準化，讓每一步都有清楚的統計理由？",
+     "en": "Can the cleaning be standardized so every step has a clear statistical reason?"
+    },
+    "a": {
+     "zh": "整理成五階段工作流，每階段一支腳本，並在說明文件寫下選擇方法的理由，例如偏態資料用中位數補值、用 IQR 而非 Z-score 判斷異常。",
+     "en": "A five-stage workflow with one script per stage, documenting why each method is chosen, e.g. median imputation and IQR rather than Z-score for skewed data."
+    }
+   },
+   "myRole": {
+    "zh": [
+     "獨立完成：程式與說明文件"
+    ],
+    "en": [
+     "Solo: code and documentation"
+    ]
+   },
+   "methods": [],
+   "playbook": [
+    "data/workflow"
+   ],
+   "skills": [
+    "Python",
+    "pandas",
+    "scikit-learn",
+    "Data cleaning"
+   ],
+   "privacy": {
+    "zh": "",
+    "en": ""
+   },
+   "repo": "https://github.com/p1t1rzhang/data_analysis_project",
+   "tail": 1,
+   "locked": false
+  },
+  {
+   "id": "etfmom",
+   "tracks": [
+    "data"
+   ],
+   "title": {
+    "zh": "美國 ETF 動能策略回測：12-1 動能挑前 3 檔",
+    "en": "US ETF momentum backtest: 12-1 momentum, top 3"
+   },
+   "org": {
+    "zh": "個人專案・GitHub",
+    "en": "Personal project · GitHub"
+   },
+   "type": {
+    "zh": "個人練習專案",
+    "en": "Personal practice project"
+   },
+   "period": "2025.08",
+   "result": {
+    "zh": "練習",
+    "en": "Practice"
+   },
+   "accent": "f",
+   "summary": {
+    "zh": "用 Python 回測 8 檔美國 ETF 的 12-1 動能策略：定期挑動能最強的前 3 檔等權持有，納入交易成本，並和 SPY 比較報酬、夏普值、最大回撤與 Beta。",
+    "en": "A Python backtest of 12-1 momentum across 8 US ETFs: hold the top 3 equally weighted, rebalance on a schedule, include trading costs, and compare returns, Sharpe ratio, max drawdown and beta against SPY."
+   },
+   "metrics": [
+    {
+     "v": "8",
+     "k": {
+      "zh": "檔美國 ETF 標的池（SPY、QQQ、TLT、GLD 等）",
+      "en": "US ETFs in the universe (SPY, QQQ, TLT, GLD…)"
+     }
+    },
+    {
+     "v": "12-1",
+     "k": {
+      "zh": "動能訊號（Jegadeesh & Titman, 1993）",
+      "en": "momentum signal (Jegadeesh & Titman, 1993)"
+     }
+    },
+    {
+     "v": "5 bps",
+     "k": {
+      "zh": "單邊交易成本納入回測",
+      "en": "one-way trading cost in the backtest"
+     }
+    }
+   ],
+   "scqa": {
+    "s": {
+     "zh": "動能是學術上反覆被驗證的報酬來源。",
+     "en": "Momentum is one of the most replicated return effects in finance research."
+    },
+    "c": {
+     "zh": "直接套用學術結果、忽略交易成本與再平衡頻率，回測容易高估。",
+     "en": "Applying it naively, without trading costs or a realistic rebalancing schedule, overstates backtest results."
+    },
+    "q": {
+     "zh": "在交易成本下，簡單的 ETF 動能策略和 SPY 比起來如何？",
+     "en": "After costs, how does a simple ETF momentum strategy compare with SPY?"
+    },
+    "a": {
+     "zh": "建立參數可調的回測框架（再平衡頻率、持有檔數、成本、部分再平衡），用夏普值、最大回撤、Beta 等指標和基準比較。",
+     "en": "A configurable backtest (rebalancing frequency, number of holdings, costs, partial rebalancing) that compares the strategy with the benchmark on Sharpe ratio, max drawdown and beta."
+    }
+   },
+   "myRole": {
+    "zh": [
+     "獨立完成：回測程式、績效指標與圖表"
+    ],
+    "en": [
+     "Solo: backtest code, performance metrics and charts"
+    ]
+   },
+   "methods": [],
+   "playbook": [
+    "data/modeling"
+   ],
+   "skills": [
+    "Python",
+    "pandas",
+    "yfinance",
+    "Backtesting"
+   ],
+   "privacy": {
+    "zh": "",
+    "en": ""
+   },
+   "repo": "https://github.com/p1t1rzhang/Quantitative-strategy",
+   "tail": 3,
+   "locked": false
+  },
+  {
+   "id": "ragquant",
+   "tracks": [
+    "data"
+   ],
+   "title": {
+    "zh": "本地 RAG：用動能策略文獻建一個可以問答的知識庫",
+    "en": "Local RAG: a Q&A knowledge base built on momentum-strategy papers"
+   },
+   "org": {
+    "zh": "個人專案・GitHub",
+    "en": "Personal project · GitHub"
+   },
+   "type": {
+    "zh": "個人練習專案",
+    "en": "Personal practice project"
+   },
+   "period": "2025.08",
+   "result": {
+    "zh": "練習",
+    "en": "Practice"
+   },
+   "accent": "b",
+   "summary": {
+    "zh": "用 LangChain、FAISS 與 Ollama 在本機建立 RAG：把 5 篇台灣與國際的動能策略文獻切塊、向量化，提問時檢索最相關的段落交給本地模型回答，並列出來源。",
+    "en": "A local RAG built with LangChain, FAISS and Ollama: 5 Taiwanese and international momentum-strategy papers are chunked and embedded, and each question retrieves the most relevant passages for a local model to answer, with sources listed."
+   },
+   "metrics": [
+    {
+     "v": "5",
+     "k": {
+      "zh": "篇動能策略文獻（台灣＋國際）",
+      "en": "momentum-strategy papers (Taiwan + international)"
+     }
+    },
+    {
+     "v": "1,200",
+     "k": {
+      "zh": "字元切塊，重疊 150",
+      "en": "characters per chunk, 150 overlap"
+     }
+    },
+    {
+     "v": "5",
+     "k": {
+      "zh": "段 MMR 檢索結果交給模型",
+      "en": "MMR-retrieved passages passed to the model"
+     }
+    }
+   ],
+   "scqa": {
+    "s": {
+     "zh": "研究動能策略時要反覆查閱多篇論文。",
+     "en": "Researching momentum strategies means going back to several papers again and again."
+    },
+    "c": {
+     "zh": "直接問雲端大型模型，答案缺少台灣市場的依據，也看不到出處。",
+     "en": "Asking a cloud LLM directly gives answers without Taiwan-market grounding or sources."
+    },
+    "q": {
+     "zh": "能不能讓模型只根據我挑選的文獻回答，並附上來源？",
+     "en": "Can a model answer only from papers I chose, and cite them?"
+    },
+    "a": {
+     "zh": "在本機建立 RAG 流程：文件切塊、用 bge-m3 向量化存進 FAISS，以 MMR 檢索 5 段內容交給本地模型回答並列出來源。",
+     "en": "A local RAG pipeline: chunk the documents, embed them with bge-m3 into FAISS, and pass 5 MMR-retrieved passages to a local model that answers with sources."
+    }
+   },
+   "myRole": {
+    "zh": [
+     "獨立完成：文件處理、索引建置與問答流程"
+    ],
+    "en": [
+     "Solo: document processing, indexing and the Q&A flow"
+    ]
+   },
+   "methods": [],
+   "playbook": [],
+   "skills": [
+    "Python",
+    "LangChain",
+    "FAISS",
+    "Ollama",
+    "RAG"
+   ],
+   "privacy": {
+    "zh": "",
+    "en": ""
+   },
+   "repo": "https://github.com/p1t1rzhang/RAG-X-Quan",
+   "tail": 2,
+   "locked": false
+  }
+ ],
+ "education": [
+  {
+   "school": {
+    "zh": "國立臺灣大學",
+    "en": "National Taiwan University"
+   },
+   "degree": {
+    "zh": "農業經濟學研究所 碩士",
+    "en": "MS, Agricultural Economics"
+   },
+   "period": "2025.09 – 2027.06",
+   "note": {
+    "zh": "預計畢業。專攻應用機器學習、應用計量與因果推論，應用於金融風險模型；論文研究 ChatGPT 等 AI 模型對股票的衝擊與 AI 概念股報酬（DiD、事件研究法）。修課：計量經濟、因果推論、追蹤資料分析、機器學習。",
+    "en": "Expected. Focus: applied machine learning, econometrics and causal inference for financial risk modeling; thesis on the impact of ChatGPT and other AI models on stocks and AI-concept stock returns (DiD, event study). Coursework: Econometrics, Causal Inference, Panel Data Analysis, Machine Learning."
+   }
+  },
+  {
+   "school": {
+    "zh": "逢甲大學",
+    "en": "Feng Chia University"
+   },
+   "degree": {
+    "zh": "財務金融學系 學士",
+    "en": "BA, Finance"
+   },
+   "period": "2020.09 – 2024.06",
+   "note": {
+    "zh": "",
+    "en": ""
+   }
+  }
+ ],
+ "experience": [
+  {
+   "org": {
+    "zh": "合庫人壽",
+    "en": "BNP Paribas Cardif TCB Life Insurance"
+   },
+   "role": {
+    "zh": "數位與數據部 實習生",
+    "en": "Digital & Data Department Intern"
+   },
+   "period": "2026.07 – ",
+   "case": "cardif",
+   "bullets": {
+    "zh": [
+     "問題結構化：以議題樹與 16 種人物誌的 MECE 矩陣，診斷缺少傳統業務員通路造成的營收缺口，收斂為涵蓋 30 萬+ 保戶中 97.2% 的 3 個優先客群"
+    ],
+    "en": [
+     "Problem Structuring: Diagnosed revenue exposure from the absence of a traditional agent force using issue trees and a 16-persona MECE matrix, narrowing to 3 priority segments covering 97.2% of a 300K+ policyholder base."
+    ]
+   }
+  },
+  {
+   "org": {
+    "zh": "RiverBien Consulting Firm",
+    "en": "RiverBien Consulting Firm"
+   },
+   "role": {
+    "zh": "暑期專案實習生",
+    "en": "Summer Project Intern"
+   },
+   "period": "2025.06 – 2025.08",
+   "case": "riverbien",
+   "bullets": {
+    "zh": [
+     "支援旗艦研討會從籌備到執行，將 300+ 次陌生開發轉為 100+ 家企業報名（約 33%），並邀到 C-level 貴賓"
+    ],
+    "en": [
+     "Supported the flagship seminar end to end, converting 300+ cold touchpoints into 100+ client organizations (≈33%) and securing C-suite attendance"
+    ]
+   }
+  }
+ ],
+ "projects": [
+  {
+   "case": "laowang",
+   "org": {
+    "zh": "TMBA 商業策略 × 撈王",
+    "en": "TMBA Business Strategy × Laowang Hot Pot"
+   },
+   "role": {
+    "zh": "團隊隊長",
+    "en": "Team Lead"
+   },
+   "period": "2026.07 – 2026.08",
+   "bullets": {
+    "zh": [
+     "帶 8 人團隊一個月跑完 4 個衝刺，負責工作計畫、假說排序與最終交付"
+    ],
+    "en": [
+     "Led an 8-person team through 4 sprints in one month, owning the workplan, hypothesis prioritization and final delivery"
+    ]
+   }
+  },
+  {
+   "case": "citi",
+   "org": {
+    "zh": "TMBA 商業策略",
+    "en": "TMBA Business Strategy"
+   },
+   "role": {
+    "zh": "團隊成員",
+    "en": "Team member"
+   },
+   "period": "2025.06 – 2025.08",
+   "bullets": {
+    "zh": [
+     "以議題樹拆解 129 萬筆交易資料的成長槓桿，定義目標客群與產品定位；問卷假說以 t 檢定驗證，獲得第 2 名"
+    ],
+    "en": [
+     "Deconstructed growth levers over 1.29M transaction records with issue trees to define the target segment and positioning; tested survey hypotheses with t-tests; placed 2nd"
+    ]
+   }
+  },
+  {
+   "case": "site",
+   "org": {
+    "zh": "個人專案",
+    "en": "Personal project"
+   },
+   "role": {
+    "zh": "設計與開發",
+    "en": "Designer & developer"
+   },
+   "period": "2026.09",
+   "bullets": {
+    "zh": [
+     "建立 143 個方法的中英雙語資料科學知識庫，以及五因子評分的 Hugging Face 模型雷達（Python、JavaScript、GitHub Actions）"
+    ],
+    "en": [
+     "Built a bilingual data-science knowledge base of 143 methods and a five-factor Hugging Face model radar (Python, JavaScript, GitHub Actions)"
+    ]
+   }
+  },
+  {
+   "org": {
+    "zh": "個人研究專案｜臺大",
+    "en": "Personal research project · NTU"
+   },
+   "role": {
+    "zh": "動能 × 情緒因子選股回測（FinBERT）",
+    "en": "Momentum × sentiment stock-selection backtest (FinBERT)"
+   },
+   "period": "2025.09 – 2025.12",
+   "bullets": {
+    "zh": [
+     "以 Nasdaq-100 成分股做 12-2 動能選股回測，並加入 FinBERT 對 8-K 與法說會的情緒分數作為輔助因子；每季選前 10 檔、納入交易成本，與 QQQ 比較。"
+    ],
+    "en": [
+     "Backtested 12-2 momentum stock selection on Nasdaq-100 names, adding FinBERT sentiment scores from 8-K filings and earnings calls as a secondary factor; top 10 rebalanced quarterly with trading costs, compared against QQQ."
+    ]
+   }
+  }
+ ],
+ "skills": [
+  {
+   "group": {
+    "zh": "資料與程式",
+    "en": "Data & code"
+   },
+   "items": [
+    "SQL",
+    "Python (pandas, NumPy, scikit-learn, XGBoost)",
+    "R",
+    "Stata",
+    "Excel",
+    "Tableau"
+   ]
+  },
+  {
+   "group": {
+    "zh": "分析方法",
+    "en": "Analytics"
+   },
+   "items": {
+    "zh": [
+     "顧客分群（RFM）",
+     "轉換漏斗建模",
+     "損益兩平分析",
+     "特徵工程",
+     "假設檢定",
+     "因果推論（DiD、事件研究）",
+     "RAG／LLM 應用"
+    ],
+    "en": [
+     "Customer segmentation (RFM)",
+     "Conversion funnel modeling",
+     "Breakeven analysis",
+     "Feature engineering",
+     "Hypothesis testing",
+     "Causal inference (DiD, event study)",
+     "RAG / LLM applications"
+    ]
+   }
+  },
+  {
+   "group": {
+    "zh": "顧問與專案",
+    "en": "Consulting & delivery"
+   },
+   "items": {
+    "zh": [
+     "假設驅動解題",
+     "根因分析",
+     "市場規模估算",
+     "情境分析",
+     "高層簡報與資料敘事",
+     "團隊領導與衝刺管理"
+    ],
+    "en": [
+     "Hypothesis-driven problem solving",
+     "Root-cause analysis",
+     "Market sizing",
+     "Scenario analysis",
+     "Executive storytelling",
+     "Team leadership & sprint management"
+    ]
+   }
+  }
+ ],
+ "certs": [
+  {
+   "name": {
+    "zh": "iPAS AI 應用規劃師（初級）",
+    "en": "iPAS AI Application Planner (Entry level)"
+   },
+   "org": {
+    "zh": "經濟部產業發展署",
+    "en": "Industrial Development Administration, MOEA"
+   },
+   "year": "2026"
+  }
+ ],
+ "languages": [
+  {
+   "n": {
+    "zh": "中文",
+    "en": "Mandarin"
+   },
+   "l": {
+    "zh": "母語",
+    "en": "Native"
+   }
+  },
+  {
+   "n": {
+    "zh": "英文",
+    "en": "English"
+   },
+   "l": {
+    "zh": "專業工作能力",
+    "en": "Professional working proficiency"
+   }
+  }
+ ]
+}

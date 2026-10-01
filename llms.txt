@@ -1,0 +1,29 @@
+# 張方燡 Pete（Fang-I Zhang）
+
+> 把模糊的商業問題，拆成可以驗證的假設，再用數據給出答案。 I turn ambiguous business questions into testable hypotheses, then answer them with data.
+
+- 臺大農業經濟學研究所碩士生｜合庫人壽 數位與數據部實習生
+- MS candidate, National Taiwan University · Digital & Data Intern, BNP Paribas Cardif TCB Life
+- 專長 / Focus: 策略顧問 × 數據分析 × 專案管理 · Strategy × Data × Delivery
+- 狀態 / Status: 正在尋找策略顧問、數據分析／資料科學、專案管理相關機會
+
+## 作品 / Work (summaries only; full write-ups on request)
+- [壽險數位通路：找出優先客群並估算商機 / Life insurance digital channel: priority segments and opportunity sizing](https://p1t1rzhang.github.io/#case/cardif): Without a traditional agent force, I used issue trees, SQL and XGBoost to find 3 priority segments and sized the digital-channel opportunity with a three-scenario funnel.
+- [本站：個人介紹 × 雙語資料科學知識庫 × AI 模型雷達 / This site: personal profile × bilingual data-science knowledge base × AI model radar](https://p1t1rzhang.github.io/#case/site): Organized 143 ML, statistics and causal methods into two MECE knowledge trees, each explained plain-language first and math last, and wrote a scoring model that picks the most interesting Hugging Face models every day.
+- [連鎖火鍋品牌：從折價驅動轉向會員生命週期經營 / Hot-pot chain: from discount-driven visits to lifecycle membership](https://p1t1rzhang.github.io/#case/laowang): Led 8 people through 4 sprints in one month: consolidated members into 5 lifecycle tiers with RFM, designed a phased strategy for off-peak capacity and member relationships, and the framework was adopted into the client's CRM planning.
+- [玉山 Origin：給 Z 世代的互動式金融日記 / E.SUN Origin: an interactive financial diary for Gen Z](https://p1t1rzhang.github.io/#case/esun): A subscription bookkeeping service for students and new graduates who are just starting to manage money: automatic logging, LLM chat logging and an annual Wrapped, with a free student plan that builds the habit, then converts to paid and feeds the E.SUN ecosystem.
+- [新信用卡：用議題樹與假設檢定找出成長槓桿 / New credit card: finding the growth lever with an issue tree and hypothesis tests](https://p1t1rzhang.github.io/#case/citi): Split total spend into average spend and transaction count, targeted top spenders in the department-store occasion, and used one-sample t-tests on 291 survey responses to show tiered rewards are the strongest lever.
+- [暑期專案實習：把陌生名單變成出席的企業客戶 / Summer project internship: turning a cold list into attending companies](https://p1t1rzhang.github.io/#case/riverbien): Supported the firm's flagship seminar end to end, turning 300+ cold outbound touchpoints into 100+ registered organizations and securing C-suite guests.
+- [資料前處理工作流：五個步驟把原始資料整理成可建模的特徵 / Data preprocessing pipeline: five steps from raw data to model-ready features](https://p1t1rzhang.github.io/#case/prep): Turned the data-cleaning habits from my projects into five Python scripts (inspection, missing values, outliers and duplicates, transformation, scaling), with the reasoning behind each step written down.
+- [本地 RAG：用動能策略文獻建一個可以問答的知識庫 / Local RAG: a Q&A knowledge base built on momentum-strategy papers](https://p1t1rzhang.github.io/#case/ragquant): A local RAG built with LangChain, FAISS and Ollama: 5 Taiwanese and international momentum-strategy papers are chunked and embedded, and each question retrieves the most relevant passages for a local model to answer, with sources listed.
+- [美國 ETF 動能策略回測：12-1 動能挑前 3 檔 / US ETF momentum backtest: 12-1 momentum, top 3](https://p1t1rzhang.github.io/#case/etfmom): A Python backtest of 12-1 momentum across 8 US ETFs: hold the top 3 equally weighted, rebalance on a schedule, include trading costs, and compare returns, Sharpe ratio, max drawdown and beta against SPY.
+
+## 方法論 / Playbooks
+- [管顧思維 Consulting](https://p1t1rzhang.github.io/#methods/consulting)
+- [數據分析與資料科學 Data](https://p1t1rzhang.github.io/#methods/data)
+- [專案管理 PM](https://p1t1rzhang.github.io/#methods/pm)
+
+## 聯絡 / Contact
+- LinkedIn: https://www.linkedin.com/in/p1t1rzhang/
+- GitHub: https://github.com/p1t1rzhang
+- Email: mailto:p1t1rzhang@gmail.com

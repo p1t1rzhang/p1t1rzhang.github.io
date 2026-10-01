@@ -1,0 +1,272 @@
+/* ═════════ 3B：Ezera 風格（白底、粉彩霧面、大字襯線、灰色玻璃導覽） ═════════ */
+:root[data-style="ez"]{
+  color-scheme:light;
+  --bg:#FFFFFF;--surface:#FFFFFF;--surface-2:#F6F6F6;--surface-3:#EEEEEE;--ink:#1B1B1B;--ink-2:#565656;--muted:#6B6B6B;--line:#EDEDED;--line-2:#DADADA;
+  --on-brand:#FFFFFF;
+  --field:#FFFFFF;--deep:#F3F3F3;--on-deep:#1B1B1B;--ez-dot:#2B2B2B;--ez-pink:#E0628F;--shadow-rgb:0,0,0;
+  --font-display:"Playfair Display","Noto Serif TC","Songti TC",Georgia,serif;
+  --font-serif:var(--font-display);
+  --font-sans:"Inter","Noto Sans TC",-apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;
+}
+:root[data-style="ez"][data-theme="dark"]{
+  color-scheme:dark;--bg:#0E0E0E;--surface:#151515;--surface-2:#1B1B1B;--surface-3:#232323;--ink:#F1F1F1;--ink-2:#BDBDBD;--muted:#8C8C8C;--line:#242424;--line-2:#333;
+  --on-brand:#FFFFFF;--field:#0E0E0E;--deep:#1A1A1A;--on-deep:#F1F1F1;--ez-dot:#E6E6E6;--ez-pink:#F08AB0;
+}
+@media (prefers-color-scheme: dark){:root[data-style="ez"]:not([data-theme="light"]){
+  color-scheme:dark;--bg:#0E0E0E;--surface:#151515;--surface-2:#1B1B1B;--surface-3:#232323;--ink:#F1F1F1;--ink-2:#BDBDBD;--muted:#8C8C8C;--line:#242424;--line-2:#333;
+  --on-brand:#FFFFFF;--field:#0E0E0E;--deep:#1A1A1A;--on-deep:#F1F1F1;--ez-dot:#E6E6E6;--ez-pink:#F08AB0;}}
+[data-style="ez"] h1,[data-style="ez"] h2,[data-style="ez"] .title{font-weight:400;letter-spacing:-.015em}
+[data-style="ez"] h1.title{font-weight:400}
+
+/* 導覽：灰色玻璃膠囊、白字 */
+[data-style="ez"] .hdr{background:linear-gradient(180deg,rgba(120,120,120,.62),rgba(92,92,92,.5));border-color:rgba(255,255,255,.28);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 20px 40px -18px rgba(0,0,0,.45)}
+[data-style="ez"] .hdr .brand{color:#fff}
+[data-style="ez"] .topnav button{color:rgba(255,255,255,.82)}
+[data-style="ez"] .topnav button:hover{color:#fff;background:rgba(255,255,255,.12)}
+[data-style="ez"] .topnav button[aria-current="page"]{color:#fff;background:rgba(255,255,255,.2);box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
+[data-style="ez"] .hdr :is(.icon-btn,.search-btn,.lang-btn){background:transparent;border-color:transparent;color:rgba(255,255,255,.85)}
+[data-style="ez"] .hdr .lang-btn .on{color:#fff}
+[data-style="ez"] .hdr-tools{border-color:rgba(255,255,255,.25)}
+
+/* 首頁舞台 */
+.ez-story{height:520vh;background:var(--bg)}
+.ez-stage{background:var(--bg);color:var(--ink)}
+.ez-grid{position:absolute;inset:0;z-index:1;pointer-events:none;background:
+  linear-gradient(var(--line),var(--line)) calc(47% ) 0/1px 100% no-repeat,
+  linear-gradient(var(--line),var(--line)) 0 41%/100% 1px no-repeat}
+.ez-blobs{position:absolute;inset:0;z-index:0;overflow:hidden}
+.ez-blobs i{position:absolute;border-radius:50%;filter:blur(54px);opacity:.75;will-change:transform}
+.ez-blobs .b1{width:30vw;height:30vw;left:-6vw;top:-8vw;background:#BFEBD0}
+.ez-blobs .b2{width:26vw;height:24vw;left:6vw;top:12vh;background:#B9D6F7}
+.ez-blobs .b3{width:24vw;height:24vw;left:33vw;top:30vh;background:#EFB6D3}
+.ez-blobs .b4{width:28vw;height:28vw;left:52vw;top:48vh;background:#FAF0A6}
+.ez-blobs .b5{width:34vw;height:30vw;left:32vw;top:60vh;background:#E3E3E3}
+:root[data-theme="dark"] .ez-blobs i{opacity:.22}
+.ez-stage .dots{z-index:2}
+.ez-hero{display:block!important;padding:0!important;--split:0;pointer-events:none}
+.ez-hero a,.ez-hero button{pointer-events:auto}
+.ez-l1,.ez-l2{position:absolute;margin:0;font:400 clamp(72px,10.4vw,188px)/.95 var(--font-display);letter-spacing:-.035em;color:var(--ink);z-index:3;white-space:nowrap}
+html[lang="zh-Hant"] .ez-l1,html[lang="zh-Hant"] .ez-l2{letter-spacing:.02em;font-weight:400;font-size:clamp(60px,8.6vw,156px)}
+.ez-l1{left:5vw;top:13vh;transform:translateX(calc(var(--split) * -18vw));opacity:calc(1 - var(--split) * .9)}
+.ez-l2{right:5vw;top:37vh;transform:translateX(calc(var(--split) * 18vw));opacity:calc(1 - var(--split) * .9)}
+.ez-side{position:absolute;margin:0;color:var(--ink-2);font:400 clamp(15px,1.3vw,20px)/1.6 var(--font-sans);z-index:3}
+.ez-tr{right:5vw;top:14vh;width:min(30vw,440px);text-align:right}
+.ez-ml{left:5vw;top:36vh;width:min(26vw,380px);text-align:left;transform:translateY(clamp(70px,9vw,150px))}
+.ez-quote{position:absolute;right:5vw;bottom:15vh;margin:0;max-width:min(34vw,520px);text-align:right;z-index:3}
+.ez-quote blockquote{margin:0;font:400 clamp(19px,1.7vw,28px)/1.45 var(--font-display);color:var(--ink-2)}
+.ez-quote figcaption{display:flex;justify-content:flex-end;margin-top:12px;color:var(--ink)}
+.sig-quote{width:150px}
+.sig-quote path{stroke-width:30}
+.ez-scroll{position:absolute;left:4.2vw;bottom:15vh;z-index:3;display:flex;flex-direction:column;align-items:center;gap:12px;color:var(--muted)}
+.ez-scroll span{writing-mode:vertical-rl;font:500 11px var(--font-sans);letter-spacing:.3em}
+.ez-scroll i{width:1px;height:70px;background:var(--ink);opacity:.5;animation:ezline 2s ease-in-out infinite;transform-origin:top}
+@keyframes ezline{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(0);transform-origin:bottom}}
+[data-style="ez"] .ch1 .name{font-family:var(--font-display);font-weight:400;letter-spacing:-.03em}
+[data-style="ez"] .ch1 .headline,[data-style="ez"] .ch1 .hi,[data-style="ez"] .lead{color:var(--ink-2)}
+[data-style="ez"] .r3 b,[data-style="ez"] .nums b{font-family:var(--font-display);font-weight:400}
+[data-style="ez"] .stage .ch:not(.ez-hero){color:var(--ink)}
+[data-style="ez"] .prog li{border-color:var(--brand)}
+[data-style="ez"] .prog li.on{background:var(--brand)}
+[data-style="ez"] .now span{color:var(--muted);opacity:1}
+
+/* 故事之後的段落 */
+[data-style="ez"] .after{background:var(--bg);border-radius:0;margin-top:0;border-top:1px solid var(--line)}
+[data-style="ez"] .hsec-head h2{font-family:var(--font-display);font-weight:400;letter-spacing:-.03em}
+[data-style="ez"] .worklist{border-top:1px solid var(--brand)}
+[data-style="ez"] .wt b{font-family:var(--font-display);font-weight:400;font-size:clamp(21px,2.1vw,28px)}
+[data-style="ez"] .wr{border-color:var(--line-2);color:var(--ink-2);font-weight:500}
+[data-style="ez"] .wa{color:var(--ink)}
+[data-style="ez"] .way{border:1px solid var(--line-2)}
+[data-style="ez"] .way:hover{background:var(--brand);color:var(--on-brand);border-color:var(--brand)}
+[data-style="ez"] .way-pill{font-family:var(--font-display);font-weight:400}
+[data-style="ez"] .faqs{border-top:1px solid var(--brand)}
+[data-style="ez"] .faqs summary{font-family:var(--font-display);font-weight:400}
+[data-style="ez"] .faqs summary::after{border-color:var(--brand)}
+[data-style="ez"] .faqs details[open] summary::after{background:var(--brand)}
+[data-style="ez"] .ask{background:var(--surface-2);color:var(--ink)}
+[data-style="ez"] .ask-blob{filter:blur(34px);opacity:.8}
+[data-style="ez"] .ask-blob circle:nth-child(1){fill:#EFB6D3}
+[data-style="ez"] .ask-blob circle:nth-child(2){fill:#B9D6F7}
+[data-style="ez"] .ask-blob circle:nth-child(3){fill:#FAF0A6}
+[data-style="ez"] .ask h2{font-family:var(--font-display);font-weight:400}
+[data-style="ez"] .btn.on-field{background:var(--brand);border-color:var(--brand);color:var(--on-brand)}
+[data-style="ez"] .btn.on-field.ghost{background:transparent;color:var(--ink);border-color:var(--line-2)}
+[data-style="ez"] .lock{background:var(--surface-2);color:var(--ink)}
+[data-style="ez"] .lock::before{background:#EFB6D3;filter:blur(30px)}
+[data-style="ez"] .lock::after{background:#B9D6F7;filter:blur(24px)}
+[data-style="ez"] .lock li{border-color:var(--line-2)}
+[data-style="ez"] .kb-pill:hover{border-color:var(--brand);color:var(--brand-text)}
+[data-style="ez"] .btn.primary{background:var(--brand);border-color:var(--brand);color:var(--on-brand)}
+
+@media (max-width:760px){
+  .ez-story{height:470vh}
+  .ez-grid{display:none}
+  .ez-blobs .b1{width:70vw;height:70vw}.ez-blobs .b2{width:60vw;height:60vw;top:18vh}.ez-blobs .b3{width:60vw;height:60vw;left:30vw;top:38vh}.ez-blobs .b4{width:66vw;height:66vw;left:30vw;top:58vh}.ez-blobs .b5{display:none}
+  .ez-l1,.ez-l2{font-size:clamp(46px,14vw,72px)}
+  html[lang="zh-Hant"] .ez-l1,html[lang="zh-Hant"] .ez-l2{font-size:clamp(40px,12vw,64px)}
+  .ez-l1{left:22px;top:11vh}.ez-l2{right:22px;top:21vh}
+  .ez-tr{left:22px;right:22px;top:auto;bottom:calc(150px + 13vh);width:auto;text-align:left;font-size:15px}
+  .ez-ml{display:none}
+  .ez-quote{left:22px;right:22px;bottom:118px;max-width:none}
+  .ez-quote blockquote{font-size:17px}
+  .sig-quote{width:110px}
+  .ez-scroll{display:none}
+}
+
+/* ═════ 全站透明感面板（參考「想看完整的案例與履歷？」那塊） ═════ */
+:root[data-style="ez"]{
+  --glass-bg:rgba(244,244,244,.72);
+  --glass-hue:linear-gradient(transparent,transparent);
+  --glass-hue-soft:linear-gradient(transparent,transparent);
+  --glass-line:rgba(0,0,0,.05);
+  --pinkbtn:var(--pink-2);--pinkbtn-2:var(--pink);--pinkbtn-line:var(--pink-3);
+}
+:root[data-style="ez"][data-theme="dark"]{--glass-bg:rgba(30,30,30,.7);--glass-line:rgba(255,255,255,.07);
+  --glass-hue:linear-gradient(transparent,transparent);
+  --glass-hue-soft:linear-gradient(transparent,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--glass-line);box-shadow:none}
+[data-style="ez"] :is(.ask,.lock,.id-card,.contact-band,.role-panel,.case-hero-card){
+  background:var(--glass-hue),var(--glass-bg)!important;-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid var(--glass-line);color:var(--ink)!important;box-shadow:none!important}
+[data-style="ez"] :is(.ask,.lock)::before,[data-style="ez"] :is(.ask,.lock)::after,[data-style="ez"] .id-card::after{display:none!important}
+[data-style="ez"] .card{border-radius:24px}
+[data-style="ez"] :is(.case-card,.way,.tile){border-radius:28px}
+
+/* 個人簡介卡：改成透明面板 */
+[data-style="ez"] .id-card{border-radius:30px;padding:28px}
+[data-style="ez"] .id-top b{color:var(--ink);font-weight:400}
+[data-style="ez"] .id-top small{color:var(--ink-2)}
+[data-style="ez"] .id-av{background:rgba(255,255,255,.7);color:var(--ink);box-shadow:inset 0 0 0 1px var(--glass-line);border-radius:50%;overflow:hidden}
+[data-style="ez"] .id-facts li{border-top:1px solid rgba(0,0,0,.07);color:var(--ink)}
+[data-style="ez"] .id-facts li span{color:var(--muted)}
+[data-style="ez"] .id-links a{color:var(--ink);border-color:var(--pinkbtn-line);background:var(--pinkbtn)}
+[data-style="ez"] .id-links a:hover{background:var(--pinkbtn-2)}
+
+/* 按鈕：主要酒紅（依配色主題），其餘淡粉 */
+[data-style="ez"] .btn{background:var(--pinkbtn);border-color:var(--pinkbtn-line);color:var(--ink)}
+[data-style="ez"] .btn:hover{background:var(--pinkbtn-2);border-color:var(--pinkbtn-line);color:var(--ink)}
+[data-style="ez"] .btn.primary,[data-style="ez"] .btn.on-field:not(.ghost){background:var(--brand);border-color:var(--brand);color:var(--on-brand)}
+[data-style="ez"] .btn.primary:hover,[data-style="ez"] .btn.on-field:not(.ghost):hover{background:var(--brand-2);border-color:var(--brand-2);color:var(--on-brand)}
+[data-style="ez"] .btn.on-field.ghost,[data-style="ez"] .btn.ghost{background:var(--pinkbtn);border-color:var(--pinkbtn-line);color:var(--ink)}
+[data-style="ez"] :is(.seg button,.subnav button,.kb-pill,.chip,.pyr-crumb button){background:rgba(255,255,255,.6);border-color:var(--pinkbtn-line)}
+[data-style="ez"] :is(.seg button,.subnav button,.pyr-crumb button)[aria-pressed="true"],
+[data-style="ez"] :is(.subnav button,.pyr-crumb button)[aria-current="page"],[data-style="ez"] .pyr-crumb button[aria-current="true"]{background:var(--pinkbtn-2);border-color:var(--pinkbtn-line);color:var(--ink);font-weight:600}
+[data-style="ez"] .chip.task{background:var(--pinkbtn);color:var(--pink-ink)}
+[data-style="ez"] .kb-pill:hover{background:var(--pinkbtn-2);border-color:var(--pinkbtn-line)}
+
+/* 搜尋：去掉輸入框內的系統外框與清除鈕，面板改成玻璃 */
+[data-style="ez"] .cmdk{background:rgba(255,255,255,.35);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+[data-style="ez"] .cmdk-box{background:var(--glass-hue-soft),rgba(255,255,255,.86);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border:1px solid rgba(0,0,0,.06);border-radius:26px;box-shadow:0 30px 70px -30px rgba(0,0,0,.35)}
+.cmdk-in input{-webkit-appearance:none;appearance:none;box-shadow:none!important;border:0!important;border-radius:0!important;background:transparent!important;outline:none!important}
+.cmdk-in input:focus,.cmdk-in input:focus-visible{box-shadow:none!important;outline:none!important}
+.cmdk-in input::-webkit-search-cancel-button,.cmdk-in input::-webkit-search-decoration{-webkit-appearance:none;display:none}
+.cmdk-in:focus-within{background:rgba(0,0,0,.015)}
+[data-style="ez"] .s-item{border-radius:16px}
+[data-style="ez"] .s-item:hover,[data-style="ez"] .s-item.active{background:var(--pinkbtn)}
+[data-style="ez"] .s-item .s-kind{background:var(--pinkbtn-2);color:var(--pink-ink)}
+.s-item mark,.cmdk mark{background:none;color:inherit;font-weight:700;box-shadow:inset 0 -.38em 0 var(--pinkbtn-2,#F8D6E2);border-radius:0;padding:0}
+
+/* 抽屜（方法詳情）：頂部改成淺色玻璃 */
+[data-style="ez"] .d-head{background:var(--glass-hue),#F3F3F3;color:var(--ink)}
+[data-style="ez"] .d-title{color:var(--ink);font-weight:400}
+[data-style="ez"] :is(.d-sub,.d-crumb){color:var(--ink-2)}
+[data-style="ez"] .d-tags .chip{background:rgba(255,255,255,.7);color:var(--ink);border-color:var(--pinkbtn-line)}
+[data-style="ez"] .d-close{background:rgba(255,255,255,.7);color:var(--ink);border-color:rgba(0,0,0,.08)}
+
+[data-style="ez"] .id-av{width:76px;height:76px;background:transparent;box-shadow:none}
+.mono-seal{width:100%;height:100%;display:block;color:var(--ink)}
+
+
+/* 「想看完整的案例與履歷？」保留右側粉彩霧面（Pete 喜歡的版本） */
+[data-style="ez"] .ask{background:var(--surface-2)!important;-webkit-backdrop-filter:none;backdrop-filter:none}
+[data-style="ez"] .ask .ask-blob{display:block!important;filter:blur(34px);opacity:.8}
+
+/* 頭像改用分頁圖示（與瀏覽器 favicon 一致）：圓角方形＋細框 */
+[data-style="ez"] .id-av{border-radius:18px!important;overflow:hidden;background:#fff!important;box-shadow:0 0 0 1px var(--glass-line),0 6px 18px rgba(0,0,0,.06)!important}
+.fav-av{width:100%;height:100%;display:block;object-fit:cover}
+
+/* ═════ 配色：主色＋淡色＋白（酒紅預設，可切換 iPhone 18 Pro 四色） ═════ */
+:root[data-style="ez"]{--ez-pink:#E0628F}
+:root[data-style="ez"][data-accent="glacier"]{--ez-pink:#3A7DA6}
+:root[data-style="ez"][data-accent="silver"]{--ez-pink:#7D8792}
+:root[data-style="ez"][data-accent="black"]{--ez-pink:#C9A86A}
+/* 選取中的頁籤、卡片一律用主色，不用黑 */
+[data-style="ez"] .track-tab[aria-selected="true"]{background:var(--brand);border-color:var(--brand)}
+[data-style="ez"] .track-tab:not([aria-selected="true"]) .ic{background:var(--pink-2);color:var(--brand-text)}
+[data-style="ez"] .track-tab:hover:not([aria-selected="true"]){border-color:var(--pink-3);background:var(--pink-2)}
+[data-style="ez"] :is(.seg button,.subnav button)[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:var(--on-brand)}
+[data-style="ez"] .r3:hover{border-color:var(--brand)}
+/* 配色選單：導覽列在下方，所以往上展開；玻璃面板 */
+[data-style="ez"] .accent-pop{top:auto;bottom:calc(100% + 14px);right:-8px;background:rgba(255,255,255,.9);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border:1px solid rgba(0,0,0,.06);border-radius:20px;box-shadow:0 24px 50px -24px rgba(0,0,0,.35)}
+[data-style="ez"] .accent-opt:hover{background:var(--pink-2)}
+[data-style="ez"] .hdr #accentBtn .swatch{box-shadow:0 0 0 1.5px rgba(255,255,255,.7)}
+
+/* ═════ 3B 配色組：主色＋淡色＋白（深一階的 iPhone 18 Pro 四色；酒紅為預設） ═════ */
+:root[data-style="ez"]{--brand:#7A1E3A;--brand-2:#942A4B;--brand-deep:#4A1022;--brand-text:#7A1E3A;--pink:#F7D9E2;--pink-2:#FBEAF0;--pink-3:#EFBACB;--pink-ink:#7A1E3A;--on-brand:#FFFFFF}
+:root[data-style="ez"][data-theme="dark"]{--brand:#9C2F52;--brand-2:#B23B61;--brand-deep:#3A0D1B;--brand-text:#F09BB5;--pink:#3B1F29;--pink-2:#2A1920;--pink-3:#5C2D3D;--pink-ink:#F4B3C6;--on-brand:#FFFFFF}
+@media (prefers-color-scheme: dark){:root[data-style="ez"]:not([data-theme="light"]){--brand:#9C2F52;--brand-2:#B23B61;--brand-deep:#3A0D1B;--brand-text:#F09BB5;--pink:#3B1F29;--pink-2:#2A1920;--pink-3:#5C2D3D;--pink-ink:#F4B3C6;--on-brand:#FFFFFF}}
+:root[data-style="ez"][data-accent="glacier"]{--brand:#2E6A8E;--brand-2:#3A7DA6;--brand-deep:#173B52;--brand-text:#255C7D;--pink:#D5EEF1;--pink-2:#E9F6F8;--pink-3:#A9DCE3;--pink-ink:#1D5F6B;--on-brand:#FFFFFF}
+:root[data-style="ez"][data-accent="glacier"][data-theme="dark"]{--brand:#3A7DA6;--brand-2:#4A91BC;--brand-deep:#0E2533;--brand-text:#8CC8E6;--pink:#16343B;--pink-2:#122830;--pink-3:#245058;--pink-ink:#9EDCE6;--on-brand:#FFFFFF}
+@media (prefers-color-scheme: dark){:root[data-style="ez"][data-accent="glacier"]:not([data-theme="light"]){--brand:#3A7DA6;--brand-2:#4A91BC;--brand-deep:#0E2533;--brand-text:#8CC8E6;--pink:#16343B;--pink-2:#122830;--pink-3:#245058;--pink-ink:#9EDCE6;--on-brand:#FFFFFF}}
+:root[data-style="ez"][data-accent="silver"]{--brand:#5B6570;--brand-2:#6E7883;--brand-deep:#2E343B;--brand-text:#4B545E;--pink:#E6E9ED;--pink-2:#F1F3F5;--pink-3:#C9CFD6;--pink-ink:#3B444E;--on-brand:#FFFFFF}
+:root[data-style="ez"][data-accent="silver"][data-theme="dark"]{--brand:#6E7883;--brand-2:#838D98;--brand-deep:#1A1E22;--brand-text:#C3CBD3;--pink:#2A2F35;--pink-2:#202428;--pink-3:#3D444C;--pink-ink:#D5DBE1;--on-brand:#FFFFFF}
+@media (prefers-color-scheme: dark){:root[data-style="ez"][data-accent="silver"]:not([data-theme="light"]){--brand:#6E7883;--brand-2:#838D98;--brand-deep:#1A1E22;--brand-text:#C3CBD3;--pink:#2A2F35;--pink-2:#202428;--pink-3:#3D444C;--pink-ink:#D5DBE1;--on-brand:#FFFFFF}}
+:root[data-style="ez"][data-accent="black"]{--brand:#1D1D1F;--brand-2:#333336;--brand-deep:#0B0B0C;--brand-text:#1D1D1F;--pink:#EFE4CF;--pink-2:#F7F1E6;--pink-3:#DCC79E;--pink-ink:#7A5B22;--on-brand:#FFFFFF}
+:root[data-style="ez"][data-accent="black"][data-theme="dark"]{--brand:#E3CC9A;--brand-2:#EAD7AE;--brand-deep:#3A3020;--brand-text:#E3CC9A;--pink:#2E2718;--pink-2:#211C12;--pink-3:#4A3E24;--pink-ink:#E8D3A4;--on-brand:#111111}
+@media (prefers-color-scheme: dark){:root[data-style="ez"][data-accent="black"]:not([data-theme="light"]){--brand:#E3CC9A;--brand-2:#EAD7AE;--brand-deep:#3A3020;--brand-text:#E3CC9A;--pink:#2E2718;--pink-2:#211C12;--pink-3:#4A3E24;--pink-ink:#E8D3A4;--on-brand:#111111}}
+
+/* 頭像：大頭照 */
+.photo-av{object-position:50% 30%}
+
+/* 下方 liquid glass 導覽：拿掉簽名、更透明的清玻璃（字改深色才讀得到） */
+[data-style="ez"] .hdr .brand{display:none!important}
+[data-style="ez"] .hdr{background:linear-gradient(180deg,color-mix(in srgb,var(--bg) 34%,transparent),color-mix(in srgb,var(--bg) 14%,transparent));
+  -webkit-backdrop-filter:blur(26px) saturate(1.8);backdrop-filter:blur(26px) saturate(1.8);border:1px solid color-mix(in srgb,var(--bg) 60%,transparent);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -1px 0 rgba(0,0,0,.04),0 14px 34px -18px rgba(0,0,0,.28),0 1px 3px rgba(0,0,0,.06)}
+[data-style="ez"] .hdr .topnav button{color:var(--ink-2)}
+[data-style="ez"] .hdr .topnav button:hover{color:var(--ink);background:color-mix(in srgb,var(--bg) 45%,transparent)}
+[data-style="ez"] .hdr .topnav button[aria-current="page"]{color:var(--brand-text);font-weight:600;background:color-mix(in srgb,var(--bg) 72%,transparent);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 2px 8px -4px rgba(0,0,0,.18)}
+[data-style="ez"] .hdr :is(.icon-btn,.search-btn,.lang-btn){color:var(--ink-2)}
+[data-style="ez"] .hdr :is(.icon-btn,.search-btn,.lang-btn):hover{color:var(--ink)}
+[data-style="ez"] .hdr .lang-btn .on{color:var(--ink)}
+[data-style="ez"] .hdr-tools{border-color:color-mix(in srgb,var(--ink) 14%,transparent)}
+
+/* 頭像固定 76×76，不被長名字（英文版）擠窄 */
+[data-style="ez"] .id-av{flex:0 0 76px!important;width:76px!important;height:76px!important;min-width:76px;aspect-ratio:1/1}
+[data-style="ez"] .id-av img{width:100%;height:100%;object-fit:cover}
+.photo-av{object-position:50% 22%!important}
+
+/* 導覽玻璃再透明：幾乎無底色，只靠模糊＋高光邊框 */
+[data-style="ez"] .hdr{background:linear-gradient(180deg,color-mix(in srgb,var(--bg) 14%,transparent),color-mix(in srgb,var(--bg) 4%,transparent))!important;
+  -webkit-backdrop-filter:blur(14px) saturate(1.6);backdrop-filter:blur(14px) saturate(1.6);border-color:color-mix(in srgb,var(--bg) 70%,transparent);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 -1px 0 rgba(0,0,0,.035),0 10px 28px -18px rgba(0,0,0,.22)}
+[data-style="ez"] .hdr .topnav button[aria-current="page"]{background:color-mix(in srgb,var(--bg) 55%,transparent)}
+
+/* 針對職缺的連結：首頁左上的個人化膠囊 */
+.ez-for{position:absolute;left:5vw;top:5vh;z-index:4;pointer-events:auto;display:inline-flex;align-items:center;gap:10px;padding:9px 16px 9px 12px;border-radius:999px;
+  background:var(--pink-2);border:1px solid var(--pink-3);color:var(--ink);font:500 14px/1.3 var(--font-sans);text-decoration:none;box-shadow:0 8px 22px -14px rgba(0,0,0,.25)}
+.ez-for .dot{width:8px;height:8px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 4px color-mix(in srgb,var(--brand) 18%,transparent)}
+.ez-for b{color:var(--brand-text);font-weight:600;margin-left:4px}
+.ez-for:hover{background:var(--pink)}
+[data-style="ez"] .r3.on b{color:var(--brand-text);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:8px}
+@media (max-width:760px){.ez-for{left:16px;right:16px;top:3vh;font-size:13px;flex-wrap:wrap;gap:6px}}
+@media (max-width:760px){
+  .ez-for{top:2.2vh;padding:7px 12px}
+  .has-for .ez-l1{top:15vh}.has-for .ez-l2{top:25vh}
+}
+
+/* 深色模式：未選取的膠囊／標籤用表面色，不再是淺灰底配淺字 */
+[data-style="ez"] :is(.seg button,.subnav button,.kb-pill,.chip,.pyr-crumb button):not([aria-pressed="true"]):not([aria-current="page"]):not([aria-current="true"]){background:color-mix(in srgb,var(--surface) 72%,transparent);color:var(--ink)}
+[data-style="ez"] .d-tags .chip,[data-style="ez"] .d-close{background:color-mix(in srgb,var(--surface) 72%,transparent);color:var(--ink)}
+
+/* 履歷頁＝寫信索取（沿用「想看完整的案例與履歷？」面板） */
+.res-req{max-width:980px}
+.res-pick-l{margin:0 0 10px;font-weight:600;color:var(--ink)}
+.res-pick{flex-wrap:wrap}
+.res-hl{margin:16px 0 4px;padding-left:18px;color:var(--ink-2)}
+.res-hl li{margin:3px 0}
+[data-style="ez"] .res-req{margin:0;max-width:980px}
+
+/* iPhone 14 Pro 深紫色（Deep Purple）＋淡紫＋白 */
+:root[data-style="ez"][data-accent="purple"]{--brand:#594F63;--brand-2:#6B5F78;--brand-deep:#3A3342;--brand-text:#594F63;--pink:#E2DAEC;--pink-2:#F2EEF7;--pink-3:#CBBFDB;--pink-ink:#4A3F57;--on-brand:#FFFFFF;--mark:#EEE8F5;--code-bg:#2A2531;--ez-pink:#9B87C2}
+:root[data-style="ez"][data-accent="purple"][data-theme="dark"]{--brand:#7D6E91;--brand-2:#9283A8;--brand-deep:#241F2B;--brand-text:#CBBEDD;--pink:#2E2836;--pink-2:#221E28;--pink-3:#463D52;--pink-ink:#D9CEE8;--on-brand:#FFFFFF;--mark:#2E2836;--code-bg:#15121A;--ez-pink:#B5A3D6}
+@media (prefers-color-scheme: dark){:root[data-style="ez"][data-accent="purple"]:not([data-theme="light"]){--brand:#7D6E91;--brand-2:#9283A8;--brand-deep:#241F2B;--brand-text:#CBBEDD;--pink:#2E2836;--pink-2:#221E28;--pink-3:#463D52;--pink-ink:#D9CEE8;--on-brand:#FFFFFF;--mark:#2E2836;--code-bg:#15121A;--ez-pink:#B5A3D6}}

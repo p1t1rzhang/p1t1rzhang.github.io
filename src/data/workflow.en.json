@@ -1,0 +1,764 @@
+{
+ "title": "Analytics Workflow Knowledge Base",
+ "lede": "Modeling is only step three of the workflow. Whether an analysis creates value depends on whether the problem was framed correctly, whether the data can be trusted, and whether the results actually change a decision. The four stages below unfold in sequence and then loop back to the start.",
+ "principles": [
+  [
+   "Decision-oriented",
+   "At every step, ask: which decision will this change? If you can't say, don't go any further yet."
+  ],
+  [
+   "Reproducible",
+   "Everything in code and under version control; every number can be traced back to its source and calculation logic."
+  ],
+  [
+   "Honest about uncertainty",
+   "Be explicit about intervals, assumptions and limitations; decision-makers need to know the worst case, not just a point estimate."
+  ]
+ ],
+ "loop": "Post-launch monitoring results, new findings and failure cases are the inputs to the next round of problem framing. Analytics is a loop, not a straight line.",
+ "stages": [
+  {
+   "id": "frame",
+   "num": "01",
+   "name": "Problem Framing",
+   "en": "Problem Framing",
+   "q": "Whose decision will the results of this analysis change, and which one?",
+   "summary": "The most common reason analyses fail is not that the model isn't good enough, but that the problem was framed wrong. This step turns a vague business concern into a concrete question that data can answer and whose answer will shape a decision.",
+   "output": "One-page problem statement",
+   "compares": [
+    {
+     "title": "Problem-driven vs. Data-driven",
+     "cols": [
+      "Problem-driven",
+      "Data-driven"
+     ],
+     "rows": [
+      [
+       "Starting point",
+       "A business question or decision: \"Why did the Q3 renewal rate drop?\"",
+       "A dataset: \"We have app event logs; let's see what we can find.\""
+      ],
+      [
+       "Process",
+       "Question → hypothesis → data needed → analysis → confirm or reject the hypothesis",
+       "Data → exploration → patterns → hypotheses → search for use cases"
+      ],
+      [
+       "Best suited for",
+       "Clear objective, decision deadline, known stakeholders",
+       "New data sources or new markets where the problem space hasn't taken shape"
+      ],
+      [
+       "Strengths",
+       "Focused and efficient; results map directly to action",
+       "Can surface opportunities nobody anticipated; fewer preconceptions"
+      ],
+      [
+       "Risks",
+       "Confirmation bias: looking only for evidence that supports the hypothesis; framing the problem too narrowly",
+       "Fishing: run enough tests and something will always be \"significant\"; findings that nobody uses"
+      ],
+      [
+       "Output",
+       "Recommendations for a specific decision",
+       "A list of new hypotheses and questions"
+      ]
+     ],
+     "verdict": "Lead with problem-driven work and use data-driven work to supplement it. Use data-driven exploration to generate hypotheses, then return to the problem-driven workflow to test them. The criterion fits in one sentence: if you can't say which decision the result will change, you're not ready to start the analysis."
+    }
+   ],
+   "sections": [
+    {
+     "title": "SCQA: Frame the Problem in Four Sentences",
+     "body": "Situation (facts everyone agrees on) → Complication (what has changed) → Question (what therefore needs answering) → Answer (the current most likely answer, as a hypothesis, and the recommended direction). Before the analysis, A is an initial hypothesis to be tested; afterward, it is replaced by an evidence-backed conclusion. If you can't write these four sentences, the problem hasn't been thought through yet.",
+     "example": "S: Subscription revenue has grown steadily over the past two years.\nC: The Q3 renewal rate fell from 82% to 76%.\nQ: What is the main driver of the decline, and which issue should we tackle first?\nA (initial hypothesis): The main driver is churn on the SMB plan after the Q3 price change; test price sensitivity first and, if confirmed, prioritize launching an SMB renewal offer."
+    },
+    {
+     "title": "Issue Trees and Hypothesis Trees (MECE)",
+     "body": "Break the core question into mutually exclusive, collectively exhaustive sub-questions, each mapped to a testable hypothesis and the data it requires. That is the essence of a problem-driven approach: hypothesis first, then decide which data to look at.",
+     "items": [
+      "Issue tree: question → sub-questions; used to diagnose \"where the problem lies\"",
+      "Hypothesis tree: answer → supporting arguments; used to verify \"whether it is true\"",
+      "Tag each branch with its validation method, required data and owner"
+     ]
+    },
+    {
+     "title": "Driver Tree",
+     "body": "Decompose the target metric into multiplicative or additive drivers to pinpoint where the problem sits, and to show each team which lever it owns.",
+     "example": "Revenue = Traffic × Conversion rate × Average order value\nConversion rate = Add-to-cart rate × Checkout completion rate"
+    },
+    {
+     "title": "Identify the Question Type",
+     "body": "The question type determines which methods to use in step 03. Ask about the same topic in a different way and you get an entirely different analysis.",
+     "items": [
+      "Descriptive: What happened? (Revenue by region last quarter)",
+      "Inferential: Is this difference real? What is it associated with?",
+      "Causal: How much impact did this change have?",
+      "Predictive: What happens next? Who will churn?",
+      "Prescriptive: What should we do, and for whom?"
+     ]
+    },
+    {
+     "title": "Decision-first",
+     "body": "Before the analysis starts, write down who makes the decision, what the options are, and which result leads to which option. Set thresholds in advance to avoid finishing only to find the result is \"interesting, but doesn't change anything,\" and to avoid post-hoc rationalization.",
+     "items": [
+      "Effect > 2%: full rollout",
+      "Effect within ±1%: keep the status quo and save the development cost",
+      "Negative effect: stop and investigate why"
+     ]
+    },
+    {
+     "title": "Success Metrics and Guardrail Metrics",
+     "body": "Success metrics measure the goal you are trying to improve; guardrail metrics ensure nothing else important is sacrificed.",
+     "items": [
+      "Success metrics: directly tied to the decision, sensitive enough, measurable within a reasonable time frame",
+      "Guardrail metrics: metrics that must not get worse, such as revenue, latency, complaints and cancellation rate",
+      "Avoid vanity metrics: they only go up and are unrelated to value (e.g., cumulative sign-ups)"
+     ]
+    }
+   ],
+   "checklist": [
+    "The question to be answered can be stated in one sentence",
+    "It is clear who will use the results and what decision they will make",
+    "Key hypotheses and how to test them are listed",
+    "Success metrics, guardrail metrics and decision thresholds are defined",
+    "Timeline, data availability and scope (what's in, what's out) are confirmed"
+   ],
+   "pitfalls": [
+    [
+     "Solving the wrong problem",
+     "Taking the request literally (\"build me a churn model\") without asking about the decision behind it; the real question is \"who should get the retention budget,\" which is a causal/uplift problem."
+    ],
+    [
+     "Misaligned metrics",
+     "The team optimizes click-through rate while the company cares about long-term retention."
+    ],
+    [
+     "Scope creep",
+     "Without a clear scope, the analysis keeps growing and never gets finished."
+    ],
+    [
+     "Post-hoc storytelling",
+     "Looking at the data first, then picking the slices that support the conclusion (HARKing)."
+    ]
+   ],
+   "deliverables": [
+    "One-page problem statement: background (SCQA), core question, hypotheses, decision and thresholds, metrics, scope, timeline"
+   ],
+   "links": [
+    {
+     "t": "algo",
+     "id": "power",
+     "label": "Power analysis: how much data you need"
+    },
+    {
+     "t": "algo",
+     "id": "metalearners",
+     "label": "Uplift: the right way to ask \"whom should we target\""
+    }
+   ]
+  },
+  {
+   "id": "data",
+   "num": "02",
+   "name": "Data & Quality",
+   "en": "Data Foundation & Quality",
+   "q": "Can this data be trusted? Are the definitions consistent? Is it reproducible?",
+   "summary": "Garbage in, garbage out. Data architecture determines whether metric definitions stay consistent and whether analyses are reproducible; data quality determines whether conclusions can be trusted. The output of this step is a trustworthy, reproducible analytical dataset with consistent definitions.",
+   "output": "Trusted analytical dataset",
+   "layers": {
+    "title": "Layered Data Architecture",
+    "three": {
+     "name": "Three-layer architecture",
+     "layers": [
+      {
+       "name": "Raw layer",
+       "alias": "ODS / Bronze",
+       "desc": "Stores source data untouched, with only minimal processing (formats, timestamps). Traceable and re-runnable."
+      },
+      {
+       "name": "Integration layer",
+       "alias": "DWD·DWS / Silver",
+       "desc": "Cleans, deduplicates and standardizes definitions and dimensions, integrating data into subject-area detail and summary tables. Define once, share across the company."
+      },
+      {
+       "name": "Application layer",
+       "alias": "ADS / Gold",
+       "desc": "Wide tables and metric tables serving specific reports, dashboards or model features."
+      }
+     ]
+    },
+    "two": {
+     "name": "Two-layer architecture",
+     "layers": [
+      {
+       "name": "Raw layer",
+       "alias": "Raw / Staging",
+       "desc": "Stores source data."
+      },
+      {
+       "name": "Application layer",
+       "alias": "Mart",
+       "desc": "Transforms raw data directly into reporting or analysis tables; logic is scattered across individual tables."
+      }
+     ]
+    }
+   },
+   "compares": [
+    {
+     "title": "Three-layer vs. Two-layer Architecture",
+     "cols": [
+      "Three layers (raw → integration → application)",
+      "Two layers (raw → application)"
+     ],
+     "rows": [
+      [
+       "Layers",
+       "ODS → DWD/DWS → ADS; or Bronze → Silver → Gold (Medallion)",
+       "Raw/Staging → Mart"
+      ],
+      [
+       "Metric definitions",
+       "Defined once in the integration layer; consistent company-wide",
+       "Each application transforms the data its own way, often producing \"one metric, three numbers\""
+      ],
+      [
+       "Reusability",
+       "High: subject-area tables in the integration layer can be shared by multiple applications",
+       "Low: logic is scattered across application tables, and work gets duplicated"
+      ],
+      [
+       "Development speed",
+       "Slow up front; requires modeling and governance first",
+       "Fast; well suited to quick validation"
+      ],
+      [
+       "Cost of change",
+       "Source changes only require updating the integration layer; downstream is unaffected",
+       "Source changes affect every table that depends on it directly"
+      ],
+      [
+       "Best suited for",
+       "Multiple teams and product lines that need a single source of truth",
+       "Small teams, a single product, early exploration or POCs"
+      ]
+     ],
+     "verdict": "With few use cases and a small team, two layers are enough; once \"the same metric doesn't reconcile across departments,\" that is the signal to add an integration layer. The Kimball (dimensional modeling) vs. Inmon (enterprise data warehouse) debate is, at its core, also about where the integration layer sits and how to build it; the Medallion architecture (Bronze/Silver/Gold) common in cloud lakehouses is a three-layer architecture."
+    },
+    {
+     "title": "ETL vs. ELT",
+     "cols": [
+      "ETL (extract → transform → load)",
+      "ELT (extract → load → transform)"
+     ],
+     "rows": [
+      [
+       "Process",
+       "Clean the data in a separate transformation environment, then load it into the warehouse",
+       "Load the data into the warehouse as-is, then transform it in the warehouse with SQL"
+      ],
+      [
+       "Where transformation happens",
+       "Outside the warehouse (ETL tools, Spark jobs)",
+       "Inside the warehouse (using the cloud warehouse's compute)"
+      ],
+      [
+       "Raw data",
+       "Usually not retained; discarded after transformation",
+       "Fully retained; can be re-transformed at any time"
+      ],
+      [
+       "Flexibility",
+       "Changing requirements means changing the pipeline and re-extracting",
+       "Just edit the SQL model and re-run; analysts can contribute too"
+      ],
+      [
+       "Cost structure",
+       "Transformation-environment costs; less warehouse storage",
+       "Warehouse compute and storage costs; query spend needs to be controlled"
+      ],
+      [
+       "Privacy & compliance",
+       "PII can be masked before loading, so sensitive data never lands",
+       "Raw PII lands in the warehouse, requiring access controls and masking policies"
+      ],
+      [
+       "Typical tools",
+       "Informatica, SSIS, Talend, in-house Spark",
+       "Fivetran/Airbyte + dbt + Snowflake/BigQuery/Databricks"
+      ]
+     ],
+     "verdict": "In the cloud era, ELT is the default: storage is cheap, warehouse compute is powerful, and keeping the raw data lets you redefine metrics later. ETL is still needed when PII must be masked before loading, when source volumes are large enough that they must be filtered first, or when streaming data must be processed first. In practice it is often a hybrid, EtLT: only lightweight masking and format conversion before loading, with the heavy business logic kept in the warehouse and handled in dbt."
+    }
+   ],
+   "quality": {
+    "title": "Six Dimensions of Data Quality",
+    "dims": [
+     [
+      "Completeness",
+      "Completeness",
+      "Is all the expected data there?",
+      "Missing rate; row counts match the source system"
+     ],
+     [
+      "Accuracy",
+      "Accuracy",
+      "Do the values reflect reality?",
+      "Reconcile against source systems or financial figures"
+     ],
+     [
+      "Consistency",
+      "Consistency",
+      "Is the same fact identical across tables?",
+      "Cross-table reconciliation of definitions"
+     ],
+     [
+      "Timeliness",
+      "Timeliness",
+      "Is the data available when it's needed?",
+      "Refresh latency, latest partition date"
+     ],
+     [
+      "Uniqueness",
+      "Uniqueness",
+      "Are there duplicate records?",
+      "Primary-key duplicate checks"
+     ],
+     [
+      "Validity",
+      "Validity",
+      "Do the values conform to formats and business rules?",
+      "Value-range, enumerated-value and format checks"
+     ]
+    ]
+   },
+   "sections": [
+    {
+     "title": "Quality Assurance Mechanisms",
+     "body": "Quality can't depend on eyeballing the data; it depends on mechanisms.",
+     "items": [
+      "Data contracts: upstream teams commit to fields, types, semantics and refresh times, and must give notice before any change",
+      "Automated tests: dbt tests (not_null, unique, relationships, accepted_values), Great Expectations",
+      "Data lineage: know which tables each metric is computed from, so you can assess the blast radius when something breaks upstream",
+      "Monitoring and alerting: track row counts, missing rates and distribution shift daily"
+     ]
+    },
+    {
+     "title": "Unified Metric Definitions (Semantic Layer)",
+     "body": "Codify metric definitions (numerator, denominator, filters, time window) and manage them centrally, so every report and analysis references the same definition.",
+     "example": "Active users = accounts with at least one valid interaction in the past 28 days (excluding test accounts and bots)",
+     "items": [
+      "Tools: dbt Semantic Layer, LookML, Cube"
+     ]
+    },
+    {
+     "title": "Exploratory Data Analysis (EDA)",
+     "body": "Understand the data before modeling. The goal is not pretty charts but finding the data issues that could affect the conclusions.",
+     "items": [
+      "Univariate: distributions, missing values, outliers",
+      "Temporal: trends, seasonality, breaks (often caused by tracking or system changes)",
+      "Relationships: association with the target variable, collinearity",
+      "Segments: whether different groups behave differently (watch out for Simpson's paradox)"
+     ]
+    }
+   ],
+   "checklist": [
+    "The definition, source and refresh frequency of every field are known",
+    "Reconciled against a trusted source (row counts, totals)",
+    "Duplicates, missing values and outliers handled, and the treatment documented",
+    "Time zones and cutoffs of time fields are consistent",
+    "Every feature is available at prediction time (no data leakage)",
+    "The data-processing pipeline can be re-run (in code, under version control)"
+   ],
+   "pitfalls": [
+    [
+     "Data leakage",
+     "Using information not yet available at prediction time (e.g., using \"refunded or not\" to predict \"satisfied or not\"): great offline, collapses in production."
+    ],
+    [
+     "Survivorship bias",
+     "Analyzing only the customers who stayed and ignoring those who have already churned."
+    ],
+    [
+     "Inconsistent definitions",
+     "Two reports define \"active users\" differently, and meetings are spent reconciling numbers."
+    ],
+    [
+     "Tracking changes",
+     "A new version of the tracking code breaks a metric's continuity, and the break is mistaken for a business change."
+    ],
+    [
+     "Not reproducible",
+     "Data cleaned by hand in a notebook; three months later, nobody knows where the numbers came from."
+    ]
+   ],
+   "deliverables": [
+    "Data dictionary (field definitions, sources, metric definitions)",
+    "Data quality report (check results across the six dimensions)",
+    "Re-runnable data-processing code and the analytical dataset"
+   ],
+   "links": [
+    {
+     "t": "node",
+     "id": "uns-den",
+     "label": "Anomaly detection: automatically flag suspicious data"
+    },
+    {
+     "t": "algo",
+     "id": "ks",
+     "label": "KS test: check whether two distributions differ"
+    }
+   ]
+  },
+  {
+   "id": "model",
+   "num": "03",
+   "name": "Modeling & Analysis",
+   "en": "Modeling & Analysis",
+   "q": "Which method answers the question? How far can the results be trusted?",
+   "summary": "The question type determines the method, not the latest model. Identify the question type first, pick the corresponding method family, and use the simplest possible baseline to confirm that a complex model is really worth it.",
+   "output": "Results with quantified uncertainty",
+   "routing": {
+    "title": "Question Type → Method Family",
+    "rows": [
+     {
+      "type": "Descriptive",
+      "q": "What happened? What was revenue by region last quarter?",
+      "method": "Descriptive statistics, confidence intervals, clustering",
+      "links": [
+       {
+        "t": "algo",
+        "id": "ci-clt",
+        "label": "Confidence intervals"
+       },
+       {
+        "t": "node",
+        "id": "uns-clu",
+        "label": "Clustering"
+       }
+      ]
+     },
+     {
+      "type": "Inferential",
+      "q": "Is the difference between the two groups real? Which factors are associated with churn?",
+      "method": "Hypothesis testing, regression, survival analysis",
+      "links": [
+       {
+        "t": "node",
+        "id": "inf-test",
+        "label": "Hypothesis testing"
+       },
+       {
+        "t": "node",
+        "id": "inf-model",
+        "label": "Association modeling"
+       }
+      ]
+     },
+     {
+      "type": "Causal",
+      "q": "How much impact did this change have?",
+      "method": "Randomized experiments, quasi-experiments, observational adjustment",
+      "links": [
+       {
+        "t": "node",
+        "id": "cau-rct",
+        "label": "Randomized experiments"
+       },
+       {
+        "t": "node",
+        "id": "cau-quasi",
+        "label": "Quasi-experiments"
+       },
+       {
+        "t": "node",
+        "id": "cau-obs",
+        "label": "Observational adjustment"
+       }
+      ]
+     },
+     {
+      "type": "Predictive",
+      "q": "Who will churn? What will demand be next month?",
+      "method": "Supervised learning, time series",
+      "links": [
+       {
+        "t": "node",
+        "id": "sup-tab",
+        "label": "Tabular data"
+       },
+       {
+        "t": "node",
+        "id": "sup-seq",
+        "label": "Sequential data"
+       }
+      ]
+     },
+     {
+      "type": "Prescriptive",
+      "q": "Who should get a discount? Which version should we ship?",
+      "method": "Heterogeneous effects (uplift), bandits, optimization",
+      "links": [
+       {
+        "t": "node",
+        "id": "cau-obs-hte",
+        "label": "Heterogeneous effects"
+       },
+       {
+        "t": "node",
+        "id": "rl-bandit",
+        "label": "Bandit"
+       }
+      ]
+     }
+    ],
+    "note": "Prediction ≠ causation. A churn model tells you \"who will leave,\" not \"who will stay because of a retention effort.\" \"What to do, and for whom\" is a causal question."
+   },
+   "sections": [
+    {
+     "title": "Start with a Baseline",
+     "body": "Every complex model must first beat a simple baseline: the historical average, the last period's value, a business rule, a logistic regression. If it can't beat the baseline, there is no case for deploying a complex model; the margin by which it wins is the value of the added complexity."
+    },
+    {
+     "title": "Design Validation to Mirror Production",
+     "body": "The purpose of validation is to estimate \"post-launch performance,\" so the split must match how the model will actually be used.",
+     "items": [
+      "Time-based split: train on the past, validate on the future (the right choice for most business problems)",
+      "Group split: the same customer must never appear in both the training and validation sets",
+      "Keep a test set that has never been looked at; don't tune repeatedly on the validation set"
+     ]
+    },
+    {
+     "title": "Align Evaluation Metrics with Business Costs",
+     "body": "Metrics should reflect the real cost of errors.",
+     "items": [
+      "Imbalanced classification: look at PR-AUC and Recall@K, not accuracy",
+      "Ordinal grading: QWK heavily penalizes errors that are \"many grades off\" (e.g., insurance underwriting tiers)",
+      "Decision threshold: set it based on misclassification costs, not the default 0.5",
+      "Demand forecasting: provide P10/P50/P90 so decision-makers can see the risk"
+     ]
+    },
+    {
+     "title": "Explainable ≠ Causal",
+     "body": "SHAP and feature importance describe \"how the model uses this variable\"; they do not mean \"changing this variable will change the outcome.\" To answer the latter, you have to go back to causal inference methods."
+    },
+    {
+     "title": "Quantify Uncertainty",
+     "body": "Every number should come with its uncertainty: a confidence interval, a prediction interval or a bootstrap distribution.",
+     "items": [
+      "Estimates: confidence intervals or credible intervals",
+      "Predictions: prediction intervals (wider than confidence intervals)",
+      "When no formula is available: bootstrap"
+     ]
+    },
+    {
+     "title": "Robustness Checks",
+     "body": "A conclusion shouldn't hold only under one particular configuration.",
+     "items": [
+      "Does the conclusion change under a different, reasonable set of assumptions or parameters?",
+      "Subgroup analysis: does the conclusion hold only for one group? (Remember to correct for multiple comparisons.)",
+      "Causal analysis: placebo tests, sensitivity analysis for unmeasured confounding"
+     ]
+    }
+   ],
+   "checklist": [
+    "The method matches the question type (descriptive / inferential / causal / predictive / prescriptive)",
+    "A simple baseline exists, and the complex model's lift over it is quantified",
+    "The validation split mirrors real production conditions",
+    "Evaluation metrics reflect business costs",
+    "Results come with quantified uncertainty",
+    "Robustness checks are done"
+   ],
+   "pitfalls": [
+    [
+     "Answering causal questions with predictive models",
+     "Reading feature importance as \"improve this factor and the outcome will improve.\""
+    ],
+    [
+     "Overfitting the validation set",
+     "Tuning repeatedly on the same validation set, then seeing a large performance gap after launch."
+    ],
+    [
+     "Multiple comparisons",
+     "Slice the data into 20 subgroups and one will always come out \"significant.\""
+    ],
+    [
+     "Reporting only the average",
+     "The average effect is positive, but it is negative for some key customer segments."
+    ],
+    [
+     "Complexity worship",
+     "Trading a 0.5% AUC gain for a model that is hard to maintain and hard to explain."
+    ]
+   ],
+   "deliverables": [
+    "Analysis or model report: methods, assumptions, results, uncertainty, limitations",
+    "Reproducible code and a model card"
+   ],
+   "links": [
+    {
+     "t": "algo",
+     "id": "bootstrap",
+     "label": "Bootstrap: intervals when there's no formula"
+    },
+    {
+     "t": "algo",
+     "id": "bh",
+     "label": "BH correction: multiple comparisons in subgroup analysis"
+    },
+    {
+     "t": "algo",
+     "id": "xgboost",
+     "label": "XGBoost: a strong baseline for tabular prediction"
+    }
+   ]
+  },
+  {
+   "id": "deploy",
+   "num": "04",
+   "name": "Deployment & Value",
+   "en": "Deployment & Value",
+   "q": "Did the results actually change a decision and create measurable value?",
+   "summary": "An analysis nobody uses might as well not have been done. Deployment comes down to three things: embedding the results in the decision process, validating the real impact with experiments, and monitoring continuously while feeding what you learn into the next round of problem framing.",
+   "output": "Measurable business impact",
+   "compares": [
+    {
+     "title": "Batch vs. Real-time",
+     "cols": [
+      "Batch",
+      "Real-time"
+     ],
+     "rows": [
+      [
+       "How outputs are produced",
+       "Computed on a schedule (daily, weekly), with results written to tables",
+       "Computed on the fly when a request comes in, and returned immediately"
+      ],
+      [
+       "Latency",
+       "Hours to a day",
+       "Milliseconds to seconds"
+      ],
+      [
+       "Architectural complexity",
+       "Low: scheduler + tables",
+       "High: API service, real-time features, latency and availability monitoring"
+      ],
+      [
+       "Suited decisions",
+       "List-based: marketing lists, risk tiers, replenishment plans",
+       "Interactive: recommendations, fraud detection, dynamic pricing"
+      ],
+      [
+       "Feature consistency",
+       "Training and inference share the same batch code, so consistency is easy",
+       "Online and offline features easily drift apart; often requires a feature store"
+      ],
+      [
+       "Cost",
+       "Low",
+       "High (always-on services, ops headcount)"
+      ]
+     ],
+     "verdict": "If batch will do, don't go real-time. Ask first: does the decision really have to be made within seconds? Most business decisions (lists, tiers, budget allocation) are fine with a daily refresh; real-time is only worth its cost when a user's in-the-moment behavior changes the decision."
+    }
+   ],
+   "sections": [
+    {
+     "title": "Embed in the Decision Process",
+     "body": "Results must show up where decision-makers actually decide (CRM lists, fields in operational systems, daily reports), not in a slide deck.",
+     "items": [
+      "Define explicitly: who takes which action, at what point, based on which output",
+      "Recommend actions, not just scores: \"Contact these 500 first\" beats \"churn probability 0.73\"",
+      "Design human review and exception-handling processes"
+     ]
+    },
+    {
+     "title": "Validate the Real Impact",
+     "body": "Good offline metrics don't mean the business will improve. Treat the launch itself as an experiment.",
+     "items": [
+      "Shadow mode: the new model scores but doesn't act; compare it against the current approach",
+      "Small-traffic A/B test: validate business metrics on 5–10% of traffic",
+      "Gradual ramp-up: roll out fully only after confirming guardrail metrics haven't deteriorated",
+      "Long-term holdout: keep measuring cumulative value"
+     ]
+    },
+    {
+     "title": "Monitoring and Operations",
+     "body": "Once deployed, models quietly lose accuracy as the environment changes; monitoring is part of deployment.",
+     "items": [
+      "Data monitoring: upstream fields, row counts, missing rates",
+      "Drift monitoring: whether input distributions (PSI, KS test) and prediction distributions have shifted",
+      "Performance monitoring: track actual accuracy once ground-truth labels come in",
+      "Retraining triggers: on a fixed schedule, or when drift/performance crosses a threshold"
+     ]
+    },
+    {
+     "title": "Communication: The Pyramid Principle",
+     "body": "Conclusion first: lead with the answer and the recommendation, then the supporting arguments, and only then the methods and details. What decision-makers want is \"so what should we do.\"",
+     "example": "Conclusion: Concentrate the retention budget on the 20% of customers with the highest uplift, retaining an estimated 1,200 more customers per quarter.\nSupporting points: ① The experiment shows retention efforts are 3× as effective for this group as on average ② For the remaining 80%, the retention effect is close to 0 ③ The budget stays the same.\nLimitations: The effect is estimated from the Q2 experiment and may differ in peak season."
+    },
+    {
+     "title": "Measure ROI and Close the Loop",
+     "body": "Convert the effect into business value (revenue, cost, risk), and feed the new problems observed after launch back into the next round of problem framing.",
+     "items": [
+      "Incremental value = effect measured in the experiment × scale − development and operating costs",
+      "Record every decision and its outcome to build up organizational learning"
+     ]
+    }
+   ],
+   "checklist": [
+    "Who acts, when, on which output, and with what action is defined",
+    "Business impact is validated with an experiment or a control group",
+    "Monitoring and alerting cover data, drift and performance",
+    "Model versioning and a rollback mechanism are in place",
+    "Conclusions are communicated using the Pyramid Principle, with limitations stated",
+    "ROI is estimated and a review date is scheduled"
+   ],
+   "pitfalls": [
+    [
+     "Breaking the last mile",
+     "The model is built but never wired into any system or process."
+    ],
+    [
+     "Good offline, poor online",
+     "Features differ between training and serving, or there is data leakage."
+    ],
+    [
+     "No control group",
+     "Metrics rise after launch, but there is no way to tell whether the model or seasonality deserves the credit."
+    ],
+    [
+     "Model decay",
+     "The environment changes and the model quietly loses accuracy without anyone noticing."
+    ],
+    [
+     "Feedback-loop bias",
+     "The model only acts on high-scoring customers, so future training data contains only treated samples."
+    ]
+   ],
+   "deliverables": [
+    "Deployment plan (decision process, architecture, ramp-up plan)",
+    "Monitoring dashboard and alerting rules",
+    "Impact assessment report and ROI"
+   ],
+   "links": [
+    {
+     "t": "algo",
+     "id": "abtest",
+     "label": "A/B testing: validate the impact of a launch"
+    },
+    {
+     "t": "algo",
+     "id": "sequential",
+     "label": "Sequential testing: continuous monitoring during ramp-up"
+    },
+    {
+     "t": "algo",
+     "id": "its",
+     "label": "CausalImpact: when you can't run an experiment"
+    }
+   ]
+  }
+ ]
+}

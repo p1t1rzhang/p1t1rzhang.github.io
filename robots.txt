@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://p1t1rzhang.github.io/sitemap.xml

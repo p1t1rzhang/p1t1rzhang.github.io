@@ -15,3 +15,7 @@ _data/
 
 # 部署設定的暫存副本（請貼到 GitHub 網頁的 .github/workflows/deploy.yml）
 /deploy.yml
+
+# 本機版本存檔與完整（含私密）資料：不上傳
+versions/
+index-ez.html

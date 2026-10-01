@@ -74,9 +74,14 @@ jobs:
             SITE_URL="https://$OWNER.github.io/$REPO/"
           fi
           echo "網站網址：$SITE_URL"
+          # 最新的模型雷達資料先放進 src/data，讓網頁內嵌的快照也是最新的
+          if [ -f _data/daily_models.js ]; then cp _data/daily_models.js src/data/daily_models.js; fi
           SITE_URL="$SITE_URL" python3 src/build.py
           mkdir -p _site
-          cp index.html _site/
+          # 網頁本體＋分享預覽圖＋給搜尋引擎與 AI 讀的檔案
+          for f in index.html og-image.jpg robots.txt sitemap.xml llms.txt; do
+            if [ -f "$f" ]; then cp "$f" _site/; fi
+          done
           for f in daily_models.json daily_models.js; do
             if [ -f "_data/$f" ]; then cp "_data/$f" _site/; fi
           done

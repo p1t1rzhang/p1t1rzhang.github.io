@@ -1,0 +1,518 @@
+{
+ "id": "consulting",
+ "name": {
+  "zh": "管顧思維",
+  "en": "Consulting Toolkit"
+ },
+ "role": {
+  "zh": "對應職能：策略顧問",
+  "en": "For: Strategy Consultant"
+ },
+ "tagline": {
+  "zh": "先有答案、再找證據：把模糊問題變成可驗證、可量化的決策。",
+  "en": "Answer first, then prove it: turn fuzzy problems into testable, quantified decisions."
+ },
+ "intro": {
+  "zh": "顧問的價值不在蒐集多少資料，而在多快收斂到對的問題，並給出可驗證、可量化的答案。以下七張卡片來自撈王會員成長、信用卡新產品策略、壽險數位通路等實際專案：用假設驅動拆解問題、用數字逼出取捨、用金字塔結構讓高層一分鐘內做決定。",
+  "en": "A consultant's value isn't how much data they collect but how fast they converge on the right question and a testable, quantified answer. The seven cards below come from real projects (a hot-pot chain's member growth, a new credit-card strategy, a life insurer's digital channel): hypothesis-driven structuring, numbers that force trade-offs, and pyramid storylines an executive can act on in a minute."
+ },
+ "principles": [
+  {
+   "zh": [
+    "答案先行",
+    "第一天就寫下最可能的答案，再用資料證明或推翻它。"
+   ],
+   "en": [
+    "Answer first",
+    "Write down the most likely answer on Day 1, then let data prove or kill it."
+   ]
+  },
+  {
+   "zh": [
+    "MECE 拆解",
+    "不重不漏地拆問題，讓每一小時都花在會改變決策的分支。"
+   ],
+   "en": [
+    "Structure MECE",
+    "Split problems with no gaps or overlaps so every hour goes to a branch that can change the decision."
+   ]
+  },
+  {
+   "zh": [
+    "以決策為終點",
+    "每個分析都要回答「所以呢？」：改變了哪個決定、值多少。"
+   ],
+   "en": [
+    "End in a decision",
+    "Every analysis must answer 'so what?': which decision it changes and what it is worth."
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "hypothesis",
+   "name": {
+    "zh": "假設驅動解題",
+    "en": "Hypothesis-Driven Problem Solving"
+   },
+   "oneLiner": {
+    "zh": "第一天就提出答案，用最少的分析證明或推翻它，快速迭代。",
+    "en": "Put a Day-1 answer on the table, then use the fewest analyses needed to prove or kill it, and iterate."
+   },
+   "when": {
+    "zh": [
+     "時程緊、問題模糊，沒有時間煮沸海洋",
+     "團隊需要聚焦在少數決定性的分析",
+     "客戶期待期中就看到方向，而非期末才有答案"
+    ],
+    "en": [
+     "Tight timeline, fuzzy problem: no time to boil the ocean",
+     "The team must focus on a handful of decisive analyses",
+     "The client expects a direction at the midpoint, not only at the end"
+    ]
+   },
+   "steps": {
+    "zh": [
+     "把問題寫成一句可回答的關鍵問題：誰、做什麼決定、何時",
+     "寫下 Day-1 答案，拆成 3–5 個可被推翻的子假設",
+     "替每個假設寫下「什麼證據會推翻它」，再決定跑哪個分析",
+     "先做最便宜、最能分辨真偽的分析，每週更新假設清單",
+     "被推翻就換掉，絕不為了保住假設而挑資料"
+    ],
+    "en": [
+     "Write the key question as one answerable sentence: who decides what, by when",
+     "Draft a Day-1 answer and split it into 3–5 falsifiable sub-hypotheses",
+     "For each, write down what evidence would kill it, then pick the analysis",
+     "Run the cheapest, most discriminating analysis first; refresh the list weekly",
+     "Drop what gets disproven; never cherry-pick data to save a hypothesis"
+    ]
+   },
+   "example": {
+    "zh": "信用卡新產品策略：把「新卡靠什麼拉高消費」拆成分級回饋、活動誘因、產品設計 3 個假設，以 12 題 Likert 量表（n = 291）對中立值 3 做單尾單樣本 t 檢定：三者皆 p < .001，分級回饋最強（M = 3.86）。\n撈王專案同樣從 5 個假設出發（如下午茶時段缺口、新客首訪體驗），新客 CRM、下午品湯小鍋等策略都由此推導。",
+    "en": "New credit-card strategy: the team split 'what will make the card lift spend?' into 3 hypotheses (tiered rewards, campaign events, product design) and tested 12 Likert items (n = 291) with one-tailed one-sample t-tests against the neutral midpoint of 3. All three held at p < .001; tiered rewards was strongest (M = 3.86).\nLaowang started the same way from 5 hypotheses (e.g. an afternoon-tea occasion gap, the trial-guest first visit); strategies such as trial-guest CRM and the afternoon soup-tasting mini-pot were derived from them."
+   },
+   "template": {
+    "zh": "關鍵問題：〔誰〕應如何〔做什麼〕，才能在〔期限〕前達成〔目標〕？\nDay-1 答案：……\nH1：…… → 推翻條件：…… → 驗證分析：……\nH2：…… → 推翻條件：…… → 驗證分析：……\nH3：…… → 推翻條件：…… → 驗證分析：……\n本週先做：……（成本低、區分力高）",
+    "en": "Key question: How should [who] [do what] to reach [goal] by [when]?\nDay-1 answer: …\nH1: … → Killed if: … → Test: …\nH2: … → Killed if: … → Test: …\nH3: … → Killed if: … → Test: …\nDo first this week: … (cheap, highly discriminating)"
+   },
+   "pitfalls": {
+    "zh": [
+     "把假設寫成主題（「定價」），而非可被推翻的主張",
+     "確認偏誤：只找支持假設的證據",
+     "假設太多、每個都做一點，等於沒有聚焦"
+    ],
+    "en": [
+     "Writing a topic ('pricing') instead of a falsifiable claim",
+     "Confirmation bias: hunting only for supporting evidence",
+     "Too many hypotheses, each half-tested: that is not focus"
+    ]
+   },
+   "cases": [
+    "citi",
+    "laowang"
+   ],
+   "links": [
+    {
+     "t": "flow",
+     "id": "frame"
+    },
+    {
+     "t": "algo",
+     "id": "ttest"
+    }
+   ]
+  },
+  {
+   "id": "issue-tree",
+   "name": {
+    "zh": "議題樹與 MECE",
+    "en": "Issue Trees & MECE"
+   },
+   "oneLiner": {
+    "zh": "把大問題拆成不重不漏的分支，讓每一項分析都對應一個決策。",
+    "en": "Break a big question into mutually exclusive, collectively exhaustive branches so every analysis maps to a decision."
+   },
+   "when": {
+    "zh": [
+     "專案開場，需要界定範圍與分工",
+     "問題成因不明，需要系統性診斷",
+     "要向客戶證明沒有遺漏重要方向"
+    ],
+    "en": [
+     "Kick-off: scoping the work and splitting it across the team",
+     "The root cause is unclear and needs a systematic diagnosis",
+     "You must show the client no major avenue was missed"
+    ]
+   },
+   "steps": {
+    "zh": [
+     "選樹種：診斷用「為什麼」樹、找解方用「如何」樹、已有答案用假設樹",
+     "第一層盡量用恆等式拆（營收 = 客數 × 客單價），天生 MECE",
+     "每層 2–5 個分支，同一層只用一種切分邏輯",
+     "MECE 檢查：子分支能完整還原母節點嗎？有東西能同時放進兩支嗎？",
+     "用 80/20 標出最可能的分支，指派負責人與驗證資料"
+    ],
+    "en": [
+     "Pick the tree: a why-tree to diagnose, a how-tree for solutions, a hypothesis tree once you have an answer",
+     "Split the first level with an identity where possible (revenue = customers × average ticket): MECE by construction",
+     "Keep 2–5 branches per level, and one cutting logic per level",
+     "MECE test: do the children fully rebuild the parent? Could anything sit in two branches?",
+     "Flag the likely branches with 80/20; assign an owner and the data to test each"
+    ]
+   },
+   "example": {
+    "zh": "信用卡新產品策略：總消費 = 平均每筆金額 × 交易筆數，拆解後聚焦「每筆金額」槓桿與百貨公司消費場景。\n壽險數位通路專案：議題樹搭配 16 種人物誌的 MECE 矩陣，收斂到涵蓋大多數保戶的 3 個優先客群。\n本站知識庫也用同一原則，把 143 種方法整理成兩棵四層 MECE 樹。",
+    "en": "New credit-card strategy: total spend = average spend per transaction × number of transactions; the tree pointed to the per-transaction lever and the department-store occasion.\nLife insurer digital channel: an issue tree plus a 16-persona MECE matrix narrowed the base to 3 priority segments covering the large majority of policyholders.\nThis site's knowledge base follows the same rule: 143 methods in two 4-level MECE trees."
+   },
+   "template": {
+    "zh": "根問題：……？\n├─ A 客數\n│　├─ A1 新客\n│　└─ A2 回訪客\n└─ B 客單價\n　　├─ B1 每單品項數\n　　└─ B2 平均品項單價\nMECE 檢查：子分支能完整還原母節點？有無重疊？「其他」是否過大？",
+    "en": "Root question: …?\n├─ A Number of customers\n│  ├─ A1 New customers\n│  └─ A2 Returning customers\n└─ B Average ticket\n   ├─ B1 Items per order\n   └─ B2 Average item price\nMECE check: do children rebuild the parent? Any overlap? Is 'other' too big?"
+   },
+   "pitfalls": {
+    "zh": [
+     "同一層混用切分邏輯（既按產品又按通路），造成重疊",
+     "「其他」分支過大，代表拆解並不完整",
+     "樹畫得漂亮卻沒排優先順序，團隊仍在煮沸海洋"
+    ],
+    "en": [
+     "Mixing cutting logics on one level (product and channel) creates overlap",
+     "An oversized 'other' branch means the split isn't exhaustive",
+     "A beautiful tree with no prioritization: the team still boils the ocean"
+    ]
+   },
+   "cases": [
+    "citi",
+    "cardif",
+    "site"
+   ],
+   "links": [
+    {
+     "t": "flow",
+     "id": "frame"
+    }
+   ]
+  },
+  {
+   "id": "scqa",
+   "name": {
+    "zh": "SCQA 與金字塔原理",
+    "en": "SCQA & the Pyramid Principle"
+   },
+   "oneLiner": {
+    "zh": "結論先行：用 SCQA 開場、金字塔撐住，讓聽眾一分鐘抓到重點。",
+    "en": "Answer first: open with SCQA, support it with a pyramid, and let the audience get it in one minute."
+   },
+   "when": {
+    "zh": [
+     "寫報告、提案或 email 之前，先定故事線",
+     "簡報頁數多，需要一條主線串起來",
+     "聽眾是時間有限的決策者"
+    ],
+    "en": [
+     "Before writing a report, proposal or email: set the storyline first",
+     "A long deck needs a single spine",
+     "The audience is a time-poor decision maker"
+    ]
+   },
+   "steps": {
+    "zh": [
+     "S 情境：寫出聽眾已同意、不需論證的事實",
+     "C 衝突：點出讓現狀無法持續的改變或威脅",
+     "Q／A：寫出衝突引出的問題，用一句話回答，這就是頂層結論",
+     "垂直邏輯：每個論點都回答上一層的「為什麼？」或「怎麼做？」",
+     "水平邏輯：同層 3±1 個論點，彼此 MECE、屬同一類型"
+    ],
+    "en": [
+     "S (Situation): state facts the audience already accepts",
+     "C (Complication): name the change or threat that makes the status quo untenable",
+     "Q/A: write the question it raises and answer it in one sentence; that is your top line",
+     "Vertical logic: each supporting point answers 'why?' or 'how?' for the level above",
+     "Horizontal logic: 3±1 points per level, MECE and of one kind"
+    ]
+   },
+   "example": {
+    "zh": "撈王會員成長提案可用 SCQA 這樣收斂：\nS：來客多由折扣活動帶動。\nC：折扣換來的多是一次性來客，顧客價值無法累積。\nQ：如何從折扣驅動轉向生命週期經營？\nA：依 RFM 分成 5 個生命週期層級分層經營：新客 CRM 促成第二次來店、下午品湯小鍋填補離峰、VIP 以禮遇取代折扣。",
+    "en": "The Laowang member-growth pitch in SCQA:\nS: Visits are largely driven by discounts.\nC: Discounts buy one-off visits, so customer value never compounds.\nQ: How do we move from discount-driven visits to lifecycle-based value?\nA: Manage 5 RFM lifecycle tiers differently: trial-guest CRM to earn the second visit, an afternoon soup-tasting mini-pot to fill off-peak hours, privileges instead of discounts for VIPs."
+   },
+   "template": {
+    "zh": "S 情境：〔聽眾已同意的事實〕\nC 衝突：〔改變了什麼／風險在哪〕\nQ 問題：〔所以我們該怎麼做？〕\nA 答案：〔一句話結論〕\n　├─ 論點 1：……（證據）\n　├─ 論點 2：……（證據）\n　└─ 論點 3：……（證據）",
+    "en": "S (Situation): [fact the audience already accepts]\nC (Complication): [what changed / what is at risk]\nQ (Question): [so what should we do?]\nA (Answer): [one-sentence conclusion]\n  ├─ Point 1: … (evidence)\n  ├─ Point 2: … (evidence)\n  └─ Point 3: … (evidence)"
+   },
+   "pitfalls": {
+    "zh": [
+     "把 S 寫成冗長背景，結論到第十頁才出現",
+     "標題只寫主題（「市場分析」），沒有 so-what",
+     "同層論點混雜原因、做法與數字，邏輯斷裂"
+    ],
+    "en": [
+     "Turning S into a history lesson, so the answer shows up on slide 10",
+     "Topic titles ('Market analysis') with no so-what",
+     "Mixing causes, actions and numbers on one level: the logic breaks"
+    ]
+   },
+   "cases": [
+    "laowang"
+   ],
+   "links": [
+    {
+     "t": "flow",
+     "id": "deploy"
+    }
+   ]
+  },
+  {
+   "id": "sizing",
+   "name": {
+    "zh": "市場規模估算",
+    "en": "Market Sizing"
+   },
+   "oneLiner": {
+    "zh": "用由上而下、由下而上與漏斗三種角度交叉驗證，給出區間而非單一數字。",
+    "en": "Triangulate top-down, bottom-up and funnel estimates, and give a range, not a single number."
+   },
+   "when": {
+    "zh": [
+     "評估新產品、新通路或新市場值不值得投入",
+     "投資決策需要一個營收天花板",
+     "資料不完整，只能靠結構化假設推估"
+    ],
+    "en": [
+     "Deciding whether a new product, channel or market is worth pursuing",
+     "An investment decision needs a revenue ceiling",
+     "Data is incomplete and the number must come from structured assumptions"
+    ]
+   },
+   "steps": {
+    "zh": [
+     "先定義市場：產品、客群、地區、期間，以及算營收還是人數",
+     "由上而下：母體 → 目標客群占比 → 滲透率 × 單價",
+     "由下而上：據點數 × 單點產能 × 單價，或客數 × 頻次 × 客單價",
+     "漏斗法：觸及 → 點擊 → 申請 → 成交，逐段套用轉換率",
+     "三法交叉驗證，差距大就回頭檢查假設；最後給保守／基準／樂觀三情境"
+    ],
+    "en": [
+     "Define the market: product, segment, geography, period, and revenue or headcount",
+     "Top-down: population → target share → penetration × price",
+     "Bottom-up: locations × capacity per location × price, or customers × frequency × ticket",
+     "Funnel: reach → click → apply → convert, applying a rate at each stage",
+     "Triangulate; if the methods disagree, revisit assumptions. Report conservative / base / optimistic cases"
+    ]
+   },
+   "example": {
+    "zh": "壽險數位通路專案：以 3 個優先客群分別建立轉換漏斗，推估保守／基準／樂觀三種情境的市場規模，再以 IFRS 17 合約服務邊際（CSM）檢驗獲利面是否站得住。\n通用範例：台北精品咖啡豆訂閱市場 ≈ 家戶數 × 手沖滲透率 × 訂閱意願 × 年費，再用競品訂閱數由下而上核對。",
+    "en": "Life insurer digital channel: a conversion funnel for each of 3 priority segments gave the market size under conservative / base / optimistic scenarios, then pressure-tested against IFRS 17 contractual service margin (CSM) economics.\nGeneric: Taipei specialty-coffee subscriptions ≈ households × pour-over penetration × subscription intent × annual fee, cross-checked bottom-up from competitors' subscriber counts."
+   },
+   "pitfalls": {
+    "zh": [
+     "只用一種方法、沒有交叉驗證就報單一數字",
+     "把 TAM 當成可實現營收，忽略可服務與可取得的比例",
+     "情境只是整體 ±20%，沒有對應到具體假設的改變"
+    ],
+    "en": [
+     "One method, no triangulation, one point estimate",
+     "Treating TAM as achievable revenue, ignoring the serviceable and obtainable share",
+     "Scenarios that are just ±20% across the board instead of specific assumption changes"
+    ]
+   },
+   "cases": [
+    "cardif"
+   ],
+   "links": [
+    {
+     "t": "flow",
+     "id": "frame"
+    }
+   ],
+   "widget": "sizing"
+  },
+  {
+   "id": "prioritize",
+   "name": {
+    "zh": "80/20 與優先矩陣",
+    "en": "80/20 & the Prioritization Matrix"
+   },
+   "oneLiner": {
+    "zh": "找出少數高槓桿的客群與行動，再用 2×2 決定先做、分階段、試行或不做。",
+    "en": "Find the few high-leverage segments and moves, then use a 2×2 to decide: do first, phase in, pilot, or drop."
+   },
+   "when": {
+    "zh": [
+     "點子多、資源少，必須取捨",
+     "決定先服務哪些客群、先推哪些方案",
+     "需要讓利害關係人對優先順序達成共識"
+    ],
+    "en": [
+     "Many ideas, few resources: trade-offs are unavoidable",
+     "Choosing which segments to serve and which initiatives to launch first",
+     "Stakeholders must align on the order of play"
+    ]
+   },
+   "steps": {
+    "zh": [
+     "先做 80/20（柏拉圖）分析：哪 20% 的客群、品項或通路貢獻 80% 的價值",
+     "列出所有候選方案，定義兩軸，如第一年淨效益 × 第一年成本",
+     "用同一套假設粗估每個方案，放進 2×2",
+     "高效益低成本先做、高效益高成本分階段、低效益低成本試行、低效益高成本不做",
+     "把「不做」清單寫下來並取得共識，聚焦才算完成"
+    ],
+    "en": [
+     "Run a Pareto cut: which 20% of segments, items or channels drive 80% of value",
+     "List every candidate and define two axes, e.g. first-year net benefit × first-year cost",
+     "Rough-size every option on the same assumptions and plot it",
+     "High benefit, low cost: do first; high/high: phase in; low/low: pilot; low benefit, high cost: don't do",
+     "Write down the don't-do list and get sign-off: only then is the focus real"
+    ]
+   },
+   "example": {
+    "zh": "信用卡新產品策略：年消費前 1% 的卡友貢獻全台 21.5% 的刷卡金額（2024 公開資料），因此鎖定這群高消費族群。\n撈王專案：R、F、M 各分高低成 8 格，整併為 5 個生命週期層級，以「最近來店」為主要觸發；冷卻客（91–180 天未回訪、但過去頻次或金額高）最值得挽回。所有策略再依第一年淨效益 × 第一年成本放進 2×2。",
+    "en": "New credit-card strategy: the top 1% of cards by annual spend generate 21.5% of Taiwan's card spend (2024 public data), so the card targets that group.\nLaowang: splitting R, F and M high/low gave 8 cells, consolidated into 5 lifecycle tiers with recency as the primary trigger; 'Cooling' guests (91–180 days since the last visit but high past frequency or spend) are the most worth saving. Every strategy was then placed on a first-year net benefit × first-year cost 2×2."
+   },
+   "pitfalls": {
+    "zh": [
+     "軸的定義模糊（「重要性」），每個人放的位置都不同",
+     "所有方案都擠在「先做」，等於沒有排序",
+     "只看平均：高價值的少數被大量低價值客群稀釋"
+    ],
+    "en": [
+     "Vague axes ('importance'): everyone plots differently",
+     "Everything lands in 'do first', so nothing is prioritized",
+     "Looking at averages: the vital few get diluted by the many"
+    ]
+   },
+   "cases": [
+    "laowang",
+    "citi"
+   ],
+   "links": []
+  },
+  {
+   "id": "breakeven",
+   "name": {
+    "zh": "損益兩平與情境分析",
+    "en": "Breakeven & Scenario Analysis"
+   },
+   "oneLiner": {
+    "zh": "反推方案至少要達到多少成效才回本，再看關鍵假設變動時結論會不會翻轉。",
+    "en": "Back-solve the minimum result an initiative needs to pay off, then check whether the call flips when key assumptions move."
+   },
+   "when": {
+    "zh": [
+     "成效難以預測，但成本相對確定",
+     "需要說服財務或高層核准投資",
+     "要替試行設定成功門檻（go／kill 標準）"
+    ],
+    "en": [
+     "Results are hard to forecast but costs are fairly known",
+     "Finance or leadership must approve an investment",
+     "A pilot needs a success bar (go / kill criteria)"
+    ]
+   },
+   "steps": {
+    "zh": [
+     "列出增量成本（固定＋變動）與每單位增量貢獻（用毛利，不用營收）",
+     "損益兩平量 = 固定成本 ÷ 單位貢獻；再反推所需的轉換率提升",
+     "拿門檻對照歷史資料、標竿或試行結果，判斷做不做得到",
+     "敏感度分析：一次只動一個變數，找出最能翻轉結論的兩三個",
+     "給出保守／基準／樂觀情境，並把門檻寫成試行的 go／kill 標準"
+    ],
+    "en": [
+     "List incremental costs (fixed + variable) and incremental contribution per unit: margin, not revenue",
+     "Breakeven volume = fixed cost ÷ unit contribution; then back-solve the required conversion lift",
+     "Check the bar against history, benchmarks or pilot results: is it achievable?",
+     "Sensitivity: move one variable at a time to find the two or three that flip the call",
+     "Report conservative / base / optimistic cases and turn the bar into the pilot's go / kill criterion"
+    ]
+   },
+   "example": {
+    "zh": "壽險數位通路專案：反推方案需要多少轉換率提升才能損益兩平，討論從「預測準不準」變成「門檻做不做得到」。\n通用範例：咖啡連鎖的會員 App 年固定成本 300 萬元，每位新增回訪客年毛利 1,500 元 → 需多留住 2,000 人才回本。\n玉山企劃競賽提案同樣做情境檢驗：團隊推估回收期約 4 年、IRR 約 13.5%，悲觀情境 NPV 仍為正。",
+    "en": "Life insurer digital channel: back-solving the conversion lift needed to break even moves the debate from 'is the forecast right?' to 'is this bar achievable?'.\nGeneric: a coffee chain's member app costs NT$3M a year; at NT$1,500 annual margin per extra returning customer, it needs 2,000 more returners to break even.\nThe E.SUN business-plan entry was stress-tested the same way: the team projected a ~4-year payback and ~13.5% IRR, with NPV still positive in the pessimistic case."
+   },
+   "pitfalls": {
+    "zh": [
+     "用營收而非毛利算貢獻，門檻被嚴重低估",
+     "把原本就會發生的需求算成增量（沒有對照組）",
+     "只報基準情境，隱藏結論對假設有多敏感"
+    ],
+    "en": [
+     "Using revenue instead of margin, badly understating the bar",
+     "Counting demand that would have happened anyway as incremental (no control group)",
+     "Showing only the base case and hiding how sensitive the answer is"
+    ]
+   },
+   "cases": [
+    "cardif",
+    "esun"
+   ],
+   "links": [],
+   "widget": "breakeven"
+  },
+  {
+   "id": "exec",
+   "name": {
+    "zh": "高層溝通：先講結論",
+    "en": "Executive Communication: Answer First"
+   },
+   "oneLiner": {
+    "zh": "高層只有三分鐘：先講結論與需要的決定，再給證據，並在會前先對齊。",
+    "en": "Executives have three minutes: lead with the answer and the decision you need, then the evidence, and pre-wire before the meeting."
+   },
+   "when": {
+    "zh": [
+     "期中／期末報告、董事會或高層審查",
+     "需要高層當場拍板或核准資源",
+     "議題具爭議，利害關係人立場不一"
+    ],
+    "en": [
+     "Steering committees, board or leadership reviews",
+     "You need a decision or resources approved on the spot",
+     "The topic is contentious and stakeholders disagree"
+    ]
+   },
+   "steps": {
+    "zh": [
+     "先寫一頁執行摘要（exec summary）：結論、三個理由、需要的決定與時程",
+     "一頁一訊息：標題是一句完整結論，內文只放支撐它的證據",
+     "標題串讀測試：只讀每頁標題，就能看懂整個故事",
+     "會前逐一預先溝通（pre-wire）關鍵人物，不讓任何人在會中才初次看到",
+     "細節與資料來源放附錄，備而不用"
+    ],
+    "en": [
+     "Write a one-page exec summary first: answer, three reasons, the decision needed and timing",
+     "One message per slide: the title is a full-sentence conclusion; the body holds only its evidence",
+     "Title test: reading only the slide titles should tell the whole story",
+     "Pre-wire key stakeholders one by one so no one sees it cold in the meeting",
+     "Park detail and sources in the appendix: ready for questions, out of the main flow"
+    ]
+   },
+   "example": {
+    "zh": "撈王專案的最終提案對象是集團創辦人與獨立董事。用執行摘要寫法，一頁即可收斂：先講結論（依會員分層設計的成長策略），再給理由（RFM 分層與 5 個假設）。該框架後續納入客戶的 CRM 規劃，團隊獲第三名。",
+    "en": "Laowang's final pitch went to the group founder and an independent director. As an exec summary it fits on one page: lead with the answer (a growth strategy built on the member tiers), then the reasons (the RFM tiers and 5 hypotheses). The framework was adopted into the client's CRM planning, and the team placed 3rd."
+   },
+   "template": {
+    "zh": "【結論】我們建議……，預期……\n【為什麼】1. ……　2. ……　3. ……\n【需要的決定】請於〔日期〕前核准〔資源／範圍〕\n【風險與因應】……\n【下一步】〔誰〕於〔何時〕完成〔什麼〕",
+    "en": "[Answer] We recommend …, which is expected to …\n[Why] 1. …  2. …  3. …\n[Decision needed] Approve [resources / scope] by [date]\n[Risks & mitigations] …\n[Next steps] [Who] delivers [what] by [when]"
+   },
+   "pitfalls": {
+    "zh": [
+     "照分析的時間順序報告，而非照論證順序",
+     "一頁塞三個訊息，高層不知道該看哪裡",
+     "會議上才首次拋出爭議數字，引來防衛而非決策"
+    ],
+    "en": [
+     "Presenting in the order you did the work, not the order of the argument",
+     "Three messages on one slide: the executive doesn't know where to look",
+     "Springing a contentious number for the first time in the meeting: you get defense, not a decision"
+    ]
+   },
+   "cases": [
+    "laowang"
+   ],
+   "links": [
+    {
+     "t": "flow",
+     "id": "deploy"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,582 @@
+{
+ "id": "data",
+ "name": {
+  "zh": "數據分析與資料科學",
+  "en": "Data Analytics & Science"
+ },
+ "role": {
+  "zh": "對應職能：資料分析師／資料科學家",
+  "en": "For: Data Analyst / Data Scientist"
+ },
+ "tagline": {
+  "zh": "把商業問題變成可驗證的假設，用嚴謹的統計給出可行動的答案。",
+  "en": "Turn business questions into testable hypotheses, then answer them with rigorous, actionable statistics."
+ },
+ "intro": {
+  "zh": "分析的價值不在模型多複雜，而在於回答對的問題，並讓決策者信得過結果。我在台大專攻應用計量與因果推論，實務上用 SQL 與 Python 篩選變數、以統計檢定與實驗設計驗證假設，再把結果轉成具體建議。以下七張卡片是我反覆使用的工作方法。",
+  "en": "Analytics pays off only when it answers the right question in a way decision-makers can trust. At NTU I focus on applied econometrics and causal inference; in practice I screen drivers with SQL and Python, validate hypotheses with statistical tests and experiment design, and translate the results into concrete recommendations. These seven cards are the playbooks I return to again and again."
+ },
+ "principles": [
+  {
+   "zh": [
+    "決策先於資料",
+    "每個分析都要對應一個「結果不同，做法就會不同」的決策。"
+   ],
+   "en": [
+    "Decision before data",
+    "Every analysis should serve a decision that would change depending on the result."
+   ]
+  },
+  {
+   "zh": [
+    "相關不等於因果",
+    "能隨機就隨機；不能隨機，就把識別假設講清楚並檢驗。"
+   ],
+   "en": [
+    "Correlation is not causation",
+    "Randomize when you can; when you can't, state the identifying assumptions and test them."
+   ]
+  },
+  {
+   "zh": [
+    "誠實面對不確定性",
+    "報告效果量與信賴區間，而不是只看 p 值是否顯著。"
+   ],
+   "en": [
+    "Be honest about uncertainty",
+    "Report effect sizes and confidence intervals, not just whether p < 0.05."
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "workflow",
+   "name": {
+    "zh": "分析四階段流程",
+    "en": "The Four-Stage Analytics Workflow"
+   },
+   "oneLiner": {
+    "zh": "問題定義 → 資料與品質 → 建模與分析 → 部署與價值，每段都有明確交付與關卡。",
+    "en": "Frame → data & quality → modeling & analysis → deploy & value, each stage with a clear deliverable and a gate."
+   },
+   "when": {
+    "zh": [
+     "商業需求模糊，需要轉成可分析的問題",
+     "專案跨部門，要對齊範圍、交付與時程",
+     "回顧過去的分析為何沒被採用"
+    ],
+    "en": [
+     "A vague business request needs to become an analyzable question",
+     "The project spans teams and needs aligned scope, deliverables and timing",
+     "Diagnosing why a past analysis never got used"
+    ]
+   },
+   "steps": {
+    "zh": [
+     "定義：寫下要支援的決策、成功指標，以及什麼結果會改變決策",
+     "資料：確認分析單位與時間窗，檢查缺值、重複、異常與定義一致性",
+     "建模：先做描述統計與基準線，再選真正能回答問題的方法",
+     "部署：把結論轉成行動、負責人與追蹤指標，並監控成效衰退"
+    ],
+    "en": [
+     "Frame: write down the decision, the success metric and what result would change the decision",
+     "Data: fix the unit of analysis and time window; check missing values, duplicates, outliers and definition consistency",
+     "Model: start with descriptives and a baseline, then pick the method that actually answers the question",
+     "Deploy: turn findings into actions, owners and tracking metrics; monitor for performance decay"
+    ]
+   },
+   "example": {
+    "zh": "在合庫人壽的專案，先用議題樹界定營收曝險與數位機會（定義），以 SQL 篩選 40 多個客戶屬性（資料），用 XGBoost 排序回應驅動因子（建模），最後把結果轉成分階段的數位路線圖（部署）。",
+    "en": "At Cardif, an issue tree framed the revenue exposure and digital opportunity (frame); I screened 40+ customer attributes in SQL (data) and ranked response drivers with XGBoost (model), and the work landed as a phased digital roadmap (deploy)."
+   },
+   "pitfalls": {
+    "zh": [
+     "跳過定義直接建模，最後答非所問",
+     "清理規則沒有記錄，結果無法重現",
+     "把報告當終點，沒人負責後續追蹤"
+    ],
+    "en": [
+     "Jumping into modeling before framing, then answering the wrong question",
+     "Undocumented cleaning rules that make results irreproducible",
+     "Treating the report as the finish line, with no owner for follow-through"
+    ]
+   },
+   "cases": [
+    "cardif",
+    "site"
+   ],
+   "links": [
+    {
+     "t": "flow",
+     "id": "frame"
+    },
+    {
+     "t": "flow",
+     "id": "data"
+    },
+    {
+     "t": "flow",
+     "id": "model"
+    },
+    {
+     "t": "flow",
+     "id": "deploy"
+    }
+   ]
+  },
+  {
+   "id": "metric-tree",
+   "name": {
+    "zh": "指標拆解與北極星指標",
+    "en": "Metric Trees & North-Star Metrics"
+   },
+   "oneLiner": {
+    "zh": "把目標拆成可行動的驅動因子，並用護欄指標防止顧此失彼。",
+    "en": "Break the goal into actionable drivers, and use guardrail metrics so a gain in one place isn't a loss elsewhere."
+   },
+   "when": {
+    "zh": [
+     "診斷營收或成長變動的來源",
+     "為 dashboard 或實驗選主要與護欄指標",
+     "各部門對同一指標的定義不一致"
+    ],
+    "en": [
+     "Diagnosing where a revenue or growth change comes from",
+     "Choosing primary and guardrail metrics for a dashboard or experiment",
+     "Teams define the same metric differently"
+    ]
+   },
+   "steps": {
+    "zh": [
+     "選一個反映顧客價值、團隊可影響的北極星指標",
+     "用乘法或加法拆解，例如營收＝顧客數×頻率×客單價",
+     "逐一定義分子、分母與時間窗；比率指標以 delta method 估變異",
+     "為每個槓桿指定負責人，並配一個不可惡化的護欄指標",
+     "合成分數先轉百分位等級再加權，避免尺度與極端值主導"
+    ],
+    "en": [
+     "Pick one north-star metric that reflects customer value and that the team can move",
+     "Decompose multiplicatively or additively, e.g. revenue = customers × frequency × ticket size",
+     "Define numerator, denominator and time window for every node; use the delta method for ratio-metric variance",
+     "Give each lever an owner and pair it with a guardrail that must not worsen",
+     "For composite scores, convert inputs to percentile ranks before weighting so scale and outliers don't dominate"
+    ]
+   },
+   "example": {
+    "zh": "信用卡專案把總簽帳金額拆成「平均每筆金額 × 交易筆數」，聚焦平均金額槓桿與百貨消費情境。\n撈王專案要求多項指標同時成立，例如實驗組對照組的 60 天回訪率，加上晚餐來客不被侵蝕的護欄，才算真正的新需求。\n本站的模型雷達則把 5 個因子轉成百分位等級後加權計分。",
+    "en": "The credit card project split total spend into average spend per transaction × number of transactions, then focused on the average-spend lever and the department-store occasion.\nFor Laowang, several indicators had to hold at once, e.g. the 60-day repeat rate of treatment vs control plus a guardrail on cannibalized dinner traffic, before counting demand as genuinely new.\nThis site's model radar converts 5 factors to percentile ranks before weighting them into one score."
+   },
+   "template": {
+    "zh": "指標名稱：＿＿\n定義：分子＿＿／分母＿＿／時間窗＿＿／排除＿＿\n資料來源與更新頻率：＿＿\n負責人：＿＿\n護欄指標：＿＿（不得低於＿＿）",
+    "en": "Metric: ___\nDefinition: numerator ___ / denominator ___ / window ___ / exclusions ___\nSource & refresh: ___\nOwner: ___\nGuardrail: ___ (must not fall below ___)"
+   },
+   "pitfalls": {
+    "zh": [
+     "選虛榮指標（下載、曝光），與價值脫鉤",
+     "只看比率，忽略分母組成改變（辛普森悖論）",
+     "指標太多，沒有一個真正對決策負責"
+    ],
+    "en": [
+     "Vanity metrics (downloads, impressions) disconnected from value",
+     "Reading ratios while ignoring shifts in the denominator mix (Simpson's paradox)",
+     "So many metrics that none is accountable for a decision"
+    ]
+   },
+   "cases": [
+    "citi",
+    "laowang",
+    "site"
+   ],
+   "links": [
+    {
+     "t": "flow",
+     "id": "frame"
+    },
+    {
+     "t": "algo",
+     "id": "delta"
+    }
+   ]
+  },
+  {
+   "id": "segmentation",
+   "name": {
+    "zh": "顧客分群：從 RFM 到分群模型",
+    "en": "Customer Segmentation: From RFM to Clustering"
+   },
+   "oneLiner": {
+    "zh": "好分群不是統計上最漂亮，而是每群對應不同行動，且隨時間穩定。",
+    "en": "A good segmentation isn't the statistically prettiest: each segment gets a different action and stays stable over time."
+   },
+   "when": {
+    "zh": [
+     "會員經營或 CRM 需要差異化溝通",
+     "預算有限，要決定先投資哪些客群",
+     "想從交易資料找出未知的行為型態"
+    ],
+    "en": [
+     "Membership or CRM programs need differentiated treatment",
+     "Budget is limited and you must choose which customers to invest in first",
+     "You want to uncover unknown behavior patterns in transaction data"
+    ]
+   },
+   "steps": {
+    "zh": [
+     "先用規則式 RFM 建立可解釋的基準分群",
+     "需要更多維度時，對數轉換並標準化後跑 k-means 或 GMM",
+     "以輪廓係數、BIC 與商業可解釋性共同決定群數",
+     "合併行動相同的群，替每群命名並寫下對應策略",
+     "換期間或 bootstrap 重跑，檢查穩定度與群間移動"
+    ],
+    "en": [
+     "Start with rule-based RFM for an interpretable baseline",
+     "When you need more dimensions, log-transform and standardize, then run k-means or a GMM",
+     "Choose the number of segments by silhouette, BIC and business interpretability together",
+     "Merge cells that get the same action; name each segment and write its play",
+     "Re-run on another period or bootstrap samples to check stability and migration"
+    ]
+   },
+   "example": {
+    "zh": "撈王專案將 R、F、M 各分高低，得到 2×2×2＝8 格，再依行動合併成 5 個生命週期層級：嘗鮮客、成長客、常客／VIP、降溫客、沉睡客。\n以最近一次消費（R）為主要觸發條件，因為久未回訪的顧客無論過去花多少都不易回流；「降溫客」近期流失但歷史價值高，最值得挽回。",
+    "en": "For Laowang Hot Pot, splitting R, F and M into high/low gave 2×2×2 = 8 cells, consolidated by action into 5 lifecycle tiers: trial, developing, regular/VIP, cooling and dormant.\nRecency was the primary trigger because a lapsed guest is unlikely to return whatever they spent before; the cooling tier, recently lapsed but historically valuable, was the most worth saving."
+   },
+   "pitfalls": {
+    "zh": [
+     "未處理偏態與尺度就跑 k-means，被金額主導",
+     "群分得越來越細，行動卻無法區分",
+     "用所得等人口屬性代替行為，與實際消費脫節"
+    ],
+    "en": [
+     "Running k-means on skewed, unscaled features so monetary value dominates",
+     "Splitting into ever-finer segments that don't get different actions",
+     "Using demographics like income as a proxy for behavior, though it may barely track spend"
+    ]
+   },
+   "cases": [
+    "laowang",
+    "citi"
+   ],
+   "links": [
+    {
+     "t": "algo",
+     "id": "kmeans"
+    },
+    {
+     "t": "algo",
+     "id": "gmm"
+    },
+    {
+     "t": "algo",
+     "id": "bootstrap"
+    }
+   ]
+  },
+  {
+   "id": "experiment",
+   "name": {
+    "zh": "實驗設計與樣本數",
+    "en": "Experiment Design & Sample Size"
+   },
+   "oneLiner": {
+    "zh": "上線前定好 MDE、檢定力與樣本數；上線後先查 SRM 再看結果，不偷看。",
+    "en": "Fix MDE, power and sample size before launch; after launch, check SRM before reading results, and don't peek."
+   },
+   "when": {
+    "zh": [
+     "評估新功能、推播或優惠的增量效果",
+     "能隨機分派使用者、門市或時段",
+     "是否擴大推行取決於實驗結果"
+    ],
+    "en": [
+     "Measuring the incremental effect of a feature, push message or offer",
+     "You can randomize users, stores or time slots",
+     "A scale-up decision depends on the result"
+    ]
+   },
+   "steps": {
+    "zh": [
+     "事先登記假設、主要與護欄指標、分析單位及停止規則",
+     "由基準值、MDE、α 與檢定力算出樣本數與所需天數",
+     "用實驗前資料做 CUPED，降低變異、縮短實驗時間",
+     "讀結果前先以卡方檢定查 SRM，確認分流比例正確",
+     "需中途檢視就用序貫檢定；報告效果量與信賴區間"
+    ],
+    "en": [
+     "Pre-register the hypothesis, primary and guardrail metrics, unit of analysis and stopping rule",
+     "Derive sample size and runtime from the baseline, MDE, α and power",
+     "Apply CUPED with pre-period data to cut variance and shorten the test",
+     "Before reading results, run a chi-square SRM check to confirm the traffic split",
+     "If you must look early, use a sequential test; report effect size with a confidence interval"
+    ]
+   },
+   "example": {
+    "zh": "例如：基準轉換率 5%，想偵測提升 0.5 個百分點，在 α＝0.05（雙尾）、檢定力 80% 下，每組約需 3.1 萬人。\n撈王專案的嘗鮮客 CRM 也規劃以實驗組與對照組比較 60 天回訪率，驗證個人化推播能否帶來第二次到店。",
+    "en": "Example: with a 5% baseline conversion and a 0.5-point MDE, α = 0.05 (two-sided) and 80% power need roughly 31,000 users per arm.\nFor Laowang, the trial-guest CRM was designed with treatment and control groups, comparing 60-day repeat rates to verify whether personalized pushes drive a second visit."
+   },
+   "template": {
+    "zh": "假設：若＿＿，則＿＿會提升，因為＿＿\n隨機單位／分析單位：＿＿／＿＿\n主要指標：＿＿；護欄指標：＿＿\n基準值＿＿、MDE＿＿、α＿＿、檢定力＿＿ → 每組＿＿人、＿＿天\n決策規則：顯著且護欄未惡化則擴大，否則＿＿",
+    "en": "Hypothesis: if ___, then ___ will rise, because ___\nRandomization / analysis unit: ___ / ___\nPrimary metric: ___; guardrails: ___\nBaseline ___, MDE ___, α ___, power ___ → ___ per arm, ___ days\nDecision rule: scale if significant and guardrails hold; otherwise ___"
+   },
+   "pitfalls": {
+    "zh": [
+     "天天看 p 值、一顯著就停，偽陽性大增",
+     "以門市分流卻以顧客算變異，低估標準誤",
+     "同時檢定多個指標卻未做多重比較校正"
+    ],
+    "en": [
+     "Checking p-values daily and stopping at the first significant result, inflating false positives",
+     "Randomizing by store but computing variance per customer, understating standard errors",
+     "Testing many metrics without a multiple-comparison correction"
+    ]
+   },
+   "cases": [
+    "laowang"
+   ],
+   "links": [
+    {
+     "t": "algo",
+     "id": "abtest"
+    },
+    {
+     "t": "algo",
+     "id": "power"
+    },
+    {
+     "t": "algo",
+     "id": "cuped"
+    },
+    {
+     "t": "algo",
+     "id": "sequential"
+    }
+   ],
+   "widget": "samplesize"
+  },
+  {
+   "id": "causal",
+   "name": {
+    "zh": "因果推論：選對方法",
+    "en": "Causal Inference: Choosing the Right Design"
+   },
+   "oneLiner": {
+    "zh": "能隨機就隨機；不能時依資料結構選方法，並把識別假設攤開檢驗。",
+    "en": "Randomize if you can; if not, let the data structure choose the design, and test its identifying assumptions in the open."
+   },
+   "when": {
+    "zh": [
+     "政策或活動已上線，無法事後隨機",
+     "隨機分派不可行、不合倫理或成本過高",
+     "要回答「如果沒做會怎樣」的反事實問題"
+    ],
+    "en": [
+     "A policy or campaign has already launched and can't be randomized after the fact",
+     "Randomization is infeasible, unethical or too costly",
+     "You need the counterfactual: what would have happened otherwise?"
+    ]
+   },
+   "steps": {
+    "zh": [
+     "有前後期與對照組 → DiD，用事件研究圖檢查平行趨勢",
+     "依門檻分派 → RDD，檢查斷點處連續、無人為操弄",
+     "有外生誘因 → IV，驗證相關性並論證排除限制",
+     "單一處理單位 → 合成控制；觀察資料 → 配對或 DML（需無未觀察干擾）",
+     "以安慰劑與敏感度分析測試結論是否穩健"
+    ],
+    "en": [
+     "Pre/post data with a comparison group → DiD; check parallel trends with an event-study plot",
+     "Assignment by a cutoff → RDD; check continuity at the cutoff and no manipulation",
+     "An exogenous nudge → IV; show relevance and argue the exclusion restriction",
+     "One treated unit → synthetic control; observational data → matching or DML (requires no unobserved confounding)",
+     "Stress-test conclusions with placebo and sensitivity analyses"
+    ]
+   },
+   "example": {
+    "zh": "例如：某銀行只在北部分行推出新 App 功能。以南部分行為對照、比較導入前後活躍率的變化就是 DiD，但要先確認兩區在導入前走勢平行。\n若功能改為只開放給信用分數高於門檻的客戶，就能用 RDD 比較門檻兩側的客戶。",
+    "en": "Example: a bank rolls out a new app feature only in its northern branches. Comparing the before/after change in active rate against southern branches is a DiD, provided the two regions trended in parallel before launch.\nIf the feature were instead gated by a credit-score cutoff, an RDD comparing customers just above and below the cutoff would be cleaner."
+   },
+   "pitfalls": {
+    "zh": [
+     "只加控制變數就宣稱因果，忽略未觀察干擾",
+     "分批導入仍用傳統雙向固定效果 DiD，估計偏誤",
+     "弱工具變數，或工具本身直接影響結果"
+    ],
+    "en": [
+     "Adding controls and calling it causal while ignoring unobserved confounders",
+     "Using classic two-way fixed-effects DiD under staggered adoption, which can bias estimates",
+     "Weak instruments, or instruments that affect the outcome directly"
+    ]
+   },
+   "cases": [],
+   "links": [
+    {
+     "t": "algo",
+     "id": "did"
+    },
+    {
+     "t": "algo",
+     "id": "rdd"
+    },
+    {
+     "t": "algo",
+     "id": "iv"
+    },
+    {
+     "t": "algo",
+     "id": "synthetic"
+    }
+   ],
+   "widget": "chooser"
+  },
+  {
+   "id": "modeling",
+   "name": {
+    "zh": "建模與驗證：先有基準線",
+    "en": "Modeling & Validation: Baseline First"
+   },
+   "oneLiner": {
+    "zh": "複雜模型必須贏過簡單基準線，驗證方式也要模擬真實上線情境。",
+    "en": "A complex model must beat a simple baseline, and validation must mimic how the model will really be used."
+   },
+   "when": {
+    "zh": [
+     "預測流失、回應、違約等二元結果",
+     "從大量候選變數中找出關鍵驅動因子",
+     "模型分數要用來排序名單或設定門檻"
+    ],
+    "en": [
+     "Predicting churn, response, default or other binary outcomes",
+     "Finding key drivers among many candidate features",
+     "Scores will rank a target list or feed a decision threshold"
+    ]
+   },
+   "steps": {
+    "zh": [
+     "先建基準線：簡單規則或邏輯斯迴歸",
+     "切分貼近現實：時間資料用時間切分，同一顧客不跨訓練與測試集",
+     "逐一確認每個特徵在預測時點已可取得，杜絕資料洩漏",
+     "再上 XGBoost 等模型，以 AUC、PR-AUC 與校準曲線評估",
+     "用 SHAP 或排列重要度解釋，並與業務邏輯交叉檢查"
+    ],
+    "en": [
+     "Build a baseline first: a simple rule or logistic regression",
+     "Split like reality: time-based splits for temporal data; never let one customer span train and test",
+     "Confirm every feature is available at prediction time to rule out leakage",
+     "Then try models like XGBoost; evaluate with AUC, PR-AUC and calibration curves",
+     "Explain with SHAP or permutation importance and sanity-check against business logic"
+    ]
+   },
+   "example": {
+    "zh": "在合庫人壽，我先以 SQL 篩選 40 多個客戶屬性，再用 XGBoost 排序回應驅動因子，聚焦前 5 名。\n通用原則：若 XGBoost 的 AUC 只比邏輯斯迴歸高一點點，通常選較易解釋與維護的後者。",
+    "en": "At Cardif I screened 40+ customer attributes in SQL, then ranked response drivers with XGBoost to isolate the top 5.\nRule of thumb: if XGBoost beats logistic regression by only a sliver of AUC, the simpler, more explainable model usually wins."
+   },
+   "template": {
+    "zh": "預測目標與用途：預測＿＿，用於＿＿\n基準線與成績：＿＿\n切分方式：時間／群組＿＿\n洩漏檢查：每個特徵在＿＿時點可取得\n評估：AUC＿＿、PR-AUC＿＿、校準＿＿\n前 5 大驅動因子：＿＿，是否合乎業務直覺？",
+    "en": "Target & use: predict ___ to support ___\nBaseline & score: ___\nSplit: time / group ___\nLeakage check: every feature available at ___\nEvaluation: AUC ___, PR-AUC ___, calibration ___\nTop 5 drivers: ___; do they make business sense?"
+   },
+   "pitfalls": {
+    "zh": [
+     "時間資料用隨機切分，成績虛高",
+     "先在全資料上做特徵選擇或標準化才切分",
+     "類別不平衡時只看準確率"
+    ],
+    "en": [
+     "Random splits on temporal data, producing inflated scores",
+     "Running feature selection or scaling on the full dataset before splitting",
+     "Judging an imbalanced problem by accuracy alone"
+    ]
+   },
+   "cases": [
+    "cardif"
+   ],
+   "links": [
+    {
+     "t": "algo",
+     "id": "logreg"
+    },
+    {
+     "t": "algo",
+     "id": "xgboost"
+    },
+    {
+     "t": "flow",
+     "id": "model"
+    }
+   ]
+  },
+  {
+   "id": "storytelling",
+   "name": {
+    "zh": "資料敘事與視覺化",
+    "en": "Data Storytelling & Visualization"
+   },
+   "oneLiner": {
+    "zh": "從發現走到決策：結論先行、一張圖一個洞察，並講清楚所以要做什麼。",
+    "en": "Move from finding to decision: lead with the answer, one insight per chart, and spell out the so-what."
+   },
+   "when": {
+    "zh": [
+     "向主管或客戶報告分析結果",
+     "設計 dashboard 或定期報表",
+     "結果違反直覺，需要說服利害關係人"
+    ],
+    "en": [
+     "Presenting results to executives or clients",
+     "Designing a dashboard or recurring report",
+     "Results run against intuition and stakeholders need convincing"
+    ]
+   },
+   "steps": {
+    "zh": [
+     "先用一句話寫出結論與建議，再挑支持它的圖",
+     "依問題選圖：趨勢用折線、比較用長條、關係用散布圖",
+     "標題直接寫洞察，只用顏色標出重點",
+     "並列效果量與信賴區間，交代限制與下一步"
+    ],
+    "en": [
+     "Write the conclusion and recommendation in one sentence, then pick the charts that support it",
+     "Choose charts by question: lines for trends, bars for comparisons, scatter for relationships",
+     "Make the title the insight; use color only to highlight the point",
+     "Show effect sizes with confidence intervals; state limitations and next steps"
+    ]
+   },
+   "example": {
+    "zh": "信用卡專案的問卷（n＝291）以單尾單一樣本 t 檢定對照中立值 3，三個假設皆顯著，其中分級回饋支持度最高；所得與簽帳金額僅弱相關（r ≈ 0.22）。\n可行動的結論因此很清楚：以消費行為而非所得定義目標客群，並把分級回饋設計進推廣方案。",
+    "en": "In the credit card project, one-tailed one-sample t-tests against the neutral midpoint of 3 (n = 291) supported all three hypotheses, with tiered rewards scoring highest; income correlated only weakly with card spend (r ≈ 0.22).\nThe actionable takeaway was clear: define the target segment by spending behavior, not income, and build tiered rewards into the go-to-market plan."
+   },
+   "template": {
+    "zh": "標題（洞察）：＿＿使＿＿變化＿＿\n證據：圖＿＿；效果量＿＿（95% 信賴區間＿＿）\n所以呢：建議＿＿，預期影響＿＿\n限制與下一步：＿＿",
+    "en": "Title (the insight): ___ moves ___ by ___\nEvidence: chart ___; effect size ___ (95% CI ___)\nSo what: recommend ___, expected impact ___\nLimits & next steps: ___"
+   },
+   "pitfalls": {
+    "zh": [
+     "照分析順序報告，把結論藏在最後",
+     "雙軸、3D 圓餅或截斷座標軸誤導讀者",
+     "只報 p 值，不說效果多大、對業務代表什麼"
+    ],
+    "en": [
+     "Narrating the analysis chronologically and burying the conclusion",
+     "Dual axes, 3D pies or truncated axes that mislead",
+     "Reporting p-values without effect size or business meaning"
+    ]
+   },
+   "cases": [
+    "citi",
+    "laowang"
+   ],
+   "links": [
+    {
+     "t": "algo",
+     "id": "ttest"
+    },
+    {
+     "t": "algo",
+     "id": "ci-clt"
+    },
+    {
+     "t": "flow",
+     "id": "deploy"
+    }
+   ]
+  }
+ ]
+}

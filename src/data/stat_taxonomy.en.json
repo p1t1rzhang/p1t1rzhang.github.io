@@ -1,0 +1,2505 @@
+{
+ "title": "Statistical Inference × Causal Inference: A MECE Knowledge Tree",
+ "criterion": "L1 split criterion: does the target quantity of inference involve an \"intervention\"?",
+ "criterionDetail": "Every statistical method answers \"what can a sample tell us about the population?\"; what differs is the target quantity. If the target is an associational quantity P(Y | X) (a mean, a difference, a conditional relationship), observational data plus sampling assumptions are enough for inference. If the target is an interventional quantity P(Y | do(X)) (how much Y would change if we changed X), we must first specify how the treatment was assigned before the data can \"identify\" the answer. A target quantity either involves an intervention or it does not, so the two branches are mutually exclusive and collectively exhaustive.",
+ "levels": [
+  {
+   "level": "L1",
+   "name": "Inference type",
+   "rule": "Whether the target quantity involves an intervention: associational P(Y | X) / causal P(Y | do(X))"
+  },
+  {
+   "level": "L2",
+   "name": "Problem type",
+   "rule": "Statistical inference splits by \"the form of the inferential output\" (an interval for a quantity / a yes-or-no decision / a model of a conditional relationship); causal inference splits by \"the treatment assignment mechanism\" (randomized by the researcher / determined by an exogenous rule or event / self-selected by units)"
+  },
+  {
+   "level": "L3",
+   "name": "Method family",
+   "rule": "Within each problem type, one single criterion: how uncertainty is quantified, the stage of the testing workflow, the data structure, the main challenge the experiment must overcome, the source of exogenous variation, the target estimand"
+  },
+  {
+   "level": "L4",
+   "name": "Specific method",
+   "rule": "Each method appears exactly once, placed by its \"most typical use\"; uses in other branches are noted on its card"
+  }
+ ],
+ "notation": [
+  [
+   "Y",
+   "Outcome variable"
+  ],
+  [
+   "T/D",
+   "Treatment (D is common in the econometrics literature)"
+  ],
+  [
+   "X",
+   "Covariates / confounders"
+  ],
+  [
+   "Z",
+   "Instrumental variable"
+  ],
+  [
+   "Y(1), Y(0)",
+   "Potential outcomes: the outcome of the same unit with / without treatment"
+  ],
+  [
+   "τ",
+   "Treatment effect (ATE, ATT, CATE)"
+  ],
+  [
+   "e(X)",
+   "Propensity score P(T = 1 | X)"
+  ],
+  [
+   "μ_t(X)",
+   "Outcome model E[Y | T = t, X]"
+  ],
+  [
+   "α",
+   "Significance level (Type I error rate)"
+  ],
+  [
+   "1 − β",
+   "Statistical power (here β is the Type II error rate; in regression, β denotes a coefficient)"
+  ],
+  [
+   "n",
+   "Sample size"
+  ],
+  [
+   "σ, s",
+   "Population / sample standard deviation"
+  ],
+  [
+   "SE",
+   "Standard error"
+  ],
+  [
+   "ICC",
+   "Intraclass correlation coefficient"
+  ]
+ ],
+ "boundaries": [
+  {
+   "q": "Why does logistic regression appear both in the ML knowledge tree and here?",
+   "a": "Same mathematical model, two uses. The ML tree cares about predictive accuracy, and the coefficients are merely a means to that end; the GLM here cares about estimating and drawing inferences on the coefficients themselves (odds ratios, confidence intervals, tests). The two trees use different split criteria, so they offer two perspectives; within any single tree, each method still appears only once."
+  },
+  {
+   "q": "The bootstrap and permutation tests both resample; why are they in different branches?",
+   "a": "L2 splits by \"the form of the output.\" The bootstrap produces the sampling distribution of an estimator and a confidence interval (estimation); a permutation test produces a p-value under the null hypothesis (testing). Resampling is only the means, not the split criterion."
+  },
+  {
+   "q": "Sequential testing is hypothesis testing; why is it placed under randomized experiments?",
+   "a": "Methodologically it is a test, but in practice it is used almost exclusively to \"monitor an experiment continuously and decide when to stop.\" Under the \"most typical use\" rule it belongs with experimental design; general-purpose testing methods sit in the \"Hypothesis Testing\" branch of statistical inference."
+  },
+  {
+   "q": "Isn't G-computation just regression? How does it differ from OLS?",
+   "a": "OLS sits under statistical inference, and its target is the coefficient of a conditional relationship; G-computation sits under causal inference, and its target is the difference in mean outcomes under intervention. The two give the same number only when the model has no interactions and all confounding has been adjusted for."
+  },
+  {
+   "q": "CUPED also adjusts for covariates; why isn't it under observational adjustment?",
+   "a": "The L2 criterion is the treatment assignment mechanism. CUPED's data come from a randomized experiment, so the covariates serve only to reduce variance and bear no responsibility for removing bias; observational adjustment, by contrast, must rely on covariates to remove confounding, which is a precondition for identification."
+  },
+  {
+   "q": "Heterogeneous-effect (CATE) methods are also widely used on experimental data; why are they under observational adjustment?",
+   "a": "At their core, meta-learners and causal forests \"adjust via a model\": on observational data they require conditional exchangeability, while on experimental data exchangeability is guaranteed automatically by randomization, and the method itself is unchanged. Going by the nature of the method, they sit in the CATE branch under observational adjustment."
+  },
+  {
+   "q": "Synthetic control and DiD both use pre-treatment data; how do they differ?",
+   "a": "DiD assumes parallel trends and weights control units equally; synthetic control chooses the control-unit weights by pre-treatment fit and does not need parallel trends, but it requires that the treated unit can be approximated by a weighted average of control units. Both belong to the \"time × group\" panel-comparison family, and Synthetic DiD combines the two."
+  },
+  {
+   "q": "Why isn't causal discovery (the PC algorithm) in this tree?",
+   "a": "This tree covers causal inference of the \"treatment and outcome are known; estimate the effect\" kind. \"Causal discovery,\" which learns the causal graph among variables from data, outputs a structure of relationships among variables, so under the ML tree's criteria it belongs in \"Unsupervised / Variable Relationship Mining.\" The two are often chained: first draw a DAG from domain knowledge or causal discovery, then estimate the effect with the methods here."
+  },
+  {
+   "q": "Does \"significant\" mean there is a causal effect?",
+   "a": "No. A p-value only answers \"if there were truly no difference, how unlikely would a difference this large be?\", which is a question of statistical inference. Whether it can be read causally depends on how the treatment was assigned: with a randomized experiment it can; with observational data it must additionally be paired with the identification assumptions of the causal branch on the right."
+  }
+ ],
+ "hybrids": [
+  [
+   "Bayesian A/B Testing",
+   "Randomized experiment (causal identification) + Bayesian inference (decisions based on the posterior \"probability that B beats A\" and on expected loss)."
+  ],
+  [
+   "Double ML",
+   "Identification assumptions of observational adjustment + ML-estimated nuisance models + semiparametric theory for confidence intervals."
+  ],
+  [
+   "Uplift Modeling",
+   "Randomized experiment data + CATE estimation (meta-learners, causal forests) + targeting decisions ranked by effect."
+  ],
+  [
+   "Experiment + Instrumental Variables",
+   "Random assignment serves as the instrument and actual uptake as the treatment, handling imperfect compliance in experiments (estimates the LATE)."
+  ],
+  [
+   "DiD + Matching/Weighting",
+   "First use matching or weighting to make the two groups' pre-treatment characteristics similar, then run DiD, so that the parallel-trends assumption is more credible."
+  ]
+ ],
+ "children": [
+  {
+   "id": "inf",
+   "name": "Statistical Inference (Associational)",
+   "en": "Statistical Inference (Associational)",
+   "signal": "The target quantity is an associational P(Y | X) or a population parameter: infer the population from a sample and quantify the uncertainty, without claiming any effect of an intervention.",
+   "criterion": "L2 split criterion: the form of the inferential output (an interval for a quantity / a yes-or-no decision / a model of a conditional relationship)",
+   "children": [
+    {
+     "id": "inf-est",
+     "name": "Parameter Estimation & Uncertainty",
+     "en": "Estimation & Uncertainty",
+     "def": "Output: a point estimate and an interval for a parameter (confidence or credible interval), answering \"how much, and how uncertain?\"",
+     "criterion": "L3 split criterion: how uncertainty is quantified (analytic approximation / computational resampling / probabilistic prior)",
+     "children": [
+      {
+       "id": "inf-est-freq",
+       "name": "Frequentist Analytic Methods",
+       "en": "Frequentist Analytic Methods",
+       "philosophy": "Treat the estimator as a random variable, derive its sampling distribution from large-sample theory (the central limit theorem, asymptotic normality), and obtain a confidence interval from it.",
+       "leaves": [
+        {
+         "id": "mle",
+         "name": "Maximum Likelihood Estimation (MLE)",
+         "zh": "Estimating parameters by maximizing the likelihood",
+         "year": 1922,
+         "tasks": [
+          "Parameter Estimation",
+          "Model Fitting"
+         ],
+         "plain": "Think of it in reverse: \"What parameter value would be most likely to produce the data I actually have?\" Then pick that value. For example, if a coin lands heads 7 times in 10 tosses, the most reasonable guess for the probability of heads is 0.7. It is the common principle behind parameter estimation in most statistical models.",
+         "intuition": "Choose the parameter values under which the observed data are \"most likely.\" In large samples the MLE is asymptotically unbiased and asymptotically normal, and its variance attains the theoretical lower bound (Cramér–Rao), so standard errors can be computed directly from the curvature of the likelihood (the Fisher information): the more sharply curved the likelihood, the more precise the estimate.",
+         "objective": "$\\hat{\\theta} = \\operatorname*{arg\\,max}_{\\theta}\\, \\ell(\\theta)$\n$\\qquad = \\operatorname*{arg\\,max}_{\\theta} \\sum_{i=1}^{n} \\log f(x_i \\mid \\theta)$\nAsymptotic distribution: $\\hat{\\theta} \\approx \\mathcal{N}\\big(\\theta,\\, \\mathcal{I}(\\theta)^{-1}\\big)$\n$\\mathcal{I}(\\theta) = -\\mathbb{E}\\left[\\frac{\\partial^2 \\ell}{\\partial \\theta^2}\\right]$\nWald interval: $\\hat{\\theta} \\pm z_{1-\\alpha/2} \\cdot \\operatorname{SE}(\\hat{\\theta})$",
+         "assumptions": [
+          "Model (distributional family) correctly specified",
+          "Observations are independent and identically distributed",
+          "Parameters are identifiable, and the true value is not on the boundary of the parameter space",
+          "Sample is large enough (for the asymptotic results to hold)"
+         ],
+         "checks": [
+          "Check the distributional assumption with residual plots and QQ plots",
+          "Compare nested models with likelihood-ratio tests",
+          "In small samples, cross-check intervals against the bootstrap",
+          "Check whether the likelihood is too flat (identification problems)"
+         ],
+         "pros": [
+          "Consistent and asymptotically efficient",
+          "Unified framework for estimation and testing (Wald, likelihood ratio, score)",
+          "Foundation of generalized linear models and survival models"
+         ],
+         "use": [
+          "Coefficient estimation in generalized linear models",
+          "Fitting distribution parameters (e.g., a Gamma distribution for claim amounts)",
+          "Likelihood-ratio tests"
+         ],
+         "cons": [
+          "Estimates can be biased when the model is misspecified",
+          "Asymptotic approximations are inaccurate in small samples",
+          "May have multiple local maxima; requires numerical optimization"
+         ],
+         "hp": [
+          [
+           "Starting values",
+           "Numerical optimization is sensitive to starting values; method-of-moments estimates make a good starting point"
+          ],
+          [
+           "Standard errors",
+           "Use robust (sandwich) standard errors when the model may be misspecified"
+          ],
+          [
+           "Small samples",
+           "Use profile-likelihood intervals or the bootstrap instead"
+          ]
+         ],
+         "tools": "Python: scipy.stats.<distribution>.fit, statsmodels GenericLikelihoodModel; R: stats4::mle, MASS::fitdistr"
+        },
+        {
+         "id": "ci-clt",
+         "name": "Confidence Intervals (CLT / t-Distribution)",
+         "zh": "Normal- and t-based interval estimation",
+         "year": 1937,
+         "tasks": [
+          "Interval Estimation"
+         ],
+         "plain": "A sample mean is only an estimate; a different sample would give a different number. A confidence interval gives a range, e.g., \"conversion rate 5.2%, 95% confidence interval 4.8%–5.6%.\" The key point: the narrower the interval, the more precise the estimate, and quadrupling the sample size roughly halves the interval width.",
+         "intuition": "The sampling distribution of the sample mean is approximately normal (central limit theorem), so \"the mean ± about 2 standard errors\" covers the true value with roughly 95% probability. Interpret it with care: 95% refers to the long-run coverage rate of the procedure, not the probability that the true value lies in this particular interval.",
+         "objective": "Mean: $\\bar{x} \\pm t_{n-1,\\,1-\\alpha/2} \\cdot \\frac{s}{\\sqrt{n}}$\nProportion (Wilson interval; better than Wald for small samples or proportions near 0 or 1):\n$\\frac{\\hat{p} + \\frac{z^2}{2n} \\pm z\\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n} + \\frac{z^2}{4n^2}}}{1 + \\frac{z^2}{n}}$",
+         "assumptions": [
+          "Observations are independent",
+          "Sample is large enough for the central limit theorem to apply (the more skewed the distribution, the larger the sample needed)",
+          "The t interval assumes approximately normal data or a large sample"
+         ],
+         "checks": [
+          "Check skewness and outliers (convergence is slow for heavy-tailed distributions)",
+          "Switch to Wilson or exact intervals when the proportion is near 0 or 1",
+          "Verify actual coverage by simulation"
+         ],
+         "pros": [
+          "Simple and easy to communicate",
+          "Conveys both effect size and uncertainty, so it is more informative than a p-value alone"
+         ],
+         "use": [
+          "Margins of error for reported metrics",
+          "Effect intervals in A/B tests",
+          "Margins of error for survey proportions"
+         ],
+         "cons": [
+          "Often misread as \"a 95% probability that the true value is in the interval\"",
+          "Actual coverage falls short for heavy-tailed metrics (e.g., revenue)",
+          "Standard errors are underestimated when data are dependent (clustered data, time series)"
+         ],
+         "hp": [
+          [
+           "Confidence level",
+           "95% by convention, but choose it based on decision costs"
+          ],
+          [
+           "Heavy-tailed metrics",
+           "Consider winsorizing, a log transform, or the bootstrap"
+          ],
+          [
+           "Dependent data",
+           "Use cluster-robust standard errors"
+          ]
+         ],
+         "tools": "Python: scipy.stats.t.interval, statsmodels.stats.proportion.proportion_confint; R: t.test, binom::binom.confint"
+        },
+        {
+         "id": "delta",
+         "name": "Delta Method",
+         "zh": "Standard errors via first-order Taylor expansion",
+         "year": 1946,
+         "tasks": [
+          "Interval Estimation",
+          "Ratio Metrics"
+         ],
+         "plain": "Many metrics are ratios or other transformations, such as revenue per user (total revenue ÷ number of users) or the log of a proportion. The delta method uses an approximation that \"treats a curve as a straight line over a small range\" to carry the uncertainty of the underlying variables over to these metrics and compute their standard errors.",
+         "intuition": "When the quantity you care about is a function of an estimator, such as the ratio metric \"clicks per user = total clicks ÷ total users,\" linearize the function with a first-order Taylor expansion and derive its approximate variance from the variance of the original estimator. In A/B testing, standard errors for ratio metrics are commonly computed this way.",
+         "objective": "$\\sqrt{n}\\,\\big(g(\\hat{\\theta}) - g(\\theta)\\big)$\n$\\qquad \\to \\mathcal{N}\\big(0,\\ \\nabla g(\\theta)^\\top \\Sigma\\, \\nabla g(\\theta)\\big)$\nFor the ratio $R = \\bar{X} / \\bar{Y}$:\n$\\operatorname{Var}(\\hat{R}) \\approx \\frac{1}{\\mu_Y^2} \\big[\\operatorname{Var}(\\bar{X})$\n$\\qquad - 2R \\operatorname{Cov}(\\bar{X}, \\bar{Y}) + R^2 \\operatorname{Var}(\\bar{Y})\\big]$",
+         "assumptions": [
+          "The function g is differentiable at the true value, with a nonzero derivative",
+          "The original estimator is asymptotically normal",
+          "Sample is large enough for the first-order approximation to be accurate"
+         ],
+         "checks": [
+          "Cross-check delta-method standard errors against the bootstrap",
+          "Check whether the denominator mean is close to 0 (the ratio becomes very unstable)"
+         ],
+         "pros": [
+          "Closed-form and fast to compute",
+          "Well suited to ratio metrics in large-scale online experiments"
+         ],
+         "use": [
+          "Ratio metrics in A/B tests (CTR, revenue per user)",
+          "Standard errors of transformed parameters such as log odds and elasticities"
+         ],
+         "cons": [
+          "Approximation is inaccurate in small samples or under strong nonlinearity",
+          "Requires correctly estimated covariances"
+         ],
+         "hp": [
+          [
+           "Unit of analysis",
+           "Aggregate both the numerator and the denominator of a ratio metric by the \"randomization unit\" before computing"
+          ],
+          [
+           "Validation",
+           "Validate the standard errors with an A/A test or the bootstrap before launch"
+          ]
+         ],
+         "tools": "Python: compute by hand, or use statsmodels regression results with numerical gradients; R: msm::deltamethod"
+        }
+       ]
+      },
+      {
+       "id": "inf-est-resample",
+       "name": "Resampling Methods",
+       "en": "Resampling",
+       "philosophy": "Rather than deriving formulas, repeatedly resample from the data by computer to simulate the estimator's sampling distribution directly.",
+       "leaves": [
+        {
+         "id": "bootstrap",
+         "name": "Bootstrap",
+         "zh": "Bootstrap resampling",
+         "year": 1979,
+         "tasks": [
+          "Interval Estimation",
+          "Standard Errors"
+         ],
+         "plain": "You can quantify uncertainty without memorizing formulas: resample your data \"with replacement\" a few thousand times, recompute the metric each time, and see how spread out the results are; that tells you how unstable the estimate is. It is especially handy for metrics like medians and ratios that have no simple formula.",
+         "intuition": "Treat the sample as a miniature of the population: draw new samples of the same size from it \"with replacement\" and recompute the statistic thousands of times; the distribution of these results approximates the sampling distribution of the statistic. Any complex statistic (a median, a difference in quantiles, a model metric) can get an interval through the same procedure.",
+         "objective": "Repeat $B$ times: let $x^{*(b)}$ be a resample drawn with replacement from $\\{x_1, \\dots, x_n\\}$, of size $n$, and compute $\\hat{\\theta}^{*(b)}$\nPercentile interval: $\\big[\\hat{\\theta}^*_{(\\alpha/2)},\\ \\hat{\\theta}^*_{(1-\\alpha/2)}\\big]$\nThe BCa interval additionally corrects for bias and skewness",
+         "assumptions": [
+          "The sample is representative of the population",
+          "Observations are independent (dependent data require a block or cluster bootstrap)",
+          "The statistic is a smooth function of the data (it may fail for extreme-value statistics such as the maximum)"
+         ],
+         "checks": [
+          "Increase B and confirm the interval is stable",
+          "Compare percentile and BCa intervals (a large difference signals skewness or bias)",
+          "Use a block bootstrap for time series and check sensitivity to the block length"
+         ],
+         "pros": [
+          "Applies to almost any statistic",
+          "No distributional assumptions required",
+          "Intuitive and easy to implement"
+         ],
+         "use": [
+          "Metrics without simple formulas, such as medians, quantiles, and ratios",
+          "Intervals for model evaluation metrics (AUC, QWK)",
+          "A/B tests on non-normal metrics"
+         ],
+         "cons": [
+          "Computationally intensive",
+          "In small samples the sample itself is poorly representative, so intervals tend to be too narrow",
+          "Extreme-value statistics and dependent data require specialized variants"
+         ],
+         "hp": [
+          [
+           "Number of resamples B",
+           "At least 2,000 for interval estimation; about 200 is enough if you only need standard errors"
+          ],
+          [
+           "Interval type",
+           "Prefer BCa"
+          ],
+          [
+           "Dependent data",
+           "Cluster bootstrap for clustered data; block bootstrap for time series"
+          ]
+         ],
+         "tools": "Python: scipy.stats.bootstrap; R: boot"
+        }
+       ]
+      },
+      {
+       "id": "inf-est-bayes",
+       "name": "Bayesian Inference",
+       "en": "Bayesian Inference",
+       "philosophy": "Treat the parameter as a random variable: prior × likelihood = posterior, which directly answers \"what is the probability that the parameter lies in a given range?\"",
+       "leaves": [
+        {
+         "id": "conjugate",
+         "name": "Conjugate Bayes (Beta-Binomial)",
+         "zh": "Conjugate Bayesian updating",
+         "year": 1763,
+         "tasks": [
+          "Proportion Estimation",
+          "Bayesian A/B Testing"
+         ],
+         "plain": "Start with an \"initial belief\" (the prior) and, after seeing data, update it to a \"new belief\" (the posterior). The Beta-Binomial update is especially simple: the prior acts like \"having already seen a few successes and a few failures,\" and the new data are simply added on. It can directly answer \"What is the probability that version B is better than version A?\"",
+         "intuition": "The prior and the posterior belong to the same distributional family, so updating only requires adding up counts. For a conversion rate, use Beta(α, β) as the prior; after observing s successes and f failures, the posterior is Beta(α + s, β + f). You can directly compute \"the probability that version B's conversion rate is higher than A's,\" and the prior can also encode historical experience, making estimates more stable in small samples.",
+         "objective": "Prior $p \\sim \\operatorname{Beta}(\\alpha, \\beta)$; data: $s$ successes and $f$ failures\nPosterior $p \\mid \\text{data} \\sim \\operatorname{Beta}(\\alpha + s,\\, \\beta + f)$\nPosterior mean $= \\frac{\\alpha + s}{\\alpha + \\beta + s + f}$\n$\\mathbb{P}(p_B > p_A \\mid \\text{data})$ is estimated by sampling from the posterior",
+         "assumptions": [
+          "Likelihood correctly specified (e.g., independent Bernoulli trials)",
+          "The prior is reasonable and chosen before looking at the data"
+         ],
+         "checks": [
+          "Prior sensitivity analysis: try different priors and see whether the conclusions change",
+          "Posterior predictive checks"
+         ],
+         "pros": [
+          "Extremely cheap to compute; can be updated in real time",
+          "Intuitive results (direct probability statements)",
+          "The prior can incorporate historical information, stabilizing small-sample estimates"
+         ],
+         "use": [
+          "Bayesian A/B testing",
+          "Conversion-rate estimation with small samples, such as new or long-tail products",
+          "Posterior updates in Thompson Sampling"
+         ],
+         "cons": [
+          "Only works for a handful of conjugate pairs",
+          "The choice of prior is subjective and should be disclosed",
+          "A high \"probability that B beats A\" does not mean the effect is large enough"
+         ],
+         "hp": [
+          [
+           "Prior strength",
+           "α + β acts as a \"pseudo sample size\"; usually set it small (e.g., 1–10) or estimate it from historical data"
+          ],
+          [
+           "Decision rule",
+           "Pair it with an expected-loss threshold rather than looking only at the win probability"
+          ]
+         ],
+         "tools": "Python: scipy.stats.beta, PyMC; R: bayesAB"
+        },
+        {
+         "id": "mcmc",
+         "name": "MCMC (HMC / NUTS)",
+         "zh": "Markov chain Monte Carlo",
+         "year": 1953,
+         "tasks": [
+          "Posterior Inference"
+         ],
+         "plain": "Complex Bayesian models usually have no formula for the posterior. MCMC uses a clever random walk that \"lingers where probability is high\" in parameter space; after walking long enough, the path it leaves behind represents the posterior distribution. HMC/NUTS uses the slope of the terrain to move more efficiently.",
+         "intuition": "Most posterior distributions have no closed form. MCMC constructs a Markov chain whose stationary distribution is exactly the posterior, then approximates the posterior with draws from the chain. Modern HMC/NUTS uses gradient information to glide through parameter space like a physical particle, making it far more efficient than a random walk in high-dimensional models.",
+         "objective": "Goal: sample from $p(\\theta \\mid y) \\propto p(y \\mid \\theta) \\cdot p(\\theta)$\nMetropolis-Hastings acceptance probability:\n$a = \\min\\left(1,\\ \\frac{p(\\theta' \\mid y)\\, q(\\theta \\mid \\theta')}{p(\\theta \\mid y)\\, q(\\theta' \\mid \\theta)}\\right)$\nHMC: proposes candidates via Hamiltonian dynamics with $H(\\theta, r) = -\\log p(\\theta \\mid y) + \\frac{1}{2} r^\\top M^{-1} r$",
+         "assumptions": [
+          "The chain has converged to its stationary distribution",
+          "The effective sample size is large enough to represent the posterior",
+          "Model specification and priors are reasonable"
+         ],
+         "checks": [
+          "R̂ (Gelman-Rubin) below 1.01",
+          "Sufficient effective sample size (ESS), e.g., above 400",
+          "No divergent transitions in NUTS",
+          "Trace plots and posterior predictive checks"
+         ],
+         "pros": [
+          "Can fit almost any probabilistic model",
+          "Yields the full posterior distribution, not just a point estimate",
+          "Naturally handles hierarchical structure and missing values"
+         ],
+         "use": [
+          "Complex Bayesian models (hierarchical models, marketing mix models/MMM)",
+          "Propagating uncertainty into downstream decisions",
+          "Problems with little data but rich domain knowledge"
+         ],
+         "cons": [
+          "Slow to compute and hard to scale to large data (variational inference is an alternative)",
+          "Convergence diagnostics take experience",
+          "Poor parameterizations make sampling difficult and call for reparameterization"
+         ],
+         "hp": [
+          [
+           "Number and length of chains",
+           "At least 4 chains; start from 1,000 warmup and 1,000 sampling iterations"
+          ],
+          [
+           "target_accept",
+           "Raise to 0.9–0.99 when divergences appear"
+          ],
+          [
+           "Reparameterization",
+           "Use a non-centered parameterization for hierarchical models"
+          ]
+         ],
+         "tools": "Python: PyMC, NumPyro, CmdStanPy; R: brms, rstan"
+        },
+        {
+         "id": "hierarchical",
+         "name": "Hierarchical Bayes (Partial Pooling)",
+         "zh": "Hierarchical Bayesian model",
+         "year": 1972,
+         "tasks": [
+          "Multi-Group Estimation",
+          "Small-Area Estimation"
+         ],
+         "plain": "You have many small groups (stores, regions, schools), each with a different amount of data. Estimating each one separately makes the small groups very unstable; lumping everything together ignores real differences. A hierarchical model strikes a compromise: groups with little data \"borrow strength\" more from the overall average, while groups with lots of data mostly trust their own.",
+         "intuition": "With many groups (stores, products, regions), fully separate estimates are dominated by noise from the small groups, while complete pooling ignores between-group differences. A hierarchical model lets each group's parameter come from a common parent distribution: groups with many observations mostly trust their own data, while groups with few are \"pulled toward\" the overall mean (shrinkage).",
+         "objective": "$y_{ij} \\sim \\mathcal{N}(\\theta_j, \\sigma^2)$, $\\theta_j \\sim \\mathcal{N}(\\mu, \\tau^2)$, with separate priors on $\\mu$ and $\\tau$\nPosterior mean $\\approx \\frac{\\frac{n_j}{\\sigma^2}\\, \\bar{y}_j + \\frac{1}{\\tau^2}\\, \\mu}{\\frac{n_j}{\\sigma^2} + \\frac{1}{\\tau^2}}$\nThe larger the sample size $n_j$, the more weight goes to the group's own mean $\\bar{y}_j$",
+         "assumptions": [
+          "Groups are exchangeable: no prior reason to believe any particular group is special",
+          "The group-level distribution is reasonably specified"
+         ],
+         "checks": [
+          "Compare the predictive performance of complete pooling, no pooling, and partial pooling (LOO-CV)",
+          "Examine the posterior of τ: values near 0 indicate little between-group variation"
+         ],
+         "pros": [
+          "More stable estimates for small groups",
+          "Automatically determines how much information to borrow from the whole",
+          "Also estimates how large the group differences are"
+         ],
+         "use": [
+          "Conversion-rate or sales estimates across many stores or products",
+          "Small-area estimation",
+          "Combining results from multiple A/B tests (meta-analysis)"
+         ],
+         "cons": [
+          "Requires MCMC; computationally expensive",
+          "Shrinkage introduces bias when groups are not exchangeable",
+          "Harder to explain to non-technical audiences"
+         ],
+         "hp": [
+          [
+           "Parameterization",
+           "Use a non-centered parameterization when there are many groups or little data"
+          ],
+          [
+           "Prior on τ",
+           "Use a weakly informative prior such as a half-normal or half-Cauchy"
+          ],
+          [
+           "Frequentist alternative",
+           "Mixed-effects models (see Associational Modeling)"
+          ]
+         ],
+         "tools": "Python: PyMC, Bambi; R: brms (lme4 as a frequentist approximation)"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "inf-test",
+     "name": "Hypothesis Testing",
+     "en": "Hypothesis Testing",
+     "def": "Output: a decision on the null hypothesis (reject or fail to reject) and a p-value, answering \"does the difference or association really exist, or is it just sampling noise?\"",
+     "criterion": "L3 split criterion: the stage of the testing workflow being addressed (pre-study design / parametric tests / nonparametric tests / multiple comparisons)",
+     "children": [
+      {
+       "id": "inf-test-design",
+       "name": "Pre-study Design",
+       "en": "Design: Power & Sample Size",
+       "philosophy": "Decide, before collecting any data, how large an effect you want to detect and how many observations you need, so you avoid \"claiming no difference from an underpowered sample.\"",
+       "leaves": [
+        {
+         "id": "power",
+         "name": "Power Analysis & Sample Size",
+         "zh": "Power analysis & minimum detectable effect (MDE)",
+         "year": 1988,
+         "tasks": [
+          "Experimental Design",
+          "Sample-Size Planning"
+         ],
+         "plain": "Before the experiment starts, work out: \"How large a sample do I need to be reasonably sure of detecting the effect I care about?\" The smaller the effect and the noisier the data, the larger the sample you need. With too small a sample, even a real effect will likely go unnoticed, and the experiment is wasted.",
+         "intuition": "Statistical power is \"the probability of detecting an effect when it truly exists.\" Sample size, effect size, noise, and significance level constrain one another: fix any three and you can solve for the fourth. In practice you usually set the minimum detectable effect (MDE) first, i.e., the effect below which it is not worth taking action, and then compute the required sample size.",
+         "objective": "Comparing two means (sample size per group):\n$n \\approx \\frac{2\\,(z_{1-\\alpha/2} + z_{1-\\beta})^2\\, \\sigma^2}{\\delta^2}$\nComparing two proportions:\n$n \\approx \\frac{(z_{1-\\alpha/2} + z_{1-\\beta})^2}{(p_1 - p_2)^2}$\n$\\qquad \\times \\big[\\,p_1(1-p_1) + p_2(1-p_2)\\,\\big]$\nCommon choices: $\\alpha = 0.05$, power $1 - \\beta = 0.8$",
+         "assumptions": [
+          "The prior estimate of the variance σ² is reliable (usually from historical data)",
+          "The MDE reflects the smallest effect that matters to the business",
+          "The test used for planning matches the one used in the actual analysis"
+         ],
+         "checks": [
+          "Don't compute post hoc \"observed power\" (it maps one-to-one to the p-value and adds no information)",
+          "Confirm the variance estimate with A/A tests or simulations on historical data"
+         ],
+         "pros": [
+          "Avoids false negatives caused by insufficient sample size",
+          "Makes experiment duration and cost plannable",
+          "Turns \"how small an effect is worth caring about\" into an explicit business decision"
+         ],
+         "use": [
+          "Estimating how many days an A/B test needs to run before launch",
+          "Sample planning for clinical trials or market surveys",
+          "Judging whether an effect is detectable in practice at all"
+         ],
+         "cons": [
+          "Depends on the variance estimate; if it is wrong, the sample will be too small",
+          "Setting the MDE too small makes experiments impractically long"
+         ],
+         "hp": [
+          [
+           "MDE",
+           "Set it by business value, e.g., +0.5 percentage points in conversion rate"
+          ],
+          [
+           "Variance reduction",
+           "CUPED can substantially reduce the required sample size"
+          ],
+          [
+           "Multiple groups",
+           "Adjust α as the number of groups grows (see Multiple Testing Correction)"
+          ]
+         ],
+         "tools": "Python: statsmodels.stats.power (TTestIndPower, NormalIndPower); R: pwr"
+        }
+       ]
+      },
+      {
+       "id": "inf-test-param",
+       "name": "Parametric & Large-Sample Tests",
+       "en": "Parametric & Large-Sample Tests",
+       "philosophy": "Assume the test statistic follows a known distribution (t, F, χ², normal) and compute the p-value from it; with a large enough sample, most of these hold by the central limit theorem.",
+       "leaves": [
+        {
+         "id": "ttest",
+         "name": "Welch's t-Test",
+         "zh": "Unequal-variance two-sample t-test",
+         "year": 1947,
+         "tasks": [
+          "Two-Group Mean Comparison"
+         ],
+         "plain": "Checks whether the difference between two groups' averages is too large to be just luck. Welch's version doesn't require the two groups to have the same spread, so it is more robust than the classic t-test and should be the default in practice.",
+         "intuition": "Compares the difference between two group means with the noise in the estimate of that difference. Welch's version does not assume equal variances and should be the default in practice; with large enough samples it is approximately valid even when the data are not normal.",
+         "objective": "$t = \\frac{\\bar{x}_1 - \\bar{x}_2}{\\sqrt{\\frac{s_1^2}{n_1} + \\frac{s_2^2}{n_2}}}$\nDegrees of freedom (Welch–Satterthwaite):\n$\\nu \\approx \\frac{(s_1^2/n_1 + s_2^2/n_2)^2}{\\frac{(s_1^2/n_1)^2}{n_1 - 1} + \\frac{(s_2^2/n_2)^2}{n_2 - 1}}$",
+         "assumptions": [
+          "Independent observations (within and between groups)",
+          "Sample means approximately normal (large enough samples, or approximately normal data)"
+         ],
+         "checks": [
+          "Check for outliers and heavy tails (very common in revenue metrics)",
+          "Use a paired t-test for paired data",
+          "Correct the standard errors when randomizing by user but analyzing at the event level"
+         ],
+         "pros": [
+          "Simple, fast, and widely known",
+          "Robust to non-normal data in large samples"
+         ],
+         "use": [
+          "Continuous metrics in A/B tests (time on page, average order value)",
+          "Comparing results between two experimental groups"
+         ],
+         "cons": [
+          "Sensitive to outliers",
+          "Unreliable with small, highly skewed samples",
+          "Underestimates variance when the unit of analysis differs from the unit of randomization"
+         ],
+         "hp": [
+          [
+           "Default to Welch",
+           "Don't run an equal-variance test first to decide which t-test to use (the two-stage procedure distorts α)"
+          ],
+          [
+           "Heavy-tailed data",
+           "Winsorize, log-transform, or switch to a nonparametric test or the bootstrap"
+          ],
+          [
+           "One- or two-sided",
+           "Decide in advance; two-sided is the usual choice"
+          ]
+         ],
+         "tools": "Python: scipy.stats.ttest_ind(equal_var=False); R: t.test"
+        },
+        {
+         "id": "anova",
+         "name": "Analysis of Variance (ANOVA)",
+         "zh": "F-test for comparing group means",
+         "year": 1925,
+         "tasks": [
+          "Multi-Group Mean Comparison",
+          "Factorial Experiments"
+         ],
+         "plain": "When comparing the averages of three or more groups, it runs a single test of whether \"at least one group is different,\" instead of running t-tests on every pair (running too many raises the chance of a false alarm). It works by comparing the differences between groups with the variation that naturally exists within each group.",
+         "intuition": "Compares the means of three or more groups: if the differences among group means (between-group variance) are much larger than the random fluctuation within groups (within-group variance), at least one group differs. It tests all groups at once, avoiding the Type I error inflation of pairwise t-tests; once a difference is confirmed, follow up with post hoc comparisons.",
+         "objective": "$F = \\frac{\\mathrm{SS}_{\\text{between}} / (k - 1)}{\\mathrm{SS}_{\\text{within}} / (N - k)}$\n$\\qquad \\sim F(k - 1,\\, N - k)$\n$\\mathrm{SS}_{\\text{between}} = \\sum_{j} n_j (\\bar{x}_j - \\bar{x})^2$\n$\\mathrm{SS}_{\\text{within}} = \\sum_{j} \\sum_{i} (x_{ij} - \\bar{x}_j)^2$",
+         "assumptions": [
+          "Independent observations",
+          "Residuals approximately normal within each group",
+          "Equal variances across groups (use Welch's ANOVA if not)"
+         ],
+         "checks": [
+          "Residual QQ plot",
+          "Levene's test, or simply compare the groups' standard deviations",
+          "If significant, use Tukey's HSD for post hoc pairwise comparisons"
+         ],
+         "pros": [
+          "Compares many groups at once while controlling the overall Type I error",
+          "Extends to multiple factors and interactions (factorial designs)"
+         ],
+         "use": [
+          "Multi-variant experiments (A/B/C/D)",
+          "Factorial experiments (price × copy)",
+          "Comparing processes or formulations"
+         ],
+         "cons": [
+          "Only tells you that a difference exists, not which group differs",
+          "Not robust when variances and group sizes are both unequal"
+         ],
+         "hp": [
+          [
+           "Unequal variances",
+           "Use Welch's ANOVA"
+          ],
+          [
+           "Post hoc comparisons",
+           "Tukey's HSD for all pairwise comparisons; Dunnett's test when every group is compared with the control"
+          ],
+          [
+           "Effect size",
+           "Report η² or ω²"
+          ]
+         ],
+         "tools": "Python: scipy.stats.f_oneway, statsmodels anova_lm, pingouin; R: aov, car::Anova"
+        },
+        {
+         "id": "chisq",
+         "name": "Chi-Square Test of Independence",
+         "zh": "Test of association for contingency tables",
+         "year": 1900,
+         "tasks": [
+          "Categorical Association",
+          "Proportion Comparison"
+         ],
+         "plain": "Checks whether two categorical variables are related, such as \"plan type\" and \"whether the customer renews.\" First work out how many people each cell \"should\" have if the two were completely unrelated, then see how far the actual numbers deviate. The larger the deviation, the less it looks like there is no relationship.",
+         "intuition": "Tests whether two categorical variables are independent: first compute \"how many observations each cell should have if the two were independent,\" then measure how far the observed counts deviate from these expected counts. The larger the deviation, the less likely the variables are independent.",
+         "objective": "$\\chi^2 = \\sum \\frac{(O - E)^2}{E}$\n$E_{ij} = \\frac{\\text{row } i \\text{ total} \\times \\text{column } j \\text{ total}}{N}$\nDegrees of freedom $= (r - 1)(c - 1)$\nEffect size: Cramér's $V = \\sqrt{\\frac{\\chi^2}{N\\,(\\min(r, c) - 1)}}$",
+         "assumptions": [
+          "Independent observations (each individual counted only once)",
+          "Expected counts large enough (common rule of thumb: at least 5 per cell)"
+         ],
+         "checks": [
+          "Use Fisher's exact test when expected counts are too small",
+          "Examine standardized residuals to find which cells deviate the most"
+         ],
+         "pros": [
+          "Works with categorical data",
+          "Simple, intuitive, and handles many categories"
+         ],
+         "use": [
+          "Whether preferences differ across customer segments",
+          "Comparing conversion rates in A/B tests (2×2 table)",
+          "Survey cross-tabulation"
+         ],
+         "cons": [
+          "Tests only whether there is an association, not its direction or size (report an effect size separately)",
+          "With very large samples, even tiny differences become significant"
+         ],
+         "hp": [
+          [
+           "Small samples",
+           "Use Fisher's exact test for 2×2 tables with small expected counts"
+          ],
+          [
+           "Effect size",
+           "Always report Cramér's V or the difference in proportions"
+          ],
+          [
+           "2×2 proportion comparison",
+           "Equivalent to the two-proportion z-test"
+          ]
+         ],
+         "tools": "Python: scipy.stats.chi2_contingency, fisher_exact; R: chisq.test, fisher.test"
+        }
+       ]
+      },
+      {
+       "id": "inf-test-nonparam",
+       "name": "Nonparametric & Resampling Tests",
+       "en": "Nonparametric & Permutation Tests",
+       "philosophy": "Make no assumption about the shape of the data distribution; instead, build the null distribution from ranks or by permuting the labels.",
+       "leaves": [
+        {
+         "id": "mannwhitney",
+         "name": "Mann-Whitney U Test",
+         "zh": "Wilcoxon rank-sum test",
+         "year": 1947,
+         "tasks": [
+          "Two-Group Comparison (Heavy-Tailed or Ordinal Data)"
+         ],
+         "plain": "Instead of comparing averages, it pools all the values from both groups, ranks them, and checks whether one group generally ranks higher. It isn't thrown off by extreme values and doesn't require a normal distribution, so it suits heavily skewed data such as revenue.",
+         "intuition": "Pool the two groups, rank all the values, and check whether one group's ranks are systematically higher. It tests whether \"the probability that a random value from A exceeds a random value from B is 50%,\" and it is insensitive to outliers.",
+         "objective": "$U = R_1 - \\frac{n_1(n_1 + 1)}{2}$ ($R_1$ is the sum of ranks in group 1)\nEffect size: $\\text{AUC} = \\frac{U}{n_1 n_2} = \\mathbb{P}(X_A > X_B)$ (ties count as $\\frac{1}{2}$)",
+         "assumptions": [
+          "Independent observations",
+          "Data at least on an ordinal scale",
+          "To interpret the result as a \"difference in medians,\" the two distributions must have the same shape"
+         ],
+         "checks": [
+          "Compare the shapes of the two distributions (if they differ, the conclusion is about stochastic dominance, not a difference in medians)",
+          "Use the tie-corrected version when there are many ties"
+         ],
+         "pros": [
+          "Robust to outliers and skewness",
+          "No normality assumption",
+          "Exact distribution available for small samples"
+         ],
+         "use": [
+          "Comparing heavy-tailed metrics (revenue, usage time)",
+          "Ordinal data such as satisfaction ratings",
+          "Two-group comparisons with small samples"
+         ],
+         "cons": [
+          "Often mistaken for a test of medians",
+          "Gives only a p-value; the effect size must be reported separately",
+          "Slightly less powerful than the t-test when the data are normal"
+         ],
+         "hp": [
+          [
+           "Effect size",
+           "Report the AUC or the Hodges–Lehmann shift estimate"
+          ],
+          [
+           "Three or more groups",
+           "Use Kruskal–Wallis instead"
+          ],
+          [
+           "Paired data",
+           "Use the Wilcoxon signed-rank test instead"
+          ]
+         ],
+         "tools": "Python: scipy.stats.mannwhitneyu; R: wilcox.test"
+        },
+        {
+         "id": "permutation",
+         "name": "Permutation Test",
+         "zh": "Randomization test",
+         "year": 1935,
+         "tasks": [
+          "Testing Arbitrary Statistics"
+         ],
+         "plain": "If the treatment truly has no effect, the labels saying who belongs to which group could be swapped at will. Shuffle the labels thousands of times and see how rare the difference you actually observed is among the shuffled results. It needs almost no distributional assumptions, and the logic is very intuitive.",
+         "intuition": "If the treatment truly has no effect, the group labels can be swapped freely. Randomly shuffle the labels thousands of times, recomputing the statistic each time, to get \"the distribution of the statistic when there is no effect,\" then see how extreme the observed value is within it. Any statistic can be tested this way.",
+         "objective": "$p = \\frac{1 + \\#\\{\\, b : T(\\pi_b(\\mathcal{D})) \\ge T(\\mathcal{D}) \\,\\}}{B + 1}$\n$\\mathcal{D}$ is the data; $\\pi_b$ is the random permutation of the labels in draw $b$",
+         "assumptions": [
+          "Labels are exchangeable under the null hypothesis (automatically true in randomized experiments)",
+          "Permute at the correct unit (permute whole clusters for clustered data)"
+         ],
+         "checks": [
+          "The number of permutations B is large enough for a stable p-value",
+          "In stratified or clustered designs, permute in a way that mirrors the original randomization"
+         ],
+         "pros": [
+          "Needs almost no distributional assumptions and controls the Type I error exactly",
+          "Works for any statistic (difference in medians, quantiles, custom metrics)",
+          "Consistent with the logic of randomized experiments"
+         ],
+         "use": [
+          "A/B tests on non-normal metrics",
+          "Small-sample experiments",
+          "Testing custom composite metrics"
+         ],
+         "cons": [
+          "Computationally intensive",
+          "Not applicable to observational data where labels are not exchangeable",
+          "Provides only a test; intervals require the bootstrap or test inversion"
+         ],
+         "hp": [
+          [
+           "B",
+           "At least 5,000–10,000; more if you need to report very small p-values"
+          ],
+          [
+           "Stratification",
+           "Permute within strata (stratified permutation)"
+          ],
+          [
+           "Statistic",
+           "Decide in advance; don't pick one after seeing the results"
+          ]
+         ],
+         "tools": "Python: scipy.stats.permutation_test; R: coin, perm"
+        },
+        {
+         "id": "ks",
+         "name": "Kolmogorov–Smirnov Test",
+         "zh": "KS test",
+         "year": 1933,
+         "tasks": [
+          "Distribution Comparison",
+          "Drift Detection"
+         ],
+         "plain": "Checks whether two datasets have the same \"overall distribution shape,\" not just the same average. It looks at the biggest gap between the two cumulative distribution curves. It is also commonly used to check whether a model's feature distributions have drifted.",
+         "intuition": "Tests whether two distributions are the same overall: plot the cumulative distribution curves of both groups and find the largest vertical distance between them. The larger the distance, the less likely the two come from the same distribution. It looks beyond the mean, detecting differences in location, shape, and spread.",
+         "objective": "$D = \\sup_x \\big|\\hat{F}_1(x) - \\hat{F}_2(x)\\big|$\nIn large samples, $\\sqrt{\\frac{n_1 n_2}{n_1 + n_2}} \\cdot D$ follows the Kolmogorov distribution",
+         "assumptions": [
+          "Independent observations",
+          "Continuous distributions (conservative for discrete data with many ties)"
+         ],
+         "checks": [
+          "Plot both ECDFs to see where the differences occur",
+          "For discrete data, use a chi-square or permutation test instead"
+         ],
+         "pros": [
+          "Detects any kind of distributional difference",
+          "No distributional assumptions required"
+         ],
+         "use": [
+          "Data drift detection (comparing training and production data distributions)",
+          "Checking randomization in A/A tests",
+          "Comparing model score distributions"
+         ],
+         "cons": [
+          "Sensitive in the middle of the distribution but not in the tails (use Anderson–Darling for the tails)",
+          "With very large samples, even tiny differences become significant"
+         ],
+         "hp": [
+          [
+           "Large samples",
+           "Look at the size of D as well, not just the p-value"
+          ],
+          [
+           "Tail differences",
+           "Use Anderson–Darling instead"
+          ],
+          [
+           "Drift monitoring",
+           "Often used together with PSI"
+          ]
+         ],
+         "tools": "Python: scipy.stats.ks_2samp; R: ks.test"
+        }
+       ]
+      },
+      {
+       "id": "inf-test-multi",
+       "name": "Multiple Comparisons Correction",
+       "en": "Multiple Testing Correction",
+       "philosophy": "When many tests are run at once, the probability of at least one false positive inflates quickly, so the thresholds must be adjusted to control the overall error rate.",
+       "leaves": [
+        {
+         "id": "holm",
+         "name": "Bonferroni / Holm (FWER Control)",
+         "zh": "Family-Wise Error Rate Control",
+         "year": 1979,
+         "tasks": [
+          "Multiple Testing"
+         ],
+         "plain": "When you run many tests at once, it is easy to \"hit\" one or two false positives even if none of the effects are real. Bonferroni divides the significance threshold by the number of tests, which is very conservative; Holm is an improved version that relaxes the threshold step by step. It keeps the same control over the chance of making even a single error, but finds real effects more easily.",
+         "intuition": "With 20 tests at α = 5% each, the probability of at least one false positive is about 64%. Bonferroni divides the threshold by the number of tests; Holm's step-down version starts from the smallest p-value and checks each in turn against a progressively looser threshold. It gives the same guarantee that the probability of \"at least one false positive\" does not exceed α, but with higher power.",
+         "objective": "$\\text{FWER} = \\mathbb{P}(\\text{at least one false positive}) \\le \\alpha$\nBonferroni: reject when $p_i \\le \\alpha / m$\nHolm: order the $p$-values as $p_{(1)} \\le \\dots \\le p_{(m)}$\nIf $p_{(k)} \\le \\frac{\\alpha}{m - k + 1}$, reject and continue; otherwise stop",
+         "assumptions": [
+          "Tests need not be independent; valid under any dependence structure"
+         ],
+         "checks": [
+          "List all hypotheses to be tested in advance to avoid post hoc cherry-picking"
+         ],
+         "pros": [
+          "Strong guarantee: controls FWER under any dependence structure",
+          "Holm is always at least as powerful as Bonferroni"
+         ],
+         "use": [
+          "A small number of primary metrics in an experiment",
+          "Decisions that must be very conservative (medical, regulatory)"
+         ],
+         "cons": [
+          "Overly conservative when there are many tests, with a sharp loss of power"
+         ],
+         "hp": [
+          [
+           "Primary vs. secondary metrics",
+           "Apply FWER correction to primary metrics only; label secondary metrics as exploratory"
+          ],
+          [
+           "Default choice",
+           "When you need FWER control, simply use Holm instead of Bonferroni"
+          ]
+         ],
+         "tools": "Python: statsmodels.stats.multitest.multipletests(method='holm'); R: p.adjust(method='holm')"
+        },
+        {
+         "id": "bh",
+         "name": "Benjamini–Hochberg (FDR Control)",
+         "zh": "False Discovery Rate Control",
+         "year": 1995,
+         "tasks": [
+          "Large-Scale Testing",
+          "Feature Screening"
+         ],
+         "plain": "Instead of demanding \"not a single mistake,\" it controls \"what share of the results you call real are actually false\" (for example, no more than 5%). In exploratory settings where you test hundreds of metrics or genes at once, it finds real effects much more readily than Bonferroni.",
+         "intuition": "With many tests (hundreds of metrics, thousands of genes), requiring \"not a single false positive\" is too strict. FDR instead controls \"the proportion of false positives among the results declared significant,\" e.g., 10%: on average, at most one in ten of all findings declared significant is false.",
+         "objective": "$\\text{FDR} = \\mathbb{E}\\left[\\frac{\\text{number of false positives}}{\\text{number of rejections}}\\right]$\nBH: sort the $p$-values in ascending order and find the largest $k$ such that $p_{(k)} \\le \\frac{k}{m} \\cdot q$\nReject $p_{(1)}, \\dots, p_{(k)}$",
+         "assumptions": [
+          "Tests are independent or positively correlated; under arbitrary dependence, use the more conservative Benjamini–Yekutieli instead"
+         ],
+         "checks": [
+          "Define the scope of the \"family\" of tests (which tests are corrected together)"
+         ],
+         "pros": [
+          "Retains power even with a very large number of tests",
+          "Easy to interpret (the share of false positives among discoveries)"
+         ],
+         "use": [
+          "Experiment dashboards with many metrics",
+          "Large-scale screening, e.g., genomics or ad keywords",
+          "Feature screening"
+         ],
+         "cons": [
+          "No guarantee of zero false positives",
+          "Control can break down under strong negative correlation between tests"
+         ],
+         "hp": [
+          [
+           "q level",
+           "0.05–0.1 is common for exploratory analysis"
+          ],
+          [
+           "Test family",
+           "Define it in advance and keep it fixed"
+          ],
+          [
+           "Arbitrary dependence",
+           "Use Benjamini–Yekutieli instead"
+          ]
+         ],
+         "tools": "Python: multipletests(method='fdr_bh'); R: p.adjust(method='BH')"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "inf-model",
+     "name": "Associational Modeling",
+     "en": "Associational Modeling",
+     "def": "Output: a statistical model of the conditional relationship E[Y | X], plus inference on its coefficients (standard errors, intervals, tests), answering \"after controlling for other variables, how strong is the association between X and Y?\"",
+     "criterion": "L3 split criterion: data structure and response type (independent observations / dependent or clustered data / time to event)",
+     "children": [
+      {
+       "id": "inf-model-glm",
+       "name": "Linear & Generalized Linear Models",
+       "en": "Linear & Generalized Linear Models",
+       "philosophy": "Model the conditional mean with a linear structure (after transformation by a link function); the focus is on estimating the coefficients and their uncertainty.",
+       "leaves": [
+        {
+         "id": "ols-robust",
+         "name": "OLS with Robust Standard Errors",
+         "zh": "Ordinary Least Squares with Robust SE",
+         "year": 1805,
+         "tasks": [
+          "Conditional Association",
+          "Econometric Analysis"
+         ],
+         "plain": "The most widely used regression: draw the line that minimizes the sum of squared errors, and read off each variable's average effect. \"Robust standard errors\" correct how the uncertainty is calculated, so confidence intervals and p-values stay trustworthy even when the size of the errors varies or observations are related to each other.",
+         "intuition": "OLS finds the line (hyperplane) that minimizes the residual sum of squares; a coefficient means \"how much Y changes on average when X increases by one unit, holding the other variables fixed.\" In real data the error variance is usually not constant (heteroskedasticity), so inference should use robust (sandwich) standard errors; otherwise the confidence intervals will be too narrow.",
+         "objective": "$\\hat{\\beta} = (X^\\top X)^{-1} X^\\top y$\nHeteroskedasticity-robust covariance:\n$\\hat{V} = (X^\\top X)^{-1} \\left(\\sum_{i} \\hat{\\varepsilon}_i^2\\, x_i x_i^\\top\\right) (X^\\top X)^{-1}$\nCluster-robust: replace the middle term with the outer products of the scores summed within each cluster",
+         "assumptions": [
+          "Linear in parameters",
+          "Exogeneity: E[ε | X] = 0 (omitting important variables causes bias)",
+          "No perfect collinearity",
+          "Independent observations (otherwise use cluster-robust standard errors)"
+         ],
+         "checks": [
+          "Residuals vs. fitted values plot (nonlinearity, heteroskedasticity)",
+          "Check collinearity with VIF",
+          "Add or remove control variables and see whether the coefficients are stable"
+         ],
+         "pros": [
+          "Interpretable and fast",
+          "Robust standard errors keep inference valid under heteroskedasticity",
+          "Common foundation for econometric methods such as DiD and IV"
+         ],
+         "use": [
+          "Association analysis controlling for other factors",
+          "Descriptive analysis of price elasticity and marketing effects",
+          "Estimation tool within causal designs"
+         ],
+         "cons": [
+          "Coefficients can be interpreted causally only when exogeneity holds",
+          "Sensitive to outliers",
+          "The linearity assumption may be too strong"
+         ],
+         "hp": [
+          [
+           "Standard errors",
+           "Default to HC3 (small samples) or cluster-robust standard errors"
+          ],
+          [
+           "Transformations",
+           "Consider logging skewed variables so coefficients can be read as elasticities"
+          ],
+          [
+           "Wording",
+           "In reports, clearly distinguish \"association\" from \"effect\""
+          ]
+         ],
+         "tools": "Python: statsmodels OLS(...).fit(cov_type='HC3' or 'cluster'); R: lm + sandwich + lmtest"
+        },
+        {
+         "id": "glm",
+         "name": "Generalized Linear Models (Logistic / Poisson)",
+         "zh": "Generalized Linear Models",
+         "year": 1972,
+         "tasks": [
+          "Binary Outcomes",
+          "Count Outcomes"
+         ],
+         "plain": "Use it when the outcome isn't a normally distributed continuous number: yes/no (logistic regression) or counts (Poisson regression). It maps the linear model's output onto a sensible range (probabilities between 0 and 1, counts that can't be negative), and the coefficients can be read as odds ratios or multiplicative changes.",
+         "intuition": "When Y is binary, a count, or positively skewed, a plain linear model is a poor fit. A GLM uses a link function to map the mean onto a scale that can be modeled linearly (log-odds, log) and pairs it with an appropriate distribution family. Exponentiated coefficients can be interpreted as odds ratios (logistic) or rate ratios (Poisson).",
+         "objective": "$g\\big(\\mathbb{E}[Y \\mid X]\\big) = X\\beta$, where $Y$ follows an exponential-family distribution\nLogistic: $\\log\\left(\\frac{p}{1 - p}\\right) = X\\beta$; $\\exp(\\beta_j)$ is the odds ratio\nPoisson: $\\log \\mathbb{E}[Y] = X\\beta + \\log(\\text{exposure})$\n$\\exp(\\beta_j)$ is the rate ratio",
+         "assumptions": [
+          "Link function and distribution family are reasonably specified",
+          "Independent observations",
+          "Poisson assumes the mean equals the variance (often violated in practice)"
+         ],
+         "checks": [
+          "Test for overdispersion (if residual deviance ÷ degrees of freedom is much greater than 1, switch to negative binomial)",
+          "Check calibration plots for logistic models",
+          "Consider zero-inflated models when there are excess zeros"
+         ],
+         "pros": [
+          "Coefficients have a clear multiplicative interpretation",
+          "Handles many types of response variables",
+          "Estimated by MLE, with a complete inference framework"
+         ],
+         "use": [
+          "Risk factor analysis (odds ratios)",
+          "Event count analysis (number of claims, complaints)",
+          "Actuarial science and epidemiology"
+         ],
+         "cons": [
+          "Standard errors are underestimated under overdispersion",
+          "Odds ratios are often misread as risk ratios",
+          "Estimates diverge under complete separation"
+         ],
+         "hp": [
+          [
+           "Overdispersion",
+           "Switch to negative binomial or quasi-Poisson"
+          ],
+          [
+           "Exposure",
+           "Include an offset for count data (e.g., policy-years)"
+          ],
+          [
+           "Rare events",
+           "Consider Firth's penalized likelihood"
+          ]
+         ],
+         "tools": "Python: statsmodels GLM, smf.logit, smf.poisson; R: glm, MASS::glm.nb",
+         "note": "Logistic regression also appears in the ML knowledge tree (supervised / tabular data / regularized linear models), where the goal is predictive accuracy; here the goal is estimation of and inference on the coefficients. Same mathematical model, framed as a different learning problem."
+        }
+       ]
+      },
+      {
+       "id": "inf-model-dep",
+       "name": "Dependent & Clustered Data",
+       "en": "Dependent & Clustered Data",
+       "philosophy": "Observations from the same cluster (store, user, school) or repeated measurements on the same unit are correlated; ignore that correlation and the standard errors will be too small.",
+       "leaves": [
+        {
+         "id": "mixed",
+         "name": "Mixed-Effects Models",
+         "zh": "Linear Mixed-Effects Model",
+         "year": 1982,
+         "tasks": [
+          "Repeated Measures",
+          "Multilevel Data"
+         ],
+         "plain": "Use it when the data have a group structure, such as the same student taking several exams or the same store observed over many months. The model estimates both the overall average effect and each group's own deviation, and it doesn't treat data from the same group as independent observations, so the conclusions are more reliable.",
+         "intuition": "It splits the effect into two parts: fixed effects shared by all groups, and a random offset for each group. The random effects are assumed to come from a common distribution, so estimates for small groups are shrunk toward the overall mean (the same idea as hierarchical Bayes), while within-group correlation is properly accounted for.",
+         "objective": "$y_{ij} = x_{ij}^\\top \\beta + z_{ij}^\\top u_j + \\varepsilon_{ij}$\n$u_j \\sim \\mathcal{N}(0, G)$, $\\varepsilon_{ij} \\sim \\mathcal{N}(0, \\sigma^2)$\nVariance components estimated by REML\nIntraclass correlation coefficient $\\text{ICC} = \\frac{\\sigma_u^2}{\\sigma_u^2 + \\sigma^2}$",
+         "assumptions": [
+          "Random effects are normal and uncorrelated with the covariates (otherwise biased; use fixed effects or the Mundlak correction instead)",
+          "Enough groups (estimating variance components usually needs at least 20–30 groups)"
+         ],
+         "checks": [
+          "Use the ICC to gauge the degree of clustering",
+          "Compare random-intercept and random-slope models (AIC, likelihood ratio)",
+          "Compare fixed and random effects with a Hausman test"
+         ],
+         "pros": [
+          "Properly handles repeated measures and clustered structure",
+          "Estimates group differences and the overall effect together",
+          "Works with unbalanced data"
+         ],
+         "use": [
+          "Sales analysis across multiple stores or regions",
+          "Analysis of repeated user behavior",
+          "Multilevel data in education and healthcare"
+         ],
+         "cons": [
+          "Many specification choices; results can be sensitive to them",
+          "Variance component estimates are unstable with too few groups",
+          "Convergence problems are common"
+         ],
+         "hp": [
+          [
+           "Random-effects structure",
+           "Start with random intercepts; add random slopes only with theoretical justification"
+          ],
+          [
+           "Estimation method",
+           "Use ML when comparing fixed effects and REML when reporting variance components"
+          ],
+          [
+           "Convergence",
+           "Standardize covariates and simplify the random-effects structure"
+          ]
+         ],
+         "tools": "Python: statsmodels MixedLM, Bambi; R: lme4, glmmTMB"
+        },
+        {
+         "id": "gee",
+         "name": "Generalized Estimating Equations (GEE)",
+         "zh": "Generalized Estimating Equations",
+         "year": 1986,
+         "tasks": [
+          "Repeated Measures",
+          "Population-Averaged Effects"
+         ],
+         "plain": "It also handles repeated measures or grouped data, but cares only about the overall average effect rather than describing how each group differs. It is forgiving about the assumed within-group correlation structure: even if you get it wrong, the standard errors are still usable.",
+         "intuition": "Rather than modeling a random effect for each group, it directly estimates the \"overall average\" relationship (the population-averaged effect), then handles within-group correlation with a working correlation structure plus robust standard errors. Even if the correlation structure is misspecified, the coefficients and robust standard errors remain consistent.",
+         "objective": "$\\sum_{j} D_j^\\top V_j^{-1} \\big(y_j - \\mu_j(\\beta)\\big) = 0$\n$V_j = A_j^{1/2} R(\\alpha) A_j^{1/2}$\nRobust standard errors computed with the sandwich estimator",
+         "assumptions": [
+          "Correctly specified mean model",
+          "Groups are independent of one another",
+          "Enough groups (robust standard errors are a large-sample result)",
+          "Missing data are missing completely at random (MCAR)"
+         ],
+         "checks": [
+          "Compare results across working correlation structures (independence, exchangeable, AR1)",
+          "Use small-sample-corrected standard errors when there are few groups"
+         ],
+         "pros": [
+          "Robust to misspecification of the correlation structure",
+          "Coefficients are population-averaged effects, well suited to policy questions"
+         ],
+         "use": [
+          "Binary or count outcomes with repeated measures",
+          "Policy analysis that needs population-averaged effects"
+         ],
+         "cons": [
+          "No individual-level predictions",
+          "Standard errors are unreliable with few groups",
+          "Stronger assumptions about the missing-data mechanism than mixed models"
+         ],
+         "hp": [
+          [
+           "Working correlation structure",
+           "Choose exchangeable or AR1 based on the structure of the data"
+          ],
+          [
+           "Few groups",
+           "Use a bias-corrected sandwich estimator"
+          ]
+         ],
+         "tools": "Python: statsmodels GEE; R: geepack"
+        }
+       ]
+      },
+      {
+       "id": "inf-model-surv",
+       "name": "Survival Analysis",
+       "en": "Survival Analysis",
+       "philosophy": "The outcome is \"how long until the event occurs,\" and some units have not yet had the event when observation ends (censoring); this incomplete information must be used correctly.",
+       "leaves": [
+        {
+         "id": "km",
+         "name": "Kaplan–Meier Estimator",
+         "zh": "Product-limit estimator of the survival function",
+         "year": 1958,
+         "tasks": [
+          "Survival Curves",
+          "Retention Analysis"
+         ],
+         "plain": "Estimates the share of people still \"surviving\" (not yet churned) up to each point in time, drawn as a staircase curve that steps down. It correctly handles people for whom the event hasn't happened by the end of observation (e.g., customers who haven't canceled yet), rather than wrongly counting them as failures or throwing them out.",
+         "intuition": "At each time an event occurs, compute the fraction of those \"still at risk\" who experience the event, then multiply together the survival fractions across time points. Censored individuals (e.g., customers who haven't churned yet) stay in the risk set until they leave observation, so survival time is not underestimated.",
+         "objective": "$\\hat{S}(t) = \\prod_{t_i \\le t} \\left(1 - \\frac{d_i}{n_i}\\right)$\n$d_i$ is the number of events at time $t_i$\n$n_i$ is the number still at risk just before that time\nGroup comparison: log-rank test",
+         "assumptions": [
+          "Censoring is unrelated to the event (non-informative censoring)",
+          "Individuals who enter observation at different times have the same survival probabilities"
+         ],
+         "checks": [
+          "Plot each group's curve with confidence bands",
+          "Check the proportion of and reasons for censoring (e.g., whether dropout is related to the outcome)"
+         ],
+         "pros": [
+          "Handles censored data correctly",
+          "Nonparametric, intuitive survival curves"
+         ],
+         "use": [
+          "Customer retention and time-to-churn analysis",
+          "Time to policy lapse or equipment failure",
+          "Survival comparisons in clinical trials"
+         ],
+         "cons": [
+          "Cannot adjust for multiple covariates at once (requires a Cox model)",
+          "Unstable estimates in the tail, where few subjects remain"
+         ],
+         "hp": [
+          [
+           "Comparison test",
+           "Log-rank test (most powerful when proportional hazards hold)"
+          ],
+          [
+           "Reporting",
+           "Median survival time and survival rates at specific time points"
+          ],
+          [
+           "Competing risks",
+           "With multiple event types, use the cumulative incidence function instead"
+          ]
+         ],
+         "tools": "Python: lifelines.KaplanMeierFitter; R: survival::survfit"
+        },
+        {
+         "id": "cox",
+         "name": "Cox Proportional Hazards Model",
+         "zh": "Semiparametric proportional hazards regression",
+         "year": 1972,
+         "tasks": [
+          "Risk Factor Analysis",
+          "Churn Risk"
+         ],
+         "plain": "Analyzes which factors make an event (churn, failure, death) happen \"sooner.\" Results are read as hazard ratios, for example: \"the churn risk on a monthly plan is 1.8 times that on an annual plan.\" You don't have to specify how the baseline risk evolves over time, but the model assumes the hazard ratio stays constant over time.",
+         "intuition": "It models the instantaneous risk (hazard): each person's hazard = a shared baseline hazard × exp(covariate effects). The clever part is that you can estimate the relative effects of the covariates (hazard ratios) without specifying what the baseline hazard looks like.",
+         "objective": "$h(t \\mid X) = h_0(t) \\cdot \\exp(X\\beta)$\nPartial likelihood: $L(\\beta) = \\prod_{\\text{event } i} \\frac{\\exp(x_i \\beta)}{\\sum_{j \\in R(t_i)} \\exp(x_j \\beta)}$\n$\\exp(\\beta_j)$ is the hazard ratio",
+         "assumptions": [
+          "Proportional hazards: covariate effects do not change over time",
+          "Non-informative censoring",
+          "Covariates are linearly related to the log hazard"
+         ],
+         "checks": [
+          "Test the proportional hazards assumption with Schoenfeld residuals",
+          "Check whether the log(−log S(t)) curves are parallel",
+          "Check the functional form with martingale residuals"
+         ],
+         "pros": [
+          "Semiparametric: no need to specify the baseline hazard",
+          "Intuitive hazard ratios",
+          "Can include time-varying covariates"
+         ],
+         "use": [
+          "Risk factor analysis for customer churn",
+          "Time to credit default",
+          "Insurance claims and policy lapse"
+         ],
+         "cons": [
+          "The proportional hazards assumption is often violated",
+          "A hazard ratio is not a difference in survival time and is easily misunderstood when communicated"
+         ],
+         "hp": [
+          [
+           "Proportional hazards violated",
+           "Add interactions with time, or use a stratified Cox model"
+          ],
+          [
+           "Ties",
+           "Use the Efron method"
+          ],
+          [
+           "Prediction",
+           "Predicting survival probabilities requires separately estimating the baseline hazard"
+          ]
+         ],
+         "tools": "Python: lifelines.CoxPHFitter; R: survival::coxph"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cau",
+   "name": "Causal Inference",
+   "en": "Causal Inference",
+   "signal": "The target quantity is an interventional effect P(Y | do(X)): what would happen to the outcome if the treatment were changed. The core difficulty is not estimation but \"identification\": under what assumptions the data can answer a counterfactual question.",
+   "criterion": "L2 split criterion: how the treatment is assigned (randomized by the researcher / determined by an exogenous rule or event / self-selected by units)",
+   "children": [
+    {
+     "id": "cau-rct",
+     "name": "Randomized Experiments",
+     "en": "Randomized Experiments",
+     "def": "The researcher assigns the treatment at random. Randomization guarantees that the groups are comparable, so identification needs no additional assumptions; the challenges lie in designing and running the experiment.",
+     "criterion": "L3 split criterion: the main challenge the experiment must overcome (basic assignment / too much noise / interference between units / need for early stopping)",
+     "children": [
+      {
+       "id": "cau-rct-basic",
+       "name": "Basic Randomized Designs",
+       "en": "Basic Randomized Designs",
+       "philosophy": "The researcher controls assignment: randomness severs the link between the treatment and all confounders (including unobserved ones), so differences between groups can come only from the treatment.",
+       "leaves": [
+        {
+         "id": "abtest",
+         "name": "A/B Testing (with SRM Check)",
+         "zh": "Randomized A/B Test",
+         "year": 1925,
+         "tasks": [
+          "Product Experimentation",
+          "Average Treatment Effect"
+         ],
+         "plain": "Randomly split users into groups A and B that differ only in the change being tested, then compare outcomes. Because assignment is random, the two groups are alike on average in every other respect, so any difference can be attributed to the change. After launch, first check that the group sizes match the design (SRM); a mismatched ratio means the traffic split is broken and the results can't be trusted.",
+         "intuition": "Random assignment makes the two groups \"equal in expectation\" on every characteristic, known and unknown, so any difference in outcomes can only come from the treatment itself. It is the only method that identifies causal effects without additional assumptions. The SRM (sample ratio mismatch) check verifies that the traffic split actually ran as designed: if a 50/50 experiment shows 50.8/49.2 on a large sample, that usually points to a bug in assignment or logging, and the results cannot be trusted.",
+         "objective": "$\\text{ATE} = \\mathbb{E}[Y(1)] - \\mathbb{E}[Y(0)]$\nEstimator: $\\hat{\\tau} = \\bar{Y}_T - \\bar{Y}_C$\n$\\operatorname{SE}(\\hat{\\tau}) = \\sqrt{\\frac{s_T^2}{n_T} + \\frac{s_C^2}{n_C}}$\nSRM check: $\\chi^2 = \\sum_{k} \\frac{(O_k - E_k)^2}{E_k}$; flag if $p < 0.001$",
+         "assumptions": [
+          "Randomization is correctly executed (no SRM)",
+          "SUTVA: no interference between units, and only one version of the treatment",
+          "Unit of analysis matches the unit of randomization",
+          "No contamination from other changes during the experiment"
+         ],
+         "checks": [
+          "SRM chi-square test",
+          "A/A tests: validate the platform's Type I error rate",
+          "Balance checks on pre-experiment metrics",
+          "Novelty effects: whether the effect decays over time"
+         ],
+         "pros": [
+          "The gold standard for causal identification",
+          "Simple analysis and easy-to-communicate results",
+          "Can be scaled up as a platform"
+         ],
+         "use": [
+          "Product features and UI redesigns",
+          "Pricing and promotion tests",
+          "Online evaluation of recommendation algorithms"
+         ],
+         "cons": [
+          "Some treatments can't be randomized (ethics, regulation, cost)",
+          "Network effects or shared resources violate SUTVA",
+          "Looking only at the average effect can mask heterogeneity",
+          "Short-term metrics don't necessarily reflect long-term value"
+         ],
+         "hp": [
+          [
+           "Sample size",
+           "Set it in advance with a power analysis; don't stop as soon as you see significance"
+          ],
+          [
+           "Primary metric",
+           "Pre-specify one overall evaluation criterion (OEC), plus guardrail metrics"
+          ],
+          [
+           "Ratio metrics",
+           "When randomizing by user but measuring a ratio such as click-through rate, compute the variance with the delta method"
+          ],
+          [
+           "Duration",
+           "Cover at least one full cycle (usually 1–2 weeks) to remove day-of-week effects"
+          ]
+         ],
+         "tools": "Platforms: GrowthBook, Eppo, Statsig, Optimizely; Python: statsmodels, scipy.stats; R: estimatr"
+        },
+        {
+         "id": "stratified",
+         "name": "Stratified / Block Randomization",
+         "zh": "Stratified / Blocked Randomization",
+         "year": 1935,
+         "tasks": [
+          "Experimental Design",
+          "Variance Reduction"
+         ],
+         "plain": "First divide subjects into strata by important characteristics (e.g., new vs. returning customers, country), then randomize separately within each stratum. This ensures the two groups are fully balanced on those key characteristics and reduces differences due to luck, making results more precise. It is especially useful with small samples.",
+         "intuition": "First split the sample into blocks by important covariates (region, new vs. returning customers), then randomize separately within each block. The two groups are then \"guaranteed\" to be balanced on these variables, not merely balanced in expectation; between-block variation is also removed from the error, which makes this especially effective in small experiments.",
+         "objective": "$\\hat{\\tau} = \\sum_{b} \\frac{n_b}{n} \\cdot \\big(\\bar{Y}_{T,b} - \\bar{Y}_{C,b}\\big)$\n$\\operatorname{Var}(\\hat{\\tau}) = \\sum_{b} \\left(\\frac{n_b}{n}\\right)^2 \\cdot \\operatorname{Var}(\\hat{\\tau}_b)$",
+         "assumptions": [
+          "Stratification variables are fixed before the experiment and unaffected by treatment",
+          "Each block has enough treatment and control units",
+          "Randomization within blocks is correctly executed"
+         ],
+         "checks": [
+          "Whether the treatment share in each stratum matches the design",
+          "Account for stratification in the analysis (stratum fixed effects); otherwise standard errors will be conservative",
+          "Whether any stratum has too few units"
+         ],
+         "pros": [
+          "Guarantees balance on key variables",
+          "Reduces estimator variance and increases power",
+          "Naturally yields stratum-level effects"
+         ],
+         "use": [
+          "Small-sample experiments (B2B clients, stores)",
+          "Experiments with strong predictors",
+          "Clinical trials (stratified by hospital)"
+         ],
+         "cons": [
+          "Too many stratification variables leave too few units per stratum",
+          "More complex to implement than simple randomization",
+          "Limited gains in large online experiments (use CUPED or post-stratification instead)"
+         ],
+         "hp": [
+          [
+           "Stratification variables",
+           "Choose 1–3 variables strongly correlated with the outcome"
+          ],
+          [
+           "Matched-pair design",
+           "With very small samples, pair units 1:1 and then randomize"
+          ],
+          [
+           "Post-stratification",
+           "If you can't stratify in advance, apply post-stratification at the analysis stage"
+          ]
+         ],
+         "tools": "R: randomizr::block_ra, blockTools; Python: randomize within strata yourself with groupby (sklearn StratifiedShuffleSplit can help)"
+        }
+       ]
+      },
+      {
+       "id": "cau-rct-precision",
+       "name": "Variance Reduction",
+       "en": "Variance Reduction",
+       "philosophy": "Randomization already guarantees unbiasedness; what remains is noise. Use pre-treatment information to explain away the predictable part of the outcome, so the same sample yields a narrower interval.",
+       "leaves": [
+        {
+         "id": "cuped",
+         "name": "CUPED Variance Reduction",
+         "zh": "Controlled-experiment Using Pre-Experiment Data",
+         "year": 2013,
+         "tasks": [
+          "Variance Reduction",
+          "Faster Experiments"
+         ],
+         "plain": "People's outcomes differ a lot to begin with (heavy users buy more anyway), and that noise can drown out the experiment's effect. CUPED uses pre-experiment behavior to subtract the differences that \"would have been there anyway,\" leaving only the part caused by the experiment. Variance drops sharply, so the same sample size gives more precise measurements and faster conclusions.",
+         "intuition": "Users differ to begin with (heavy users spend more anyway); these differences are unrelated to the treatment but make outcomes highly variable. CUPED uses the same metric measured before the experiment as a covariate, subtracts the \"already predictable part,\" and compares only what remains. Because the covariate is determined before treatment, it introduces no bias, yet the variance can drop substantially.",
+         "objective": "$\\tilde{Y} = Y - \\theta\\,(X - \\bar{X})$, $\\theta = \\frac{\\operatorname{Cov}(Y, X)}{\\operatorname{Var}(X)}$\n$\\operatorname{Var}(\\tilde{Y}) = \\operatorname{Var}(Y)\\,(1 - \\rho^2)$, where $\\rho$ is the correlation between $X$ and $Y$\n$\\hat{\\tau} = \\bar{\\tilde{Y}}_T - \\bar{\\tilde{Y}}_C$",
+         "assumptions": [
+          "The covariate is measured before treatment and unaffected by it",
+          "Valid randomization",
+          "θ is estimated on the pooled sample (or via group-wise regression)"
+         ],
+         "checks": [
+          "Confirm that the covariate's time window precedes the start of the experiment",
+          "Compare point estimates before and after CUPED (they should not change much)",
+          "Estimate the fraction of variance removed, ρ²"
+         ],
+         "pros": [
+          "Increases power without more samples (variance roughly halves when ρ = 0.7)",
+          "Simple to implement; equivalent to regression adjustment",
+          "No change to the experimental design needed"
+         ],
+         "use": [
+          "Standard feature of online experimentation platforms",
+          "High-variance metrics (revenue, time spent)",
+          "Products dominated by existing users"
+         ],
+         "cons": [
+          "New users have no pre-experiment data",
+          "Limited benefit when the covariate is weakly correlated with the outcome",
+          "Mistakenly using post-treatment variables introduces bias"
+         ],
+         "hp": [
+          [
+           "Covariate",
+           "Most often the same metric measured pre-experiment; multiple covariates or ML predictions (CUPAC) also work"
+          ],
+          [
+           "Pre-experiment window",
+           "Typically 1–4 weeks; too long a window weakens the correlation"
+          ],
+          [
+           "Missing values",
+           "Fill in 0 for new users and add an indicator variable"
+          ]
+         ],
+         "tools": "Platforms: built into Eppo, Statsig, GrowthBook; Python: statsmodels OLS (Y ~ T + X_pre)",
+         "note": "CUPED is mathematically equivalent to regression adjustment (Lin 2013: Y ~ T + X + T×X). It differs from \"observational adjustment\": randomization already guarantees unbiasedness, and the covariate only serves to reduce variance."
+        }
+       ]
+      },
+      {
+       "id": "cau-rct-interference",
+       "name": "Interference & Network Effects",
+       "en": "Interference-robust Designs",
+       "philosophy": "When one unit's treatment affects others (violating SUTVA), raise the randomization unit to a level that interference does not cross: clusters, time periods, or markets.",
+       "leaves": [
+        {
+         "id": "cluster-rct",
+         "name": "Cluster Randomization",
+         "zh": "Cluster Randomized Trial",
+         "year": 1978,
+         "tasks": [
+          "Experiments Under Interference",
+          "Network Effects"
+         ],
+         "plain": "Sometimes you can't randomize individuals (e.g., staff at the same store influence each other, students in the same class talk to one another), so you randomize whole groups (stores, classes, cities) instead. Keep in mind that the effective sample size is closer to the number of groups than to the number of people.",
+         "intuition": "When individuals influence each other (the same circle of friends, the same store), individual-level randomization \"contaminates\" the control group. The fix is to assign entire clusters together. The cost is that people within a cluster are similar, so the effective sample size shrinks dramatically.",
+         "objective": "Design effect: $\\text{DE} = 1 + (m - 1) \\cdot \\text{ICC}$, where $m$ is the average cluster size\nEffective sample size: $n_{\\text{eff}} = \\frac{n}{\\text{DE}}$\nAnalysis: compare cluster-level means, or individual-level regression + cluster-robust standard errors",
+         "assumptions": [
+          "Interference occurs only within clusters, not across them",
+          "Enough clusters (at least 20–30 per arm recommended)",
+          "Clusters are defined before the experiment and unaffected by treatment"
+         ],
+         "checks": [
+          "Estimate the ICC and compute the design effect",
+          "Check for spillover between clusters (whether neighboring clusters affect each other)",
+          "With few clusters, use small-sample corrections or randomization inference"
+         ],
+         "pros": [
+          "Handles network effects and contamination",
+          "Matches many real-world units of assignment (stores, cities, schools)"
+         ],
+         "use": [
+          "Social feature experiments (clustered by social circle)",
+          "Store or regional marketing campaigns",
+          "Two-sided marketplaces (assigned by city)"
+         ],
+         "cons": [
+          "Substantial loss of power",
+          "Unstable inference with few clusters",
+          "Unequal cluster sizes increase variance"
+         ],
+         "hp": [
+          [
+           "Cluster definition",
+           "Trade off keeping interference contained within clusters against having enough clusters"
+          ],
+          [
+           "Standard errors",
+           "Must use cluster-robust standard errors; otherwise the Type I error rate is badly inflated"
+          ],
+          [
+           "Few clusters",
+           "Use the wild cluster bootstrap or randomization inference"
+          ]
+         ],
+         "tools": "Python: statsmodels (cov_type='cluster'), linearmodels; R: estimatr::lm_robust(clusters =), clubSandwich"
+        },
+        {
+         "id": "switchback",
+         "name": "Switchback Experiment",
+         "zh": "Time-slot randomization (switchback design)",
+         "year": 2020,
+         "tasks": [
+          "Marketplace Experiments",
+          "Shared-Resource Interference"
+         ],
+         "plain": "In two-sided marketplaces (food delivery, ride-hailing), the treatment and control groups compete for the same pool of drivers and interfere with each other. A switchback experiment instead uses \"time slot × region\" as the unit, turning the new policy on and off in turns and comparing performance in the on and off periods, so the two groups don't contaminate each other.",
+         "intuition": "In two-sided marketplaces like food delivery and ride-hailing, all users share the same pool of drivers, so any experiment that splits users suffers from interference. A switchback experiment randomizes \"time\" instead: the whole market uses A in some time slots and B in others, alternating at random, and each time slot is one experimental unit.",
+         "objective": "Time slot $t$ is randomly assigned $W_t \\in \\{A, B\\}$\n$\\hat{\\tau} = \\text{mean}(Y_t \\mid W_t = B)$\n$\\qquad - \\text{mean}(Y_t \\mid W_t = A)$\nCarryover effects: discard the first $k$ periods after each switch (burn-in)",
+         "assumptions": [
+          "Carryover effects are limited and shorter than the time slot",
+          "No other systematic differences between time slots (or they are controlled for with time fixed effects)",
+          "The treatment can be switched instantly"
+         ],
+         "checks": [
+          "Whether carryover effects appear in the first few periods after a switch",
+          "Whether estimates are stable across different slot lengths",
+          "Autocorrelation of slot-level residuals"
+         ],
+         "pros": [
+          "Addresses market-level interference",
+          "Does not require multiple independent markets"
+         ],
+         "use": [
+          "Dispatch and pricing algorithms for delivery and ride-hailing",
+          "Inventory and logistics strategies",
+          "Ad bidding strategies"
+         ],
+         "cons": [
+          "Limited number of time slots, so power is usually low",
+          "Carryover effects cause bias",
+          "Slot length is hard to choose"
+         ],
+         "hp": [
+          [
+           "Slot length",
+           "Longer than the carryover effect, yet short enough to yield enough slots (commonly 30 minutes to a few hours)"
+          ],
+          [
+           "Region × time slot",
+           "Switch multiple cities simultaneously to increase the sample"
+          ],
+          [
+           "Inference",
+           "Use randomization inference (permutation) or HAC standard errors"
+          ]
+         ],
+         "tools": "Mostly built in-house; Python: statsmodels (HAC standard errors), a hand-written permutation test; see the methodology posts published by DoorDash and Lyft"
+        }
+       ]
+      },
+      {
+       "id": "cau-rct-sequential",
+       "name": "Continuous Monitoring & Early Stopping",
+       "en": "Sequential Designs",
+       "philosophy": "Experimental results accumulate over time. If you want to look at interim results and decide whether to stop, the \"repeated looks\" themselves must be built into Type I error control.",
+       "leaves": [
+        {
+         "id": "sequential",
+         "name": "Sequential Testing (Always-Valid / α-Spending)",
+         "zh": "Sequential Testing",
+         "year": 1945,
+         "tasks": [
+          "Early Stopping",
+          "Continuous Monitoring"
+         ],
+         "plain": "A traditional test lets you look at the results only once, at a pre-set sample size; peeking repeatedly and stopping as soon as something looks significant greatly raises the chance of a false alarm. Sequential testing sets up rules in advance that let you look at any time, so you can stop an experiment early while still keeping false alarms under control.",
+         "intuition": "If you check the p-value every day and stop the moment it is significant, the actual Type I error rate will be far above 5% (every extra look is effectively another test). Sequential testing plans in advance \"how many looks, and how much α to spend at each,\" or uses confidence sequences that are valid at any time, so you can legitimately stop early.",
+         "objective": "O'Brien–Fleming-type $\\alpha$ spending:\n$\\alpha(t) = 2 - 2\\Phi\\left(\\frac{z_{1-\\alpha/2}}{\\sqrt{t}}\\right)$, where $t$ is the fraction of information accrued so far\nmSPRT: $\\Lambda_n = \\int \\prod_{i=1}^{n} \\frac{f_\\theta(x_i)}{f_{\\theta_0}(x_i)}\\, dH(\\theta)$\nReject the null hypothesis when $\\Lambda_n \\ge 1/\\alpha$",
+         "assumptions": [
+          "The number of looks is planned in advance, or an always-valid method is used",
+          "Independent observations (or dependence accounted for)",
+          "Data are real-time and accurate"
+         ],
+         "checks": [
+          "Confirm the actual Type I error rate by simulation",
+          "Whether effect estimates are inflated when stopping early (winner's curse)",
+          "Whether the planned information fractions match the actual ones"
+         ],
+         "pros": [
+          "Legitimate early stopping saves traffic and time",
+          "Allows continuously monitored dashboards"
+         ],
+         "use": [
+          "Real-time monitoring on online experimentation platforms",
+          "Interim analyses in clinical trials",
+          "Real-time alerts on guardrail metrics"
+         ],
+         "cons": [
+          "Lower power than a fixed-sample test",
+          "Effect estimates are inflated when stopping early",
+          "More complex to implement and communicate"
+         ],
+         "hp": [
+          [
+           "Choice of method",
+           "Group sequential for a few interim analyses; mSPRT or confidence sequences for continuous monitoring"
+          ],
+          [
+           "α spending",
+           "O'Brien–Fleming is conservative early and lenient late; Pocock spends α evenly"
+          ],
+          [
+           "mSPRT mixing parameter",
+           "The scale of the mixing distribution should be close to the expected effect size"
+          ]
+         ],
+         "tools": "R: gsDesign, rpact; Python: spotify-confidence; Platforms: Optimizely Stats Engine, Eppo, Statsig",
+         "note": "Methodologically it is a hypothesis test, but in practice it is used almost exclusively to decide when to stop an experiment, so it is filed under randomized experiments according to its most typical use."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "cau-quasi",
+     "name": "Quasi-experimental Designs",
+     "en": "Quasi-experimental Designs",
+     "def": "The treatment is not assigned by the researcher but determined by an external rule, timing, or event, which creates \"as-good-as-random\" variation. Identification rests on defensible design assumptions.",
+     "criterion": "L3 split criterion: the source of exogenous variation (time × group / score threshold / exogenous instrument / time-series break point)",
+     "children": [
+      {
+       "id": "cau-quasi-panel",
+       "name": "Panel Comparisons (Time × Group)",
+       "en": "Panel Comparisons",
+       "philosophy": "When there are treatment and control groups with data from before and after treatment, use the control group's change to infer how the treatment group would have changed \"without the treatment.\"",
+       "leaves": [
+        {
+         "id": "did",
+         "name": "Difference-in-Differences (DiD)",
+         "zh": "Difference-in-Differences",
+         "year": 1994,
+         "tasks": [
+          "Policy Evaluation",
+          "Pre/Post-Launch Comparison"
+         ],
+         "plain": "Comparing only before vs. after a launch mixes in the overall trend; comparing only the treatment and control groups mixes in differences the two groups already had. DiD subtracts one difference from the other: the treatment group's before-after change minus the control group's before-after change. As long as \"the two groups would have followed the same trend without treatment,\" what remains is the treatment effect.",
+         "intuition": "Comparing only before vs. after a launch mixes in the overall trend; comparing only the treatment and control groups mixes in differences the two groups already had. DiD subtracts one difference from the other: the treatment group's before-after change − the control group's before-after change. As long as \"the two groups would have followed the same trend without treatment,\" what remains is the treatment effect.",
+         "objective": "$\\hat{\\tau} = (\\bar{Y}_{T,\\text{post}} - \\bar{Y}_{T,\\text{pre}})$\n$\\qquad - (\\bar{Y}_{C,\\text{post}} - \\bar{Y}_{C,\\text{pre}})$\nRegression form (two-way fixed effects):\n$Y_{it} = \\alpha_i + \\lambda_t + \\tau D_{it} + \\varepsilon_{it}$",
+         "assumptions": [
+          "Parallel trends: absent treatment, the two groups would follow the same trend",
+          "No anticipation: pre-treatment behavior is unaffected by the upcoming treatment",
+          "Stable composition, with no selective entry or exit",
+          "The control group is unaffected by treatment spillovers"
+         ],
+         "checks": [
+          "Plot pre-treatment trends",
+          "Event-study plot: pre-treatment coefficients should be close to 0",
+          "Placebo tests: fake treatment timing or fake treatment groups",
+          "Check whether conclusions agree with the outcome in logs vs. levels"
+         ],
+         "pros": [
+          "Intuitive and easy to communicate",
+          "Removes time-invariant differences between groups",
+          "Needs only panel or repeated cross-section data"
+         ],
+         "use": [
+          "New features or policies rolled out by region",
+          "Impact of regulatory changes",
+          "Regional evaluation of marketing campaigns"
+         ],
+         "cons": [
+          "Parallel trends cannot be tested directly",
+          "Low credibility when the two groups differ substantially",
+          "With staggered rollout, two-way fixed effects are biased (see Staggered DiD)"
+         ],
+         "hp": [
+          [
+           "Standard errors",
+           "Cluster-robust standard errors at the level of treatment assignment (e.g., city)"
+          ],
+          [
+           "Control group",
+           "Pick units with the most similar pre-treatment trends, or combine with matching or synthetic control"
+          ],
+          [
+           "Covariates",
+           "Include only pre-treatment covariates to avoid bad controls"
+          ]
+         ],
+         "tools": "Python: linearmodels PanelOLS, pyfixest, statsmodels; R: fixest, did"
+        },
+        {
+         "id": "staggered-did",
+         "name": "Staggered DiD / Event Study",
+         "zh": "Staggered-adoption DiD & event-study designs",
+         "year": 2021,
+         "tasks": [
+          "Staggered Rollout Evaluation",
+          "Dynamic Effects"
+         ],
+         "plain": "The policy or feature rolls out in waves (city A first, city B later). Traditional DiD uses the early groups, which are already affected, as controls for the later groups, producing biased or even reversed answers. Newer methods use only groups that \"haven't been treated yet\" as controls, and can chart how the effect evolves over time after launch.",
+         "intuition": "When units adopt treatment at different times, conventional two-way fixed effects use \"already-treated units\" as controls for later adopters. If effects change over time, this produces wrong or even negative weights, and the estimate can get even the sign wrong. The new methods use only \"not-yet-treated\" or \"never-treated\" units as controls, estimate cohort by cohort, and then aggregate.",
+         "objective": "Cohort × time effects (Callaway–Sant'Anna):\n$\\text{ATT}(g, t) = \\mathbb{E}[Y_t - Y_{g-1} \\mid G = g]$\n$\\qquad - \\mathbb{E}[Y_t - Y_{g-1} \\mid \\text{not yet treated}]$\nEvent-study aggregation: $\\theta(e) = \\sum_{g} w_g \\cdot \\text{ATT}(g, g + e)$\n$e$ is time relative to launch",
+         "assumptions": [
+          "Conditional parallel trends (holding for every cohort)",
+          "No anticipation",
+          "Irreversible treatment (no switching off after launch)",
+          "A never-treated or not-yet-treated control group exists"
+         ],
+         "checks": [
+          "Goodman-Bacon decomposition: how much of the TWFE weight comes from \"already-treated units as controls\"",
+          "Pre-treatment coefficients in the event-study plot",
+          "Agreement across estimators (Callaway–Sant'Anna, Sun–Abraham, imputation)"
+         ],
+         "pros": [
+          "Corrects TWFE bias under heterogeneous effects",
+          "Estimates how effects evolve over time",
+          "Makes full use of the variation from staggered rollout"
+         ],
+         "use": [
+          "Products launched city by city",
+          "Regulations taking effect at different times across regions",
+          "Internal policies rolled out in phases"
+         ],
+         "cons": [
+          "More complex estimators that need a reasonable sample size",
+          "Unstable estimates when cohorts are small",
+          "Still relies on parallel trends"
+         ],
+         "hp": [
+          [
+           "Control group",
+           "Never-treated units are cleaner; not-yet-treated units give a larger sample"
+          ],
+          [
+           "Aggregation",
+           "Aggregate by cohort, by calendar time, or by event time"
+          ],
+          [
+           "Reference period",
+           "Event studies usually use e = −1 as the baseline"
+          ]
+         ],
+         "tools": "Python: csdid, differences, pyfixest; R: did, fixest::sunab, didimputation, bacondecomp",
+         "note": "If you still want a regression-based event study, use the interaction-weighted estimator of Sun & Abraham (2021) rather than conventional TWFE with lead and lag dummies."
+        },
+        {
+         "id": "synthetic",
+         "name": "Synthetic Control",
+         "zh": "Synthetic control method",
+         "year": 2003,
+         "tasks": [
+          "Single-Unit Policy Evaluation",
+          "Regional Evaluation"
+         ],
+         "plain": "When only one unit is treated (say, a city launches a new policy), there is no perfect comparison city. Synthetic control blends several untreated cities with weights into a virtual twin \"whose pre-policy trajectory is almost identical to the treated city\"; after the policy, the gap between the two is the effect.",
+         "intuition": "With a single treated unit (e.g., one city), a perfect control is hard to find. Synthetic control uses a weighted average of multiple control units to \"assemble\" a synthetic control whose pre-treatment trajectory nearly matches the treated unit; the post-treatment gap between the two is the effect.",
+         "objective": "Weights: $w^* = \\operatorname*{arg\\,min}_{w} \\lVert X_1 - X_0 w \\rVert_V$\nSubject to $w_j \\ge 0$, $\\sum_{j} w_j = 1$\nEffect: $\\hat{\\tau}_t = Y_{1t} - \\sum_{j} w_j^* \\cdot Y_{jt}$, $t > T_0$",
+         "assumptions": [
+          "The treated unit lies within the convex hull of the control units (can be approximated by a weighted average)",
+          "A long enough pre-treatment period with good fit",
+          "Control units are unaffected by spillovers",
+          "No other shocks during the treatment period that affect only the treated unit"
+         ],
+         "checks": [
+          "Pre-treatment fit error (RMSPE)",
+          "Placebo tests: treat each control unit in turn as the treated unit",
+          "Use the rank of the post/pre-treatment RMSPE ratio as a p-value",
+          "Leave-one-out: drop the control unit with the largest weight"
+         ],
+         "pros": [
+          "Suited to settings with only one or a few treated units",
+          "Transparent, interpretable weights",
+          "Does not require parallel trends"
+         ],
+         "use": [
+          "Policy evaluation for a single city or country",
+          "Brand campaigns in a single market",
+          "Regional impact of major events (e.g., a new store opening)"
+         ],
+         "cons": [
+          "Inference relies mainly on permutation tests, so p-value granularity is limited by the number of control units",
+          "Not credible when the pre-treatment fit is poor",
+          "Cannot fit a treated unit that is an extreme outlier"
+         ],
+         "hp": [
+          [
+           "Donor pool",
+           "Exclude units that may be affected by spillovers"
+          ],
+          [
+           "Predictors",
+           "Pre-treatment outcome values at multiple time points matter most"
+          ],
+          [
+           "Extensions",
+           "Synthetic DiD (Arkhangelsky et al. 2021) combines DiD and synthetic control and is usually more robust"
+          ]
+         ],
+         "tools": "Python: pysyncon, SparseSC, CausalPy; R: Synth, tidysynth, synthdid"
+        }
+       ]
+      },
+      {
+       "id": "cau-quasi-rdd",
+       "name": "Threshold Rules",
+       "en": "Threshold Rules",
+       "philosophy": "Treatment is determined by whether a continuous score crosses a threshold. Units just on either side of the threshold are approximately randomly assigned.",
+       "leaves": [
+        {
+         "id": "rdd",
+         "name": "Regression Discontinuity Design (RDD)",
+         "zh": "Regression Discontinuity Design",
+         "year": 1960,
+         "tasks": [
+          "Threshold-Rule Evaluation"
+         ],
+         "plain": "When eligibility is set by a cutoff (a score of 60 to pass, spending NT$1,000 to be upgraded), people just above and just below the line are essentially the same; luck simply put them on different sides. Comparing people on either side of the cutoff amounts to a natural randomized experiment.",
+         "intuition": "When treatment is determined by a score cutoff (a card is approved only if the credit score is ≥ 650; free shipping only above a minimum spend), people just on either side of the cutoff are nearly identical and differ only in whether they were treated. Comparing people very close to either side of the cutoff is like a local randomized experiment.",
+         "objective": "Sharp RD: $\\tau = \\lim_{x \\downarrow c} \\mathbb{E}[Y \\mid X = x]$\n$\\qquad - \\lim_{x \\uparrow c} \\mathbb{E}[Y \\mid X = x]$\nEstimation: fit a local linear regression on each side within bandwidth $h$ and take the difference in intercepts\nFuzzy RD: $\\tau = \\frac{\\text{jump in outcome at cutoff}}{\\text{jump in treatment probability at cutoff}}$",
+         "assumptions": [
+          "Conditional expectations of the potential outcomes are continuous at the cutoff",
+          "Individuals cannot precisely manipulate the score (cannot just squeeze past the cutoff)",
+          "No other policy changes at the same cutoff"
+         ],
+         "checks": [
+          "Density test (McCrary/rddensity): is there bunching at the cutoff?",
+          "Continuity of pre-treatment covariates at the cutoff",
+          "Placebo cutoffs",
+          "Bandwidth sensitivity analysis"
+         ],
+         "pros": [
+          "High internal validity, close to a randomized experiment",
+          "Intuitive, persuasive graphics"
+         ],
+         "use": [
+          "Card-approval or credit-limit policies with credit-score cutoffs",
+          "Effects of benefits at membership-tier thresholds",
+          "Free-shipping thresholds and subsidy-eligibility cutoffs"
+         ],
+         "cons": [
+          "Identifies only the local effect near the cutoff",
+          "Few observations near the cutoff, so power is low",
+          "Breaks down when the score can be manipulated"
+         ],
+         "hp": [
+          [
+           "Bandwidth",
+           "Use the MSE-optimal bandwidth (rdrobust selects it automatically)"
+          ],
+          [
+           "Polynomial order",
+           "Use local linear fits, not high-order global polynomials"
+          ],
+          [
+           "Inference",
+           "Use bias-corrected robust confidence intervals (Calonico–Cattaneo–Titiunik)"
+          ]
+         ],
+         "tools": "Python: rdrobust, rddensity; R: rdrobust, rddensity, rdd"
+        }
+       ]
+      },
+      {
+       "id": "cau-quasi-iv",
+       "name": "Exogenous Instruments",
+       "en": "Exogenous Instruments",
+       "philosophy": "Find an exogenous variable that affects the outcome only through the treatment, and estimate the effect using only the part of the treatment variation that it induces.",
+       "leaves": [
+        {
+         "id": "iv",
+         "name": "Instrumental Variables (2SLS)",
+         "zh": "Instrumental Variables",
+         "year": 1928,
+         "tasks": [
+          "Endogeneity Correction",
+          "Imperfect Compliance"
+         ],
+         "plain": "You want the effect of X on Y, but X and Y may both be driven by factors you cannot see. So you find an outside factor that \"affects Y only through X\" (an instrumental variable), such as distance to a college affecting whether someone goes to college. Using only the part of the variation in X that the instrument drives gives a clean estimate of the causal effect.",
+         "intuition": "If treatment and outcome are both affected by unobserved factors, a direct regression is biased. Find an exogenous variable Z (the instrument) that \"affects the outcome only through the treatment,\" and estimate using only the part of the treatment variation induced by Z. A common example: randomly sent encouragement messages (Z) → actual feature usage (D) → retention (Y).",
+         "objective": "First stage: $D = \\pi_0 + \\pi_1 Z + \\nu$\nSecond stage: $Y = \\beta_0 + \\beta_1 \\hat{D} + \\varepsilon$\nSingle binary instrument (Wald): $\\hat{\\beta}_1 = \\frac{\\operatorname{Cov}(Y, Z)}{\\operatorname{Cov}(D, Z)}$\nUnder heterogeneous effects, $\\beta_1$ is the local average treatment effect (LATE) for \"compliers\"",
+         "assumptions": [
+          "Relevance: Z has a sufficiently strong effect on D",
+          "Exclusion restriction: Z affects Y only through D",
+          "Independence: Z is unrelated to the potential outcomes (as good as random)",
+          "Monotonicity: no \"defiers\" (needed for the LATE interpretation)"
+         ],
+         "checks": [
+          "First-stage F-statistic (conventional threshold of 10; recent work recommends stricter ones)",
+          "Anderson–Rubin test: inference that remains valid with weak instruments",
+          "Overidentification test (Hansen J) with multiple instruments",
+          "Argue for the exclusion restriction with theory and placebo outcomes"
+         ],
+         "pros": [
+          "Handles unobserved confounders",
+          "Handles imperfect compliance in experiments"
+         ],
+         "use": [
+          "Encouragement designs (randomized encouragement)",
+          "Imperfect compliance in experiments (assigned to group B but did not use the feature)",
+          "Demand estimation (cost shocks as instruments for price)"
+         ],
+         "cons": [
+          "Good instruments are hard to find",
+          "The exclusion restriction cannot be fully verified",
+          "Weak instruments cause large bias and unreliable intervals",
+          "LATE does not necessarily equal the overall ATE"
+         ],
+         "hp": [
+          [
+           "Instrument sources",
+           "Randomized encouragement, exogenous policy or geographic variation, institutional rules"
+          ],
+          [
+           "Standard errors",
+           "Use robust or clustered standard errors"
+          ],
+          [
+           "Weak instruments",
+           "When the F-statistic is low, switch to Anderson–Rubin intervals or LIML"
+          ]
+         ],
+         "tools": "Python: linearmodels IV2SLS, statsmodels; R: fixest (IV syntax in feols), ivreg, AER"
+        }
+       ]
+      },
+      {
+       "id": "cau-quasi-its",
+       "name": "Interrupted Time Series",
+       "en": "Time-series Interruption",
+       "philosophy": "When there is no contemporaneous control, use the pre-treatment temporal pattern and related series unaffected by the treatment to predict the counterfactual path \"had there been no treatment.\"",
+       "leaves": [
+        {
+         "id": "its",
+         "name": "Interrupted Time Series / CausalImpact",
+         "zh": "Interrupted Time Series / BSTS",
+         "year": 2015,
+         "tasks": [
+          "Full-Rollout Evaluation",
+          "Time-Series Counterfactuals"
+         ],
+         "plain": "Use this when you have only one unit but a long time series. The pre-intervention trajectory is used to predict \"what would have happened without the intervention,\" which is then compared with what actually happened; the gap is the effect. CausalImpact can also bring in related series unaffected by the intervention to improve forecast accuracy.",
+         "intuition": "When a change launches to everyone with no concurrent control group, use the pre-treatment time series (plus related, unaffected series) to forecast \"what would have happened without the change,\" and compare it with the actual values. CausalImpact makes this forecast with a Bayesian structural time-series model and reports credible intervals.",
+         "objective": "Segmented regression:\n$Y_t = \\beta_0 + \\beta_1 t + \\beta_2 D_t$\n$\\qquad + \\beta_3 (t - T_0) D_t + \\varepsilon_t$\n($\\beta_2$: level change, $\\beta_3$: slope change)\nCausalImpact: fit on pre-treatment data\n$Y_t = \\mu_t + \\gamma_t + \\beta^\\top x_t + \\varepsilon_t$ (trend + seasonality + control series)\nEffect: $\\hat{\\tau}_t = Y_t - \\hat{Y}_t$ ($\\hat{Y}_t$ is the counterfactual prediction)",
+         "assumptions": [
+          "Absent treatment, the pre-treatment pattern would have continued",
+          "Control series are unaffected by the treatment",
+          "A well-defined treatment time with no other concurrent shocks",
+          "A sufficiently long pre-treatment period"
+         ],
+         "checks": [
+          "Hold out a pre-treatment window for backtesting (forecast error)",
+          "Placebo treatment dates",
+          "Pre-treatment correlation between the control series and the outcome"
+         ],
+         "pros": [
+          "No concurrent control group needed",
+          "Shows how the effect accumulates over time",
+          "CausalImpact directly outputs counterfactual plots and intervals"
+         ],
+         "use": [
+          "Redesigns or brand campaigns launched to everyone",
+          "Estimating the impact of system outages or external events",
+          "Natural experiments in search and traffic"
+         ],
+         "cons": [
+          "Cannot rule out other concurrent events",
+          "Uncertainty grows with the length of the forecast horizon",
+          "Sensitive to model specification"
+         ],
+         "hp": [
+          [
+           "Pre-treatment period",
+           "Cover at least several seasonal cycles"
+          ],
+          [
+           "Control series",
+           "Pick series correlated with the outcome but unaffected by treatment (other markets, other categories)"
+          ],
+          [
+           "Autocorrelation",
+           "Segmented regression needs Newey–West standard errors or ARIMA errors"
+          ]
+         ],
+         "tools": "R: CausalImpact, bsts; Python: tfcausalimpact, statsmodels"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "cau-obs",
+     "name": "Observational Adjustment",
+     "en": "Observational Adjustment",
+     "def": "Units select their own treatment, and no exogenous variation is available. All one can do is assume that \"the measured covariates capture all confounders\" (conditional exchangeability) and then adjust via modeling or weighting.",
+     "criterion": "L3 split criterion: the target estimand (an overall average effect, ATE/ATT, or an individualized conditional effect, CATE)",
+     "children": [
+      {
+       "id": "cau-obs-ate",
+       "name": "Average-Effect Adjustment",
+       "en": "Average Effect Estimators",
+       "philosophy": "Make the treatment and control groups comparable on measured covariates, then estimate the overall average effect. Methods can be further divided by what is modeled: the outcome only (G-computation), the treatment only (matching, IPW), or both (AIPW, DML).",
+       "leaves": [
+        {
+         "id": "gcomp",
+         "name": "Regression Adjustment / G-computation",
+         "zh": "Outcome-model standardization via the g-formula",
+         "year": 1986,
+         "tasks": [
+          "Average Treatment Effect",
+          "Outcome Modeling"
+         ],
+         "plain": "Use a model to answer: \"If everyone received the treatment, what would the average outcome be? And if no one did?\" The difference between the two is the effect. The premise is that every factor that affects both \"whether someone is treated\" and \"the outcome\" has been observed and included in the model.",
+         "intuition": "First fit an outcome model E[Y | T, X], then ask: \"If everyone were treated, what would the average outcome be? And if no one were?\" Predict for every individual under both treatment states, take the difference, and average. It generalizes \"standardization,\" and any predictive model can serve as the outcome model.",
+         "objective": "$\\hat{\\mu}_t(x) = \\hat{\\mathbb{E}}[Y \\mid T = t, X = x]$\n$\\widehat{\\text{ATE}} = \\frac{1}{n} \\sum_{i=1}^{n} \\big[\\hat{\\mu}_1(X_i) - \\hat{\\mu}_0(X_i)\\big]$",
+         "assumptions": [
+          "Conditional exchangeability (no unmeasured confounding): Y(t) ⊥ T | X",
+          "Positivity (overlap): 0 < P(T = 1 | X) < 1",
+          "Consistency: the observed outcome equals the potential outcome under the treatment actually received",
+          "Correctly specified outcome model"
+         ],
+         "checks": [
+          "Draw a causal diagram (DAG) to settle the adjustment set",
+          "Degree of covariate overlap between the two groups",
+          "Sensitivity analysis (E-value): how strong an unmeasured confounder would have to be to overturn the conclusion",
+          "Check the outcome model's predictive performance with cross-validation"
+         ],
+         "pros": [
+          "Conceptually intuitive; works with any predictive model",
+          "Efficient when the model is correct",
+          "Subgroup effects are easy to estimate"
+         ],
+         "use": [
+          "ATE estimation from observational data",
+          "Paired with the bootstrap to produce intervals",
+          "Time-varying treatments (G-formula)"
+         ],
+         "cons": [
+          "Biased if the outcome model is misspecified",
+          "Relies on model extrapolation when overlap is poor",
+          "Standard errors require the bootstrap"
+         ],
+         "hp": [
+          [
+           "Outcome model",
+           "Linear, GLM, or ML; with ML, prefer AIPW or DML instead"
+          ],
+          [
+           "Intervals",
+           "Bootstrap the entire pipeline"
+          ],
+          [
+           "Adjustment variables",
+           "Include only confounders, never mediators or colliders"
+          ]
+         ],
+         "tools": "Python: DoWhy, causalml, zEpid; R: marginaleffects, stdReg",
+         "note": "How it differs from ordinary OLS: the OLS treatment coefficient equals the ATE only when there are no interactions; G-computation predicts first and then averages, so it still recovers the ATE with interactions or nonlinear models."
+        },
+        {
+         "id": "psm",
+         "name": "Propensity Score Matching (PSM)",
+         "zh": "Propensity Score Matching",
+         "year": 1983,
+         "tasks": [
+          "Average Treatment Effect on the Treated (ATT)",
+          "Observational Comparisons"
+         ],
+         "plain": "In observational data, people who received the treatment differ from those who did not to begin with. First estimate each person's \"probability of being treated\" (the propensity score), then pair each treated person with an untreated person of similar probability, so the two groups become comparable on observed characteristics.",
+         "intuition": "Matching on many covariates at once is hard. Rosenbaum and Rubin showed that matching on the \"probability of treatment\" (the propensity score) alone is enough to balance covariates between the groups. So for each treated unit, find an untreated unit with a similar propensity score, then compare their outcomes.",
+         "objective": "Propensity score: $e(X) = \\mathbb{P}(T = 1 \\mid X)$\nMatching: for each treated unit $i$, find\n$j = \\operatorname*{arg\\,min}_{j \\in \\text{control}} \\big|\\operatorname{logit} \\hat{e}(X_i) - \\operatorname{logit} \\hat{e}(X_j)\\big|$\nwith distance within the caliper\n$\\widehat{\\text{ATT}} = \\frac{1}{n_T} \\sum_{i \\in \\text{treated}} \\big(Y_i - Y_{j(i)}\\big)$",
+         "assumptions": [
+          "Conditional exchangeability (no unmeasured confounding)",
+          "Positivity: control observations exist across the treated group's propensity-score range",
+          "The propensity score model balances the covariates"
+         ],
+         "checks": [
+          "Standardized mean differences after matching (SMD < 0.1)",
+          "Overlap plot of propensity score distributions",
+          "Share of treated observations discarded (changes the population the effect represents)",
+          "Sensitivity analysis (Rosenbaum bounds)"
+         ],
+         "pros": [
+          "Intuitive; matched data are easy to understand and communicate",
+          "Separates design from outcome analysis (balance first, then look at outcomes)"
+         ],
+         "use": [
+          "Observational studies in medicine and policy",
+          "Evaluating self-selected treatments such as membership programs or course participation",
+          "Post hoc evaluation of marketing campaigns"
+         ],
+         "cons": [
+          "Discards unmatched observations, losing information",
+          "King & Nielsen (2019) show that PSM can actually increase imbalance and model dependence",
+          "Variance estimation after matching is more complex"
+         ],
+         "hp": [
+          [
+           "Caliper",
+           "Commonly 0.2 standard deviations of the logit propensity score"
+          ],
+          [
+           "Matching method",
+           "1:1 or 1:k, with or without replacement; CEM or optimal matching are also worth considering"
+          ],
+          [
+           "Balance checks",
+           "Judge by SMD, not p-values"
+          ]
+         ],
+         "tools": "R: MatchIt, cobalt; Python: causalml, psmpy, DoWhy"
+        },
+        {
+         "id": "ipw",
+         "name": "Inverse Probability Weighting (IPW)",
+         "zh": "Inverse Probability Weighting",
+         "year": 1952,
+         "tasks": [
+          "Average Treatment Effect",
+          "Sample Reweighting"
+         ],
+         "plain": "Instead of matching, reweight: the less a treated person \"looks like someone who would be treated\" (that is, the rarer they are), the larger their weight, so that after weighting the two groups' characteristics look as if treatment had been randomly assigned. Beware: extreme weights can make the estimate very unstable.",
+         "intuition": "In observational data, some people are more likely to be treated than others. IPW gives larger weights to people who were \"unlikely to be treated but were treated anyway\" and smaller weights to those who were \"very likely to be treated.\" Reweighting yields a pseudo-population in which treatment is independent of the covariates, just as under random assignment.",
+         "objective": "$\\widehat{\\text{ATE}} = \\frac{1}{n} \\sum_{i=1}^{n} \\left[\\frac{T_i Y_i}{\\hat{e}(X_i)} - \\frac{(1 - T_i)\\, Y_i}{1 - \\hat{e}(X_i)}\\right]$\nStabilized weights: $w_i = \\frac{\\mathbb{P}(T = T_i)}{\\mathbb{P}(T = T_i \\mid X_i)}$",
+         "assumptions": [
+          "Conditional exchangeability",
+          "Positivity: propensity scores are not close to 0 or 1",
+          "Correctly specified propensity score model"
+         ],
+         "checks": [
+          "Weight distribution (maximum weight, effective sample size)",
+          "Covariate balance after weighting (SMD)",
+          "Propensity score overlap plot",
+          "Compare results before and after trimming"
+         ],
+         "pros": [
+          "No outcome model required",
+          "Keeps all observations",
+          "Extends easily to time-varying treatments (marginal structural models)"
+         ],
+         "use": [
+          "ATE/ATT estimation from observational data",
+          "Handling selection bias and missing data",
+          "Offline evaluation of recommendation policies (off-policy evaluation)"
+         ],
+         "cons": [
+          "Extreme weights can blow up the variance",
+          "Biased if the propensity score model is misspecified",
+          "Standard errors require robust estimation or the bootstrap"
+         ],
+         "hp": [
+          [
+           "Trimming",
+           "Truncate propensity scores to [0.01, 0.99], or drop observations outside the region of overlap"
+          ],
+          [
+           "Stabilization",
+           "Use stabilized weights or Hájek normalization"
+          ],
+          [
+           "Propensity model",
+           "Tune it for \"covariate balance,\" not predictive accuracy"
+          ]
+         ],
+         "tools": "R: WeightIt, cobalt, ipw; Python: causalml, DoWhy, zEpid"
+        },
+        {
+         "id": "aipw",
+         "name": "Doubly Robust Estimation (AIPW)",
+         "zh": "Augmented IPW / Doubly Robust",
+         "year": 1994,
+         "tasks": [
+          "Average Treatment Effect",
+          "Robust Estimation"
+         ],
+         "plain": "Build two models at once, one that predicts the outcome and one that predicts who gets treated, then combine them. As long as either model is right, the estimate will not be biased. It is like buying double insurance, hence the name \"doubly robust.\"",
+         "intuition": "Combines an outcome model with a propensity score model: predict with the outcome model, then use IPW to correct the outcome model's residuals. The estimate is consistent as long as \"either one\" of the two models is correct, hence \"doubly robust.\" It is also the theoretical foundation for using ML in causal estimation (DML, TMLE).",
+         "objective": "$\\hat{\\psi} = \\frac{1}{n} \\sum_{i=1}^{n} \\bigg[\\hat{\\mu}_1(X_i) - \\hat{\\mu}_0(X_i)$\n$\\qquad + \\frac{T_i\\,(Y_i - \\hat{\\mu}_1(X_i))}{\\hat{e}(X_i)}$\n$\\qquad - \\frac{(1 - T_i)\\,(Y_i - \\hat{\\mu}_0(X_i))}{1 - \\hat{e}(X_i)}\\bigg]$",
+         "assumptions": [
+          "Conditional exchangeability",
+          "Positivity",
+          "At least one of the outcome model and the propensity model is correct"
+         ],
+         "checks": [
+          "Propensity score overlap and weight distribution",
+          "Cross-validated performance of each model",
+          "Compare the estimate with IPW and G-computation"
+         ],
+         "pros": [
+          "Doubly robust",
+          "Attains the semiparametric efficiency bound when both models are correct",
+          "Works with ML models (requires cross-fitting)"
+         ],
+         "use": [
+          "The go-to ATE estimator for observational data",
+          "Policy evaluation",
+          "Off-policy evaluation (doubly robust OPE)"
+         ],
+         "cons": [
+          "Still biased when both models are wrong",
+          "Extreme propensity scores still cause instability",
+          "Cross-fitting is mandatory with ML"
+         ],
+         "hp": [
+          [
+           "Cross-fitting",
+           "When both models are estimated with ML, K-fold cross-fitting is required"
+          ],
+          [
+           "Trimming",
+           "Truncate propensity scores to [0.01, 0.99]"
+          ],
+          [
+           "Alternatives",
+           "TMLE is another doubly robust estimator and usually behaves more stably in finite samples"
+          ]
+         ],
+         "tools": "Python: DoubleML, EconML (LinearDRLearner), causalml; R: AIPW, tmle, grf"
+        },
+        {
+         "id": "dml",
+         "name": "Double Machine Learning (DML)",
+         "zh": "Double / Debiased Machine Learning",
+         "year": 2018,
+         "tasks": [
+          "High-Dimensional Confounding Adjustment",
+          "Average Treatment Effect"
+         ],
+         "plain": "You want to use machine learning to control for a large number of confounders and still get a causal estimate with a confidence interval. The approach: first use ML to strip out the confounders' influence on the \"treatment\" and on the \"outcome\" separately, then estimate the effect from what is left, using cross-fitting to avoid bias from overfitting.",
+         "intuition": "With many confounders and nonlinear relationships, you want ML to do the adjustment; but plugging ML straight into a regression lets regularization bias contaminate the treatment effect. DML works \"residual on residual\": use ML to remove the part of Y and of T that X can explain, then run a simple regression of one residual on the other; combined with cross-fitting, this yields valid confidence intervals.",
+         "objective": "Partially linear model: $Y = \\theta T + g(X) + \\varepsilon$\n$T = m(X) + \\nu$\n$\\tilde{Y} = Y - \\hat{\\ell}(X)$, $\\tilde{T} = T - \\hat{m}(X)$\n($\\hat{\\ell}$, $\\hat{m}$ estimated by cross-fitting)\n$\\hat{\\theta} = \\frac{\\sum_{i} \\tilde{T}_i \\tilde{Y}_i}{\\sum_{i} \\tilde{T}_i^2}$",
+         "assumptions": [
+          "Conditional exchangeability (all confounders are in X)",
+          "Positivity: enough residual variation in treatment after controlling for X",
+          "Both nuisance models converge fast enough (product of rates faster than $n^{-1/2}$)"
+         ],
+         "checks": [
+          "Cross-validated performance of the nuisance models",
+          "Whether the treatment residual T̃ has enough variation",
+          "Whether the estimate is stable across different ML learners",
+          "Repeat the sample splitting several times and take the median"
+         ],
+         "pros": [
+          "Controls high-dimensional confounding with any ML model",
+          "√n-consistent, asymptotically normal estimates with confidence intervals",
+          "Unified theoretical foundation (Neyman orthogonality)"
+         ],
+         "use": [
+          "Estimating price elasticities and marketing effects",
+          "Effect estimation that controls for many user characteristics",
+          "Combined with instrumental variables (DML-IV)"
+         ],
+         "cons": [
+          "Still relies on \"no unmeasured confounding\"",
+          "Sensitive to the choice of learners and hyperparameters",
+          "Higher computational cost"
+         ],
+         "hp": [
+          [
+           "Cross-fitting folds",
+           "K = 5 is common; repeat the splitting several times and take the median"
+          ],
+          [
+           "Learners",
+           "GBDT, random forest, or Lasso, depending on the data"
+          ],
+          [
+           "Model",
+           "PLR (partially linear) or IRM (interactive model, suited to binary treatments)"
+          ]
+         ],
+         "tools": "Python: DoubleML, EconML (LinearDML); R: DoubleML"
+        }
+       ]
+      },
+      {
+       "id": "cau-obs-hte",
+       "name": "Heterogeneous Effects (CATE)",
+       "en": "Heterogeneous Treatment Effects",
+       "philosophy": "Ask not only \"does it work on average?\" but \"for whom does it work, and how much?\": learn the treatment effect itself as a function of X, directly supporting personalized decisions.",
+       "leaves": [
+        {
+         "id": "metalearners",
+         "name": "Meta-learners (S/T/X)",
+         "zh": "Meta-learners for CATE",
+         "year": 2019,
+         "tasks": [
+          "Heterogeneous Treatment Effects",
+          "Uplift Modeling"
+         ],
+         "plain": "The goal is to estimate \"how large the effect is for different people\" (heterogeneous effects), to find who most deserves to be treated. The S-learner uses one model with treatment as a feature; the T-learner builds a separate model for the treatment and control groups and takes the difference; the X-learner works better when the two groups differ greatly in size.",
+         "intuition": "Assemble individualized effects from off-the-shelf ML models. The S-learner treats treatment as just another feature and trains a single model; the T-learner trains separate models for the treatment and control groups and subtracts them; the X-learner first estimates each individual's effect, then combines the estimates with propensity-score weights, and is especially effective when the treatment and control groups are very unequal in size.",
+         "objective": "Target: $\\tau(x) = \\mathbb{E}[Y(1) - Y(0) \\mid X = x]$\nS: $\\hat{\\tau}(x) = \\hat{\\mu}(x, 1) - \\hat{\\mu}(x, 0)$\nT: $\\hat{\\tau}(x) = \\hat{\\mu}_1(x) - \\hat{\\mu}_0(x)$\nX: $\\tilde{D}_i^{1} = Y_i - \\hat{\\mu}_0(X_i)$, $\\tilde{D}_i^{0} = \\hat{\\mu}_1(X_i) - Y_i$\nFit each separately to obtain $\\hat{\\tau}_1$ and $\\hat{\\tau}_0$\n$\\hat{\\tau}(x) = e(x)\\, \\hat{\\tau}_0(x) + (1 - e(x))\\, \\hat{\\tau}_1(x)$",
+         "assumptions": [
+          "Conditional exchangeability (randomized experiment data are ideal)",
+          "Positivity",
+          "The base learners can capture the outcome functions"
+         ],
+         "checks": [
+          "Qini/AUUC curves (uplift ranking ability)",
+          "Group by predicted CATE and check whether the actual effects are monotonic across groups",
+          "Agreement across different learners"
+         ],
+         "pros": [
+          "Can use any ML model",
+          "Simple to implement, with mature packages",
+          "Directly supports targeting decisions"
+         ],
+         "use": [
+          "Uplift marketing (finding the \"persuadables\")",
+          "Personalized discounts and recommendations",
+          "Treatment allocation under a limited budget"
+         ],
+         "cons": [
+          "The S-learner tends to regularize the treatment effect toward 0",
+          "The T-learner has high variance with imbalanced samples",
+          "CATE has no ground-truth labels, so evaluation is hard"
+         ],
+         "hp": [
+          [
+           "Learner choice",
+           "Use the X-learner when treatment shares are very unbalanced; avoid the S-learner when effects are small"
+          ],
+          [
+           "Evaluation",
+           "Use Qini curves, or check actual effects by CATE quantile"
+          ],
+          [
+           "Advanced",
+           "The R-learner and DR-learner have better theoretical properties"
+          ]
+         ],
+         "tools": "Python: causalml, EconML, scikit-uplift; R: grf, rlearner"
+        },
+        {
+         "id": "causalforest",
+         "name": "Causal Forest",
+         "zh": "Causal Forest / Generalized Random Forest",
+         "year": 2018,
+         "tasks": [
+          "Heterogeneous Treatment Effects",
+          "Subgroup Discovery"
+         ],
+         "plain": "It turns a random forest into a tool built specifically to find \"differences in effect\": each split aims not to make predictions more accurate but to make the treatment effects of the two resulting groups differ as much as possible. The result tells you which segments see large effects and which see none, with confidence intervals, making it well suited to targeting.",
+         "intuition": "A standard random forest splits on \"reduction in prediction error\"; a causal forest instead splits on \"the difference in treatment effects between child nodes,\" so the people in each leaf respond similarly to treatment. Combined with \"honest estimation\" (half the sample determines the splits, the other half estimates the effects), it yields individualized effects with confidence intervals.",
+         "objective": "Split criterion: maximize $n_L \\cdot n_R \\cdot (\\hat{\\tau}_L - \\hat{\\tau}_R)^2$\nPrediction: $\\hat{\\tau}(x) = \\frac{\\sum_{i} \\alpha_i(x)\\, \\tilde{Y}_i \\tilde{T}_i}{\\sum_{i} \\alpha_i(x)\\, \\tilde{T}_i^2}$\nwhere $\\tilde{Y}_i = Y_i - \\hat{m}(X_i)$, $\\tilde{T}_i = T_i - \\hat{e}(X_i)$\n$\\alpha_i(x)$ is the similarity weight the forest assigns to observation $i$",
+         "assumptions": [
+          "Conditional exchangeability",
+          "Positivity",
+          "Effects are locally smooth in feature space"
+         ],
+         "checks": [
+          "grf's test_calibration: whether the average effect and heterogeneity are correctly captured",
+          "AIPW effects by predicted-CATE group (RATE/TOC curves)",
+          "Variable importance: whether the features driving heterogeneity make sense"
+         ],
+         "pros": [
+          "Confidence intervals with theoretical guarantees",
+          "Discovers heterogeneity automatically",
+          "Extends to instrumental variables, survival, and quantiles (GRF framework)"
+         ],
+         "use": [
+          "Finding the customer segments that benefit most",
+          "Personalized policy allocation",
+          "Post-experiment heterogeneity analysis"
+         ],
+         "cons": [
+          "Requires large samples",
+          "Heterogeneity estimates are noisy in high dimensions",
+          "Interpreting the results still requires post hoc analysis"
+         ],
+         "hp": [
+          [
+           "Honest estimation",
+           "Keep honesty = TRUE"
+          ],
+          [
+           "Number of trees",
+           "Several thousand or more, for stable confidence intervals"
+          ],
+          [
+           "Orthogonalization",
+           "Estimate Y.hat and W.hat first (grf does this by cross-fitting by default)"
+          ]
+         ],
+         "tools": "R: grf; Python: EconML (CausalForestDML), causalml"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
