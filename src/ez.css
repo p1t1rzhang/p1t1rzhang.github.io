@@ -289,3 +289,22 @@ html[lang="zh-Hant"] .ez-l1,html[lang="zh-Hant"] .ez-l2{letter-spacing:.02em;fon
 [data-style="ez"] .cmdk-in input::placeholder{color:var(--muted)}
 [data-style="ez"] .d-head{background:var(--surface-2)}
 [data-style="ez"] .accent-pop{background:color-mix(in srgb,var(--surface) 92%,transparent);border-color:var(--line)}
+
+/* 手機版 liquid glass 導覽：加入「首頁」按鈕（電腦版的導覽文字已有首頁，所以只在小螢幕顯示） */
+.home-btn{display:none!important}
+@media (max-width:1180px){
+  [data-style="ez"] .hdr .home-btn{display:grid!important}
+  [data-style="ez"] .hdr-tools{border-left:0;padding-left:0;margin-left:0!important}
+  [data-style="ez"] body[data-page="home"] .hdr .home-btn{color:var(--brand-text)}
+}
+/* 一鍵回到最上面（電腦與手機）：與導覽列同款的清玻璃圓鈕，放在右下角 */
+.to-top{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:38;width:52px;height:52px;border-radius:50%;
+  display:grid;place-items:center;cursor:pointer;color:var(--ink);
+  background:linear-gradient(180deg,color-mix(in srgb,var(--bg) 40%,transparent),color-mix(in srgb,var(--bg) 18%,transparent));
+  -webkit-backdrop-filter:blur(14px) saturate(1.6);backdrop-filter:blur(14px) saturate(1.6);border:1px solid color-mix(in srgb,var(--bg) 70%,transparent);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 10px 28px -16px rgba(0,0,0,.3);
+  opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .2s,transform .2s}
+.to-top.show{opacity:1;transform:none;pointer-events:auto}
+.to-top:hover{color:var(--brand-text)}
+@media print{.to-top{display:none!important}}
+@media (max-width:760px){.to-top{width:46px;height:46px;right:16px;bottom:calc(max(18px,env(safe-area-inset-bottom)) + 74px)}}

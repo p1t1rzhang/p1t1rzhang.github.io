@@ -482,6 +482,7 @@ function applyStatic(){
   document.documentElement.lang = isEN() ? "en" : "zh-Hant";
   $$("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
   $("#langOn").textContent = isEN() ? "EN" : "中"; $("#langOff").textContent = isEN() ? "中" : "EN";
+  { const tt = isEN() ? "Back to top" : "回到最上面"; $("#toTop").setAttribute("aria-label", tt); $("#toTop").title = tt; $("#homeBtn").setAttribute("aria-label", isEN() ? "Home" : "首頁"); }
   $("#langBtn").title = t("langTo"); $("#langBtn").setAttribute("aria-label", "中 EN · " + t("langTo")); $("#searchBtn") && $("#searchBtn").setAttribute("aria-label", isEN() ? "Search" : "搜尋");
   $("#themeBtn").title = t("theme"); $("#themeBtn").setAttribute("aria-label", t("theme"));
   $("#accentBtn").title = t("accent"); $("#accentBtn").setAttribute("aria-label", t("accent"));
@@ -508,3 +509,11 @@ function setLang(l){
 }
 $("#langBtn").onclick = () => setLang(isEN() ? "zh" : "en");
 
+
+/* 一鍵回到最上面：往下捲超過一個畫面高度才出現 */
+(() => {
+  const btn = $("#toTop"); if (!btn) return;
+  const sync = () => btn.classList.toggle("show", window.scrollY > window.innerHeight * 0.8);
+  addEventListener("scroll", sync, {passive:true}); addEventListener("resize", sync); sync();
+  btn.addEventListener("click", () => window.scrollTo({top:0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"}));
+})();
