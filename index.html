@@ -1553,6 +1553,14 @@ html[lang="zh-Hant"] .ez-l1,html[lang="zh-Hant"] .ez-l2{letter-spacing:.02em;fon
 .mmenu .mm-swb[aria-checked="true"]{border-color:var(--brand)}
 [data-style="ez"] .mmenu button[aria-current="page"]{color:var(--brand-text)}
 [data-style="ez"] .mmenu button[aria-current="page"]::after{content:"";display:inline-block;width:10px;height:10px;margin-left:14px;border-radius:50%;background:var(--brand);vertical-align:middle}
+
+/* 深色模式：搜尋框、方法說明頂部、配色選單改用跟主題走的表面色（原本寫死白底，深色時字看不到） */
+[data-style="ez"] .cmdk{background:color-mix(in srgb,var(--bg) 35%,transparent)}
+[data-style="ez"] .cmdk-box{background:color-mix(in srgb,var(--surface) 90%,transparent);border-color:var(--line)}
+[data-style="ez"] .cmdk-in input{color:var(--ink)!important;caret-color:var(--brand)}
+[data-style="ez"] .cmdk-in input::placeholder{color:var(--muted)}
+[data-style="ez"] .d-head{background:var(--surface-2)}
+[data-style="ez"] .accent-pop{background:color-mix(in srgb,var(--surface) 92%,transparent);border-color:var(--line)}
 </style>
 </head>
 <body>
