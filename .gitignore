@@ -19,3 +19,7 @@ _data/
 # 本機版本存檔與完整（含私密）資料：不上傳
 versions/
 index-ez.html
+
+# 個人文件（CV、作品 PDF）：不上傳
+about me/
+*.pdf
