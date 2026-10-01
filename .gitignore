@@ -13,6 +13,15 @@ __pycache__/
 _site/
 _data/
 
+# build.py 產生的 GEO 檔案：GitHub Actions 部署時會重新產生，不需要 commit
+/work/
+/methods/
+/llms-full.txt
+/favicon.svg
+/favicon-64.png
+/apple-touch-icon.png
+/avatar.jpg
+
 # 部署設定的暫存副本（請貼到 GitHub 網頁的 .github/workflows/deploy.yml）
 /deploy.yml
 

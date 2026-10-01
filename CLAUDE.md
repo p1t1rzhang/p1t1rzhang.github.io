@@ -16,13 +16,19 @@ Pete's website：https://p1t1rzhang.github.io/ （repo：p1t1rzhang/p1t1rzhang.g
 
 ## 修改流程
 1. 內容改 `src/data/`（`profile.json` 個人資料與案例、`playbook_*.json` 方法論、`taxonomy*.json` / `stat_taxonomy*.json` / `workflow*.json` 知識庫）；前端改 `src/template.html`、`src/*.css`、`src/app_*.js`。不要直接改根目錄的 `index.html`。
-2. 改完執行 `python3 src/build.py` 重新產生 `index.html`（同時產生 og-image.jpg、robots.txt、sitemap.xml、llms.txt）。
+2. 改完執行 `python3 src/build.py` 重新產生 `index.html`（同時產生 og-image.jpg、robots.txt、sitemap.xml、llms.txt；以及不 commit 的 llms-full.txt、`work/`、`methods/` 靜態頁與圖示檔）。
 3. 用瀏覽器實際打開檢查（中／英、手機、深色模式），再告訴 Pete 改了哪些檔案，讓他在 GitHub Desktop 檢查後 commit。
 4. **每次修改完都要附上 commit 摘要**，對應 GitHub Desktop 左下角的兩個欄位，放在程式碼區塊方便複製：
    - **Summary**（必填）：一行、50 字以內，說明這次改了什麼。repo 是公開的：commit 訊息不寫具體數字、公司內部資訊或個人資料，用中性描述（例如「更新關於我的文字」）。
    - **Description**（選填）：條列重點，每行以「- 」開頭，寫改了哪些功能與檔案、需要注意的地方。
    - 若改動包含不相關的多件事，建議拆成幾個 commit，並分別給摘要與對應檔案。
    - Pete 會累積多次修改才一起 commit：每次都直接給**涵蓋所有未 commit 改動的完整新摘要**。
+
+## GEO（讓搜尋引擎與 AI 助理讀得懂、引用得到）
+- 相關程式都在 `src/seo.py`：首頁 JSON-LD（Person、WebSite、ProfilePage、作品與方法論清單、FAQ）、首頁內嵌的中英靜態摘要、每個作品 `work/<id>/` 與方法論 `methods/<id>/` 的獨立靜態頁、robots.txt（明確允許 AI 爬蟲）、sitemap.xml、llms.txt、llms-full.txt。
+- 所有句子都從 `src/data` 組出來（FAQ 也是），改資料就會自動更新；不要在 seo.py 手寫新的經歷或數字。
+- `<head>` 要保持輕量：圖示用檔案、內嵌字型放在頁面後段，讓爬蟲一開頭就讀到 JSON-LD 與內容。
+- 新增作品或方法論時不用改 seo.py；確認 `python3 src/build.py` 後 `work/` 與 `methods/` 有對應資料夾即可。
 
 ## 內容慣例
 - 全站中英雙語（繁體中文為主），右下角一鍵切換。

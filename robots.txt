@@ -1,4 +1,24 @@
+# Pete's website：歡迎搜尋引擎與 AI 助理讀取公開內容
 User-agent: *
 Allow: /
 
+# AI 搜尋與助理（明確允許）
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot
+User-agent: Applebot-Extended
+User-agent: Bingbot
+User-agent: DuckAssistBot
+User-agent: meta-externalagent
+User-agent: CCBot
+Allow: /
+
+# 給 AI 的網站摘要：https://p1t1rzhang.github.io/llms.txt（完整版：https://p1t1rzhang.github.io/llms-full.txt）
 Sitemap: https://p1t1rzhang.github.io/sitemap.xml

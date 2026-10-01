@@ -7,6 +7,7 @@
   data/profile.json                              個人資料與案例（雙語）
   data/playbook_consulting|data|pm.json          三條職能線方法論（雙語）
   data/daily_models.js                           打包時的模型雷達快照
+另外產生：robots.txt、sitemap.xml、llms.txt、llms-full.txt、work/<作品>/、methods/<方法論>/、圖示與頭像檔（見 seo.py）
 用法：python3 src/build.py"""
 import base64, json, os, re, sys
 from pathlib import Path
@@ -82,57 +83,7 @@ def public_profile(p):
     p.pop("resume", None)   # 完整履歷不放進公開網頁，履歷頁改成「寫信索取」
     return p
 
-def _zh(v): return v.get("zh") if isinstance(v, dict) else v
-def _en(v): return v.get("en") if isinstance(v, dict) else v
-def _esc(s): return (str(s or "")).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
-
-FAQ_ZH = [
-  ("張方燡 Pete 是誰？", "Pete 是臺大農業經濟學研究所碩士生，研究應用計量與因果推論，目前在合庫人壽數位與數據部實習，工作橫跨策略顧問、數據分析與專案管理。"),
-  ("Pete 在找什麼樣的機會？", "策略顧問、數據分析師／資料科學、專案或產品管理相關職缺；現在可實習，2027 年起可全職。"),
-  ("Pete 做過哪些專案？", "壽險客群分群與商機估算、連鎖火鍋品牌的 RFM 會員生命週期策略（擔任 8 人組長，第 3 名）、新信用卡成長策略（第 2 名）、Z 世代金融科技企劃、顧問公司的 B2B 開發，以及這個中英雙語資料科學知識庫。"),
-  ("Pete 會用哪些工具與方法？", "SQL、Python（pandas、scikit-learn、XGBoost）、R、Stata、Excel、Tableau；議題樹與 MECE、市場規模估算、損益兩平與情境分析、RFM 分群、假說檢定、A/B 測試與因果推論（DiD、事件研究）。"),
-  ("怎麼聯絡 Pete？", "透過 Email 或 LinkedIn。完整案例拆解與完整履歷可來信索取。"),
-]
-
-def static_home(p, playbook, tax, stat):
-    """給搜尋引擎與 AI 爬蟲的靜態首頁（不執行 JavaScript 也讀得到）；JavaScript 載入後會換成互動版。"""
-    P = p["person"]
-    cases = "".join(f'<li><a href="#case/{c["id"]}"><b>{_esc(_zh(c["title"]))}</b> — {_esc(_zh(c["org"]))}（{_esc(c["period"])}，{_esc(_zh(c["result"]))}）：{_esc(_zh(c["summary"]))}</a></li>' for c in p["cases"])
-    ways = "".join(f'<li><a href="#methods/{t["id"]}"><b>{_esc(_zh(t["name"]))}</b>：{_esc(_zh(t["tagline"]))}</a></li>' for t in playbook)
-    faq = "".join(f"<dt>{_esc(q)}</dt><dd>{_esc(a)}</dd>" for q, a in FAQ_ZH)
-    facts = "".join(f"<li>{_esc(_zh(f['k']))}：{_esc(_zh(f['v']))}</li>" for f in P["facts"])
-    return (f'<div class="seo-static"><h1>{_esc(_zh(P["name"]))}｜{_esc(_zh(P["roles"]))}</h1><p>{_esc(_zh(P["headline"]))}</p><p>{_esc(_zh(P["sub"]))}</p>'
-            f'<ul>{facts}</ul><h2>作品</h2><ul>{cases}</ul><h2>做事的方法</h2><ul>{ways}</ul>'
-            f'<h2>常見問題</h2><dl>{faq}</dl><p>完整案例拆解與完整履歷可來信索取。</p></div>')
-
-def jsonld(p):
-    P = p["person"]
-    links = [c["href"] for c in P["contact"] if c.get("href", "").startswith("http")]
-    person = {"@type": "Person", "@id": "#pete", "name": "Fang-I (Pete) Zhang", "alternateName": ["張方燡", "Pete Zhang", "張方燡 Pete"],
-      "jobTitle": "Strategy, Data Analytics & Project Management", "description": _en(P["headline"]),
-      "address": {"@type": "PostalAddress", "addressLocality": "Taipei", "addressCountry": "TW"},
-      "alumniOf": [{"@type": "CollegeOrUniversity", "name": "National Taiwan University"}, {"@type": "CollegeOrUniversity", "name": "Feng Chia University"}],
-      "knowsAbout": ["Strategy consulting", "Issue trees and MECE", "Market sizing", "Data analytics", "SQL", "Python", "XGBoost", "Customer segmentation (RFM)", "A/B testing", "Causal inference", "Econometrics", "Project management"],
-      "knowsLanguage": ["zh-Hant", "en"], "sameAs": links}
-    site = {"@type": "WebSite", "@id": "#site", "name": "Pete's website", "alternateName": "張方燡 Pete 的個人網站", "inLanguage": ["zh-Hant", "en"], "author": {"@id": "#pete"}}
-    page = {"@type": "ProfilePage", "mainEntity": {"@id": "#pete"}, "isPartOf": {"@id": "#site"}}
-    faq = {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in FAQ_ZH]}
-    return json.dumps({"@context": "https://schema.org", "@graph": [person, site, page, faq]}, ensure_ascii=False)
-
-def seo_files(p, site):
-    """robots.txt、sitemap.xml、llms.txt（給 AI 搜尋引擎的網站摘要）"""
-    base = site or "https://p1t1rzhang.github.io/"
-    (OUT.parent / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {base}sitemap.xml\n", encoding="utf-8")
-    (OUT.parent / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n  <url><loc>{base}</loc>'
-        f'<xhtml:link rel="alternate" hreflang="zh-Hant" href="{base}"/><xhtml:link rel="alternate" hreflang="en" href="{base}?lang=en"/></url>\n</urlset>\n', encoding="utf-8")
-    P = p["person"]
-    lines = [f"# 張方燡 Pete（Fang-I Zhang）", "", f"> {_zh(P['headline'])} {_en(P['headline'])}", "",
-             f"- {_zh(P['sub'])}", f"- {_en(P['sub'])}", f"- 專長 / Focus: {_zh(P['roles'])} · {_en(P['roles'])}", f"- 狀態 / Status: {_zh(P['status'])}", "",
-             "## 作品 / Work (summaries only; full write-ups on request)"]
-    lines += [f"- [{_zh(c['title'])} / {_en(c['title'])}]({base}#case/{c['id']}): {_en(c['summary'])}" for c in p["cases"]]
-    lines += ["", "## 方法論 / Playbooks", f"- [管顧思維 Consulting]({base}#methods/consulting)", f"- [數據分析與資料科學 Data]({base}#methods/data)", f"- [專案管理 PM]({base}#methods/pm)",
-              "", "## 聯絡 / Contact"] + [f"- {c['label']}: {c['href']}" for c in P["contact"] if c.get("href")]
-    (OUT.parent / "llms.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
+import seo   # 給搜尋引擎與 AI 助理（GEO）的內容：結構化資料、靜態頁、robots / sitemap / llms.txt
 
 def case_sort_key(c):
     """期間字串 → (結束, 開始)。'2026.07 –' 進行中視為最新；只有年份的視為該年 0 月。"""
@@ -159,6 +110,7 @@ def main():
         print("❌", e); return 1
     html = (SRC / "template.html").read_text(encoding="utf-8")
     if STYLE == "ez": html = html.replace('<html lang="zh-Hant">', '<html lang="zh-Hant" data-style="ez">', 1).replace("family=Schibsted+Grotesk:wght@400..900", "family=Noto+Serif+TC:wght@400;600;900")
+    fonts_css = ""
     css = "\n".join((SRC / f).read_text(encoding="utf-8") for f in ("tokens.css", "legacy.css", "styles.css", "design.css") + (("ez.css",) if STYLE == "ez" else ()))
     if STYLE == "ez":   # 內嵌拉丁字型（Playfair Display、Inter），離線也能顯示正確字型
         fd = SRC / "vendor" / "fonts"; faces = []
@@ -168,27 +120,28 @@ def main():
             p = fd / f"{fn}.woff2"
             if p.exists():
                 faces.append(f'@font-face{{font-family:"{fam}";font-style:{st};font-weight:{w};font-display:swap;src:url(data:font/woff2;base64,{base64.b64encode(p.read_bytes()).decode()}) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215}}')
-        css = "\n".join(faces) + "\n" + css
+        fonts_css = "\n".join(faces)   # 字型放在頁面後段：讓搜尋引擎與 AI 一打開就先讀到內容
     app = "\n".join((SRC / f).read_text(encoding="utf-8") for f in ("app_core.js", "app_kb.js", "app_pages.js", "app_home.js", "app_ez.js", "app_boot.js"))
     av = SRC / "vendor" / "avatar.jpg"   # 個人簡介頭像（大頭照）
     app = app.replace("__AVATAR_SRC__", ("data:image/jpeg;base64," + __import__("base64").b64encode(av.read_bytes()).decode()) if av.exists() else "")
     k_css, k_js = katex_assets()
+    site = os.environ.get("SITE_URL", "https://p1t1rzhang.github.io/").strip() or "https://p1t1rzhang.github.io/"   # 正式網址（結構化資料與分享預覽圖需要完整網址）
+    n = sum(1 for _ in leaves(tax)) + sum(1 for _ in leaves(stat))
     daily = (DATA / "daily_models.js").read_text(encoding="utf-8").replace("</", "<\\/") if (DATA / "daily_models.js").exists() else ""
     rep = {
         "/*__KATEX_CSS__*/": k_css, "/*__KATEX_JS__*/": k_js, "/*__CSS__*/": css.replace("</", "<\\/"), "/*__APP__*/": app.replace("</script", "<\\/script"),
         "/*__TAX_ZH__*/": blob(tax), "/*__TAX_EN__*/": blob(tax_en), "/*__STAT_ZH__*/": blob(stat), "/*__STAT_EN__*/": blob(stat_en),
-        "/*__WF_ZH__*/": blob(wf), "/*__WF_EN__*/": blob(wf_en), "/*__PROFILE__*/": blob(profile), "/*__PLAYBOOK__*/": blob(playbook), "/*__DAILY__*/": daily, "/*__JSONLD__*/": jsonld(profile).replace("</", "<\\/"), "/*__STATIC_HOME__*/": static_home(profile, playbook, tax, stat),
+        "/*__WF_ZH__*/": blob(wf), "/*__WF_EN__*/": blob(wf_en), "/*__PROFILE__*/": blob(profile), "/*__PLAYBOOK__*/": blob(playbook), "/*__DAILY__*/": daily, "/*__FONTS__*/": fonts_css,
+        "/*__JSONLD__*/": seo.home_jsonld(profile, playbook, site, n, seo.today()).replace("</", "<\\/"), "/*__STATIC_HOME__*/": seo.static_home(profile, playbook, n),
     }
     for k, v in rep.items():
         if k not in html: print(f"❌ 樣板中找不到 {k}"); return 1
         html = html.replace(k, v, 1)
-    site = os.environ.get("SITE_URL", "https://p1t1rzhang.github.io/").strip()   # 正式網址（分享預覽圖需要完整網址）
     og = SRC / "vendor" / "og-image.jpg"
     if og.exists(): (OUT.parent / "og-image.jpg").write_bytes(og.read_bytes())   # 分享預覽圖放在網頁旁邊
-    html = html.replace("__SITE_URL__", site)
-    if not site: html = html.replace('<meta property="og:url" content="">\n', "")
+    html = html.replace("__SITE_URL__", site).replace("__N_METHODS__", str(n))
     OUT.write_text(html, encoding="utf-8")
-    seo_files(profile, site)
+    seo.write_all(OUT.parent, profile, playbook, site, n, SRC / "vendor")   # robots、sitemap、llms(-full).txt、作品與方法論靜態頁、圖示
     print(f"✅ 已產生 {OUT.name}：{sum(1 for _ in leaves(tax))} + {sum(1 for _ in leaves(stat))} 個方法、{len(profile['cases'])} 個案例、"
           f"{sum(len(t['items']) for t in playbook)} 張方法論卡，{OUT.stat().st_size/1024:.0f} KB")
     return 0
