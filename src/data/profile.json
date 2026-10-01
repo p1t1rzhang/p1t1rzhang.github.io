@@ -29,12 +29,12 @@
   "bio": {
    "zh": [
     "我大學讀財金，現在在臺大農經所做應用機器學習、應用計量與因果推論，論文研究「ChatGPT 等 AI 模型對股票的衝擊與 AI 概念股報酬」。",
-    "我習慣先寫下最可能的答案，再用議題樹拆成可以驗證的假設，最後用 SQL、Python 和統計方法把答案算出來，轉成決策者能直接行動的建議。",
+    "我習慣先寫下最可能的假說，再用議題樹拆成可以驗證的子假設，最後用 SQL、Python 和統計方法把答案算出來，轉成決策者能直接行動的建議。",
     "在合庫人壽，我用這套方法為數位通路找出優先客群並估算商機；在 TMBA，我帶 8 人團隊一個月跑完 4 個衝刺，為連鎖火鍋品牌設計會員分群策略，拿到第 3 名。這個網站本身也是我的作品：一個中英雙語的資料科學知識庫，加上每天挑選 AI 新模型的評分雷達。"
    ],
    "en": [
     "I studied finance in college and now work on applied machine learning, applied econometrics and causal inference at National Taiwan University. My thesis studies how ChatGPT and other AI models have moved stock prices, and the returns of AI-concept stocks.",
-    "I start by writing down the most likely answer, break it into testable hypotheses with an issue tree, then use SQL, Python and statistics to get to the number, and turn it into a recommendation a decision-maker can act on.",
+    "I start by writing down the most likely hypothesis, break it into testable sub-hypotheses with an issue tree, then use SQL, Python and statistics to get to the number, and turn it into a recommendation a decision-maker can act on.",
     "At BNP Paribas Cardif I use this approach to find priority segments and size the opportunity for digital channels. At TMBA I led an 8-person team through 4 sprints in a month to design a membership segmentation strategy for a hot-pot chain, placing 3rd. This website is also my work: a bilingual data-science knowledge base plus a scoring radar that picks the most interesting new AI models every day."
    ]
   },

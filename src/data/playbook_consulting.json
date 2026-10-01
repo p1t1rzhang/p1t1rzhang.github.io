@@ -9,8 +9,8 @@
   "en": "For: Strategy Consultant"
  },
  "tagline": {
-  "zh": "先有答案、再找證據：把模糊問題變成可驗證、可量化的決策。",
-  "en": "Answer first, then prove it: turn fuzzy problems into testable, quantified decisions."
+  "zh": "先有假說、再找證據：把模糊問題變成可驗證、可量化的決策。",
+  "en": "Hypothesis first, then evidence: turn fuzzy problems into testable, quantified decisions."
  },
  "intro": {
   "zh": "顧問的價值不在蒐集多少資料，而在多快收斂到對的問題，並給出可驗證、可量化的答案。以下七張卡片來自撈王會員成長、信用卡新產品策略、壽險數位通路等實際專案：用假設驅動拆解問題、用數字逼出取捨、用金字塔結構讓高層一分鐘內做決定。",
@@ -19,12 +19,12 @@
  "principles": [
   {
    "zh": [
-    "答案先行",
-    "第一天就寫下最可能的答案，再用資料證明或推翻它。"
+    "假說先行",
+    "第一天就寫下最可能的假說，再用資料證明或推翻它。"
    ],
    "en": [
-    "Answer first",
-    "Write down the most likely answer on Day 1, then let data prove or kill it."
+    "Hypothesis first",
+    "Write down the most likely hypothesis on Day 1, then let data prove or kill it."
    ]
   },
   {
@@ -56,8 +56,8 @@
     "en": "Hypothesis-Driven Problem Solving"
    },
    "oneLiner": {
-    "zh": "第一天就提出答案，用最少的分析證明或推翻它，快速迭代。",
-    "en": "Put a Day-1 answer on the table, then use the fewest analyses needed to prove or kill it, and iterate."
+    "zh": "第一天就提出假說，用最少的分析證明或推翻它，快速迭代。",
+    "en": "Put a Day-1 hypothesis on the table, then use the fewest analyses needed to prove or kill it, and iterate."
    },
    "when": {
     "zh": [
@@ -74,14 +74,14 @@
    "steps": {
     "zh": [
      "把問題寫成一句可回答的關鍵問題：誰、做什麼決定、何時",
-     "寫下 Day-1 答案，拆成 3–5 個可被推翻的子假設",
+     "寫下 Day-1 假說，拆成 3–5 個可被推翻的子假設",
      "替每個假設寫下「什麼證據會推翻它」，再決定跑哪個分析",
      "先做最便宜、最能分辨真偽的分析，每週更新假設清單",
      "被推翻就換掉，絕不為了保住假設而挑資料"
     ],
     "en": [
      "Write the key question as one answerable sentence: who decides what, by when",
-     "Draft a Day-1 answer and split it into 3–5 falsifiable sub-hypotheses",
+     "Draft a Day-1 hypothesis and split it into 3–5 falsifiable sub-hypotheses",
      "For each, write down what evidence would kill it, then pick the analysis",
      "Run the cheapest, most discriminating analysis first; refresh the list weekly",
      "Drop what gets disproven; never cherry-pick data to save a hypothesis"
@@ -92,8 +92,8 @@
     "en": "New credit-card strategy: the team split 'what will make the card lift spend?' into 3 hypotheses (tiered rewards, campaign events, product design) and tested 12 Likert items (n = 291) with one-tailed one-sample t-tests against the neutral midpoint of 3. All three held at p < .001; tiered rewards was strongest (M = 3.86).\nLaowang started the same way from 5 hypotheses (e.g. an afternoon-tea occasion gap, the trial-guest first visit); strategies such as trial-guest CRM and the afternoon soup-tasting mini-pot were derived from them."
    },
    "template": {
-    "zh": "關鍵問題：〔誰〕應如何〔做什麼〕，才能在〔期限〕前達成〔目標〕？\nDay-1 答案：……\nH1：…… → 推翻條件：…… → 驗證分析：……\nH2：…… → 推翻條件：…… → 驗證分析：……\nH3：…… → 推翻條件：…… → 驗證分析：……\n本週先做：……（成本低、區分力高）",
-    "en": "Key question: How should [who] [do what] to reach [goal] by [when]?\nDay-1 answer: …\nH1: … → Killed if: … → Test: …\nH2: … → Killed if: … → Test: …\nH3: … → Killed if: … → Test: …\nDo first this week: … (cheap, highly discriminating)"
+    "zh": "關鍵問題：〔誰〕應如何〔做什麼〕，才能在〔期限〕前達成〔目標〕？\nDay-1 假說：……\nH1：…… → 推翻條件：…… → 驗證分析：……\nH2：…… → 推翻條件：…… → 驗證分析：……\nH3：…… → 推翻條件：…… → 驗證分析：……\n本週先做：……（成本低、區分力高）",
+    "en": "Key question: How should [who] [do what] to reach [goal] by [when]?\nDay-1 hypothesis: …\nH1: … → Killed if: … → Test: …\nH2: … → Killed if: … → Test: …\nH3: … → Killed if: … → Test: …\nDo first this week: … (cheap, highly discriminating)"
    },
    "pitfalls": {
     "zh": [

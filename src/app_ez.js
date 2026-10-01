@@ -3,8 +3,8 @@
    往下滑時球慢慢旋轉、放大、散開，段落依序揭露。
    只有在 <html data-style="ez"> 時啟用（build.py 以 STYLE=ez 產生）。 */
 const IS_EZ = document.documentElement.dataset.style === "ez";
-Object.assign(UI.zh, { ezL1:"問題，", ezL2:"用數據回答。", ezQuote:"「先寫下答案，再用資料證明它。」", ezScroll:"往下滑" });
-Object.assign(UI.en, { ezL1:"Questions,", ezL2:"answered.", ezQuote:"“Write the answer first, then prove it with data.”", ezScroll:"Scroll" });
+Object.assign(UI.zh, { ezL1:"問題，", ezL2:"用數據回答。", ezQuote:"「先寫下假說，再用資料證明它。」", ezScroll:"往下滑" });
+Object.assign(UI.en, { ezL1:"Questions,", ezL2:"answered.", ezQuote:"“Start with a hypothesis, then prove it with data.”", ezScroll:"Scroll" });
 
 /* ── 針對職缺的連結：?for=consulting|data|pm（可加 &co=公司名）
    例：/?for=consulting&co=BCG → 首頁先秀顧問角色、作品篩顧問相關、履歷預設顧問版，並顯示「為 BCG 準備」 */
