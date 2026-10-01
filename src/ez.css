@@ -270,3 +270,14 @@ html[lang="zh-Hant"] .ez-l1,html[lang="zh-Hant"] .ez-l2{letter-spacing:.02em;fon
 :root[data-style="ez"][data-accent="purple"]{--brand:#594F63;--brand-2:#6B5F78;--brand-deep:#3A3342;--brand-text:#594F63;--pink:#E2DAEC;--pink-2:#F2EEF7;--pink-3:#CBBFDB;--pink-ink:#4A3F57;--on-brand:#FFFFFF;--mark:#EEE8F5;--code-bg:#2A2531;--ez-pink:#9B87C2}
 :root[data-style="ez"][data-accent="purple"][data-theme="dark"]{--brand:#7D6E91;--brand-2:#9283A8;--brand-deep:#241F2B;--brand-text:#CBBEDD;--pink:#2E2836;--pink-2:#221E28;--pink-3:#463D52;--pink-ink:#D9CEE8;--on-brand:#FFFFFF;--mark:#2E2836;--code-bg:#15121A;--ez-pink:#B5A3D6}
 @media (prefers-color-scheme: dark){:root[data-style="ez"][data-accent="purple"]:not([data-theme="light"]){--brand:#7D6E91;--brand-2:#9283A8;--brand-deep:#241F2B;--brand-text:#CBBEDD;--pink:#2E2836;--pink-2:#221E28;--pink-3:#463D52;--pink-ink:#D9CEE8;--on-brand:#FFFFFF;--mark:#2E2836;--code-bg:#15121A;--ez-pink:#B5A3D6}}
+
+/* 手機選單裡的配色列 */
+.mmenu{flex-direction:column;justify-content:center;align-items:flex-start}
+.mm-accent{margin-top:36px}
+.mm-accent-h{display:block;font:600 12px/1 var(--font-sans);letter-spacing:.24em;opacity:.65;margin-bottom:12px}
+.mm-sw{display:flex;gap:12px;flex-wrap:wrap}
+.mmenu .mm-swb{width:44px;height:44px;padding:4px;border-radius:50%;border:2px solid transparent;background:none;font:inherit;line-height:0;display:grid;place-items:center}
+.mm-swb .swatch{width:30px;height:30px}
+.mmenu .mm-swb[aria-checked="true"]{border-color:var(--brand)}
+[data-style="ez"] .mmenu button[aria-current="page"]{color:var(--brand-text)}
+[data-style="ez"] .mmenu button[aria-current="page"]::after{content:"";display:inline-block;width:10px;height:10px;margin-left:14px;border-radius:50%;background:var(--brand);vertical-align:middle}

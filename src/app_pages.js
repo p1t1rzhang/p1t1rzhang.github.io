@@ -464,10 +464,13 @@ function applyAccent(id){
 function renderAccentPop(){
   const cur = document.documentElement.getAttribute("data-accent") || "burgundy";
   $("#accentPop").innerHTML = `<div class="ap-h">${t("accent")}</div>` + ACCENTS.map(a => `<button class="accent-opt" role="menuitemradio" aria-checked="${a.id === cur}" data-accent="${a.id}"><span class="swatch" style="--sw-main:${a.main};--sw-sub:${a.sub}"></span><span><b>${a.name[isEN() ? 1 : 0]}</b><small>${a.en}</small></span><span class="ck">✓</span></button>`).join("");
+  const mm = $("#mmAccent");   // 手機選單裡的配色（小螢幕的頁首放不下配色按鈕）
+  if (mm) mm.innerHTML = ACCENTS.map(a => `<button class="mm-swb" role="radio" aria-checked="${a.id === cur}" data-accent="${a.id}" aria-label="${a.name[isEN() ? 1 : 0]}" title="${a.name[isEN() ? 1 : 0]}"><span class="swatch" style="--sw-main:${a.main};--sw-sub:${a.sub}"></span></button>`).join("");
 }
 const accentPop = $("#accentPop"), accentBtn = $("#accentBtn");
 function toggleAccent(open){ accentPop.classList.toggle("open", open); accentBtn.setAttribute("aria-expanded", open ? "true" : "false"); }
 accentBtn.onclick = e => { e.stopPropagation(); toggleAccent(!accentPop.classList.contains("open")); };
+document.addEventListener("click", e => { const b = e.target.closest("#mmAccent .mm-swb"); if (!b) return; e.stopPropagation(); applyAccent(b.dataset.accent); store.set("ml.accent", b.dataset.accent); });
 accentPop.onclick = e => { const b = e.target.closest(".accent-opt"); if (!b) return; applyAccent(b.dataset.accent); store.set("ml.accent", b.dataset.accent); toggleAccent(false); accentBtn.focus(); };
 document.addEventListener("click", e => { if (!e.target.closest(".accent-wrap")) toggleAccent(false); });
 function applyTheme(x){ if (x) document.documentElement.setAttribute("data-theme", x); else document.documentElement.removeAttribute("data-theme"); }
