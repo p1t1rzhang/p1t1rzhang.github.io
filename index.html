@@ -3052,11 +3052,10 @@ function setLang(l){
 $("#langBtn").onclick = () => setLang(isEN() ? "zh" : "en");
 
 
-/* 一鍵回到最上面：往下捲超過一個畫面高度才出現 */
+/* 一鍵回到最上面：電腦與手機都一直顯示 */
 (() => {
   const btn = $("#toTop"); if (!btn) return;
-  const sync = () => btn.classList.toggle("show", window.scrollY > window.innerHeight * 0.8);
-  addEventListener("scroll", sync, {passive:true}); addEventListener("resize", sync); sync();
+  btn.classList.add("show");   // 不論捲到哪裡都一直顯示
   btn.addEventListener("click", () => window.scrollTo({top:0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"}));
 })();
 
