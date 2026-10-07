@@ -308,3 +308,24 @@ html[lang="zh-Hant"] .ez-l1,html[lang="zh-Hant"] .ez-l2{letter-spacing:.02em;fon
 .to-top:hover{color:var(--brand-text)}
 @media print{.to-top{display:none!important}}
 @media (max-width:760px){.to-top{width:46px;height:46px;right:16px;bottom:calc(max(18px,env(safe-area-inset-bottom)) + 74px)}}
+
+/* ═════ 關於我：簡報範例 ═════ */
+.slides-sec{margin-top:56px}
+.slides-lede{margin:-6px 0 18px;font-size:14.5px}
+.slide-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.slide-card{display:flex;flex-direction:column;padding:0;border:1px solid var(--line);border-radius:18px;background:var(--surface);overflow:hidden;text-align:left;cursor:zoom-in;color:inherit;font:inherit;transition:transform .2s,box-shadow .2s,border-color .2s}
+.slide-card:hover{transform:translateY(-3px);border-color:var(--pink-3);box-shadow:0 14px 30px -18px rgba(var(--shadow-rgb),.35)}
+.slide-card:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+.slide-frame{display:flex;align-items:center;justify-content:center;aspect-ratio:16/10;background:var(--surface-2);border-bottom:1px solid var(--line)}
+.slide-frame img{display:block;max-width:100%;max-height:100%;width:100%;object-fit:contain}
+.slide-cap{display:flex;flex-direction:column;gap:4px;padding:12px 14px 14px}
+.slide-cap b{font-size:15px;line-height:1.35;color:var(--ink)}
+.slide-cap small{font-size:12.5px;line-height:1.4;color:var(--muted)}
+.slide-lb{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(14,14,14,.82);cursor:zoom-out}
+.slide-lb.open{display:flex}
+.slide-lb figure{margin:0;max-width:min(1280px,100%);display:flex;flex-direction:column;align-items:center;gap:12px}
+.slide-lb img{max-width:100%;max-height:82vh;border-radius:10px;background:#fff;cursor:default;box-shadow:0 20px 60px rgba(0,0,0,.45)}
+.slide-lb figcaption{color:#F1F1F1;font-size:14px;text-align:center;line-height:1.5}
+.slide-lb-x{position:absolute;top:16px;right:18px;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;font-size:26px;line-height:1;cursor:pointer}
+@media (max-width:900px){.slide-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.slide-grid{grid-template-columns:1fr}.slide-lb{padding:12px}}

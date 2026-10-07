@@ -34,6 +34,7 @@ Pete's website：https://p1t1rzhang.github.io/ （repo：p1t1rzhang/p1t1rzhang.g
 - 全站中英雙語（繁體中文為主），右下角一鍵切換。
 - 作品依日期排序（最新在前）；`tail` 欄位可指定放在最後的作品。開源練習專案用 `repo` 欄位連到 GitHub。
 - 履歷不公開，履歷頁只放「寫信索取」。
+- 「關於我」的簡報範例：圖片放 `src/vendor/slides/`（原始投影片、不修改），清單與說明寫在 `profile.json` 的 `slides`；建置時只把清單有列出的圖片複製到網站的 `slides/`。
 - 雷達資料：只有 Mac 執行 `start_server.command` 時才抓新資料；公開網站的資料在推送 `main`、每日排程或手動 Run workflow 時更新。
 - 每個演算法／方法：`plain`（白話直覺）放最前面；`intuition`、`objective`（公式）、`complexity` 放在最後的「數學細節（進階）」。
 - 公式用 LaTeX 包在 `$…$`，JSON 中反斜線寫兩次。

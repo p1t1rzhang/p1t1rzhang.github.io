@@ -1446,5 +1446,55 @@
     "en": "Professional working proficiency"
    }
   }
+ ],
+ "slides": [
+  {
+   "img": "slides/hypothesis.jpg",
+   "r": "4/3",
+   "title": {
+    "zh": "假說驅動分析：從直覺到數據落地",
+    "en": "Hypothesis-driven analysis: from intuition to data"
+   },
+   "from": {
+    "zh": "合庫人壽 數位與數據部 實習專案",
+    "en": "Internship project, BNP Paribas Cardif TCB Life"
+   }
+  },
+  {
+   "img": "slides/funnel.jpg",
+   "r": "4/3",
+   "title": {
+    "zh": "轉換漏斗：更精準的市場規模估算",
+    "en": "Conversion funnel: a sharper way to size the market"
+   },
+   "from": {
+    "zh": "合庫人壽 數位與數據部 實習專案",
+    "en": "Internship project, BNP Paribas Cardif TCB Life"
+   }
+  },
+  {
+   "img": "slides/two-stages.jpg",
+   "r": "4/3",
+   "title": {
+    "zh": "實習兩階段：從商業洞察到數據建模",
+    "en": "Two internship phases: from business insight to data modeling"
+   },
+   "from": {
+    "zh": "合庫人壽 暑期實習心得報告",
+    "en": "Internship report, BNP Paribas Cardif TCB Life"
+   }
+  },
+  {
+   "img": "slides/insight.jpg",
+   "r": "4/3",
+   "title": {
+    "zh": "以影響力 × 可行性，找出更高層次的 Insight",
+    "en": "Impact × feasibility: where higher-level insight sits"
+   },
+   "from": {
+    "zh": "合庫人壽 暑期實習心得報告",
+    "en": "Internship report, BNP Paribas Cardif TCB Life"
+   }
+  }
  ]
 }

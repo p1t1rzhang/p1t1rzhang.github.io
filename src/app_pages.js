@@ -267,8 +267,36 @@ function renderAbout(){
         <div class="card skill-box"><h3>${t("langT")}</h3><div class="chips">${PROFILE.languages.map(l => `<span class="chip">${esc(tx(l.n))} · ${esc(tx(l.l))}</span>`).join("")}</div></div>
         <button class="btn primary" data-view="resume">${ic("mail", 16)}${t("heroCta2")}</button>
       </aside>
-    </div>`;
+    </div>
+    ${slidesSection()}`;
 }
+/* 簡報範例：原始投影片圖片，點一下放大 */
+function slidesSection(){
+  const S = PROFILE.slides || [];
+  if (!S.length) return "";
+  return `<section class="slides-sec">
+      <div class="section-title"><h2>${t("slidesT")}</h2></div>
+      <p class="muted slides-lede">${t("slidesLede")}</p>
+      <div class="slide-grid">${S.map((s, i) => `<button class="slide-card" data-slide="${i}" aria-label="${esc(tx(s.title))}">
+        <span class="slide-frame"><img src="${esc(s.img)}" alt="${esc(tx(s.title))}" loading="lazy" decoding="async" style="aspect-ratio:${esc(s.r || "16/9")}"></span>
+        <span class="slide-cap"><b>${esc(tx(s.title))}</b><small>${esc(tx(s.from))}</small></span></button>`).join("")}</div>
+    </section>`;
+}
+function openSlide(i){
+  const s = (PROFILE.slides || [])[i]; if (!s) return;
+  let lb = $("#slideLb");
+  if (!lb){
+    lb = document.createElement("div"); lb.id = "slideLb"; lb.className = "slide-lb"; lb.setAttribute("role", "dialog"); lb.setAttribute("aria-modal", "true");
+    lb.innerHTML = `<button class="slide-lb-x" aria-label="${t("slideClose")}">×</button><figure><img alt=""><figcaption></figcaption></figure>`;
+    lb.addEventListener("click", e => { if (!e.target.closest("img")) closeSlide(); });
+    document.body.appendChild(lb);
+  }
+  lb.querySelector("img").src = s.img; lb.querySelector("img").alt = tx(s.title);
+  lb.querySelector("figcaption").innerHTML = `<b>${esc(tx(s.title))}</b> · ${esc(tx(s.from))}`;
+  lb.querySelector(".slide-lb-x").setAttribute("aria-label", t("slideClose"));
+  lb.classList.add("open"); document.body.style.overflow = "hidden"; lb.querySelector(".slide-lb-x").focus();
+}
+function closeSlide(){ const lb = $("#slideLb"); if (lb && lb.classList.contains("open")){ lb.classList.remove("open"); document.body.style.overflow = ""; } }
 
 /* ═════════════════════════ 網頁版履歷 ═════════════════════════ */
 function renderResume(){
@@ -438,12 +466,13 @@ document.addEventListener("click", e => {
   const gt = el.closest("[data-goto-track]"); if (gt){ go("methods/" + gt.dataset.gotoTrack); return; }
   const rs = el.closest("[data-resume]"); if (rs){ go("resume/" + rs.dataset.resume); return; }
   const wf = el.closest("[data-wf-filter]"); if (wf){ state.workFilter = wf.dataset.wfFilter; go("work"); return; }
+  const sc = el.closest("[data-slide]"); if (sc){ openSlide(+sc.dataset.slide); return; }
   if (el.closest("[data-top]")) window.scrollTo({top:0, behavior:"smooth"});
 });
 document.addEventListener("keydown", e => {
   if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k"){ e.preventDefault(); $("#cmdk").classList.contains("open") ? closeSearch() : openSearch(); }
   else if (e.key === "/" && !/input|textarea|select/i.test(document.activeElement.tagName)){ e.preventDefault(); openSearch(); }
-  else if (e.key === "Escape"){ if ($("#cmdk").classList.contains("open")) closeSearch(); else if ($("#drawer").classList.contains("open")) closeDrawer(); }
+  else if (e.key === "Escape"){ if ($("#slideLb") && $("#slideLb").classList.contains("open")) closeSlide(); else if ($("#cmdk").classList.contains("open")) closeSearch(); else if ($("#drawer").classList.contains("open")) closeDrawer(); }
 });
 
 /* ═════════════════════════ 配色、深淺色、語言 ═════════════════════════ */

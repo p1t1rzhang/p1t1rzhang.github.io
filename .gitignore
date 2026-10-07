@@ -16,6 +16,7 @@ _data/
 # build.py 產生的 GEO 檔案：GitHub Actions 部署時會重新產生，不需要 commit
 /work/
 /methods/
+/slides/
 /llms-full.txt
 /favicon.svg
 /favicon-64.png

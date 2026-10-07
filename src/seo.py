@@ -374,6 +374,12 @@ def write_all(root: Path, p, playbook, base, n, vendor: Path):
     for b in playbook:
         d = root / "methods" / b["id"]; d.mkdir(parents=True, exist_ok=True)
         (d / "index.html").write_text(playbook_page(b, p, base, date), encoding="utf-8")
+    sl = vendor / "slides"   # 關於我的簡報範例：只複製 profile.json 的 slides 有列出的圖片
+    names = {s["img"].split("/")[-1] for s in p.get("slides", [])}
+    if names:
+        (root / "slides").mkdir(exist_ok=True)
+        for n in names:
+            if (sl / n).exists(): (root / "slides" / n).write_bytes((sl / n).read_bytes())
     for src, dst in (("favicon.svg", "favicon.svg"), ("favicon-64.png", "favicon-64.png"), ("favicon-180.png", "apple-touch-icon.png"), ("avatar.jpg", "avatar.jpg")):
         if (vendor / src).exists(): (root / dst).write_bytes((vendor / src).read_bytes())
     return date
