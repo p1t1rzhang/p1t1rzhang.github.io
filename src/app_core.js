@@ -32,7 +32,7 @@ zh: {
   how:[["01","定義問題","先問「這會改變誰的哪個決策」，寫下第一天的假設答案。"],["02","拆成假設","用 MECE 議題樹拆成可以被資料證明或推翻的子問題。"],["03","用資料驗證","SQL、Python、統計檢定與模型，回答「多可信、多大、為什麼」。"],["04","轉成決策","先講結論，給出優先順序、門檻與下一步，並設計怎麼量成效。"]],
   featTitle:"精選案例", featMore:"全部案例 →",
   kbTitle:"這個網站本身也是作品", kbHint:"我把學過、用過的方法整理成一個會自己更新的知識庫",
-  contactTitle:"一起聊聊？", contactText:"正在尋找策略顧問、數據分析／資料科學與專案管理相關的機會。",
+  contactTitle:"一起聊聊？", contactText:"積極尋找商業企劃、數據分析與策略相關職缺。",
   /* 案例 */
   workEyebrow:"Case Studies", workTitle:"作品案例", workLede:"每個案例都用同一套結構呈現：30 秒摘要（SCQA）→ 議題樹 → 我怎麼做 → 發現與建議 → 如果重做一次。內部數字已依隱私原則移除。",
   all:"全部", readCase:"閱讀案例 →", caseCount:"個案例",
@@ -142,7 +142,7 @@ en: {
   how:[["01","Frame","Ask which decision this changes, and write down a Day-1 hypothesis."],["02","Decompose","Break it into a MECE issue tree of sub-questions data can prove or disprove."],["03","Validate","SQL, Python, statistical tests and models answer how sure, how big and why."],["04","Decide","Lead with the answer: priorities, thresholds, next steps — and how to measure impact."]],
   featTitle:"Featured cases", featMore:"All cases →",
   kbTitle:"This site is part of the portfolio", kbHint:"Everything I have learned and used, organized into a knowledge base that keeps itself current",
-  contactTitle:"Let's talk", contactText:"I'm looking for roles in strategy consulting, data analytics / data science and project management.",
+  contactTitle:"Let's talk", contactText:"Actively seeking roles in commercial planning, data analytics, and strategy.",
   workEyebrow:"Case Studies", workTitle:"Case studies", workLede:"Every case uses the same structure: a 30-second SCQA summary → issue tree → what I did → findings and recommendations → what I'd do differently. Internal figures are removed for confidentiality.",
   all:"All", readCase:"Read the case →", caseCount:"cases",
   scqaTitle:"30-second summary", scqaHint:"Situation → Complication → Question → Answer", S:"Situation", C:"Complication", Q:"Question", A:"Answer",

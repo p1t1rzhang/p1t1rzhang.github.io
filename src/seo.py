@@ -306,7 +306,7 @@ def sitemap(p, playbook, base, date):
 
 def llms(p, playbook, base, n):
     P = p["person"]
-    lines = ["# 張方燡 Pete（Fang-I (Pete) Zhang）", "", f"> {_en(P['headline'])} {_en(P['sub'])}. Open to: {_en(P['status']).replace('Open to ', '')}.", "",
+    lines = ["# 張方燡 Pete（Fang-I (Pete) Zhang）", "", f"> {_en(P['headline'])} {_en(P['sub'])}. {_en(P['status'])}.", "",
              f"{_zh(P['headline'])} {_zh(P['sub'])}。{_zh(P['status'])}。", ""]
     lines += [f"- {_en(f['k'])}: {_en(f['v'])}" for f in P["facts"]]
     lines += [f"- Location: {_en(P['location'])}", f"- Focus: {_en(P['roles'])}（{_zh(P['roles'])}）", "",

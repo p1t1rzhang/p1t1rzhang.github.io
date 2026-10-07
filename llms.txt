@@ -1,8 +1,8 @@
 # 張方燡 Pete（Fang-I (Pete) Zhang）
 
-> I turn ambiguous business questions into testable hypotheses, then answer them with data. MS candidate, National Taiwan University · Digital & Data Intern, BNP Paribas Cardif TCB Life. Open to: strategy consulting, data analytics / data science and project management roles.
+> I turn ambiguous business questions into testable hypotheses, then answer them with data. MS candidate, National Taiwan University · Digital & Data Intern, BNP Paribas Cardif TCB Life. Actively seeking roles in commercial planning, data analytics, and strategy.
 
-把模糊的商業問題，拆成可以驗證的假設，再用數據給出答案。 臺大農業經濟學研究所碩士生｜合庫人壽 數位與數據部實習生。正在尋找策略顧問、數據分析／資料科學、專案管理相關機會。
+把模糊的商業問題，拆成可以驗證的假設，再用數據給出答案。 臺大農業經濟學研究所碩士生｜合庫人壽 數位與數據部實習生。積極尋找商業企劃、數據分析與策略相關職缺。
 
 - Now: MS, National Taiwan University (expected Jun 2027)
 - Interning at: BNP Paribas Cardif TCB Life, Digital & Data
@@ -29,7 +29,7 @@
 
 ## FAQ
 - **Who is Fang-I (Pete) Zhang?** Fang-I (Pete) Zhang: MS candidate, National Taiwan University · Digital & Data Intern, BNP Paribas Cardif TCB Life. Research: Applied machine learning, applied econometrics, causal inference, financial risk models. I turn ambiguous business questions into testable hypotheses, then answer them with data.
-- **What roles is Pete looking for?** Open to strategy consulting, data analytics / data science and project management roles. Currently: MS, National Taiwan University (expected Jun 2027), based in Taipei, Taiwan.
+- **What roles is Pete looking for?** Actively seeking roles in commercial planning, data analytics, and strategy. Currently: MS, National Taiwan University (expected Jun 2027), based in Taipei, Taiwan.
 - **What has Pete worked on?** 9 projects: Life insurance digital channel; This site; Hot-pot chain; E.SUN Origin; New credit card; Summer project internship; Data preprocessing pipeline; Local RAG; US ETF momentum backtest. Each has a public summary page; full write-ups are available by email.
 - **Which tools and methods does Pete use?** SQL, Python (pandas, NumPy, scikit-learn, XGBoost), R, Stata, Excel, Tableau, Customer segmentation (RFM), Conversion funnel modeling, Breakeven analysis, Feature engineering, Hypothesis testing, Causal inference (DiD, event study), RAG / LLM applications, Hypothesis-driven problem solving, Root-cause analysis, Market sizing, Scenario analysis, Executive storytelling, Team leadership & sprint management.
 - **What is on this site?** A profile, 9 case summaries, playbooks for consulting, data analytics and project management, and a bilingual data-science knowledge base of 143 methods with a daily AI model radar.
