@@ -262,39 +262,39 @@ function renderAbout(){
       <aside style="display:flex;flex-direction:column;gap:14px">
         <div class="id-card"><div class="id-top"><div class="id-av">${MONO}</div><div><b>${esc(tx(P.name))}</b><small>${esc(tx(P.status))}</small></div></div>
           <ul class="id-facts">${P.facts.map(f => `<li><span>${esc(tx(f.k))}</span><div>${esc(tx(f.v))}</div></li>`).join("")}</ul><div class="id-links">${contactLinks()}</div></div>
-        ${PROFILE.skills.map(s => `<div class="card skill-box"><h3>${esc(tx(s.group))}</h3><div class="chips">${asList(s.items).map(i => `<span class="chip">${esc(i)}</span>`).join("")}</div></div>`).join("")}
+        ${PROFILE.skills.map(s => `<div class="card skill-box"><h3>${esc(tx(s.group))}</h3><div class="chips">${asList(s.items).map(i => s.slidesChip === i && (PROFILE.slides || []).length
+          ? `<button class="chip slides-chip" data-slide="0" aria-haspopup="dialog">${esc(i)}<span class="slides-hint">${t("slidesHint")}</span></button>`
+          : `<span class="chip">${esc(i)}</span>`).join("")}</div></div>`).join("")}
         <div class="card skill-box"><h3>${t("certT")}</h3>${PROFILE.certs.map(c => `<div style="font-size:14.5px"><b>${esc(tx(c.name))}</b><div class="muted" style="font-size:13px">${esc(tx(c.org))} · ${esc(c.year)}</div></div>`).join("")}</div>
         <div class="card skill-box"><h3>${t("langT")}</h3><div class="chips">${PROFILE.languages.map(l => `<span class="chip">${esc(tx(l.n))} · ${esc(tx(l.l))}</span>`).join("")}</div></div>
         <button class="btn primary" data-view="resume">${ic("mail", 16)}${t("heroCta2")}</button>
       </aside>
-    </div>
-    ${slidesSection()}`;
+    </div>`;
 }
-/* 簡報範例：原始投影片圖片，點一下放大 */
-function slidesSection(){
-  const S = PROFILE.slides || [];
-  if (!S.length) return "";
-  return `<section class="slides-sec">
-      <div class="section-title"><h2>${t("slidesT")}</h2></div>
-      <p class="muted slides-lede">${t("slidesLede")}</p>
-      <div class="slide-grid">${S.map((s, i) => `<button class="slide-card" data-slide="${i}" aria-label="${esc(tx(s.title))}">
-        <span class="slide-frame"><img src="${esc(s.img)}" alt="${esc(tx(s.title))}" loading="lazy" decoding="async" style="aspect-ratio:${esc(s.r || "16/9")}"></span>
-        <span class="slide-cap"><b>${esc(tx(s.title))}</b><small>${esc(tx(s.from))}</small></span></button>`).join("")}</div>
-    </section>`;
-}
+/* 簡報範例：技能卡的 PPT 按鈕打開，可左右切換 */
 function openSlide(i){
-  const s = (PROFILE.slides || [])[i]; if (!s) return;
+  const S = PROFILE.slides || []; if (!S.length) return;
+  i = (i + S.length) % S.length; const s = S[i];
   let lb = $("#slideLb");
   if (!lb){
     lb = document.createElement("div"); lb.id = "slideLb"; lb.className = "slide-lb"; lb.setAttribute("role", "dialog"); lb.setAttribute("aria-modal", "true");
-    lb.innerHTML = `<button class="slide-lb-x" aria-label="${t("slideClose")}">×</button><figure><img alt=""><figcaption></figcaption></figure>`;
-    lb.addEventListener("click", e => { if (!e.target.closest("img")) closeSlide(); });
+    lb.innerHTML = `<button class="slide-lb-x" data-lb="x">×</button><button class="slide-lb-nav prev" data-lb="prev">‹</button><button class="slide-lb-nav next" data-lb="next">›</button><figure><img alt=""><figcaption></figcaption></figure>`;
+    lb.addEventListener("click", e => {
+      const b = e.target.closest("[data-lb]");
+      if (b && b.dataset.lb === "prev") return openSlide(+lb.dataset.i - 1);
+      if (b && b.dataset.lb === "next") return openSlide(+lb.dataset.i + 1);
+      if (!e.target.closest("img")) closeSlide();
+    });
     document.body.appendChild(lb);
   }
+  lb.dataset.i = i;
   lb.querySelector("img").src = s.img; lb.querySelector("img").alt = tx(s.title);
-  lb.querySelector("figcaption").innerHTML = `<b>${esc(tx(s.title))}</b> · ${esc(tx(s.from))}`;
-  lb.querySelector(".slide-lb-x").setAttribute("aria-label", t("slideClose"));
-  lb.classList.add("open"); document.body.style.overflow = "hidden"; lb.querySelector(".slide-lb-x").focus();
+  lb.querySelector("figcaption").innerHTML = `<b>${esc(tx(s.title))}</b> · ${esc(tx(s.from))}<span class="slide-lb-n">${i + 1} / ${S.length}</span>`;
+  lb.querySelector("[data-lb=x]").setAttribute("aria-label", t("slideClose"));
+  lb.querySelector("[data-lb=prev]").setAttribute("aria-label", t("slidePrev"));
+  lb.querySelector("[data-lb=next]").setAttribute("aria-label", t("slideNext"));
+  lb.querySelectorAll(".slide-lb-nav").forEach(n => n.hidden = S.length < 2);
+  if (!lb.classList.contains("open")){ lb.classList.add("open"); document.body.style.overflow = "hidden"; lb.querySelector("[data-lb=x]").focus(); }
 }
 function closeSlide(){ const lb = $("#slideLb"); if (lb && lb.classList.contains("open")){ lb.classList.remove("open"); document.body.style.overflow = ""; } }
 
@@ -472,6 +472,7 @@ document.addEventListener("click", e => {
 document.addEventListener("keydown", e => {
   if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k"){ e.preventDefault(); $("#cmdk").classList.contains("open") ? closeSearch() : openSearch(); }
   else if (e.key === "/" && !/input|textarea|select/i.test(document.activeElement.tagName)){ e.preventDefault(); openSearch(); }
+  else if ($("#slideLb") && $("#slideLb").classList.contains("open") && (e.key === "ArrowLeft" || e.key === "ArrowRight")){ openSlide(+$("#slideLb").dataset.i + (e.key === "ArrowRight" ? 1 : -1)); }
   else if (e.key === "Escape"){ if ($("#slideLb") && $("#slideLb").classList.contains("open")) closeSlide(); else if ($("#cmdk").classList.contains("open")) closeSearch(); else if ($("#drawer").classList.contains("open")) closeDrawer(); }
 });
 

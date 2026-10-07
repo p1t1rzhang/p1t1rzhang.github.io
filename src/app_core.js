@@ -117,7 +117,7 @@ zh: {
   quizEyebrow:"Quiz", quizTitle:"隨機抽考", quizLede:"看白話描述猜是哪個方法。答錯也沒關係，點「看詳情」就能複習。",
   qAll:"全部", qML:"ML 演算法", qStat:"統計與因果", qWhich:"這段描述的是哪一個方法？", qRight:"答對了！", qWrong:"再想想：正確答案是 {n}。", qNext:"下一題 →", qSee:"看詳情", qScore:"答對 {a} / {b}",
   /* 關於我 */
-  aboutEyebrow:"About", expT:"經歷", projT:"專案與競賽", eduT:"學歷", skillT:"技能", certT:"證照", langT:"語言", slidesT:"簡報範例", slidesLede:"實際做過的簡報頁面，保留原貌；點一下可放大。", slideClose:"關閉", contactT:"聯絡方式", factsT:"快速認識", seeCase:"看案例 →",
+  aboutEyebrow:"About", expT:"經歷", projT:"專案與競賽", eduT:"學歷", skillT:"技能", certT:"證照", langT:"語言", slidesHint:"點擊查看範本", slideClose:"關閉", slidePrev:"上一張", slideNext:"下一張", contactT:"聯絡方式", factsT:"快速認識", seeCase:"看案例 →",
   /* 履歷 */
   resEyebrow:"Resume", repoT:"程式碼公開在 GitHub", repoText:"這是個人練習專案，完整程式碼與說明文件都放在 GitHub 上。", repoBtn:"看 GitHub 原始碼", resReqT:"對我的履歷有興趣嗎？", resReqText:"完整履歷不放在公開網站上。歡迎寄信給我，告訴我你在看哪個職缺，我會直接回信附上 PDF。", resReqPick:"想看哪個版本？", resReqMail:"寄信索取履歷", resReqSubject:"索取履歷｜{role}版本", resTitle:"網頁版履歷", resLede:"依職缺切換三個版本，可直接列印或另存 PDF。", print:"列印／存成 PDF", resFor:"版本：",
   rsSummary:"摘要", rsEdu:"學歷", rsExp:"工作經歷", rsProj:"領導與專案", rsSkills:"技能與證照", rsLang:"語言", rsCert:"證照",
@@ -216,7 +216,7 @@ en: {
   dFamily:"Same family: ", dOnly:"This family has a single representative {w}.", dAlgo:"algorithm", dMethod:"method", dHF:"Related models on today's radar", dYear:"{y}", dPete:"Where I've used it", dInfo:"Info",
   quizEyebrow:"Quiz", quizTitle:"Random quiz", quizLede:"Guess the method from its plain-language description. Wrong answers are fine — open the details to review.",
   qAll:"All", qML:"ML algorithms", qStat:"Stats & causal", qWhich:"Which method does this describe?", qRight:"Correct!", qWrong:"Not quite: the answer is {n}.", qNext:"Next →", qSee:"See details", qScore:"{a} / {b} correct",
-  aboutEyebrow:"About", expT:"Experience", projT:"Leadership & projects", eduT:"Education", skillT:"Skills", certT:"Certification", langT:"Languages", slidesT:"Slide samples", slidesLede:"Pages from decks I have built, shown as they were. Click to enlarge.", slideClose:"Close", contactT:"Contact", factsT:"At a glance", seeCase:"See the case →",
+  aboutEyebrow:"About", expT:"Experience", projT:"Leadership & projects", eduT:"Education", skillT:"Skills", certT:"Certification", langT:"Languages", slidesHint:"click to view samples", slideClose:"Close", slidePrev:"Previous", slideNext:"Next", contactT:"Contact", factsT:"At a glance", seeCase:"See the case →",
   resEyebrow:"Résumé", repoT:"The code is on GitHub", repoText:"A personal practice project; the full code and README are on GitHub.", repoBtn:"View on GitHub", resReqT:"Interested in my résumé?", resReqText:"My full résumé isn't published here. Email me with the role you're hiring for and I'll reply with a PDF.", resReqPick:"Which version?", resReqMail:"Email me for my résumé", resReqSubject:"Résumé request | {role}", resTitle:"Web résumé", resLede:"Switch between three versions by role; print or save as PDF.", print:"Print / save as PDF", resFor:"Version: ",
   rsSummary:"Summary", rsEdu:"Education", rsExp:"Experience", rsProj:"Leadership & Projects", rsSkills:"Skills & Certifications", rsLang:"Languages", rsCert:"Certification",
   resNote:"The web version omits phone number and internal company figures; the full résumé is available on request via LinkedIn.",

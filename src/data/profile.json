@@ -1349,8 +1349,8 @@
  "skills": [
   {
    "group": {
-    "zh": "資料與程式",
-    "en": "Data & code"
+    "zh": "資料、程式與技能",
+    "en": "Data, code & skills"
    },
    "items": [
     "SQL",
@@ -1358,8 +1358,10 @@
     "R",
     "Stata",
     "Excel",
-    "Tableau"
-   ]
+    "Tableau",
+    "PPT"
+   ],
+   "slidesChip": "PPT"
   },
   {
    "group": {
