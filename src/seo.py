@@ -374,6 +374,15 @@ def write_all(root: Path, p, playbook, base, n, vendor: Path):
     for b in playbook:
         d = root / "methods" / b["id"]; d.mkdir(parents=True, exist_ok=True)
         (d / "index.html").write_text(playbook_page(b, p, base, date), encoding="utf-8")
+    en = root / "en"   # 英文版短網址：p1t1rzhang.github.io/en/ → 首頁英文版（保留 #case/… 等錨點）
+    en.mkdir(exist_ok=True)
+    (en / "index.html").write_text(f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>Fang-I (Pete) Zhang | Strategy × Data × Delivery</title>
+<meta name="robots" content="noindex,follow"><link rel="canonical" href="{base}?lang=en">
+<meta http-equiv="refresh" content="0; url=../?lang=en">
+<script>location.replace("../?lang=en" + location.hash);</script></head>
+<body><p><a href="../?lang=en">Fang-I (Pete) Zhang — English site</a></p></body></html>
+""", encoding="utf-8")
     sl = vendor / "slides"   # 關於我的簡報範例：只複製 profile.json 的 slides 有列出的圖片
     names = {s["img"].split("/")[-1] for s in p.get("slides", [])}
     if names:

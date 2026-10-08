@@ -83,7 +83,7 @@ jobs:
             if [ -f "$f" ]; then cp "$f" _site/; fi
           done
           # 每個作品與方法論的獨立靜態頁（不執行 JavaScript 也讀得到）
-          for d in work methods slides; do
+          for d in work methods slides en; do
             if [ -d "$d" ]; then cp -R "$d" _site/; fi
           done
           for f in daily_models.json daily_models.js; do

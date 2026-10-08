@@ -66,8 +66,8 @@ function renderCase(){
         ${c.impact ? `<div class="section-title"><h2>${t("impactTitle")}</h2></div>${Array.isArray(impact) ? `<div class="impact">${list(impact)}</div>` : `<div class="impact">${esc(impact)}</div>`}` : ""}
         ${c.reflection ? `<div class="section-title"><h2>${t("reflectTitle")}</h2><span class="hint">${t("reflectHint")}</span></div><div class="card reflect">${list(asList(c.reflection))}</div>` : ""}
         ${c.locked ? `<div class="lock"><div class="lock-in"><h2>${t("lockT")}</h2><p>${t("lockText")}</p>
-          <ul>${t("lockItems").map(x => `<li>${esc(x)}</li>`).join("")}</ul>
-          <div class="cta">${mailHref() ? `<a class="btn on-field" href="${esc(mailHref() + encodeURIComponent("｜" + tx(c.title)))}">${ic("mail", 16)}${t("askMail")}</a>` : ""}${P.contact.filter(x => x.id === "linkedin").map(x => `<a class="btn on-field ghost" href="${esc(x.href)}" target="_blank" rel="noopener noreferrer">${ic("linkedin", 16)}LinkedIn</a>`).join("")}</div></div></div>` : ""}
+          <p class="lock-lead">${t("lockLead")}</p><ul>${t("lockItems").map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+          <div class="cta">${mailHref() ? `<a class="btn on-field" href="${esc(mailHref() + encodeURIComponent("｜" + tx(c.title)))}">${ic("mail", 16)}${t("lockBtn")}</a>` : ""}${P.contact.filter(x => x.id === "linkedin").map(x => `<a class="btn on-field ghost" href="${esc(x.href)}" target="_blank" rel="noopener noreferrer">${ic("linkedin", 16)}LinkedIn</a>`).join("")}</div></div></div>` : ""}
         ${c.repo ? `<div class="lock repo-box"><div class="lock-in"><h2>${t("repoT")}</h2><p>${t("repoText")}</p>
           <div class="cta"><a class="btn on-field" href="${esc(c.repo)}" target="_blank" rel="noopener noreferrer">${ic("github", 16)}${t("repoBtn")}</a></div></div></div>` : ""}
         <div class="case-nav">${prev ? `<button class="btn" data-case="${prev.id}">${t("prevCase")}</button>` : "<span></span>"}${next ? `<button class="btn primary" data-case="${next.id}">${t("nextCase")}</button>` : ""}</div>

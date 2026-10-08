@@ -326,3 +326,9 @@ html[lang="zh-Hant"] .ez-l1,html[lang="zh-Hant"] .ez-l2{letter-spacing:.02em;fon
 .slide-lb-nav.prev{left:14px}.slide-lb-nav.next{right:14px}
 .slide-lb-x:hover,.slide-lb-nav:hover{background:rgba(255,255,255,.25)}
 @media (max-width:560px){.slide-lb{padding:64px 10px}.slide-lb-nav{top:auto;bottom:18px;transform:none}.slide-lb-nav.prev{left:calc(50% - 60px)}.slide-lb-nav.next{right:calc(50% - 60px)}}
+
+.lock .lock-lead{margin:14px 0 0;font-weight:600}
+.lock .lock-lead + ul{margin-top:6px}
+
+/* 系統為深色模式時（沒手動選淺色），玻璃卡片也要用深色底 */
+@media (prefers-color-scheme: dark){:root[data-style="ez"]:not([data-theme="light"]){--glass-bg:rgba(30,30,30,.7);--glass-line:rgba(255,255,255,.07)}}
