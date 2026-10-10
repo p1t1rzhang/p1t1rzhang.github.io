@@ -79,7 +79,7 @@ def public_profile(p):
         c["locked"] = not c.get("repo")   # 開源專案直接連到 GitHub，不需要「來信索取」
     for sec in ("experience", "projects"):
         for e in p.get(sec, []):
-            if "bullets" in e: e["bullets"] = _first(e["bullets"])
+            if "bullets" in e: e["bullets"] = {k: v[:3] for k, v in e["bullets"].items()} if isinstance(e["bullets"], dict) else e["bullets"][:3]   # 公開版每段經歷最多 3 點
     p.pop("resume", None)   # 完整履歷不放進公開網頁，履歷頁改成「寫信索取」
     return p
 
