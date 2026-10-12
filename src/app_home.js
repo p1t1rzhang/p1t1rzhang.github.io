@@ -5,7 +5,7 @@
 Object.assign(UI.zh, {
   chainA:"策略", chainB:"數據", chainC:"交付", storyPlace:"台北・個人網站",
   scrollCue:"往下滑", hi:"嗨，我是",
-  rolesLead:"三個角色，三種相輔相成的能力", nowT:"現在", nowCta1:"看作品", nowCta2:"聯絡我",
+  rolesLead:"三個角色，三種相輔相成的能力", nowT:"現在", nowCta1:"看作品", nowCta2:"聯絡我", nowCta3:"關於我",
   workT:"作品", workHint:"每個案例只公開摘要；完整拆解可以來信索取。", allWork:"全部案例",
   waysT:"做事的方法", waysHint:"依職能拆成三條線，每條都有可直接套用的步驟與範本。",
   kbT:"知識庫", kbText:"我把學過、用過的方法整理成一個會自己更新的知識庫：{ml} 個機器學習演算法、{st} 個統計與因果推論方法，每個都先講白話直覺，數學放在最後；另外每天挑選 Hugging Face 上值得一看的新模型。",
@@ -21,7 +21,7 @@ Object.assign(UI.zh, {
 Object.assign(UI.en, {
   chainA:"strategy", chainB:"data", chainC:"delivery", storyPlace:"Taipei · personal site",
   scrollCue:"Scroll", hi:"Hi, I'm",
-  rolesLead:"Three roles, three complementary strengths", nowT:"Now", nowCta1:"See my work", nowCta2:"Get in touch",
+  rolesLead:"Three roles, three complementary strengths", nowT:"Now", nowCta1:"See my work", nowCta2:"Get in touch", nowCta3:"About me",
   workT:"Work", workHint:"Each case shows a summary only; full write-ups are available on request.", allWork:"All case studies",
   waysT:"How I work", waysHint:"Three playbooks, one per role, with steps and templates you can reuse.",
   kbT:"Knowledge base", kbText:"Everything I've learned and used, organized into a self-updating knowledge base: {ml} machine-learning algorithms and {st} statistics and causal-inference methods, each explained in plain language before the math, plus a daily pick of noteworthy new models on Hugging Face.",
@@ -121,7 +121,7 @@ function renderHome(){
         <p class="lead">${t("nowT")}</p>
         <ul class="now">${P.facts.slice(0, 3).map(f => `<li><span>${esc(tx(f.k))}</span>${esc(tx(f.v))}</li>`).join("")}</ul>
         <p class="nstatus">${esc(tx(P.status))}</p>
-        <div class="cta"><button class="btn on-field" data-view="work">${t("nowCta1")}</button><a class="btn on-field ghost" href="#contact" data-scroll="contact">${t("nowCta2")}</a></div>
+        <div class="cta"><button class="btn on-field" data-view="work">${t("nowCta1")}</button><button class="btn on-field ghost" data-view="about">${t("nowCta3")}</button><a class="btn on-field ghost" href="#contact" data-scroll="contact">${t("nowCta2")}</a></div>
       </div>
 
       <button class="cue" id="cue" aria-label="${t("scrollCue")}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></button>
