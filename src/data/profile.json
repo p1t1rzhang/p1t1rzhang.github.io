@@ -30,12 +30,12 @@
    "zh": [
     "我大學讀財金，現在在臺大農經所做應用機器學習、應用計量與因果推論，論文研究「ChatGPT 等 AI 模型對股票的衝擊與 AI 概念股報酬」。",
     "我習慣先寫下最可能的假說，再用議題樹拆成可以驗證的子假設，最後用 SQL、Python 和統計方法把答案算出來，轉成決策者能直接行動的建議。",
-    "在合庫人壽，暑期我用這套方法為數位通路找出優先客群並估算商機，之後接手行銷預測模型的維運，把修正一路推到 UAT 驗收；在 TMBA，我帶 8 人團隊一個月跑完 4 個衝刺，為連鎖火鍋品牌設計會員分群策略，拿到第 3 名。這個網站本身也是我的作品：一個中英雙語的資料科學知識庫，加上每天挑選 AI 新模型的評分雷達。"
+    "在合庫人壽，暑期我用這套方法為數位通路找出優先客群並估算商機，之後接手行銷預測模型的維運，把修正一路推到正式上線；在 TMBA，我帶 8 人團隊一個月跑完 4 個衝刺，為連鎖火鍋品牌設計會員分群策略，拿到第 3 名。這個網站本身也是我的作品：一個中英雙語的資料科學知識庫，加上每天挑選 AI 新模型的評分雷達。"
    ],
    "en": [
     "I studied finance in college and now work on applied machine learning, applied econometrics and causal inference at National Taiwan University. My thesis studies how ChatGPT and other AI models have moved stock prices, and the returns of AI-concept stocks.",
     "I start by writing down the most likely hypothesis, break it into testable sub-hypotheses with an issue tree, then use SQL, Python and statistics to get to the number, and turn it into a recommendation a decision-maker can act on.",
-    "At BNP Paribas Cardif I used this approach over the summer to find priority segments and size the digital-channel opportunity, then took over the marketing prediction models and carried a fix through UAT. At TMBA I led an 8-person team through 4 sprints in a month to design a membership segmentation strategy for a hot-pot chain, placing 3rd. This website is also my work: a bilingual data-science knowledge base plus a scoring radar that picks the most interesting new AI models every day."
+    "At BNP Paribas Cardif I used this approach over the summer to find priority segments and size the digital-channel opportunity, then took over the marketing prediction models and carried a fix through UAT into production. At TMBA I led an 8-person team through 4 sprints in a month to design a membership segmentation strategy for a hot-pot chain, placing 3rd. This website is also my work: a bilingual data-science knowledge base plus a scoring radar that picks the most interesting new AI models every day."
    ]
   },
   "facts": [
@@ -465,8 +465,8 @@
     "pm"
    ],
    "title": {
-    "zh": "行銷預測模型維運：修正重複資料並通過 UAT 驗收",
-    "en": "Marketing model operations: fixing duplicated training data and passing UAT"
+    "zh": "行銷預測模型維運：修正重複資料並正式上線",
+    "en": "Marketing model operations: fixing duplicated training data and shipping to production"
    },
    "org": {
     "zh": "合庫人壽",
@@ -478,13 +478,13 @@
    },
    "period": "2026.09 – 2026.11",
    "result": {
-    "zh": "UAT 通過",
-    "en": "Passed UAT"
+    "zh": "已正式上線",
+    "en": "Live in production"
    },
    "accent": "d",
    "summary": {
-    "zh": "接手三個每天自動產生電銷與催收名單的機器學習模型。找出催收模型的訓練資料被重複匯入，修正去重邏輯，以三層測試驗證，再經兩輪程式審查修掉會影響業務的問題，修正版通過 UAT 驗收。",
-    "en": "Took over three machine-learning models that generate telemarketing and collections lists every day. Found that the collections model was training on duplicated data, fixed the de-duplication logic, verified it with three test layers, fixed business-impacting bugs in two rounds of code review, and the fix passed UAT."
+    "zh": "接手三個每天自動產生電銷與催收名單的機器學習模型。找出催收模型的訓練資料被重複匯入，修正去重邏輯，以三層測試驗證，再經兩輪程式審查修掉會影響業務的問題，修正版通過 UAT 驗收後正式上線。",
+    "en": "Took over three machine-learning models that generate telemarketing and collections lists every day. Found that the collections model was training on duplicated data, fixed the de-duplication logic, verified it with three test layers, fixed business-impacting bugs in two rounds of code review, and the fix passed UAT and went live in production."
    },
    "metrics": [
     {
@@ -536,8 +536,8 @@
     ]
    },
    "impact": {
-    "zh": "催收模型修正版通過 UAT 驗收、進入上線流程；修正透過版本控制流程送審，可審核、可回退。",
-    "en": "The fixed collections model passed UAT and entered the release process, reviewed and reversible through the version-control flow."
+    "zh": "催收模型修正版通過 UAT 驗收並正式上線；修正透過版本控制流程送審，可審核、可回退。",
+    "en": "The fixed collections model passed UAT and is live in production, reviewed and reversible through the version-control flow."
    },
    "methods": [],
    "playbook": [
@@ -1640,13 +1640,13 @@
    "case": "mlops",
    "bullets": {
     "zh": [
-     "模型維運與上線：接手三個行銷預測模型，修正訓練資料重複匯入的問題，建立三層測試並推進到通過 UAT 驗收",
+     "模型維運與上線：接手三個行銷預測模型，修正訓練資料重複匯入的問題，建立三層測試並推進到通過 UAT 並正式上線",
      "版本控管：導入 Azure DevOps 與分支、審核、標記的六步上版流程，讓模型修改可審核、可回退",
      "營運效率分析：把作業效率拆成四個決策問題，用 SQL 驗證 7 個假設，找出新契約時效的主要瓶頸",
      "問題結構化：以議題樹與 16 種人物誌的 MECE 矩陣，診斷缺少傳統業務員通路造成的營收缺口，收斂為涵蓋 50 萬+ 保戶中 97.2% 的 3 個優先客群"
     ],
     "en": [
-     "Model Operations: Took over three marketing prediction models, fixed duplicated training data, and built three-layer testing that took the fix through UAT.",
+     "Model Operations: Took over three marketing prediction models, fixed duplicated training data, and built three-layer testing that took the fix through UAT into production.",
      "Version Control: Introduced Azure DevOps with a six-step branch, review and tag release flow so model changes are reviewable and reversible.",
      "Operations Analytics: Broke operational efficiency into four decision questions and tested 7 hypotheses in SQL to locate the main new-business bottleneck.",
      "Problem Structuring: Diagnosed revenue exposure from the absence of a traditional agent force using issue trees and a 16-persona MECE matrix, narrowing to 3 priority segments covering 97.2% of a 500K+ policyholder base."
