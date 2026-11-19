@@ -310,8 +310,8 @@
     "pm"
    ],
    "title": {
-    "zh": "行銷預測模型維運：從找出重複資料到通過 UAT 驗收",
-    "en": "Marketing model operations: from finding duplicated training data to passing UAT"
+    "zh": "行銷預測模型的版本控制與上版：從找出重複資料到通過 UAT",
+    "en": "Version control and release for marketing models: from duplicated data to passing UAT"
    },
    "org": {
     "zh": "合庫人壽",
@@ -328,15 +328,15 @@
    },
    "accent": "d",
    "summary": {
-    "zh": "接手三個每天自動產生電銷與催收名單的機器學習模型，找出訓練資料重複匯入的問題並修正，建立三層測試與 Git 版控上版流程，把修改推進到通過 UAT 驗收。",
-    "en": "Took over three machine-learning models that generate telemarketing and collections lists every day, found and fixed duplicated training data, and set up three-layer testing and a Git-based release process that took the fix through UAT."
+    "zh": "接手三個每天自動產生電銷與催收名單的機器學習模型。我先找回正式基準版本、導入 Azure DevOps 版本控制與六步上版流程，再修正訓練資料重複匯入的問題，以三層測試驗證，把修正版一路推到通過 UAT、進入上線流程。",
+    "en": "Took over three machine-learning models that generate telemarketing and collections lists every day. I recovered the true production baseline, introduced Azure DevOps version control with a six-step release flow, fixed duplicated training data, verified it with three test layers, and took the fix through UAT into the release process."
    },
    "metrics": [
     {
-     "v": "3",
+     "v": "6 步",
      "k": {
-      "zh": "個接手維運的行銷模型",
-      "en": "production marketing models taken over"
+      "zh": "上版流程：分支、審核、標記、可回退",
+      "en": "release steps: branch, review, tag, roll back"
      }
     },
     {
@@ -347,10 +347,10 @@
      }
     },
     {
-     "v": "6 步",
+     "v": "3 方",
      "k": {
-      "zh": "上版流程：可審核、可回退",
-      "en": "release steps: reviewable and reversible"
+      "zh": "比對找回正式基準版本",
+      "en": "code comparison to recover the baseline"
      }
     }
    ],
@@ -374,15 +374,15 @@
    },
    "myRole": {
     "zh": [
-     "負責程式審查、去重修正、測試設計與版控流程導入"
+     "負責版本控制導入、上版流程設計、去重修正、測試與程式審查"
     ],
     "en": [
-     "Owned code review, the de-duplication fix, test design and the version-control rollout"
+     "Owned the version-control rollout, release-flow design, the de-duplication fix, testing and code review"
     ]
    },
    "impact": {
-    "zh": "催收模型修正版通過 UAT 驗收、進入上線流程；並整理出上版流程與新人快速入門文件，讓後續接手的人照著做就能安全修改。",
-    "en": "The fixed collections model passed UAT and entered the release process; the release flow and an onboarding guide let whoever comes next change the models safely."
+    "zh": "催收模型修正版通過 UAT 驗收、進入上線流程；兩個正式模型有了可審核、可回退的版本控制，並整理成上版流程與新人快速入門文件，讓後續接手的人照著做就能安全修改。",
+    "en": "The fixed collections model passed UAT and entered the release process; both production models now have reviewable, reversible version control, documented in a release guide and an onboarding guide so the next person can change them safely."
    },
    "methods": [],
    "playbook": [
@@ -392,10 +392,12 @@
     "pm/workplan"
    ],
    "skills": [
-    "Python",
-    "SQL",
     "Git",
     "Azure DevOps",
+    "Pull request review",
+    "Release management",
+    "Python",
+    "SQL",
     "Unit testing",
     "UAT",
     "Code review",
@@ -405,7 +407,70 @@
     "zh": "實習專案：模型內容、資料與內部數字不公開，只呈現問題與做法。",
     "en": "Internship project: model details, data and internal figures are not disclosed; only the problem and approach are shown."
    },
-   "locked": true
+   "locked": true,
+   "approachPublic": true,
+   "approach": [
+    {
+     "t": {
+      "zh": "找回正式基準版本",
+      "en": "Recover the production baseline"
+     },
+     "d": {
+      "zh": "逐檔比對測試機實際執行的程式、版控存放庫與本機副本（三方比對），發現有人直接改了執行中的檔案；先把三邊對齊成同一個基準，再開始修改。",
+      "en": "Compared, file by file, the code actually running on the test server, the repository and my local copy, found that running files had been edited in place, and aligned all three to one baseline before changing anything."
+     }
+    },
+    {
+     "t": {
+      "zh": "導入版本控制",
+      "en": "Introduce version control"
+     },
+     "d": {
+      "zh": "在 Azure DevOps 為兩個正式模型建立存放庫，以正式機程式為第一版；訂定分支命名（fix/模型-主題）與 commit 規範，並排除帳密、模型檔與 log，不讓敏感資料進版控。",
+      "en": "Created Azure DevOps repositories for the two production models with the production code as version one, set branch naming (fix/model-topic) and commit conventions, and kept credentials, model files and logs out of the repository."
+     }
+    },
+    {
+     "t": {
+      "zh": "設計六步上版流程",
+      "en": "Design a six-step release flow"
+     },
+     "d": {
+      "zh": "開分支 → 上傳修改 → 發提取要求 → 主管審核 → 合併 → 打上 prod-日期 標記。每次修改都有逐行紀錄與核准紀錄，出問題可以立刻退回上一版；主管只需要做審核那一步。",
+      "en": "Branch → push → pull request → manager review → merge → tag prod-date. Every change has a line-by-line history and an approval record and can be rolled back at once; the manager only has to do the review step."
+     }
+    },
+    {
+     "t": {
+      "zh": "修正訓練資料重複",
+      "en": "Fix duplicated training data"
+     },
+     "d": {
+      "zh": "找出催收模型的訓練資料被重複匯入；改成同一資料月只保留最新一批，並加入批次健檢，不合格就中止訓練。特徵、模型與輸出欄位都不變，現有模型檔照常使用。",
+      "en": "Found that the collections model was training on repeatedly imported data; kept only the latest batch per data month and added a batch health check that stops training on failure. Features, model and output columns were unchanged, so the existing model file still works."
+     }
+    },
+    {
+     "t": {
+      "zh": "三層測試取代改正式環境",
+      "en": "Three test layers instead of touching production"
+     },
+     "d": {
+      "zh": "假資料單元測試 → 真實資料唯讀檢查 → 沙盒完整訓練。UAT 用加了標記的測試資料寫入、測完清除，涵蓋成功、同批與跨批重複、刻意失敗三種情境，確認通知信與錯誤掃描都正常。",
+      "en": "Unit tests on fake data → read-only checks on real data → full training in a sandbox. UAT used tagged test records that are written and then cleaned up, covering success, within- and cross-batch duplicates, and a deliberate failure, and confirmed the alert emails and error scanner work."
+     }
+    },
+    {
+     "t": {
+      "zh": "程式審查與上線準備",
+      "en": "Code review and release prep"
+     },
+     "d": {
+      "zh": "兩輪程式審查，修掉會影響業務的問題（工作類型沒限定、同日名單互相覆蓋、0 筆仍產生空名單），把兩個版本的模型合併成依資料填寫率自動切換；依公司上版流程備妥版本比對、安全檢核表與上線單，含個資的附件改成預設不寄。",
+      "en": "Two rounds of code review fixed business-impacting bugs (unfiltered job types, same-day lists overwriting each other, empty lists marked as success), merged two model variants into one that switches automatically by data completeness, and prepared the version diff, security checklist and release ticket required by the company process, with personal-data attachments off by default."
+     }
+    }
+   ]
   },
   {
    "id": "opsx",
@@ -529,8 +594,8 @@
    },
    "period": "2026.07 – 2026.08",
    "result": {
-    "zh": "已完成",
-    "en": "Completed"
+    "zh": "實習專案",
+    "en": "Internship project"
    },
    "accent": "a",
    "summary": {

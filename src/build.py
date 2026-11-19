@@ -71,8 +71,9 @@ def _first(v):
 def public_profile(p):
     p = json.loads(json.dumps(p))
     for c in p["cases"]:
+        keep_how = bool(c.get("approachPublic"))
         for k in list(c):
-            if k not in CASE_PUBLIC: del c[k]
+            if k not in CASE_PUBLIC and not (k == "approach" and keep_how): del c[k]   # 「我怎麼做」預設不公開；只有標了 approachPublic 的案例（不含內部數字）才保留
         c["scqa"] = {k: v for k, v in c["scqa"].items() if k in ("s", "c", "q", "a")}   # 30 秒摘要：情境→衝突→問題→答案（答案只有一句結論，不含內部數字）
         c["metrics"] = c.get("metrics", [])[:3]
         c["myRole"] = _first(c.get("myRole"))

@@ -26,13 +26,13 @@ def _ym(period):
 # ───────── 介面文字 ─────────
 L = {
   "zh": {"home": "首頁", "work": "作品案例", "methods": "方法論", "about": "關於我", "contact": "聯絡", "scqa": "30 秒摘要",
-         "s": "情境", "c": "衝突", "q": "問題", "a": "答案", "role": "我的角色", "impact": "成果", "playbook": "用到的方法論",
+         "s": "情境", "c": "衝突", "q": "問題", "a": "答案", "role": "我的角色", "impact": "成果", "did": "我怎麼做", "playbook": "用到的方法論",
          "skills": "工具與技能", "repo": "在 GitHub 看程式碼", "ask": "完整案例拆解可來信索取", "open": "打開互動版網站",
          "more": "其他作品", "when": "什麼時候用", "steps": "怎麼做", "example": "實際例子", "pitfalls": "常見陷阱", "cases": "相關作品",
          "principles": "原則", "faq": "常見問題", "edu": "學歷", "exp": "經歷", "facts": "基本資料", "lang": "English",
          "site": "Pete's website", "by": "作者：張方燡 Pete", "updated": "更新"},
   "en": {"home": "Home", "work": "Work", "methods": "Playbooks", "about": "About", "contact": "Contact", "scqa": "30-second summary",
-         "s": "Situation", "c": "Complication", "q": "Question", "a": "Answer", "role": "My role", "impact": "Outcome", "playbook": "Playbooks used",
+         "s": "Situation", "c": "Complication", "q": "Question", "a": "Answer", "role": "My role", "impact": "Outcome", "did": "What I did", "playbook": "Playbooks used",
          "skills": "Tools & skills", "repo": "View the code on GitHub", "ask": "Full write-up available by email", "open": "Open the interactive site",
          "more": "More work", "when": "When to use it", "steps": "How", "example": "Real example", "pitfalls": "Common pitfalls", "cases": "Related work",
          "principles": "Principles", "faq": "FAQ", "edu": "Education", "exp": "Experience", "facts": "Facts", "lang": "中文",
@@ -221,6 +221,7 @@ def case_page(c, p, playbook, base, date):
         nums = "".join(f'<div><b>{_esc(m["v"])}</b><span>{_esc(_l(m["k"], lang))}</span></div>' for m in c.get("metrics", []))
         sc = "".join(f'<dt>{t[k]}</dt><dd>{_esc(_l(c["scqa"][k], lang))}</dd>' for k in ("s", "c", "q", "a") if c.get("scqa", {}).get(k))
         role = "".join(f"<li>{_esc(x)}</li>" for x in _list(c.get("myRole"), lang))
+        how = "".join(f'<li><b>{_esc(_l(s["t"], lang))}</b>{colon}{_esc(_l(s["d"], lang))}</li>' for s in c.get("approach", []))
         pb = "".join(f'<li><a href="../../methods/{names[k][0]}/#{names[k][1]["id"]}">{_esc(_l(names[k][1]["name"], lang))}</a>{colon}{_esc(_l(names[k][1]["oneLiner"], lang))}</li>'
                      for k in c.get("playbook", []) if k in names)
         skills = "".join(f"<li>{_esc(s)}</li>" for s in c.get("skills", []))
@@ -233,7 +234,7 @@ def case_page(c, p, playbook, base, date):
         arts.append(f'<article lang="{lg}" id="{lang}"><p class="eyebrow">{_esc(meta)}</p><h1>{_esc(_l(c["title"], lang))}</h1>'
             f'<p class="lede">{_esc(_l(c["summary"], lang))}</p>'
             + (f'<div class="nums">{nums}</div>' if nums else "")
-            + _sec("h2", t["scqa"], sc, "dl", "scqa") + _sec("h2", t["role"], role) + _sec("h2", t["impact"], f"<p>{_esc(impact)}</p>" if impact else "", None)
+            + _sec("h2", t["scqa"], sc, "dl", "scqa") + _sec("h2", t["did"], how, "ol") + _sec("h2", t["role"], role) + _sec("h2", t["impact"], f"<p>{_esc(impact)}</p>" if impact else "", None)
             + _sec("h2", t["playbook"], pb) + _sec("h2", t["skills"], skills, "ul", "chips")
             + (f'<p class="note">{_esc(priv)}</p>' if priv else "")
             + f'{cta}<a class="cta ghost" href="../../{q}#case/{c["id"]}">{t["open"]}</a></article>')
@@ -341,6 +342,7 @@ def llms_full(p, playbook, n, base):
                     _l(c["summary"], lang), ""]
             out += [f"- {m['v']} {_l(m['k'], lang)}" for m in c.get("metrics", [])]
             out += [f"- {t[k]}: {_l(c['scqa'][k], lang)}" for k in ("s", "c", "q", "a") if c.get("scqa", {}).get(k)]
+            out += [f"- {t['did']}: {_l(s['t'], lang)}: {_l(s['d'], lang)}" for s in c.get("approach", [])]
             out += [f"- {t['role']}: {x}" for x in _list(c.get("myRole"), lang)]
             if _l(c.get("impact"), lang): out.append(f"- {t['impact']}: {_l(c['impact'], lang)}")
             if c.get("skills"): out.append(f"- {t['skills']}: {', '.join(c['skills'])}")

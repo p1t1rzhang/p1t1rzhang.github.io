@@ -120,7 +120,6 @@ function renderHome(){
       <div class="ch ch4" data-ch="4">
         <p class="lead">${t("nowT")}</p>
         <ul class="now">${P.facts.slice(0, 3).map(f => `<li><span>${esc(tx(f.k))}</span>${esc(tx(f.v))}</li>`).join("")}</ul>
-        <p class="nstatus">${esc(tx(P.status))}</p>
         <div class="cta"><button class="btn on-field" data-view="work">${t("nowCta1")}</button><button class="btn on-field ghost" data-view="about">${t("nowCta3")}</button><a class="btn on-field ghost" href="#contact" data-scroll="contact">${t("nowCta2")}</a></div>
       </div>
 
