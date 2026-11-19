@@ -304,14 +304,14 @@
  ],
  "cases": [
   {
-   "id": "mlops",
+   "id": "vcs",
    "tracks": [
     "data",
     "pm"
    ],
    "title": {
-    "zh": "行銷預測模型的版本控制與上版：從找出重複資料到通過 UAT",
-    "en": "Version control and release for marketing models: from duplicated data to passing UAT"
+    "zh": "模型程式的版本控制與上版流程：讓每次修改可審核、可回退",
+    "en": "Version control and a release flow for production models: every change reviewable and reversible"
    },
    "org": {
     "zh": "合庫人壽",
@@ -321,15 +321,15 @@
     "zh": "實習專案・數位與數據部",
     "en": "Internship project · Digital & Data Department"
    },
-   "period": "2026.09 – 2026.11",
+   "period": "2026.10 – 2026.11",
    "result": {
-    "zh": "UAT 通過",
-    "en": "Passed UAT"
+    "zh": "流程建立",
+    "en": "Flow set up"
    },
-   "accent": "d",
+   "accent": "b",
    "summary": {
-    "zh": "接手三個每天自動產生電銷與催收名單的機器學習模型。我先找回正式基準版本、導入 Azure DevOps 版本控制與六步上版流程，再修正訓練資料重複匯入的問題，以三層測試驗證，把修正版一路推到通過 UAT、進入上線流程。",
-    "en": "Took over three machine-learning models that generate telemarketing and collections lists every day. I recovered the true production baseline, introduced Azure DevOps version control with a six-step release flow, fixed duplicated training data, verified it with three test layers, and took the fix through UAT into the release process."
+    "zh": "兩個每天自動執行的正式模型，程式散在正式機、測試機和個人電腦，沒有修改紀錄。我先用三方比對找回正式基準版本，在 Azure DevOps 建立存放庫，設計分支、審核、標記的六步上版流程，並對接公司的上線單據。",
+    "en": "Two production models that run every day had code scattered across production, test and personal machines with no change history. I recovered the true baseline with a three-way comparison, set up Azure DevOps repositories, designed a six-step branch, review and tag release flow, and mapped it to the company's release paperwork."
    },
    "metrics": [
     {
@@ -340,72 +340,68 @@
      }
     },
     {
-     "v": "3 層",
-     "k": {
-      "zh": "測試，取代直接改正式環境",
-      "en": "of testing instead of editing production"
-     }
-    },
-    {
      "v": "3 方",
      "k": {
       "zh": "比對找回正式基準版本",
       "en": "code comparison to recover the baseline"
      }
+    },
+    {
+     "v": "2",
+     "k": {
+      "zh": "個正式模型納入版控",
+      "en": "production models under version control"
+     }
     }
    ],
    "scqa": {
     "s": {
-     "zh": "公司用三個機器學習模型，每天自動產生電銷與催收名單，程式由前人開發。",
-     "en": "Three machine-learning models generate the telemarketing and collections lists every day; the code was written by someone else."
+     "zh": "部門有兩個每天自動產生名單的正式模型，程式由前人開發。",
+     "en": "The team runs two production models that generate lists every day, written by someone else."
     },
     "c": {
-     "zh": "正式機、測試機與個人電腦上的程式版本對不上，修改沒有紀錄；催收模型的訓練資料被重複匯入，出錯時只能人工比對試做檔。",
-     "en": "Production, test and personal copies of the code had drifted apart with no change history, the collections model was training on duplicated data, and failures could only be traced by comparing trial files by hand."
+     "zh": "正式機的資料夾混著試做和備份檔，舊存放庫停在一年前；改了什麼、誰核准都沒有紀錄，出錯時只能人工比對試做檔。",
+     "en": "The production folder mixed trial and backup files, the old repository was a year out of date, and there was no record of what changed or who approved it; failures meant comparing trial files by hand."
     },
     "q": {
-     "zh": "怎麼在不中斷業務的前提下，把模型修好、驗證清楚，再安全地送上正式機？",
-     "en": "How do we fix and verify the models, then ship them safely, without interrupting the business?"
+     "zh": "怎麼讓模型程式只有一個正式版本，而且每次修改都可審核、可回退？",
+     "en": "How do we get one true version of the code, with every change reviewable and reversible?"
     },
     "a": {
-     "zh": "先用三方比對找回正式基準版本，再修正去重邏輯並以三層測試驗證；同時導入 Azure DevOps 版控與六步上版流程，讓每次修改都可審核、可回退。",
-     "en": "Recover the true baseline with a three-way code comparison, fix the de-duplication logic and verify it with three test layers, and move the code into Azure DevOps with a six-step release flow so every change is reviewed and reversible."
+     "zh": "以正式機程式為基準版建立存放庫，用「開分支 → 提取要求 → 主管審核 → 合併 → 打標記」的流程上版；主管只需要做審核，出問題可以立刻退回上一版。",
+     "en": "Create repositories with the production code as the baseline and release through branch → pull request → manager review → merge → tag; the manager only reviews, and any release can be rolled back at once."
     }
    },
    "myRole": {
     "zh": [
-     "負責版本控制導入、上版流程設計、去重修正、測試與程式審查"
+     "負責三方比對、存放庫建置、上版流程設計與文件"
     ],
     "en": [
-     "Owned the version-control rollout, release-flow design, the de-duplication fix, testing and code review"
+     "Owned the three-way comparison, repository setup, release-flow design and documentation"
     ]
    },
    "impact": {
-    "zh": "催收模型修正版通過 UAT 驗收、進入上線流程；兩個正式模型有了可審核、可回退的版本控制，並整理成上版流程與新人快速入門文件，讓後續接手的人照著做就能安全修改。",
-    "en": "The fixed collections model passed UAT and entered the release process; both production models now have reviewable, reversible version control, documented in a release guide and an onboarding guide so the next person can change them safely."
+    "zh": "兩個正式模型有了單一基準版本與逐行修改紀錄；上版流程已對齊公司單據，主管開啟分支保護後就能強制執行。",
+    "en": "Both production models now have one baseline and a line-by-line history; the release flow is aligned with company paperwork and becomes mandatory once branch protection is switched on."
    },
    "methods": [],
    "playbook": [
-    "data/modeling",
-    "data/workflow",
     "pm/raid",
-    "pm/workplan"
+    "pm/workplan",
+    "pm/stakeholder",
+    "data/workflow"
    ],
    "skills": [
     "Git",
     "Azure DevOps",
+    "Branching strategy",
     "Pull request review",
     "Release management",
-    "Python",
-    "SQL",
-    "Unit testing",
-    "UAT",
-    "Code review",
-    "MLOps"
+    "Documentation"
    ],
    "privacy": {
-    "zh": "實習專案：模型內容、資料與內部數字不公開，只呈現問題與做法。",
-    "en": "Internship project: model details, data and internal figures are not disclosed; only the problem and approach are shown."
+    "zh": "實習專案：程式內容與內部系統細節不公開，只呈現問題與做法。",
+    "en": "Internship project: code and internal system details are not disclosed; only the problem and approach are shown."
    },
    "locked": true,
    "approachPublic": true,
@@ -438,6 +434,142 @@
      "d": {
       "zh": "開分支 → 上傳修改 → 發提取要求 → 主管審核 → 合併 → 打上 prod-日期 標記。每次修改都有逐行紀錄與核准紀錄，出問題可以立刻退回上一版；主管只需要做審核那一步。",
       "en": "Branch → push → pull request → manager review → merge → tag prod-date. Every change has a line-by-line history and an approval record and can be rolled back at once; the manager only has to do the review step."
+     }
+    },
+    {
+     "t": {
+      "zh": "對接公司上版單據",
+      "en": "Map it to the company release process"
+     },
+     "d": {
+      "zh": "把版控流程對到公司既有的模型上版六步驟：需求單、開發、UAT 測試、版本比對與安全檢核表、系統上線單、上線；備妥版本比對、安全檢核表與上線單草稿。",
+      "en": "Mapped the flow onto the company's six-step model release process (request, development, UAT, version diff and security checklist, release ticket, go-live) and drafted the diff, checklist and ticket."
+     }
+    },
+    {
+     "t": {
+      "zh": "寫成文件交接",
+      "en": "Document it for handover"
+     },
+     "d": {
+      "zh": "整理成上版流程簡報與新人快速入門文件，讓之後接手的人照著做就能安全修改模型。",
+      "en": "Wrote a release-flow deck and an onboarding guide so whoever comes next can change the models safely."
+     }
+    }
+   ]
+  },
+  {
+   "id": "mlops",
+   "tracks": [
+    "data",
+    "pm"
+   ],
+   "title": {
+    "zh": "行銷預測模型維運：修正重複資料並通過 UAT 驗收",
+    "en": "Marketing model operations: fixing duplicated training data and passing UAT"
+   },
+   "org": {
+    "zh": "合庫人壽",
+    "en": "BNP Paribas Cardif TCB Life Insurance"
+   },
+   "type": {
+    "zh": "實習專案・數位與數據部",
+    "en": "Internship project · Digital & Data Department"
+   },
+   "period": "2026.09 – 2026.11",
+   "result": {
+    "zh": "UAT 通過",
+    "en": "Passed UAT"
+   },
+   "accent": "d",
+   "summary": {
+    "zh": "接手三個每天自動產生電銷與催收名單的機器學習模型。找出催收模型的訓練資料被重複匯入，修正去重邏輯，以三層測試驗證，再經兩輪程式審查修掉會影響業務的問題，修正版通過 UAT 驗收。",
+    "en": "Took over three machine-learning models that generate telemarketing and collections lists every day. Found that the collections model was training on duplicated data, fixed the de-duplication logic, verified it with three test layers, fixed business-impacting bugs in two rounds of code review, and the fix passed UAT."
+   },
+   "metrics": [
+    {
+     "v": "3",
+     "k": {
+      "zh": "個接手維運的行銷模型",
+      "en": "production marketing models taken over"
+     }
+    },
+    {
+     "v": "3 層",
+     "k": {
+      "zh": "測試，取代直接改正式環境",
+      "en": "of testing instead of editing production"
+     }
+    },
+    {
+     "v": "2 輪",
+     "k": {
+      "zh": "程式審查，修掉影響業務的問題",
+      "en": "of code review fixing business-impacting bugs"
+     }
+    }
+   ],
+   "scqa": {
+    "s": {
+     "zh": "公司用三個機器學習模型，每天自動產生電銷與催收名單。",
+     "en": "Three machine-learning models generate the telemarketing and collections lists every day."
+    },
+    "c": {
+     "zh": "催收模型的訓練資料被重複匯入，同一個月的資料被放大好幾倍；過去測試只能重開排程、手改正式環境。",
+     "en": "The collections model was training on repeatedly imported data, inflating some months several times over, and testing meant restarting schedules and editing production by hand."
+    },
+    "q": {
+     "zh": "怎麼在不動到正式環境、不改模型的前提下，把資料問題修好並驗證清楚？",
+     "en": "How do we fix and verify the data problem without touching production or changing the model?"
+    },
+    "a": {
+     "zh": "同一資料月只留最新一批並加上批次健檢，用三層測試驗證；特徵、模型與輸出都不變，現有模型檔照常使用。",
+     "en": "Keep only the latest batch per data month with a batch health check, verified by three test layers; features, model and outputs stay unchanged, so the existing model file still works."
+    }
+   },
+   "myRole": {
+    "zh": [
+     "負責資料問題診斷、去重修正、測試設計與程式審查"
+    ],
+    "en": [
+     "Owned the data diagnosis, the de-duplication fix, test design and code review"
+    ]
+   },
+   "impact": {
+    "zh": "催收模型修正版通過 UAT 驗收、進入上線流程；修正透過版本控制流程送審，可審核、可回退。",
+    "en": "The fixed collections model passed UAT and entered the release process, reviewed and reversible through the version-control flow."
+   },
+   "methods": [],
+   "playbook": [
+    "data/modeling",
+    "data/workflow",
+    "pm/raid"
+   ],
+   "skills": [
+    "Python",
+    "SQL",
+    "XGBoost",
+    "Data quality",
+    "Unit testing",
+    "UAT",
+    "Code review",
+    "MLOps"
+   ],
+   "privacy": {
+    "zh": "實習專案：模型內容、資料與內部數字不公開，只呈現問題與做法。",
+    "en": "Internship project: model details, data and internal figures are not disclosed; only the problem and approach are shown."
+   },
+   "locked": true,
+   "approachPublic": true,
+   "approach": [
+    {
+     "t": {
+      "zh": "先弄清楚資料流",
+      "en": "Map the data flow first"
+     },
+     "d": {
+      "zh": "整理執行 log 與結案報告，釐清「產檔 → 匯入 → 寫入工作 → 模型輪詢 → 輸出名單」的流程，以及三個模型各自要回答的問題。",
+      "en": "Read the run logs and the project report to map the flow (export → import → job queue → model polling → list output) and what each model is meant to answer."
      }
     },
     {
